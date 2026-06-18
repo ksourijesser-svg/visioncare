@@ -11,8 +11,8 @@
         "hooks": [
           {
             "type": "command",
-            "shell": "powershell",
-            "command": "$s = [Console]::In.ReadToEnd(); $j = $s | ConvertFrom-Json; $fp = $j.tool_input.file_path; if ($fp) { git add \"$fp\"; git diff --cached --quiet; if ($LASTEXITCODE -ne 0) { $n = Split-Path \"$fp\" -Leaf; git commit -m \"auto: update $n\"; git push origin main } }",
+            "shell": "bash",
+            "command": "cd /c/Users/jasserk/Desktop/Doctor && git add -A && git diff --cached --quiet || (git commit -m \"auto: save\" && git push origin main)",
             "timeout": 30,
             "statusMessage": "Saving and pushing to GitHub..."
           }
