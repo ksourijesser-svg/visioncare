@@ -1,0 +1,57 @@
+import axios from 'axios'
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+
+export const api = axios.create({
+  baseURL: `${API_URL}/api/v1`,
+  headers: { 'Content-Type': 'application/json' },
+})
+
+api.interceptors.request.use((config) => {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null
+  if (token) config.headers.Authorization = `Bearer ${token}`
+  return config
+})
+
+api.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    if (error.response?.status === 401 && typeof window !== 'undefined') {
+      localStorage.removeItem('access_token')
+      window.location.href = '/login'
+    }
+    return Promise.reject(error)
+  }
+)
+
+export const authApi = {
+  login: (email: string, password: string) =>
+    api.post('/auth/login', { username: email, password }),
+  me: () => api.get('/auth/me'),
+  resetPassword: (email: string) => api.post('/auth/reset-password', { email }),
+}
+
+export const patientsApi = {
+  list: (params?: { search?: string; page?: number; limit?: number }) =>
+    api.get('/patients', { params }),
+  get: (id: number) => api.get(`/patients/${id}`),
+  create: (data: unknown) => api.post('/patients', data),
+  update: (id: number, data: unknown) => api.put(`/patients/${id}`, data),
+  delete: (id: number) => api.delete(`/patients/${id}`),
+  exportExcel: () => api.get('/patients/export', { responseType: 'blob' }),
+}
+
+export const appointmentsApi = {
+  list: (params?: { date?: string; statut?: string; patient_id?: number }) =>
+    api.get('/rendez-vous', { params }),
+  get: (id: number) => api.get(`/rendez-vous/${id}`),
+  create: (data: unknown) => api.post('/rendez-vous', data),
+  update: (id: number, data: unknown) => api.put(`/rendez-vous/${id}`, data),
+  delete: (id: number) => api.delete(`/rendez-vous/${id}`),
+  updateStatus: (id: number, statut: string) =>
+    api.patch(`/rendez-vous/${id}/statut`, { statut }),
+}
+
+export const dashboardApi = {
+  stats: () => api.get('/dashboard/stats'),
+}
