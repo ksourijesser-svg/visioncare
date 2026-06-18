@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$s = [Console]::In.ReadToEnd(); $j = $s | ConvertFrom-Json; $fp = $j.tool_input.file_path; if ($fp) { git add \"$fp\"; git diff --cached --quiet; if ($LASTEXITCODE -ne 0) { $n = Split-Path \"$fp\" -Leaf; git commit -m \"auto: update $n\"; git push origin main } }",
+            "timeout": 30,
+            "statusMessage": "Saving and pushing to GitHub..."
+          }
+        ]
+      }
+    ]
+  }
+}

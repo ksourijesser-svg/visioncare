@@ -24,7 +24,7 @@ export function Header({ title }: HeaderProps) {
         </button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#F5F9FA]">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-[#F5F9FA] cursor-pointer">
               <Avatar className="w-8 h-8">
                 <AvatarFallback className="bg-[#70B1C4] text-white text-xs">{initials}</AvatarFallback>
               </Avatar>
@@ -34,7 +34,7 @@ export function Header({ title }: HeaderProps) {
                 </p>
                 <p className="text-xs text-gray-400 capitalize">{user?.role}</p>
               </div>
-            </button>
+            </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem>

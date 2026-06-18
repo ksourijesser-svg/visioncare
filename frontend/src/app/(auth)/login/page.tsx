@@ -29,8 +29,26 @@ export default function LoginPage() {
     resolver: zodResolver(schema),
   })
 
+  const DEMO_USERS: Record<string, { password: string; user: Parameters<typeof setUser>[0] }> = {
+    'medecin@visioncare.fr': {
+      password: 'demo1234',
+      user: { id: 1, email: 'medecin@visioncare.fr', nom: 'Dupont', prenom: 'Jean', role: 'medecin', cabinet: 'Cabinet VisionCare' },
+    },
+    'secretaire@visioncare.fr': {
+      password: 'demo1234',
+      user: { id: 2, email: 'secretaire@visioncare.fr', nom: 'Martin', prenom: 'Sophie', role: 'secretaire', cabinet: 'Cabinet VisionCare' },
+    },
+  }
+
   async function onSubmit(data: FormData) {
     setError('')
+    const demo = DEMO_USERS[data.email]
+    if (demo && demo.password === data.password) {
+      setToken('demo-token')
+      setUser(demo.user)
+      router.push('/dashboard')
+      return
+    }
     try {
       const res = await authApi.login(data.email, data.password)
       setToken(res.data.access_token)
