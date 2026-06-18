@@ -66,10 +66,21 @@ export default function PatientsPage() {
   )
 
   function handleView(p: DerivedPatient) {
-    if (p.storeData) {
-      setViewingPatient(p.storeData)
-      setDetailOpen(true)
+    const patient = p.storeData ?? {
+      id: p.patient_id,
+      nom: p.nom,
+      prenom: p.prenom,
+      telephone: p.telephone,
+      email: '',
+      adresse: '',
+      date_naissance: '',
+      notes: '',
+      nb_consultations: p.nb_consultations,
+      derniere_visite: p.derniere_visite,
+      created_at: '',
     }
+    setViewingPatient(patient)
+    setDetailOpen(true)
   }
 
   function handleExport() {
@@ -101,10 +112,10 @@ export default function PatientsPage() {
               placeholder="Rechercher par nom ou téléphone..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 border-[#DCEEF3]"
+              className="pl-9 border-0"
             />
           </div>
-          <Button variant="outline" onClick={handleExport} className="border-[#DCEEF3] text-[#70B1C4] shrink-0">
+          <Button variant="outline" onClick={handleExport} className="border-0 text-[#70B1C4] shrink-0">
             <Download size={16} className="mr-2" />
             Exporter Excel
           </Button>
@@ -124,7 +135,7 @@ export default function PatientsPage() {
               const initials = `${patient.prenom[0]}${patient.nom[0]}`.toUpperCase()
               const storeData = patient.storeData
               return (
-                <Card key={patient.key} className="border-[#DCEEF3] hover:shadow-md transition-all">
+                <Card key={patient.key} className="border-0 hover:shadow-md transition-all">
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
                       <Avatar className="w-11 h-11">
@@ -140,25 +151,23 @@ export default function PatientsPage() {
                       <Badge className="bg-green-100 text-green-700 text-xs font-normal shrink-0">Complété</Badge>
                     </div>
 
-                    <div className="mt-3 flex items-center justify-between text-xs text-gray-500 border-t border-[#F5F9FA] pt-3">
+                    <div className="mt-3 flex items-center justify-between text-xs text-gray-500 border-t border-gray-50 pt-3">
                       <span>
                         Dernière visite : {format(new Date(patient.derniere_visite), 'dd MMM yyyy', { locale: fr })}
                       </span>
                       <span className="font-medium text-[#70B1C4]">{patient.nb_consultations} consult.</span>
                     </div>
 
-                    {storeData && (
-                      <div className="mt-3 border-t border-[#F5F9FA] pt-3">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleView(patient)}
-                          className="w-full border-[#DCEEF3] text-[#70B1C4] text-xs h-8"
-                        >
-                          <Eye size={12} className="mr-1" /> Voir dossier
-                        </Button>
-                      </div>
-                    )}
+                    <div className="mt-3 border-t border-gray-50 pt-3">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleView(patient)}
+                        className="w-full border-0 text-[#70B1C4] text-xs h-8"
+                      >
+                        <Eye size={12} className="mr-1" /> Voir dossier
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               )

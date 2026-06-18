@@ -4,33 +4,36 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   LayoutDashboard, Calendar, ClipboardList, Users,
-  Settings, LogOut, Eye, Menu, X,
+  LogOut, Eye, Menu, X, UserCircle,
 } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
-import { removeToken } from '@/lib/auth'
+import { removeToken, getUser } from '@/lib/auth'
 
 const navItems = [
-  { href: '/dashboard', label: 'Tableau de bord', icon: LayoutDashboard },
-  { href: '/calendrier', label: 'Calendrier', icon: Calendar },
-  { href: '/rendez-vous', label: 'Rendez-vous', icon: ClipboardList },
-  { href: '/patients', label: 'Patients', icon: Users },
+  { href: '/dashboard',   label: 'Tableau de bord', icon: LayoutDashboard },
+  { href: '/calendrier',  label: 'Calendrier',       icon: Calendar },
+  { href: '/rendez-vous', label: 'Rendez-vous',      icon: ClipboardList },
+  { href: '/patients',    label: 'Patients',         icon: Users },
 ]
 
 export function Sidebar() {
   const pathname = usePathname()
-  const router = useRouter()
+  const router   = useRouter()
   const [open, setOpen] = useState(false)
+  const user = getUser()
 
   function handleLogout() {
     removeToken()
     router.push('/login')
   }
 
+  const initials = user ? `${user.prenom[0]}${user.nom[0]}`.toUpperCase() : 'VC'
+
   return (
     <>
       <button
-        className="fixed top-4 left-4 z-50 md:hidden bg-white rounded-md p-2 shadow"
+        className="fixed top-4 left-4 z-50 md:hidden bg-white rounded-xl p-2 shadow-md"
         onClick={() => setOpen(!open)}
       >
         {open ? <X size={20} /> : <Menu size={20} />}
@@ -38,54 +41,84 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-40 w-64 flex flex-col bg-white border-r border-[#DCEEF3] transition-transform duration-200',
+          'fixed inset-y-0 left-0 z-40 w-64 flex flex-col bg-white shadow-xl transition-transform duration-200',
           open ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         )}
       >
-        <div className="flex items-center gap-3 px-6 py-5 border-b border-[#DCEEF3]">
-          <div className="w-9 h-9 rounded-lg bg-[#70B1C4] flex items-center justify-center">
-            <Eye size={20} className="text-white" />
+        {/* Logo */}
+        <div className="flex items-center gap-3 px-5 py-5">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#70B1C4] to-[#3d8fa8] flex items-center justify-center shadow-md shadow-[#70B1C4]/30">
+            <Eye size={19} className="text-white" />
           </div>
           <div>
-            <p className="font-bold text-[#2D3748] text-sm">VisionCare</p>
-            <p className="text-xs text-[#70B1C4]">Cabinet d&apos;Ophtalmologie</p>
+            <p className="font-bold text-[#1A2B3C] text-[15px] tracking-tight">VisionCare</p>
+            <p className="text-[11px] text-[#70B1C4] font-medium">Cabinet d&apos;Ophtalmologie</p>
           </div>
         </div>
 
-        <nav className="flex-1 px-3 py-4 space-y-1">
-          {navItems.map(({ href, label, icon: Icon }) => (
-            <Link
-              key={href}
-              href={href}
-              onClick={() => setOpen(false)}
-              className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
-                pathname === href || pathname.startsWith(href + '/')
-                  ? 'bg-[#DCEEF3] text-[#70B1C4]'
-                  : 'text-[#2D3748] hover:bg-[#F5F9FA]'
-              )}
-            >
-              <Icon size={18} />
-              {label}
-            </Link>
-          ))}
+        <div className="mx-5 h-px bg-gray-100" />
+
+        {/* Nav */}
+        <nav className="flex-1 px-4 pt-5 pb-2 space-y-1">
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] px-2 mb-3">Navigation</p>
+
+          {navItems.map(({ href, label, icon: Icon }) => {
+            const active = pathname === href || pathname.startsWith(href + '/')
+            return (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setOpen(false)}
+                className={cn(
+                  'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150',
+                  active
+                    ? 'bg-[#70B1C4] text-white shadow-md shadow-[#70B1C4]/25'
+                    : 'text-gray-500 hover:bg-gray-50 hover:text-[#1A2B3C]'
+                )}
+              >
+                <Icon size={17} className={active ? 'text-white' : 'text-gray-400'} />
+                {label}
+              </Link>
+            )
+          })}
         </nav>
 
-        <div className="px-3 py-4 border-t border-[#DCEEF3] space-y-1">
+        {/* User section */}
+        <div className="px-4 pb-5 space-y-2">
+          <div className="mx-1 h-px bg-gray-100 mb-3" />
+
           <Link
-            href="/parametres"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-[#2D3748] hover:bg-[#F5F9FA] transition-colors"
+            href="/profil"
+            onClick={() => setOpen(false)}
+            className={cn(
+              'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150',
+              pathname === '/profil'
+                ? 'bg-[#70B1C4] text-white shadow-md shadow-[#70B1C4]/25'
+                : 'text-gray-500 hover:bg-gray-50 hover:text-[#1A2B3C]'
+            )}
           >
-            <Settings size={18} />
-            Paramètres
+            <UserCircle size={17} className={pathname === '/profil' ? 'text-white' : 'text-gray-400'} />
+            Mon profil
           </Link>
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-500 hover:bg-red-50 transition-colors"
-          >
-            <LogOut size={18} />
-            Déconnexion
-          </button>
+
+          <div className="flex items-center gap-3 px-3 py-2.5 bg-gray-50 rounded-xl">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#70B1C4] to-[#3d8fa8] flex items-center justify-center text-white text-xs font-bold shrink-0">
+              {initials}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-semibold text-[#1A2B3C] truncate">
+                Dr. {user?.prenom} {user?.nom}
+              </p>
+              <p className="text-[10px] text-gray-400 capitalize">{user?.role}</p>
+            </div>
+            <button
+              onClick={handleLogout}
+              title="Déconnexion"
+              className="p-1.5 rounded-lg text-red-400 hover:bg-red-50 transition-colors shrink-0"
+            >
+              <LogOut size={14} />
+            </button>
+          </div>
         </div>
       </aside>
 

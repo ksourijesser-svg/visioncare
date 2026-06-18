@@ -5,127 +5,291 @@ import { ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { Button } from '@/components/ui/button'
 import { AppointmentModal } from '@/components/appointments/AppointmentModal'
-import { useAppointmentsStore, AppointmentStatus } from '@/store/appointmentsStore'
+import { useAppointmentsStore, AppointmentStatus, Appointment } from '@/store/appointmentsStore'
 import {
   format, startOfMonth, endOfMonth, startOfWeek, endOfWeek,
-  addDays, isSameMonth, isToday, addMonths, subMonths,
+  addDays, addWeeks, subWeeks, addMonths, subMonths,
+  isSameMonth, isToday,
 } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
 type ViewMode = 'mois' | 'semaine' | 'jour'
 
-const statusColors: Record<AppointmentStatus, string> = {
+const STATUS_COLORS: Record<AppointmentStatus, string> = {
   programme: 'bg-blue-100 text-blue-700',
-  confirme: 'bg-green-100 text-green-700',
-  complete: 'bg-gray-100 text-gray-600',
-  annule: 'bg-red-100 text-red-500 line-through',
+  confirme:  'bg-green-100 text-green-700',
+  complete:  'bg-gray-100 text-gray-600',
+  annule:    'bg-red-100 text-red-500 line-through',
 }
 
-const DAYS = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']
+const HOURS = Array.from({ length: 12 }, (_, i) => i + 8) // 08:00 → 19:00
 
 export default function CalendrierPage() {
   const { appointments } = useAppointmentsStore()
   const [currentDate, setCurrentDate] = useState(new Date())
-  const [view, setView] = useState<ViewMode>('mois')
+  const [view, setView]  = useState<ViewMode>('mois')
   const [modalOpen, setModalOpen] = useState(false)
 
+  /* ── Navigation ── */
+  function goPrev() {
+    if (view === 'mois')    setCurrentDate((d) => subMonths(d, 1))
+    else if (view === 'semaine') setCurrentDate((d) => subWeeks(d, 1))
+    else                    setCurrentDate((d) => addDays(d, -1))
+  }
+  function goNext() {
+    if (view === 'mois')    setCurrentDate((d) => addMonths(d, 1))
+    else if (view === 'semaine') setCurrentDate((d) => addWeeks(d, 1))
+    else                    setCurrentDate((d) => addDays(d, 1))
+  }
+
+  /* ── Title ── */
+  function getTitle() {
+    if (view === 'mois') return format(currentDate, 'MMMM yyyy', { locale: fr })
+    if (view === 'semaine') {
+      const ws = startOfWeek(currentDate, { weekStartsOn: 1 })
+      const we = endOfWeek(currentDate,   { weekStartsOn: 1 })
+      return `${format(ws, 'd')} – ${format(we, 'd MMM yyyy', { locale: fr })}`
+    }
+    return format(currentDate, 'EEEE d MMMM yyyy', { locale: fr })
+  }
+
+  /* ── Month data ── */
   const monthStart = startOfMonth(currentDate)
-  const monthEnd = endOfMonth(currentDate)
-  const calStart = startOfWeek(monthStart, { weekStartsOn: 1 })
-  const calEnd = endOfWeek(monthEnd, { weekStartsOn: 1 })
-
-  const days: Date[] = []
+  const monthEnd   = endOfMonth(currentDate)
+  const calStart   = startOfWeek(monthStart, { weekStartsOn: 1 })
+  const calEnd     = endOfWeek(monthEnd,     { weekStartsOn: 1 })
+  const monthDays: Date[] = []
   let d = calStart
-  while (d <= calEnd) { days.push(d); d = addDays(d, 1) }
+  while (d <= calEnd) { monthDays.push(d); d = addDays(d, 1) }
 
-  const eventsByDay: Record<string, typeof appointments> = {}
+  const eventsByDay: Record<string, Appointment[]> = {}
   appointments.forEach((a) => {
     if (!eventsByDay[a.date]) eventsByDay[a.date] = []
     eventsByDay[a.date].push(a)
   })
 
+  /* ── Week data ── */
+  const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 })
+  const weekDays  = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i))
+
+  function getApptForDayHour(date: Date, hour: number) {
+    const key = format(date, 'yyyy-MM-dd')
+    return (eventsByDay[key] || []).filter((a) => parseInt(a.heure.split(':')[0]) === hour)
+  }
+
   return (
     <div className="flex flex-col flex-1">
       <Header title="Calendrier" />
-      <div className="p-6 space-y-5">
+      <div className="p-6 flex flex-col gap-4 flex-1">
+
+        {/* ── Toolbar ── */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <button onClick={() => setCurrentDate(subMonths(currentDate, 1))} className="p-2 rounded-lg hover:bg-[#DCEEF3] text-[#2D3748]">
+          <div className="flex items-center gap-2">
+            <button onClick={goPrev} className="p-2 rounded-lg hover:bg-[#DCEEF3] text-[#2D3748]">
               <ChevronLeft size={18} />
             </button>
-            <h2 className="text-lg font-semibold text-[#2D3748] capitalize min-w-44 text-center">
-              {format(currentDate, 'MMMM yyyy', { locale: fr })}
+            <h2 className="text-base font-semibold text-[#2D3748] capitalize min-w-52 text-center">
+              {getTitle()}
             </h2>
-            <button onClick={() => setCurrentDate(addMonths(currentDate, 1))} className="p-2 rounded-lg hover:bg-[#DCEEF3] text-[#2D3748]">
+            <button onClick={goNext} className="p-2 rounded-lg hover:bg-[#DCEEF3] text-[#2D3748]">
               <ChevronRight size={18} />
             </button>
-            <button onClick={() => setCurrentDate(new Date())} className="text-sm text-[#70B1C4] hover:underline ml-1">
+            <button
+              onClick={() => setCurrentDate(new Date())}
+              className="text-sm text-[#70B1C4] hover:underline ml-1"
+            >
               Aujourd&apos;hui
             </button>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex bg-[#F5F9FA] rounded-lg p-1 gap-1">
+            <div className="flex bg-[#F5F9FA] rounded-lg p-1 gap-0.5">
               {(['jour', 'semaine', 'mois'] as ViewMode[]).map((v) => (
                 <button
                   key={v}
                   onClick={() => setView(v)}
-                  className={`px-3 py-1 rounded-md text-sm font-medium capitalize transition-colors ${view === v ? 'bg-white text-[#70B1C4] shadow-sm' : 'text-gray-500 hover:text-[#2D3748]'}`}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium capitalize transition-colors ${
+                    view === v ? 'bg-white text-[#70B1C4] shadow-sm' : 'text-gray-500 hover:text-[#2D3748]'
+                  }`}
                 >
-                  {v}
+                  {v === 'jour' ? 'Jour' : v === 'semaine' ? 'Semaine' : 'Mois'}
                 </button>
               ))}
             </div>
             <Button onClick={() => setModalOpen(true)} className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white">
-              <Plus size={16} className="mr-2" />
-              Nouveau RDV
+              <Plus size={16} className="mr-2" /> Nouveau RDV
             </Button>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-[#DCEEF3] overflow-hidden">
-          <div className="grid grid-cols-7 border-b border-[#DCEEF3]">
-            {DAYS.map((day) => (
-              <div key={day} className="py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                {day}
-              </div>
-            ))}
-          </div>
-          <div className="grid grid-cols-7">
-            {days.map((day, idx) => {
-              const key = format(day, 'yyyy-MM-dd')
-              const events = eventsByDay[key] || []
-              const inMonth = isSameMonth(day, currentDate)
-              const today = isToday(day)
-              return (
-                <div
-                  key={idx}
-                  className={`min-h-24 p-2 border-b border-r border-[#F5F9FA] cursor-pointer hover:bg-[#F5F9FA] transition-colors ${!inMonth ? 'opacity-40' : ''}`}
-                  onClick={() => setModalOpen(true)}
-                >
-                  <div className={`w-7 h-7 flex items-center justify-center rounded-full text-sm font-medium mb-1 ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748]'}`}>
-                    {format(day, 'd')}
-                  </div>
-                  <div className="space-y-0.5">
-                    {events.slice(0, 3).map((ev) => (
-                      <div key={ev.id} className={`text-xs px-1.5 py-0.5 rounded truncate ${statusColors[ev.statut]}`}>
-                        {ev.heure} {ev.patient_prenom}
-                      </div>
-                    ))}
-                    {events.length > 3 && (
-                      <p className="text-xs text-gray-400 pl-1">+{events.length - 3} autres</p>
-                    )}
-                  </div>
+        {/* ══════════════ MONTH VIEW ══════════════ */}
+        {view === 'mois' && (
+          <div className="bg-white rounded-xl border border-0 overflow-hidden">
+            <div className="grid grid-cols-7 border-b border-0">
+              {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day) => (
+                <div key={day} className="py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                  {day}
                 </div>
-              )
-            })}
+              ))}
+            </div>
+            <div className="grid grid-cols-7">
+              {monthDays.map((day, idx) => {
+                const key    = format(day, 'yyyy-MM-dd')
+                const events = eventsByDay[key] || []
+                const inMonth = isSameMonth(day, currentDate)
+                const today   = isToday(day)
+                return (
+                  <div
+                    key={idx}
+                    className={`min-h-24 p-2 border-b border-r border-gray-50 ${!inMonth ? 'opacity-40' : ''}`}
+                  >
+                    <div
+                      onClick={() => { setCurrentDate(day); setView('jour') }}
+                      className={`w-7 h-7 flex items-center justify-center rounded-full text-sm font-medium mb-1 cursor-pointer transition-colors
+                        ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748] hover:bg-[#DCEEF3]'}`}
+                    >
+                      {format(day, 'd')}
+                    </div>
+                    <div className="space-y-0.5">
+                      {events.slice(0, 3).map((ev) => (
+                        <div key={ev.id} className={`text-xs px-1.5 py-0.5 rounded truncate ${STATUS_COLORS[ev.statut]}`}>
+                          {ev.heure} {ev.patient_prenom}
+                        </div>
+                      ))}
+                      {events.length > 3 && (
+                        <p
+                          onClick={() => { setCurrentDate(day); setView('jour') }}
+                          className="text-xs text-gray-400 pl-1 cursor-pointer hover:text-[#70B1C4]"
+                        >
+                          +{events.length - 3} autres
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
-        </div>
+        )}
 
+        {/* ══════════════ WEEK VIEW ══════════════ */}
+        {view === 'semaine' && (
+          <div className="bg-white rounded-xl border border-0 overflow-hidden flex flex-col flex-1">
+            {/* Day headers */}
+            <div className="grid border-b border-0" style={{ gridTemplateColumns: '56px repeat(7, 1fr)' }}>
+              <div />
+              {weekDays.map((day, i) => {
+                const today = isToday(day)
+                return (
+                  <div
+                    key={i}
+                    className="py-2 text-center border-l border-0 cursor-pointer hover:bg-[#F5F9FA] transition-colors"
+                    onClick={() => { setCurrentDate(day); setView('jour') }}
+                  >
+                    <p className="text-xs text-gray-400 uppercase">
+                      {format(day, 'EEE', { locale: fr })}
+                    </p>
+                    <div className={`w-8 h-8 mx-auto flex items-center justify-center rounded-full text-sm font-semibold mt-0.5
+                      ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748]'}`}>
+                      {format(day, 'd')}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            {/* Time grid */}
+            <div className="overflow-y-auto flex-1">
+              {HOURS.map((hour) => (
+                <div
+                  key={hour}
+                  className="grid border-b border-gray-50"
+                  style={{ gridTemplateColumns: '56px repeat(7, 1fr)', minHeight: '64px' }}
+                >
+                  <div className="px-2 pt-1.5 text-xs text-gray-400 text-right shrink-0">
+                    {hour}:00
+                  </div>
+                  {weekDays.map((day, i) => {
+                    const appts = getApptForDayHour(day, hour)
+                    return (
+                      <div
+                        key={i}
+                        className={`border-l border-gray-50 p-1 ${isToday(day) ? 'bg-blue-50/40' : ''}`}
+                      >
+                        {appts.map((a) => (
+                          <div key={a.id} className={`text-xs rounded px-1.5 py-1 mb-0.5 truncate ${STATUS_COLORS[a.statut]}`}>
+                            <span className="font-medium">{a.heure}</span>{' '}
+                            {a.patient_prenom} {a.patient_nom[0]}.
+                          </div>
+                        ))}
+                      </div>
+                    )
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ══════════════ DAY VIEW ══════════════ */}
+        {view === 'jour' && (
+          <div className="bg-white rounded-xl border border-0 overflow-hidden flex flex-col flex-1">
+            {/* Day header */}
+            <div className="border-b border-0 px-6 py-3 flex items-center gap-3">
+              <div className={`w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold shrink-0
+                ${isToday(currentDate) ? 'bg-[#70B1C4] text-white' : 'bg-[#F5F9FA] text-[#2D3748]'}`}>
+                {format(currentDate, 'd')}
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-[#2D3748] capitalize">
+                  {format(currentDate, 'EEEE', { locale: fr })}
+                </p>
+                <p className="text-xs text-gray-400 capitalize">
+                  {format(currentDate, 'MMMM yyyy', { locale: fr })}
+                </p>
+              </div>
+              <div className="ml-auto">
+                <span className="text-xs bg-[#DCEEF3] text-[#70B1C4] px-2.5 py-1 rounded-full font-medium">
+                  {(eventsByDay[format(currentDate, 'yyyy-MM-dd')] || []).length} rendez-vous
+                </span>
+              </div>
+            </div>
+            {/* Time grid */}
+            <div className="overflow-y-auto flex-1">
+              {HOURS.map((hour) => {
+                const appts = getApptForDayHour(currentDate, hour)
+                return (
+                  <div key={hour} className="flex border-b border-gray-50" style={{ minHeight: '68px' }}>
+                    <div className="w-16 px-3 pt-2 text-xs text-gray-400 text-right shrink-0 border-r border-0">
+                      {hour}:00
+                    </div>
+                    <div className="flex-1 p-2 space-y-1.5">
+                      {appts.map((a) => (
+                        <div key={a.id} className={`rounded-lg px-3 py-2 ${STATUS_COLORS[a.statut]}`}>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-semibold">
+                              {a.patient_prenom} {a.patient_nom}
+                            </span>
+                            <span className="text-xs opacity-70 ml-3 shrink-0">
+                              {a.heure} · {a.duree} min
+                            </span>
+                          </div>
+                          <p className="text-xs opacity-75 mt-0.5">{a.motif}</p>
+                          {a.notes && <p className="text-xs opacity-60 mt-0.5 italic">{a.notes}</p>}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Legend */}
         <div className="flex items-center gap-4 text-xs text-gray-500">
-          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-blue-100 inline-block" /> Programmé</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-green-100 inline-block" /> Confirmé</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-gray-100 inline-block" /> Complété</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-red-100 inline-block" /> Annulé</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-blue-100 inline-block" /> Programmé</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-green-100 inline-block" /> Confirmé</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-gray-100 inline-block" /> Complété</span>
+          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-red-100 inline-block" /> Annulé</span>
         </div>
       </div>
 

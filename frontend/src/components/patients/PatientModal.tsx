@@ -17,8 +17,8 @@ const schema = z.object({
   date_naissance: z.string().min(1, 'Requis'),
   telephone: z.string().min(1, 'Requis'),
   email: z.string().email('Email invalide').or(z.literal('')),
-  adresse: z.string().optional().default(''),
-  notes: z.string().optional().default(''),
+  adresse: z.string(),
+  notes: z.string(),
 })
 
 type FormData = z.infer<typeof schema>
@@ -35,6 +35,7 @@ export function PatientModal({ open, onClose, patient }: Props) {
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: { adresse: '', notes: '' },
   })
 
   useEffect(() => {

@@ -29,7 +29,7 @@ let nextId = 9
 
 interface PatientsStore {
   patients: Patient[]
-  addPatient: (data: Omit<Patient, 'id' | 'nb_consultations' | 'derniere_visite' | 'created_at'>) => void
+  addPatient: (data: Omit<Patient, 'id' | 'nb_consultations' | 'derniere_visite' | 'created_at'>) => number
   updatePatient: (id: number, data: Partial<Patient>) => void
   deletePatient: (id: number) => void
   getPatient: (id: number) => Patient | undefined
@@ -39,14 +39,16 @@ export const usePatientsStore = create<PatientsStore>((set, get) => ({
   patients: INITIAL_PATIENTS,
 
   addPatient: (data) => {
+    const id = nextId++
     const patient: Patient = {
       ...data,
-      id: nextId++,
+      id,
       nb_consultations: 0,
       derniere_visite: new Date().toISOString().split('T')[0],
       created_at: new Date().toISOString().split('T')[0],
     }
     set((s) => ({ patients: [...s.patients, patient] }))
+    return id
   },
 
   updatePatient: (id, data) => {

@@ -1,6 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card'
 import { LucideIcon } from 'lucide-react'
-import { cn } from '@/lib/utils'
 
 interface StatCardProps {
   title: string
@@ -13,19 +11,18 @@ interface StatCardProps {
 
 export function StatCard({ title, value, icon: Icon, color = '#70B1C4', bgColor = '#DCEEF3', trend }: StatCardProps) {
   return (
-    <Card className="border-[#DCEEF3]">
-      <CardContent className="p-5">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-500 mb-1">{title}</p>
-            <p className="text-2xl font-bold text-[#2D3748]">{value}</p>
-            {trend && <p className="text-xs text-gray-400 mt-1">{trend}</p>}
-          </div>
-          <div className={cn('w-12 h-12 rounded-xl flex items-center justify-center')} style={{ backgroundColor: bgColor }}>
-            <Icon size={22} style={{ color }} />
-          </div>
+    <div className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow duration-200">
+      <div className="flex items-start justify-between mb-4">
+        <div
+          className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+          style={{ backgroundColor: bgColor }}
+        >
+          <Icon size={20} style={{ color }} />
         </div>
-      </CardContent>
-    </Card>
+        <span className="text-3xl font-bold text-[#1A2B3C]">{value}</span>
+      </div>
+      <p className="text-sm font-semibold text-[#1A2B3C]">{title}</p>
+      {trend && <p className="text-xs text-gray-400 mt-0.5">{trend}</p>}
+    </div>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Search, Filter, Eye, Pencil, Trash2 } from 'lucide-react'
+import { Plus, Search, Filter, Pencil, Trash2, ClipboardList } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { AppointmentModal } from '@/components/appointments/AppointmentModal'
+import { ConsultationModal } from '@/components/appointments/ConsultationModal'
 import { useAppointmentsStore, Appointment, AppointmentStatus } from '@/store/appointmentsStore'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
@@ -33,6 +34,8 @@ export default function RendezVousPage() {
   const [statusFilter, setStatusFilter] = useState<AppointmentStatus | 'tous'>('tous')
   const [modalOpen, setModalOpen] = useState(false)
   const [editingRdv, setEditingRdv] = useState<Appointment | null>(null)
+  const [consultationOpen, setConsultationOpen] = useState(false)
+  const [consultationRdv, setConsultationRdv] = useState<Appointment | null>(null)
 
   const filtered = appointments.filter((rdv) => {
     const matchSearch =
@@ -50,6 +53,11 @@ export default function RendezVousPage() {
   function handleEdit(rdv: Appointment) {
     setEditingRdv(rdv)
     setModalOpen(true)
+  }
+
+  function handleDossier(rdv: Appointment) {
+    setConsultationRdv(rdv)
+    setConsultationOpen(true)
   }
 
   function handleDelete(id: number) {
@@ -70,11 +78,11 @@ export default function RendezVousPage() {
                 placeholder="Rechercher un patient ou motif..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-9 border-[#DCEEF3]"
+                className="pl-9 border-0"
               />
             </div>
             <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as AppointmentStatus | 'tous')}>
-              <SelectTrigger className="w-44 border-[#DCEEF3]">
+              <SelectTrigger className="w-44 border-0">
                 <Filter size={14} className="mr-1 text-gray-400" />
                 <SelectValue placeholder="Statut" />
               </SelectTrigger>
@@ -93,12 +101,12 @@ export default function RendezVousPage() {
           </Button>
         </div>
 
-        <Card className="border-[#DCEEF3]">
+        <Card className="border-0">
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-[#DCEEF3] bg-[#F5F9FA]">
+                  <tr className="border-b border-gray-50 bg-gray-50/80">
                     <th className="text-left px-4 py-3 font-medium text-gray-500">Patient</th>
                     <th className="text-left px-4 py-3 font-medium text-gray-500">Date & Heure</th>
                     <th className="text-left px-4 py-3 font-medium text-gray-500">Motif</th>
@@ -109,7 +117,7 @@ export default function RendezVousPage() {
                 </thead>
                 <tbody>
                   {filtered.map((rdv) => (
-                    <tr key={rdv.id} className="border-b border-[#F5F9FA] hover:bg-[#F5F9FA] transition-colors">
+                    <tr key={rdv.id} className="border-b border-gray-50 hover:bg-[#F5F9FA] transition-colors">
                       <td className="px-4 py-3">
                         <p className="font-medium text-[#2D3748]">{rdv.patient_prenom} {rdv.patient_nom}</p>
                         <p className="text-xs text-gray-400">{rdv.patient_telephone}</p>
@@ -137,6 +145,13 @@ export default function RendezVousPage() {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => handleDossier(rdv)}
+                            className="p-1.5 rounded hover:bg-[#DCEEF3] text-[#70B1C4]"
+                            title="Dossier médical"
+                          >
+                            <ClipboardList size={14} />
+                          </button>
                           <button onClick={() => handleEdit(rdv)} className="p-1.5 rounded hover:bg-[#DCEEF3] text-[#70B1C4]">
                             <Pencil size={14} />
                           </button>
@@ -163,6 +178,11 @@ export default function RendezVousPage() {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         appointment={editingRdv}
+      />
+      <ConsultationModal
+        open={consultationOpen}
+        onClose={() => setConsultationOpen(false)}
+        appointment={consultationRdv}
       />
     </div>
   )
