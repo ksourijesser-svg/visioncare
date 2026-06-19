@@ -63,7 +63,7 @@ app/
 
 components/
   layout/
-    Sidebar.tsx              # nav with active state (solid teal), user card, logout
+    Sidebar.tsx              # nav with active state (solid teal), decorative eye widget + rotating tip, user card, logout
     Header.tsx               # page title + bell + avatar dropdown → Mon profil
   appointments/
     AppointmentModal.tsx     # create/edit RDV with patient autocomplete + dedup
@@ -148,6 +148,10 @@ This project uses the Base UI variant of Shadcn. `DropdownMenuTrigger` and simil
 ### Patient deduplication
 `AppointmentModal` has a patient autocomplete search (min 2 chars). On save, names are normalized with `toTitleCase()`. Selecting an existing patient links the RDV to their `patient_id`, preventing duplicate records.
 
+### Autocomplete inside Dialog — CRITICAL
+Do **not** use `absolute` positioning for dropdown suggestions inside a `@base-ui/react` Dialog. The Dialog's `Popup` creates a new CSS stacking context (`fixed` + `z-50` + `grid`), which clips absolutely-positioned children regardless of `z-index`.
+**Fix**: render the suggestions list as a normal inline element (no `absolute`, no `z-index`) outside the `relative` wrapper but still in document flow — it pushes content down instead of floating.
+
 ### Profile persistence
 `profileStore` saves to two `localStorage` keys on every `updateProfile()` call:
 - `user` — name, email, telephone, cabinet name (shared with auth)
@@ -163,10 +167,12 @@ This project uses the Base UI variant of Shadcn. `DropdownMenuTrigger` and simil
 - Background: `#E4EEF4` (blue-gray) — cards are white `shadow-sm rounded-2xl` on top of it
 - Primary teal: `#70B1C4` — active nav, buttons, accents
 - Dark text: `#1A2B3C`
-- Sidebar: `shadow-xl`, active nav item = `bg-[#70B1C4] text-white`
-- Card component (`components/ui/card.tsx`): default is `shadow-sm rounded-2xl` — no border ring
-- StatCard: icon top-left, value top-right, title below
+- Sidebar: `glow-sidebar` shadow, active nav item = `bg-[#70B1C4] text-white shadow-md shadow-[#70B1C4]/25`
+- Sidebar decorative widget: SVG eye illustration + rotating French tip (7 tips, picked by `new Date().getDay()`), sits in `flex-1 justify-end` between nav and user card
+- Card component (`components/ui/card.tsx`): default is `rounded-2xl bg-white glow` — no border ring
+- StatCard: icon top-left, value top-right, title below; accepts `glowClass` prop
 - Dashboard has a gradient teal welcome banner
+- Glow utilities defined in `globals.css`: `glow`, `glow-md`, `glow-green`, `glow-violet`, `glow-red`, `glow-sidebar`
 
 ### Shadcn Select null guard
 `onValueChange` types `v` as `string | null`. Always guard: `onValueChange={(v) => { if (v) setValue(...) }}`

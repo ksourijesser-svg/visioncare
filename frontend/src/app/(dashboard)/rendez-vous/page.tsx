@@ -1,12 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Search, Filter, Pencil, Trash2, ClipboardList } from 'lucide-react'
+import { Plus, Search, Filter, Pencil, Trash2, ClipboardList, Calendar, Clock, User } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { AppointmentModal } from '@/components/appointments/AppointmentModal'
 import { ConsultationModal } from '@/components/appointments/ConsultationModal'
@@ -14,28 +12,21 @@ import { useAppointmentsStore, Appointment, AppointmentStatus } from '@/store/ap
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
-const statusColors: Record<AppointmentStatus, string> = {
-  programme: 'bg-blue-100 text-blue-700',
-  confirme: 'bg-green-100 text-green-700',
-  complete: 'bg-gray-100 text-gray-700',
-  annule: 'bg-red-100 text-red-700',
-}
-
-const statusLabels: Record<AppointmentStatus, string> = {
-  programme: 'Programmé',
-  confirme: 'Confirmé',
-  complete: 'Complété',
-  annule: 'Annulé',
+const STATUS_CONFIG: Record<AppointmentStatus, { label: string; text: string; bg: string; border: string; dot: string }> = {
+  programme: { label: 'Programmé', text: 'text-blue-600',   bg: 'bg-blue-50',   border: 'border-blue-400',   dot: 'bg-blue-400' },
+  confirme:  { label: 'Confirmé',  text: 'text-green-600',  bg: 'bg-green-50',  border: 'border-green-400',  dot: 'bg-green-400' },
+  complete:  { label: 'Complété',  text: 'text-gray-500',   bg: 'bg-gray-100',  border: 'border-gray-300',   dot: 'bg-gray-400' },
+  annule:    { label: 'Annulé',    text: 'text-red-500',    bg: 'bg-red-50',    border: 'border-red-400',    dot: 'bg-red-400' },
 }
 
 export default function RendezVousPage() {
   const { appointments, deleteAppointment, updateStatus } = useAppointmentsStore()
-  const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState<AppointmentStatus | 'tous'>('tous')
-  const [modalOpen, setModalOpen] = useState(false)
-  const [editingRdv, setEditingRdv] = useState<Appointment | null>(null)
+  const [search, setSearch]               = useState('')
+  const [statusFilter, setStatusFilter]   = useState<AppointmentStatus | 'tous'>('tous')
+  const [modalOpen, setModalOpen]         = useState(false)
+  const [editingRdv, setEditingRdv]       = useState<Appointment | null>(null)
   const [consultationOpen, setConsultationOpen] = useState(false)
-  const [consultationRdv, setConsultationRdv] = useState<Appointment | null>(null)
+  const [consultationRdv, setConsultationRdv]   = useState<Appointment | null>(null)
 
   const filtered = appointments.filter((rdv) => {
     const matchSearch =
@@ -45,145 +36,169 @@ export default function RendezVousPage() {
     return matchSearch && matchStatus
   })
 
-  function handleAdd() {
-    setEditingRdv(null)
-    setModalOpen(true)
-  }
-
-  function handleEdit(rdv: Appointment) {
-    setEditingRdv(rdv)
-    setModalOpen(true)
-  }
-
-  function handleDossier(rdv: Appointment) {
-    setConsultationRdv(rdv)
-    setConsultationOpen(true)
-  }
-
+  function handleEdit(rdv: Appointment) { setEditingRdv(rdv); setModalOpen(true) }
+  function handleDossier(rdv: Appointment) { setConsultationRdv(rdv); setConsultationOpen(true) }
   function handleDelete(id: number) {
-    if (confirm('Supprimer ce rendez-vous ?')) {
-      deleteAppointment(id)
-    }
+    if (confirm('Supprimer ce rendez-vous ?')) deleteAppointment(id)
   }
 
   return (
     <div className="flex flex-col flex-1">
       <Header title="Rendez-vous" />
-      <div className="p-6 space-y-5">
-        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-          <div className="flex gap-3 flex-1 w-full">
-            <div className="relative flex-1">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <Input
-                placeholder="Rechercher un patient ou motif..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-9 border-0"
-              />
-            </div>
-            <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as AppointmentStatus | 'tous')}>
-              <SelectTrigger className="w-44 border-0">
-                <Filter size={14} className="mr-1 text-gray-400" />
-                <SelectValue placeholder="Statut" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="tous">Tous les statuts</SelectItem>
-                <SelectItem value="programme">Programmé</SelectItem>
-                <SelectItem value="confirme">Confirmé</SelectItem>
-                <SelectItem value="complete">Complété</SelectItem>
-                <SelectItem value="annule">Annulé</SelectItem>
-              </SelectContent>
-            </Select>
+      <div className="p-6 space-y-4">
+
+        {/* ── Toolbar card ── */}
+        <div className="bg-white rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row gap-3 items-center">
+          {/* Search */}
+          <div className="relative flex-1 w-full">
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+            <Input
+              placeholder="Rechercher un patient ou motif..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-9 border border-gray-200 rounded-xl bg-[#F7FAFB] focus-visible:ring-[#70B1C4] h-10"
+            />
           </div>
-          <Button onClick={handleAdd} className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shrink-0">
-            <Plus size={16} className="mr-2" />
-            Nouveau RDV
+
+          {/* Status filter */}
+          <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as AppointmentStatus | 'tous')}>
+            <SelectTrigger className="w-48 border border-gray-200 rounded-xl bg-[#F7FAFB] h-10 shrink-0">
+              <Filter size={13} className="mr-1.5 text-gray-400 shrink-0" />
+              <SelectValue placeholder="Tous les statuts" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="tous">Tous les statuts</SelectItem>
+              <SelectItem value="programme">Programmé</SelectItem>
+              <SelectItem value="confirme">Confirmé</SelectItem>
+              <SelectItem value="complete">Complété</SelectItem>
+              <SelectItem value="annule">Annulé</SelectItem>
+            </SelectContent>
+          </Select>
+
+          {/* Button */}
+          <Button
+            onClick={() => { setEditingRdv(null); setModalOpen(true) }}
+            className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30 shrink-0 h-10"
+          >
+            <Plus size={16} className="mr-1.5" /> Nouveau RDV
           </Button>
         </div>
 
-        <Card className="border-0">
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-gray-50 bg-gray-50/80">
-                    <th className="text-left px-4 py-3 font-medium text-gray-500">Patient</th>
-                    <th className="text-left px-4 py-3 font-medium text-gray-500">Date & Heure</th>
-                    <th className="text-left px-4 py-3 font-medium text-gray-500">Motif</th>
-                    <th className="text-left px-4 py-3 font-medium text-gray-500">Durée</th>
-                    <th className="text-left px-4 py-3 font-medium text-gray-500">Statut</th>
-                    <th className="text-left px-4 py-3 font-medium text-gray-500">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((rdv) => (
-                    <tr key={rdv.id} className="border-b border-gray-50 hover:bg-[#F5F9FA] transition-colors">
-                      <td className="px-4 py-3">
-                        <p className="font-medium text-[#2D3748]">{rdv.patient_prenom} {rdv.patient_nom}</p>
-                        <p className="text-xs text-gray-400">{rdv.patient_telephone}</p>
-                      </td>
-                      <td className="px-4 py-3 text-gray-600">
-                        {format(new Date(rdv.date), 'dd MMM yyyy', { locale: fr })} à {rdv.heure}
-                      </td>
-                      <td className="px-4 py-3 text-gray-600">{rdv.motif}</td>
-                      <td className="px-4 py-3 text-gray-600">{rdv.duree} min</td>
-                      <td className="px-4 py-3">
-                        <Select
-                          value={rdv.statut}
-                          onValueChange={(v) => updateStatus(rdv.id, v as AppointmentStatus)}
-                        >
-                          <SelectTrigger className={`w-32 h-7 text-xs border-0 px-2 ${statusColors[rdv.statut]}`}>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="programme">Programmé</SelectItem>
-                            <SelectItem value="confirme">Confirmé</SelectItem>
-                            <SelectItem value="complete">Complété</SelectItem>
-                            <SelectItem value="annule">Annulé</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </td>
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-1">
-                          <button
-                            onClick={() => handleDossier(rdv)}
-                            className="p-1.5 rounded hover:bg-[#DCEEF3] text-[#70B1C4]"
-                            title="Dossier médical"
-                          >
-                            <ClipboardList size={14} />
-                          </button>
-                          <button onClick={() => handleEdit(rdv)} className="p-1.5 rounded hover:bg-[#DCEEF3] text-[#70B1C4]">
-                            <Pencil size={14} />
-                          </button>
-                          <button onClick={() => handleDelete(rdv.id)} className="p-1.5 rounded hover:bg-red-50 text-red-400">
-                            <Trash2 size={14} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {filtered.length === 0 && (
-                <div className="text-center py-12 text-gray-400">Aucun rendez-vous trouvé</div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+        {/* Column headers */}
+        <div className="hidden sm:grid grid-cols-[1fr_160px_1fr_80px_148px_96px] px-5 gap-4">
+          {['Patient', 'Date & Heure', 'Motif', 'Durée', 'Statut', 'Actions'].map((h) => (
+            <p key={h} className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">{h}</p>
+          ))}
+        </div>
 
-        <p className="text-sm text-gray-400">{filtered.length} rendez-vous affichés</p>
+        {/* ── Row cards ── */}
+        <div className="space-y-2.5">
+          {filtered.length === 0 ? (
+            <div className="bg-white rounded-2xl glow text-center py-14 text-gray-400">
+              <User size={40} className="mx-auto mb-3 opacity-20" />
+              <p className="font-medium">Aucun rendez-vous trouvé</p>
+            </div>
+          ) : (
+            filtered.map((rdv) => {
+              const s = STATUS_CONFIG[rdv.statut]
+              return (
+                <div
+                  key={rdv.id}
+                  className={`bg-white rounded-2xl glow hover:glow-md transition-all duration-200 border-l-4 ${s.border} overflow-hidden`}
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-[1fr_160px_1fr_80px_148px_96px] items-center gap-x-4 gap-y-1 px-5 py-3.5">
+
+                    {/* Patient */}
+                    <div className="flex items-center gap-2.5">
+                      <div className={`w-8 h-8 rounded-full ${s.bg} flex items-center justify-center shrink-0`}>
+                        <span className={`text-xs font-bold ${s.text}`}>
+                          {rdv.patient_prenom[0]}{rdv.patient_nom[0]}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-[#1A2B3C] text-sm leading-tight">
+                          {rdv.patient_prenom} {rdv.patient_nom}
+                        </p>
+                        <p className="text-xs text-gray-400">{rdv.patient_telephone}</p>
+                      </div>
+                    </div>
+
+                    {/* Date & Heure */}
+                    <div className="flex items-center gap-1.5 text-gray-600 text-sm">
+                      <Calendar size={12} className="text-gray-400 shrink-0" />
+                      <span>
+                        {format(new Date(rdv.date), 'dd MMM', { locale: fr })}
+                        <span className="text-gray-400 mx-1">·</span>
+                        {rdv.heure}
+                      </span>
+                    </div>
+
+                    {/* Motif */}
+                    <p className="text-sm text-gray-600 truncate">{rdv.motif}</p>
+
+                    {/* Durée */}
+                    <div className="flex items-center gap-1 text-gray-500 text-sm">
+                      <Clock size={12} className="text-gray-400 shrink-0" />
+                      <span>{rdv.duree} min</span>
+                    </div>
+
+                    {/* Statut */}
+                    <Select
+                      value={rdv.statut}
+                      onValueChange={(v) => { if (v) updateStatus(rdv.id, v as AppointmentStatus) }}
+                    >
+                      <SelectTrigger
+                        className={`h-7 text-xs border-0 rounded-lg px-2 font-medium w-full ${s.bg} ${s.text}`}
+                      >
+                        <span className={`w-1.5 h-1.5 rounded-full ${s.dot} mr-1.5 shrink-0`} />
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="programme">Programmé</SelectItem>
+                        <SelectItem value="confirme">Confirmé</SelectItem>
+                        <SelectItem value="complete">Complété</SelectItem>
+                        <SelectItem value="annule">Annulé</SelectItem>
+                      </SelectContent>
+                    </Select>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-0.5">
+                      <button
+                        onClick={() => handleDossier(rdv)}
+                        title="Dossier médical"
+                        className="p-1.5 rounded-lg hover:bg-[#E4EEF4] text-[#70B1C4] transition-colors"
+                      >
+                        <ClipboardList size={14} />
+                      </button>
+                      <button
+                        onClick={() => handleEdit(rdv)}
+                        className="p-1.5 rounded-lg hover:bg-[#E4EEF4] text-[#70B1C4] transition-colors"
+                      >
+                        <Pencil size={14} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(rdv.id)}
+                        className="p-1.5 rounded-lg hover:bg-red-50 text-red-400 transition-colors"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )
+            })
+          )}
+        </div>
+
+        {filtered.length > 0 && (
+          <p className="text-xs text-gray-400 pl-1">
+            {filtered.length} rendez-vous affiché{filtered.length > 1 ? 's' : ''}
+          </p>
+        )}
       </div>
 
-      <AppointmentModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        appointment={editingRdv}
-      />
-      <ConsultationModal
-        open={consultationOpen}
-        onClose={() => setConsultationOpen(false)}
-        appointment={consultationRdv}
-      />
+      <AppointmentModal open={modalOpen} onClose={() => setModalOpen(false)} appointment={editingRdv} />
+      <ConsultationModal open={consultationOpen} onClose={() => setConsultationOpen(false)} appointment={consultationRdv} />
     </div>
   )
 }

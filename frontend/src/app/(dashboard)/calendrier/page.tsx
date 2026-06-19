@@ -82,48 +82,62 @@ export default function CalendrierPage() {
       <Header title="Calendrier" />
       <div className="p-6 flex flex-col gap-4 flex-1">
 
-        {/* ── Toolbar ── */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <button onClick={goPrev} className="p-2 rounded-lg hover:bg-[#DCEEF3] text-[#2D3748]">
-              <ChevronLeft size={18} />
+        {/* ── Toolbar card ── */}
+        <div className="bg-white rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          {/* Left: navigation */}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={goPrev}
+              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] text-[#1A2B3C] transition-colors"
+            >
+              <ChevronLeft size={16} />
             </button>
-            <h2 className="text-base font-semibold text-[#2D3748] capitalize min-w-52 text-center">
+            <h2 className="text-base font-bold text-[#1A2B3C] capitalize min-w-52 text-center px-1">
               {getTitle()}
             </h2>
-            <button onClick={goNext} className="p-2 rounded-lg hover:bg-[#DCEEF3] text-[#2D3748]">
-              <ChevronRight size={18} />
+            <button
+              onClick={goNext}
+              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] text-[#1A2B3C] transition-colors"
+            >
+              <ChevronRight size={16} />
             </button>
             <button
               onClick={() => setCurrentDate(new Date())}
-              className="text-sm text-[#70B1C4] hover:underline ml-1"
+              className="ml-2 text-xs font-medium text-[#70B1C4] border border-[#70B1C4]/30 rounded-lg px-3 py-1.5 hover:bg-[#E4EEF4] transition-colors"
             >
               Aujourd&apos;hui
             </button>
           </div>
+
+          {/* Right: view switcher + button */}
           <div className="flex items-center gap-2">
-            <div className="flex bg-[#F5F9FA] rounded-lg p-1 gap-0.5">
+            <div className="flex bg-[#E4EEF4] rounded-xl p-1 gap-0.5">
               {(['jour', 'semaine', 'mois'] as ViewMode[]).map((v) => (
                 <button
                   key={v}
                   onClick={() => setView(v)}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium capitalize transition-colors ${
-                    view === v ? 'bg-white text-[#70B1C4] shadow-sm' : 'text-gray-500 hover:text-[#2D3748]'
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+                    view === v
+                      ? 'bg-[#70B1C4] text-white shadow-md shadow-[#70B1C4]/30'
+                      : 'text-gray-500 hover:text-[#1A2B3C]'
                   }`}
                 >
                   {v === 'jour' ? 'Jour' : v === 'semaine' ? 'Semaine' : 'Mois'}
                 </button>
               ))}
             </div>
-            <Button onClick={() => setModalOpen(true)} className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white">
-              <Plus size={16} className="mr-2" /> Nouveau RDV
+            <Button
+              onClick={() => setModalOpen(true)}
+              className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30"
+            >
+              <Plus size={16} className="mr-1.5" /> Nouveau RDV
             </Button>
           </div>
         </div>
 
         {/* ══════════════ MONTH VIEW ══════════════ */}
         {view === 'mois' && (
-          <div className="bg-white rounded-xl border border-0 overflow-hidden">
+          <div className="bg-white rounded-2xl glow overflow-hidden">
             <div className="grid grid-cols-7 border-b border-0">
               {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day) => (
                 <div key={day} className="py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
@@ -173,7 +187,7 @@ export default function CalendrierPage() {
 
         {/* ══════════════ WEEK VIEW ══════════════ */}
         {view === 'semaine' && (
-          <div className="bg-white rounded-xl border border-0 overflow-hidden flex flex-col flex-1">
+          <div className="bg-white rounded-2xl glow overflow-hidden flex flex-col flex-1">
             {/* Day headers */}
             <div className="grid border-b border-0" style={{ gridTemplateColumns: '56px repeat(7, 1fr)' }}>
               <div />
@@ -231,7 +245,7 @@ export default function CalendrierPage() {
 
         {/* ══════════════ DAY VIEW ══════════════ */}
         {view === 'jour' && (
-          <div className="bg-white rounded-xl border border-0 overflow-hidden flex flex-col flex-1">
+          <div className="bg-white rounded-2xl glow overflow-hidden flex flex-col flex-1">
             {/* Day header */}
             <div className="border-b border-0 px-6 py-3 flex items-center gap-3">
               <div className={`w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold shrink-0
@@ -284,12 +298,20 @@ export default function CalendrierPage() {
           </div>
         )}
 
-        {/* Legend */}
-        <div className="flex items-center gap-4 text-xs text-gray-500">
-          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-blue-100 inline-block" /> Programmé</span>
-          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-green-100 inline-block" /> Confirmé</span>
-          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-gray-100 inline-block" /> Complété</span>
-          <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-red-100 inline-block" /> Annulé</span>
+        {/* Legend card */}
+        <div className="bg-white rounded-2xl glow px-5 py-3 flex items-center gap-6 self-start">
+          <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Légende</span>
+          {[
+            { label: 'Programmé', color: 'bg-blue-400' },
+            { label: 'Confirmé',  color: 'bg-green-400' },
+            { label: 'Complété',  color: 'bg-gray-300' },
+            { label: 'Annulé',    color: 'bg-red-400' },
+          ].map(({ label, color }) => (
+            <span key={label} className="flex items-center gap-2 text-xs text-gray-600 font-medium">
+              <span className={`w-2.5 h-2.5 rounded-full ${color} shrink-0`} />
+              {label}
+            </span>
+          ))}
         </div>
       </div>
 

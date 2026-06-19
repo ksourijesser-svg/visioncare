@@ -74,10 +74,10 @@ export default function DashboardPage() {
         {/* Stat cards */}
         <div className="grid grid-cols-2 xl:grid-cols-3 gap-4">
           <StatCard title="Total patients"           value={patients.length}      icon={Users}         trend={`${patients.length} enregistrés`} />
-          <StatCard title="RDV aujourd'hui"          value={todayRdv.length}      icon={Calendar}      color="#10b981" bgColor="#d1fae5" trend={`${todayRdv.filter(a => a.statut !== 'complete').length} restants`} />
-          <StatCard title="Total RDV"                value={appointments.length}  icon={ClipboardList} color="#6366f1" bgColor="#ede9fe" />
-          <StatCard title="RDV confirmés"            value={confirmes}            icon={CheckCircle}   color="#10b981" bgColor="#d1fae5" />
-          <StatCard title="RDV annulés"              value={annules}              icon={XCircle}       color="#ef4444" bgColor="#fee2e2" />
+          <StatCard title="RDV aujourd'hui"          value={todayRdv.length}      icon={Calendar}      color="#10b981" bgColor="#d1fae5" trend={`${todayRdv.filter(a => a.statut !== 'complete').length} restants`} glowClass="glow-green" />
+          <StatCard title="Total RDV"                value={appointments.length}  icon={ClipboardList} color="#6366f1" bgColor="#ede9fe" glowClass="glow-violet" />
+          <StatCard title="RDV confirmés"            value={confirmes}            icon={CheckCircle}   color="#10b981" bgColor="#d1fae5" glowClass="glow-green" />
+          <StatCard title="RDV annulés"              value={annules}              icon={XCircle}       color="#ef4444" bgColor="#fee2e2" glowClass="glow-red" />
           <StatCard title="Consultations complètes"  value={completes}            icon={TrendingUp} />
         </div>
 

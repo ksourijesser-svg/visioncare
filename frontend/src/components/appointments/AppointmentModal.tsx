@@ -167,35 +167,48 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
                 </button>
               </div>
             ) : (
-              <div className="relative">
-                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-                <Input
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value)
-                    setShowDropdown(true)
-                  }}
-                  onFocus={() => setShowDropdown(true)}
-                  onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
-                  placeholder="Rechercher un patient existant..."
-                  className="pl-9 border-[#DCEEF3]"
-                />
+              <div>
+                <div className="relative">
+                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                  <Input
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value)
+                      setShowDropdown(true)
+                    }}
+                    onFocus={() => setShowDropdown(true)}
+                    onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                    placeholder="Rechercher un patient existant..."
+                    className="pl-9 border-[#DCEEF3]"
+                  />
+                </div>
+                {/* Suggestions rendered inline — avoids dialog stacking-context clipping */}
                 {showDropdown && suggestions.length > 0 && (
-                  <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-white border border-[#DCEEF3] rounded-lg shadow-lg overflow-hidden">
+                  <div className="mt-1 bg-white border border-[#DCEEF3] rounded-lg shadow-sm overflow-hidden">
                     {suggestions.map((p) => (
                       <button
                         key={p.id}
                         type="button"
                         onMouseDown={() => handleSelectPatient(p)}
-                        className="w-full text-left px-4 py-2.5 hover:bg-[#F5F9FA] flex items-center justify-between border-b border-[#F5F9FA] last:border-0"
+                        className="w-full text-left px-4 py-2.5 hover:bg-[#F5F9FA] flex items-center justify-between border-b border-[#F5F9FA] last:border-0 transition-colors"
                       >
-                        <span className="text-sm font-medium text-[#2D3748]">
-                          {p.prenom} {p.nom}
-                        </span>
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-7 h-7 rounded-full bg-[#E4EEF4] flex items-center justify-center shrink-0">
+                            <span className="text-[10px] font-bold text-[#70B1C4]">
+                              {p.prenom[0]}{p.nom[0]}
+                            </span>
+                          </div>
+                          <span className="text-sm font-medium text-[#2D3748]">
+                            {p.prenom} {p.nom}
+                          </span>
+                        </div>
                         <span className="text-xs text-gray-400">{p.telephone}</span>
                       </button>
                     ))}
                   </div>
+                )}
+                {showDropdown && searchQuery.length >= 2 && suggestions.length === 0 && (
+                  <p className="mt-1 text-xs text-gray-400 px-1">Aucun patient trouvé — saisissez manuellement ci-dessous.</p>
                 )}
               </div>
             )}

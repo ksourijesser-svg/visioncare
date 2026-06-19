@@ -128,3 +128,28 @@
     @apply font-sans;
   }
 }
+
+@layer utilities {
+  /* Teal glow — used on cards and containers */
+  .glow {
+    box-shadow:
+      0 4px 24px rgba(112, 177, 196, 0.18),
+      0 1px 4px  rgba(0, 0, 0, 0.06);
+  }
+  /* Stronger glow — hero cards, stat cards on hover */
+  .glow-md {
+    box-shadow:
+      0 8px 40px rgba(112, 177, 196, 0.22),
+      0 2px 8px  rgba(0, 0, 0, 0.07);
+  }
+  /* Coloured accent glow — matches a specific icon/status colour */
+  .glow-green  { box-shadow: 0 6px 28px rgba(16,  185, 129, 0.20), 0 1px 4px rgba(0,0,0,0.05); }
+  .glow-violet { box-shadow: 0 6px 28px rgba(99,  102, 241, 0.20), 0 1px 4px rgba(0,0,0,0.05); }
+  .glow-red    { box-shadow: 0 6px 28px rgba(239, 68,  68,  0.18), 0 1px 4px rgba(0,0,0,0.05); }
+  /* Sidebar glow */
+  .glow-sidebar {
+    box-shadow:
+      4px 0 32px rgba(112, 177, 196, 0.12),
+      2px 0 8px  rgba(0, 0, 0, 0.06);
+  }
+}
