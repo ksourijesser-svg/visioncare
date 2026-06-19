@@ -5,7 +5,8 @@ import { ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { Button } from '@/components/ui/button'
 import { AppointmentModal } from '@/components/appointments/AppointmentModal'
-import { useAppointmentsStore, AppointmentStatus, Appointment } from '@/store/appointmentsStore'
+import type { AppointmentStatus, Appointment } from '@/store/appointmentsStore'
+import { useAppointments } from '@/hooks/useAppointments'
 import {
   format, startOfMonth, endOfMonth, startOfWeek, endOfWeek,
   addDays, addWeeks, subWeeks, addMonths, subMonths,
@@ -25,7 +26,7 @@ const STATUS_COLORS: Record<AppointmentStatus, string> = {
 const HOURS = Array.from({ length: 12 }, (_, i) => i + 8) // 08:00 → 19:00
 
 export default function CalendrierPage() {
-  const { appointments } = useAppointmentsStore()
+  const { data: appointments = [] } = useAppointments()
   const [currentDate, setCurrentDate] = useState(new Date())
   const [view, setView]  = useState<ViewMode>('mois')
   const [modalOpen, setModalOpen] = useState(false)

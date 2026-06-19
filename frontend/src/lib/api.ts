@@ -25,10 +25,15 @@ api.interceptors.response.use(
 )
 
 export const authApi = {
-  login: (email: string, password: string) =>
-    api.post('/auth/login', { username: email, password }),
+  login: (email: string, password: string) => {
+    const form = new URLSearchParams()
+    form.append('username', email)
+    form.append('password', password)
+    return api.post('/auth/login', form, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    })
+  },
   me: () => api.get('/auth/me'),
-  resetPassword: (email: string) => api.post('/auth/reset-password', { email }),
 }
 
 export const patientsApi = {

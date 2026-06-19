@@ -1,85 +1,53 @@
 'use client'
 
 import { useState } from 'react'
-import { Search, Download, Eye, User } from 'lucide-react'
+import { Search, Download, Eye, User, Loader2 } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 import { PatientDetail } from '@/components/patients/PatientDetail'
-import { useAppointmentsStore } from '@/store/appointmentsStore'
-import { usePatientsStore, Patient } from '@/store/patientsStore'
+import { usePatients } from '@/hooks/usePatients'
+import { useAppointments } from '@/hooks/useAppointments'
+import type { Patient } from '@/store/patientsStore'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import * as XLSX from 'xlsx'
 
-interface DerivedPatient {
-  key: string
-  patient_id: number
-  prenom: string
-  nom: string
-  telephone: string
-  nb_consultations: number
-  derniere_visite: string
-  storeData: Patient | undefined
-}
-
 export default function PatientsPage() {
-  const { appointments } = useAppointmentsStore()
-  const { patients: storePatients } = usePatientsStore()
+  const { data: patients = [], isLoading } = usePatients()
+  const { data: appointments = [] } = useAppointments()
   const [search, setSearch] = useState('')
   const [detailOpen, setDetailOpen] = useState(false)
   const [viewingPatient, setViewingPatient] = useState<Patient | null>(null)
 
-  // Derive unique patients only from completed appointments
-  const completedMap = new Map<string, DerivedPatient>()
-  appointments
-    .filter((a) => a.statut === 'complete')
-    .forEach((a) => {
-      const key = `${a.patient_prenom}-${a.patient_nom}`
-      if (completedMap.has(key)) {
-        const existing = completedMap.get(key)!
-        existing.nb_consultations += 1
-        if (a.date > existing.derniere_visite) existing.derniere_visite = a.date
-      } else {
-        completedMap.set(key, {
-          key,
-          patient_id: a.patient_id,
-          prenom: a.patient_prenom,
-          nom: a.patient_nom,
-          telephone: a.patient_telephone,
-          nb_consultations: 1,
-          derniere_visite: a.date,
-          storeData: storePatients.find((p) => p.id === a.patient_id),
-        })
-      }
-    })
+  // Compute per-patient stats from appointments
+  const statsMap = new Map<number, { nb: number; derniere: string }>()
+  appointments.filter((a) => a.statut === 'complete').forEach((a) => {
+    const existing = statsMap.get(a.patient_id)
+    if (!existing) {
+      statsMap.set(a.patient_id, { nb: 1, derniere: a.date })
+    } else {
+      existing.nb += 1
+      if (a.date > existing.derniere) existing.derniere = a.date
+    }
+  })
 
-  const derivedPatients = Array.from(completedMap.values())
+  const enriched = patients.map((p) => ({
+    ...p,
+    nb_consultations: statsMap.get(p.id)?.nb ?? 0,
+    derniere_visite: statsMap.get(p.id)?.derniere ?? '',
+  }))
 
-  const filtered = derivedPatients.filter(
+  const filtered = enriched.filter(
     (p) =>
       `${p.prenom} ${p.nom}`.toLowerCase().includes(search.toLowerCase()) ||
       p.telephone.includes(search)
   )
 
-  function handleView(p: DerivedPatient) {
-    const patient = p.storeData ?? {
-      id: p.patient_id,
-      nom: p.nom,
-      prenom: p.prenom,
-      telephone: p.telephone,
-      email: '',
-      adresse: '',
-      date_naissance: '',
-      notes: '',
-      nb_consultations: p.nb_consultations,
-      derniere_visite: p.derniere_visite,
-      created_at: '',
-    }
-    setViewingPatient(patient)
+  function handleView(p: typeof enriched[number]) {
+    setViewingPatient(p)
     setDetailOpen(true)
   }
 
@@ -88,11 +56,11 @@ export default function PatientsPage() {
       Prénom: p.prenom,
       Nom: p.nom,
       Téléphone: p.telephone,
-      'Nb consultations complètes': p.nb_consultations,
+      Email: p.email || '',
+      Adresse: p.adresse || '',
+      'Nb consultations': p.nb_consultations,
       'Dernière visite': p.derniere_visite,
-      Email: p.storeData?.email || '',
-      Adresse: p.storeData?.adresse || '',
-      Notes: p.storeData?.notes || '',
+      Notes: p.notes || '',
     }))
     const ws = XLSX.utils.json_to_sheet(data)
     const wb = XLSX.utils.book_new()
@@ -121,21 +89,23 @@ export default function PatientsPage() {
           </Button>
         </div>
 
-        {filtered.length === 0 ? (
+        {isLoading ? (
+          <div className="text-center py-20 text-gray-400">
+            <Loader2 size={40} className="mx-auto mb-4 opacity-30 animate-spin" />
+            <p className="font-medium">Chargement des patients...</p>
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="text-center py-20 text-gray-400">
             <User size={48} className="mx-auto mb-4 opacity-20" />
             <p className="font-medium">Aucun patient pour le moment</p>
-            <p className="text-sm mt-1">
-              Les patients apparaissent ici dès qu&apos;un rendez-vous est marqué <strong>Complété</strong>.
-            </p>
+            <p className="text-sm mt-1">Ajoutez des patients en créant un rendez-vous.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {filtered.map((patient) => {
               const initials = `${patient.prenom[0]}${patient.nom[0]}`.toUpperCase()
-              const storeData = patient.storeData
               return (
-                <Card key={patient.key} className="border-0 hover:shadow-md transition-all">
+                <Card key={patient.id} className="border-0 hover:shadow-md transition-all">
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
                       <Avatar className="w-11 h-11">
@@ -146,17 +116,20 @@ export default function PatientsPage() {
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-[#2D3748] truncate">{patient.prenom} {patient.nom}</p>
                         <p className="text-xs text-gray-400">{patient.telephone}</p>
-                        {storeData?.email && <p className="text-xs text-gray-400 truncate">{storeData.email}</p>}
+                        {patient.email && <p className="text-xs text-gray-400 truncate">{patient.email}</p>}
                       </div>
-                      <Badge className="bg-green-100 text-green-700 text-xs font-normal shrink-0">Complété</Badge>
                     </div>
 
-                    <div className="mt-3 flex items-center justify-between text-xs text-gray-500 border-t border-gray-50 pt-3">
-                      <span>
-                        Dernière visite : {format(new Date(patient.derniere_visite), 'dd MMM yyyy', { locale: fr })}
-                      </span>
-                      <span className="font-medium text-[#70B1C4]">{patient.nb_consultations} consult.</span>
-                    </div>
+                    {patient.derniere_visite ? (
+                      <div className="mt-3 flex items-center justify-between text-xs text-gray-500 border-t border-gray-50 pt-3">
+                        <span>
+                          Dernière visite : {format(new Date(patient.derniere_visite), 'dd MMM yyyy', { locale: fr })}
+                        </span>
+                        <span className="font-medium text-[#70B1C4]">{patient.nb_consultations} consult.</span>
+                      </div>
+                    ) : (
+                      <div className="mt-3 text-xs text-gray-400 border-t border-gray-50 pt-3">Aucune consultation</div>
+                    )}
 
                     <div className="mt-3 border-t border-gray-50 pt-3">
                       <Button
@@ -175,8 +148,8 @@ export default function PatientsPage() {
           </div>
         )}
 
-        {filtered.length > 0 && (
-          <p className="text-sm text-gray-400">{filtered.length} patient{filtered.length > 1 ? 's' : ''} avec consultation complétée</p>
+        {filtered.length > 0 && !isLoading && (
+          <p className="text-sm text-gray-400">{filtered.length} patient{filtered.length > 1 ? 's' : ''}</p>
         )}
       </div>
 

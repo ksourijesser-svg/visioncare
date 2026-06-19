@@ -1,14 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Search, Filter, Pencil, Trash2, ClipboardList, Calendar, Clock, User } from 'lucide-react'
+import { Plus, Search, Filter, Pencil, Trash2, ClipboardList, Calendar, Clock, User, Loader2 } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { AppointmentModal } from '@/components/appointments/AppointmentModal'
 import { ConsultationModal } from '@/components/appointments/ConsultationModal'
-import { useAppointmentsStore, Appointment, AppointmentStatus } from '@/store/appointmentsStore'
+import { useAppointments, useDeleteAppointment, useUpdateAppointmentStatus } from '@/hooks/useAppointments'
+import type { Appointment, AppointmentStatus } from '@/store/appointmentsStore'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
@@ -20,7 +21,10 @@ const STATUS_CONFIG: Record<AppointmentStatus, { label: string; text: string; bg
 }
 
 export default function RendezVousPage() {
-  const { appointments, deleteAppointment, updateStatus } = useAppointmentsStore()
+  const { data: appointments = [], isLoading } = useAppointments()
+  const deleteAppointment = useDeleteAppointment()
+  const updateStatus = useUpdateAppointmentStatus()
+
   const [search, setSearch]               = useState('')
   const [statusFilter, setStatusFilter]   = useState<AppointmentStatus | 'tous'>('tous')
   const [modalOpen, setModalOpen]         = useState(false)
@@ -39,7 +43,7 @@ export default function RendezVousPage() {
   function handleEdit(rdv: Appointment) { setEditingRdv(rdv); setModalOpen(true) }
   function handleDossier(rdv: Appointment) { setConsultationRdv(rdv); setConsultationOpen(true) }
   function handleDelete(id: number) {
-    if (confirm('Supprimer ce rendez-vous ?')) deleteAppointment(id)
+    if (confirm('Supprimer ce rendez-vous ?')) deleteAppointment.mutate(id)
   }
 
   return (
@@ -49,7 +53,6 @@ export default function RendezVousPage() {
 
         {/* ── Toolbar card ── */}
         <div className="bg-white rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row gap-3 items-center">
-          {/* Search */}
           <div className="relative flex-1 w-full">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             <Input
@@ -59,8 +62,6 @@ export default function RendezVousPage() {
               className="pl-9 border border-gray-200 rounded-xl bg-[#F7FAFB] focus-visible:ring-[#70B1C4] h-10"
             />
           </div>
-
-          {/* Status filter */}
           <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as AppointmentStatus | 'tous')}>
             <SelectTrigger className="w-48 border border-gray-200 rounded-xl bg-[#F7FAFB] h-10 shrink-0">
               <Filter size={13} className="mr-1.5 text-gray-400 shrink-0" />
@@ -74,8 +75,6 @@ export default function RendezVousPage() {
               <SelectItem value="annule">Annulé</SelectItem>
             </SelectContent>
           </Select>
-
-          {/* Button */}
           <Button
             onClick={() => { setEditingRdv(null); setModalOpen(true) }}
             className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30 shrink-0 h-10"
@@ -93,7 +92,12 @@ export default function RendezVousPage() {
 
         {/* ── Row cards ── */}
         <div className="space-y-2.5">
-          {filtered.length === 0 ? (
+          {isLoading ? (
+            <div className="bg-white rounded-2xl glow text-center py-14 text-gray-400">
+              <Loader2 size={32} className="mx-auto mb-3 animate-spin opacity-40" />
+              <p className="text-sm">Chargement des rendez-vous...</p>
+            </div>
+          ) : filtered.length === 0 ? (
             <div className="bg-white rounded-2xl glow text-center py-14 text-gray-400">
               <User size={40} className="mx-auto mb-3 opacity-20" />
               <p className="font-medium">Aucun rendez-vous trouvé</p>
@@ -102,13 +106,8 @@ export default function RendezVousPage() {
             filtered.map((rdv) => {
               const s = STATUS_CONFIG[rdv.statut]
               return (
-                <div
-                  key={rdv.id}
-                  className={`bg-white rounded-2xl glow hover:glow-md transition-all duration-200 border-l-4 ${s.border} overflow-hidden`}
-                >
+                <div key={rdv.id} className={`bg-white rounded-2xl glow hover:glow-md transition-all duration-200 border-l-4 ${s.border} overflow-hidden`}>
                   <div className="grid grid-cols-1 sm:grid-cols-[1fr_160px_1fr_80px_148px_96px] items-center gap-x-4 gap-y-1 px-5 py-3.5">
-
-                    {/* Patient */}
                     <div className="flex items-center gap-2.5">
                       <div className={`w-8 h-8 rounded-full ${s.bg} flex items-center justify-center shrink-0`}>
                         <span className={`text-xs font-bold ${s.text}`}>
@@ -122,8 +121,6 @@ export default function RendezVousPage() {
                         <p className="text-xs text-gray-400">{rdv.patient_telephone}</p>
                       </div>
                     </div>
-
-                    {/* Date & Heure */}
                     <div className="flex items-center gap-1.5 text-gray-600 text-sm">
                       <Calendar size={12} className="text-gray-400 shrink-0" />
                       <span>
@@ -132,24 +129,16 @@ export default function RendezVousPage() {
                         {rdv.heure}
                       </span>
                     </div>
-
-                    {/* Motif */}
                     <p className="text-sm text-gray-600 truncate">{rdv.motif}</p>
-
-                    {/* Durée */}
                     <div className="flex items-center gap-1 text-gray-500 text-sm">
                       <Clock size={12} className="text-gray-400 shrink-0" />
                       <span>{rdv.duree} min</span>
                     </div>
-
-                    {/* Statut */}
                     <Select
                       value={rdv.statut}
-                      onValueChange={(v) => { if (v) updateStatus(rdv.id, v as AppointmentStatus) }}
+                      onValueChange={(v) => { if (v) updateStatus.mutate({ id: rdv.id, statut: v as AppointmentStatus }) }}
                     >
-                      <SelectTrigger
-                        className={`h-7 text-xs border-0 rounded-lg px-2 font-medium w-full ${s.bg} ${s.text}`}
-                      >
+                      <SelectTrigger className={`h-7 text-xs border-0 rounded-lg px-2 font-medium w-full ${s.bg} ${s.text}`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${s.dot} mr-1.5 shrink-0`} />
                         <SelectValue />
                       </SelectTrigger>
@@ -160,26 +149,14 @@ export default function RendezVousPage() {
                         <SelectItem value="annule">Annulé</SelectItem>
                       </SelectContent>
                     </Select>
-
-                    {/* Actions */}
                     <div className="flex items-center gap-0.5">
-                      <button
-                        onClick={() => handleDossier(rdv)}
-                        title="Dossier médical"
-                        className="p-1.5 rounded-lg hover:bg-[#E4EEF4] text-[#70B1C4] transition-colors"
-                      >
+                      <button onClick={() => handleDossier(rdv)} title="Dossier médical" className="p-1.5 rounded-lg hover:bg-[#E4EEF4] text-[#70B1C4] transition-colors">
                         <ClipboardList size={14} />
                       </button>
-                      <button
-                        onClick={() => handleEdit(rdv)}
-                        className="p-1.5 rounded-lg hover:bg-[#E4EEF4] text-[#70B1C4] transition-colors"
-                      >
+                      <button onClick={() => handleEdit(rdv)} className="p-1.5 rounded-lg hover:bg-[#E4EEF4] text-[#70B1C4] transition-colors">
                         <Pencil size={14} />
                       </button>
-                      <button
-                        onClick={() => handleDelete(rdv.id)}
-                        className="p-1.5 rounded-lg hover:bg-red-50 text-red-400 transition-colors"
-                      >
+                      <button onClick={() => handleDelete(rdv.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-400 transition-colors">
                         <Trash2 size={14} />
                       </button>
                     </div>
@@ -190,7 +167,7 @@ export default function RendezVousPage() {
           )}
         </div>
 
-        {filtered.length > 0 && (
+        {filtered.length > 0 && !isLoading && (
           <p className="text-xs text-gray-400 pl-1">
             {filtered.length} rendez-vous affiché{filtered.length > 1 ? 's' : ''}
           </p>

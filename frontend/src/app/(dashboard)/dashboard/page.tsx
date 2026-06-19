@@ -8,8 +8,8 @@ import { Badge } from '@/components/ui/badge'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
-import { usePatientsStore } from '@/store/patientsStore'
-import { useAppointmentsStore } from '@/store/appointmentsStore'
+import { usePatients } from '@/hooks/usePatients'
+import { useAppointments } from '@/hooks/useAppointments'
 import { getUser } from '@/lib/auth'
 
 const activityData = [
@@ -36,8 +36,8 @@ const statusLabels: Record<string, string> = {
 }
 
 export default function DashboardPage() {
-  const { patients }     = usePatientsStore()
-  const { appointments } = useAppointmentsStore()
+  const { data: patients = [] }     = usePatients()
+  const { data: appointments = [] } = useAppointments()
   const user    = getUser()
   const today   = format(new Date(), 'yyyy-MM-dd')
   const todayLabel = format(new Date(), "EEEE d MMMM yyyy", { locale: fr })

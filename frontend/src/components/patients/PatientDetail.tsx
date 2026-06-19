@@ -13,8 +13,9 @@ import {
   Phone, Mail, MapPin, Calendar, ClipboardList,
   Pencil, X, Save, Hash, Activity, FileText,
 } from 'lucide-react'
-import { Patient, usePatientsStore } from '@/store/patientsStore'
-import { useAppointmentsStore } from '@/store/appointmentsStore'
+import { Patient } from '@/store/patientsStore'
+import { useUpdatePatient } from '@/hooks/usePatients'
+import { useAppointments } from '@/hooks/useAppointments'
 import { differenceInYears, format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { toast } from 'sonner'
@@ -38,9 +39,9 @@ interface Props {
 }
 
 export function PatientDetail({ patient, open, onClose }: Props) {
-  const { appointments }         = useAppointmentsStore()
-  const { updatePatient }        = usePatientsStore()
-  const [isEditing, setIsEditing] = useState(false)
+  const { data: appointments = [] } = useAppointments(patient ? { patient_id: patient.id } : undefined)
+  const updatePatientMutation       = useUpdatePatient()
+  const [isEditing, setIsEditing]   = useState(false)
 
   const { register, handleSubmit, reset, formState: { errors, isDirty } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -78,10 +79,17 @@ export function PatientDetail({ patient, open, onClose }: Props) {
   )
 
   function onSubmit(data: FormData) {
-    updatePatient(patient!.id, data)
-    reset(data)
-    setIsEditing(false)
-    toast.success('Dossier patient mis à jour')
+    updatePatientMutation.mutate(
+      { id: patient!.id, data },
+      {
+        onSuccess: () => {
+          reset(data)
+          setIsEditing(false)
+          toast.success('Dossier patient mis à jour')
+        },
+        onError: () => toast.error('Erreur lors de la mise à jour'),
+      }
+    )
   }
 
   function handleCancelEdit() {

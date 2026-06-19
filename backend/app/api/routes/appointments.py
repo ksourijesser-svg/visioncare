@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session, joinedload
-from datetime import date
+from datetime import date, timedelta
 from app.db.base import get_db
 from app.models.appointment import Appointment, AppointmentStatus
 from app.schemas.appointment import AppointmentCreate, AppointmentUpdate, AppointmentStatusUpdate, AppointmentOut
@@ -21,7 +21,7 @@ def list_appointments(
     q = db.query(Appointment).options(joinedload(Appointment.patient))
     q = q.filter(Appointment.medecin_id == current_user.id)
     if date_rdv:
-        q = q.filter(Appointment.date_heure >= date_rdv, Appointment.date_heure < date_rdv)
+        q = q.filter(Appointment.date_heure >= date_rdv, Appointment.date_heure < date_rdv + timedelta(days=1))
     if statut:
         q = q.filter(Appointment.statut == statut)
     if patient_id:
@@ -54,8 +54,7 @@ def update_appointment(rdv_id: int, data: AppointmentUpdate, db: Session = Depen
     for field, value in data.model_dump(exclude_none=True).items():
         setattr(rdv, field, value)
     db.commit()
-    db.refresh(rdv)
-    return rdv
+    return db.query(Appointment).options(joinedload(Appointment.patient)).filter(Appointment.id == rdv_id).first()
 
 
 @router.patch("/{rdv_id}/statut", response_model=AppointmentOut)
@@ -65,8 +64,7 @@ def update_status(rdv_id: int, data: AppointmentStatusUpdate, db: Session = Depe
         raise HTTPException(status_code=404, detail="Rendez-vous introuvable")
     rdv.statut = data.statut
     db.commit()
-    db.refresh(rdv)
-    return rdv
+    return db.query(Appointment).options(joinedload(Appointment.patient)).filter(Appointment.id == rdv_id).first()
 
 
 @router.delete("/{rdv_id}", status_code=204)

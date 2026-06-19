@@ -10,8 +10,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Loader2, Search, CheckCircle2, X } from 'lucide-react'
-import { Appointment, useAppointmentsStore } from '@/store/appointmentsStore'
-import { Patient, usePatientsStore } from '@/store/patientsStore'
+import type { Appointment } from '@/store/appointmentsStore'
+import type { Patient } from '@/store/patientsStore'
+import { usePatients } from '@/hooks/usePatients'
+import { useCreateAppointment, useUpdateAppointment } from '@/hooks/useAppointments'
 
 function toTitleCase(str: string) {
   return str.replace(/\w\S*/g, (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
@@ -38,8 +40,9 @@ interface Props {
 }
 
 export function AppointmentModal({ open, onClose, appointment }: Props) {
-  const { addAppointment, updateAppointment } = useAppointmentsStore()
-  const { patients } = usePatientsStore()
+  const { data: patients = [] } = usePatients()
+  const createAppointment = useCreateAppointment()
+  const updateAppointment = useUpdateAppointment()
   const isEdit = !!appointment
 
   const [patientId, setPatientId] = useState<number>(0)
@@ -47,7 +50,7 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
   const [searchQuery, setSearchQuery] = useState('')
   const [showDropdown, setShowDropdown] = useState(false)
 
-  const { register, handleSubmit, reset, setValue, watch, formState: { errors, isSubmitting } } = useForm<FormData>({
+  const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { statut: 'programme', duree: '30', patient_telephone: '', notes: '' },
   })
@@ -125,11 +128,10 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
       notes: data.notes || '',
     }
     if (isEdit && appointment) {
-      updateAppointment(appointment.id, rdvData)
+      updateAppointment.mutate({ id: appointment.id, data: rdvData }, { onSuccess: onClose })
     } else {
-      addAppointment(rdvData)
+      createAppointment.mutate(rdvData, { onSuccess: onClose })
     }
-    onClose()
   }
 
   return (
@@ -323,8 +325,8 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
             <Button type="button" variant="outline" onClick={onClose} className="border-[#DCEEF3]">
               Annuler
             </Button>
-            <Button type="submit" disabled={isSubmitting} className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white">
-              {isSubmitting && <Loader2 size={14} className="animate-spin mr-2" />}
+            <Button type="submit" disabled={createAppointment.isPending || updateAppointment.isPending} className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white">
+              {(createAppointment.isPending || updateAppointment.isPending) && <Loader2 size={14} className="animate-spin mr-2" />}
               {isEdit ? 'Enregistrer' : 'Créer le RDV'}
             </Button>
           </DialogFooter>

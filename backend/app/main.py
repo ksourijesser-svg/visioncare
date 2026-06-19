@@ -1,13 +1,48 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.api.routes import auth, patients, appointments, dashboard
+
+
+def seed_demo_users():
+    from app.db.base import SessionLocal
+    from app.models.user import User, UserRole
+    from app.core.security import hash_password
+
+    db = SessionLocal()
+    try:
+        demos = [
+            {"email": "medecin@visioncare.fr", "password": "demo1234", "nom": "Dupont", "prenom": "Jean", "role": UserRole.medecin, "cabinet": "Cabinet VisionCare"},
+            {"email": "secretaire@visioncare.fr", "password": "demo1234", "nom": "Martin", "prenom": "Sophie", "role": UserRole.secretaire, "cabinet": "Cabinet VisionCare"},
+        ]
+        for u in demos:
+            if not db.query(User).filter(User.email == u["email"]).first():
+                db.add(User(
+                    email=u["email"],
+                    hashed_password=hash_password(u["password"]),
+                    nom=u["nom"],
+                    prenom=u["prenom"],
+                    role=u["role"],
+                    cabinet=u["cabinet"],
+                ))
+        db.commit()
+    finally:
+        db.close()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    seed_demo_users()
+    yield
+
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
     docs_url="/docs",
     redoc_url="/redoc",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
