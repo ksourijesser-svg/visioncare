@@ -18,6 +18,8 @@ class AppointmentUpdate(BaseModel):
     motif: str | None = None
     notes: str | None = None
     statut: AppointmentStatus | None = None
+    diagnostic: str | None = None
+    traitement: str | None = None
 
 
 class AppointmentStatusUpdate(BaseModel):
@@ -33,6 +35,8 @@ class AppointmentOut(BaseModel):
     statut: AppointmentStatus
     motif: str | None
     notes: str | None
+    diagnostic: str | None
+    traitement: str | None
     patient: PatientOut
     created_at: datetime
 

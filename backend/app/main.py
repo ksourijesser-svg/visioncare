@@ -7,10 +7,22 @@ from app.api.routes import auth, patients, appointments, dashboard
 
 def create_tables():
     from app.db.base import engine, Base
+    from sqlalchemy import text
     import app.models.user        # noqa — register models
     import app.models.patient     # noqa
     import app.models.appointment # noqa
     Base.metadata.create_all(bind=engine)
+    # Add columns that may be missing on existing tables
+    with engine.connect() as conn:
+        for stmt in [
+            "ALTER TABLE rendez_vous ADD COLUMN IF NOT EXISTS diagnostic TEXT",
+            "ALTER TABLE rendez_vous ADD COLUMN IF NOT EXISTS traitement TEXT",
+        ]:
+            try:
+                conn.execute(text(stmt))
+            except Exception:
+                pass
+        conn.commit()
     print("Database tables ensured")
 
 

@@ -17,6 +17,8 @@ function transform(a: Record<string, unknown>): Appointment {
     motif: (a.motif as string) || '',
     statut: (a.statut as AppointmentStatus) || 'programme',
     notes: (a.notes as string) || '',
+    diagnostic: (a.diagnostic as string) || undefined,
+    traitement: (a.traitement as string) || undefined,
   }
 }
 

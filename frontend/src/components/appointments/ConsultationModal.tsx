@@ -9,8 +9,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { User, Stethoscope } from 'lucide-react'
-import { Appointment, useAppointmentsStore } from '@/store/appointmentsStore'
-import { usePatientsStore } from '@/store/patientsStore'
+import { toast } from 'sonner'
+import type { Appointment } from '@/store/appointmentsStore'
+import { usePatients, useUpdatePatient } from '@/hooks/usePatients'
+import { useUpdateAppointment } from '@/hooks/useAppointments'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
@@ -31,17 +33,19 @@ interface Props {
 }
 
 export function ConsultationModal({ open, onClose, appointment }: Props) {
-  const { updateAppointment } = useAppointmentsStore()
-  const { patients, updatePatient, addPatient } = usePatientsStore()
+  const { data: patients = [] } = usePatients()
+  const updatePatient = useUpdatePatient()
+  const updateAppointment = useUpdateAppointment()
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
+  const patient = patients.find((p) => p.id === appointment?.patient_id)
+
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { date_naissance: '', adresse: '', email: '', diagnostic: '', traitement: '' },
   })
 
   useEffect(() => {
     if (open && appointment) {
-      const patient = patients.find((p) => p.id === appointment.patient_id)
       reset({
         date_naissance: patient?.date_naissance || '',
         adresse: patient?.adresse || '',
@@ -50,51 +54,31 @@ export function ConsultationModal({ open, onClose, appointment }: Props) {
         traitement: appointment.traitement || '',
       })
     }
-  }, [open, appointment, patients, reset])
+  }, [open, appointment?.id, patient?.id])
 
-  function onSubmit(data: FormData) {
+  async function onSubmit(data: FormData) {
     if (!appointment) return
 
-    let patientId = appointment.patient_id
-    const existing = patients.find((p) => p.id === appointment.patient_id && appointment.patient_id !== 0)
-
-    if (existing) {
-      updatePatient(existing.id, {
-        date_naissance: data.date_naissance || existing.date_naissance,
-        adresse: data.adresse || existing.adresse,
-        email: data.email || existing.email,
-      })
-    } else {
-      const byName = patients.find(
-        (p) => p.nom === appointment.patient_nom && p.prenom === appointment.patient_prenom
-      )
-      if (byName) {
-        patientId = byName.id
-        updatePatient(byName.id, {
-          date_naissance: data.date_naissance || byName.date_naissance,
-          adresse: data.adresse || byName.adresse,
-          email: data.email || byName.email,
-        })
-      } else {
-        patientId = addPatient({
-          nom: appointment.patient_nom,
-          prenom: appointment.patient_prenom,
-          telephone: appointment.patient_telephone,
-          date_naissance: data.date_naissance || '',
-          adresse: data.adresse || '',
-          email: data.email || '',
-          notes: '',
-        })
-      }
+    // Update patient details if changed
+    if (appointment.patient_id) {
+      await updatePatient.mutateAsync({
+        id: appointment.patient_id,
+        data: {
+          date_naissance: data.date_naissance || undefined,
+          adresse: data.adresse || undefined,
+          email: data.email || undefined,
+        },
+      }).catch(() => {})
     }
 
-    updateAppointment(appointment.id, {
-      diagnostic: data.diagnostic,
-      traitement: data.traitement,
-      patient_id: patientId,
-    })
-
-    onClose()
+    // Save diagnostic + traitement on the appointment
+    updateAppointment.mutate(
+      { id: appointment.id, data: { diagnostic: data.diagnostic, traitement: data.traitement } },
+      {
+        onSuccess: () => { toast.success('Dossier enregistré'); onClose() },
+        onError: () => toast.error('Erreur lors de l\'enregistrement'),
+      }
+    )
   }
 
   if (!appointment) return null
@@ -171,7 +155,7 @@ export function ConsultationModal({ open, onClose, appointment }: Props) {
             <Button type="button" variant="outline" onClick={onClose} className="border-[#DCEEF3]">
               Annuler
             </Button>
-            <Button type="submit" className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white">
+            <Button type="submit" disabled={isSubmitting || updateAppointment.isPending} className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white">
               Enregistrer
             </Button>
           </DialogFooter>
