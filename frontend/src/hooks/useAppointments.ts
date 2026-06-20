@@ -30,12 +30,23 @@ export function useAppointments(params?: { patient_id?: number }) {
   })
 }
 
+function toISO(date: string, heure: string) {
+  // heure may be "09:00", "09:00:00", or "04:42 PM" — normalise to HH:MM:SS
+  const d = new Date(`${date}T${heure}`)
+  if (!isNaN(d.getTime())) {
+    const hh = String(d.getHours()).padStart(2, '0')
+    const mm = String(d.getMinutes()).padStart(2, '0')
+    return `${date}T${hh}:${mm}:00`
+  }
+  return `${date}T${heure}:00`
+}
+
 export function useCreateAppointment() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (data: Omit<Appointment, 'id'>) => {
       const { date, heure, patient_nom, patient_prenom, patient_telephone, ...rest } = data
-      return appointmentsApi.create({ ...rest, date_heure: `${date}T${heure}:00` })
+      return appointmentsApi.create({ ...rest, date_heure: toISO(date, heure) })
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['appointments'] }),
   })
@@ -47,7 +58,7 @@ export function useUpdateAppointment() {
     mutationFn: ({ id, data }: { id: number; data: Partial<Appointment> }) => {
       const { date, heure, patient_nom, patient_prenom, patient_telephone, ...rest } = data
       const payload: Record<string, unknown> = { ...rest }
-      if (date && heure) payload.date_heure = `${date}T${heure}:00`
+      if (date && heure) payload.date_heure = toISO(date, heure)
       return appointmentsApi.update(id, payload)
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['appointments'] }),

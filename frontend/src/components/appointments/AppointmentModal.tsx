@@ -127,11 +127,11 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
         const res = await patientsApi.create({
           nom: toTitleCase(data.patient_nom),
           prenom: toTitleCase(data.patient_prenom),
-          telephone: data.patient_telephone || '',
-          email: '',
-          adresse: '',
-          date_naissance: '',
-          notes: '',
+          telephone: data.patient_telephone || null,
+          email: null,
+          adresse: null,
+          date_naissance: null,
+          notes: null,
         })
         pid = (res.data as { id: number }).id
         queryClient.invalidateQueries({ queryKey: ['patients'] })
