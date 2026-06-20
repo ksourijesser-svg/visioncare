@@ -17,11 +17,11 @@ router = APIRouter(prefix="/patients", tags=["Patients"])
 def list_patients(
     search: str = Query(None),
     page: int = Query(1, ge=1),
-    limit: int = Query(20, le=100),
+    limit: int = Query(100, le=500),
     db: Session = Depends(get_db),
-    _: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
 ):
-    q = db.query(Patient)
+    q = db.query(Patient).filter(Patient.medecin_id == current_user.id)
     if search:
         q = q.filter(
             or_(
@@ -31,17 +31,16 @@ def list_patients(
                 Patient.email.ilike(f"%{search}%"),
             )
         )
-    return q.offset((page - 1) * limit).limit(limit).all()
+    return q.order_by(Patient.nom).offset((page - 1) * limit).limit(limit).all()
 
 
 @router.get("/export")
-def export_patients(db: Session = Depends(get_db), _: User = Depends(get_current_user)):
-    patients = db.query(Patient).all()
+def export_patients(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    patients = db.query(Patient).filter(Patient.medecin_id == current_user.id).all()
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Patients"
-    headers = ["ID", "Nom", "Prénom", "Date de naissance", "Téléphone", "Email", "Adresse"]
-    ws.append(headers)
+    ws.append(["ID", "Nom", "Prénom", "Date de naissance", "Téléphone", "Email", "Adresse"])
     for p in patients:
         ws.append([p.id, p.nom, p.prenom, str(p.date_naissance or ""), p.telephone or "", p.email or "", p.adresse or ""])
     buffer = io.BytesIO()
@@ -55,8 +54,8 @@ def export_patients(db: Session = Depends(get_db), _: User = Depends(get_current
 
 
 @router.get("/{patient_id}", response_model=PatientOut)
-def get_patient(patient_id: int, db: Session = Depends(get_db), _: User = Depends(get_current_user)):
-    patient = db.query(Patient).filter(Patient.id == patient_id).first()
+def get_patient(patient_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    patient = db.query(Patient).filter(Patient.id == patient_id, Patient.medecin_id == current_user.id).first()
     if not patient:
         raise HTTPException(status_code=404, detail="Patient introuvable")
     return patient
@@ -72,8 +71,8 @@ def create_patient(data: PatientCreate, db: Session = Depends(get_db), current_u
 
 
 @router.put("/{patient_id}", response_model=PatientOut)
-def update_patient(patient_id: int, data: PatientUpdate, db: Session = Depends(get_db), _: User = Depends(get_current_user)):
-    patient = db.query(Patient).filter(Patient.id == patient_id).first()
+def update_patient(patient_id: int, data: PatientUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    patient = db.query(Patient).filter(Patient.id == patient_id, Patient.medecin_id == current_user.id).first()
     if not patient:
         raise HTTPException(status_code=404, detail="Patient introuvable")
     for field, value in data.model_dump(exclude_none=True).items():
@@ -84,8 +83,8 @@ def update_patient(patient_id: int, data: PatientUpdate, db: Session = Depends(g
 
 
 @router.delete("/{patient_id}", status_code=204)
-def delete_patient(patient_id: int, db: Session = Depends(get_db), _: User = Depends(get_current_user)):
-    patient = db.query(Patient).filter(Patient.id == patient_id).first()
+def delete_patient(patient_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    patient = db.query(Patient).filter(Patient.id == patient_id, Patient.medecin_id == current_user.id).first()
     if not patient:
         raise HTTPException(status_code=404, detail="Patient introuvable")
     db.delete(patient)
