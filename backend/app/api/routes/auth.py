@@ -41,6 +41,8 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
         role=data.role,
         telephone=data.telephone,
         cabinet=data.cabinet,
+        specialisation=data.specialisation,
+        type_cabinet=data.type_cabinet,
     )
     db.add(user)
     db.commit()

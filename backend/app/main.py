@@ -17,6 +17,8 @@ def create_tables():
         for stmt in [
             "ALTER TABLE rendez_vous ADD COLUMN IF NOT EXISTS diagnostic TEXT",
             "ALTER TABLE rendez_vous ADD COLUMN IF NOT EXISTS traitement TEXT",
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS specialisation VARCHAR",
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS type_cabinet VARCHAR",
         ]:
             try:
                 conn.execute(text(stmt))

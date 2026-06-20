@@ -8,9 +8,11 @@ class UserCreate(BaseModel):
     password: str
     nom: str
     prenom: str
-    role: UserRole = UserRole.secretaire
+    role: UserRole = UserRole.medecin
     telephone: str | None = None
     cabinet: str | None = None
+    specialisation: str | None = None
+    type_cabinet: str | None = None
 
 
 class UserUpdate(BaseModel):
@@ -18,6 +20,8 @@ class UserUpdate(BaseModel):
     prenom: str | None = None
     telephone: str | None = None
     cabinet: str | None = None
+    specialisation: str | None = None
+    type_cabinet: str | None = None
 
 
 class UserOut(BaseModel):
@@ -28,6 +32,8 @@ class UserOut(BaseModel):
     role: UserRole
     telephone: str | None
     cabinet: str | None
+    specialisation: str | None
+    type_cabinet: str | None
     is_active: bool
     created_at: datetime
 

@@ -34,6 +34,7 @@ export const authApi = {
     })
   },
   me: () => api.get('/auth/me'),
+  register: (data: unknown) => api.post('/auth/register', data),
 }
 
 export const patientsApi = {
