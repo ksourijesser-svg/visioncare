@@ -6,29 +6,33 @@ from app.api.routes import auth, patients, appointments, dashboard
 
 
 def seed_demo_users():
-    from app.db.base import SessionLocal
-    from app.models.user import User, UserRole
-    from app.core.security import hash_password
-
-    db = SessionLocal()
     try:
-        demos = [
-            {"email": "medecin@visioncare.fr", "password": "demo1234", "nom": "Dupont", "prenom": "Jean", "role": UserRole.medecin, "cabinet": "Cabinet VisionCare"},
-            {"email": "secretaire@visioncare.fr", "password": "demo1234", "nom": "Martin", "prenom": "Sophie", "role": UserRole.secretaire, "cabinet": "Cabinet VisionCare"},
-        ]
-        for u in demos:
-            if not db.query(User).filter(User.email == u["email"]).first():
-                db.add(User(
-                    email=u["email"],
-                    hashed_password=hash_password(u["password"]),
-                    nom=u["nom"],
-                    prenom=u["prenom"],
-                    role=u["role"],
-                    cabinet=u["cabinet"],
-                ))
-        db.commit()
-    finally:
-        db.close()
+        from app.db.base import SessionLocal
+        from app.models.user import User, UserRole
+        from app.core.security import hash_password
+
+        db = SessionLocal()
+        try:
+            demos = [
+                {"email": "medecin@visioncare.fr", "password": "demo1234", "nom": "Dupont", "prenom": "Jean", "role": UserRole.medecin, "cabinet": "Cabinet VisionCare"},
+                {"email": "secretaire@visioncare.fr", "password": "demo1234", "nom": "Martin", "prenom": "Sophie", "role": UserRole.secretaire, "cabinet": "Cabinet VisionCare"},
+            ]
+            for u in demos:
+                if not db.query(User).filter(User.email == u["email"]).first():
+                    db.add(User(
+                        email=u["email"],
+                        hashed_password=hash_password(u["password"]),
+                        nom=u["nom"],
+                        prenom=u["prenom"],
+                        role=u["role"],
+                        cabinet=u["cabinet"],
+                    ))
+            db.commit()
+            print("Demo users seeded successfully")
+        finally:
+            db.close()
+    except Exception as e:
+        print(f"Warning: demo user seeding skipped — {e}")
 
 
 @asynccontextmanager
