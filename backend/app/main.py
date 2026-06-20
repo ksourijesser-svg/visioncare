@@ -5,6 +5,15 @@ from app.core.config import settings
 from app.api.routes import auth, patients, appointments, dashboard
 
 
+def create_tables():
+    from app.db.base import engine, Base
+    import app.models.user        # noqa — register models
+    import app.models.patient     # noqa
+    import app.models.appointment # noqa
+    Base.metadata.create_all(bind=engine)
+    print("Database tables ensured")
+
+
 def seed_demo_users():
     try:
         from app.db.base import SessionLocal
@@ -37,6 +46,7 @@ def seed_demo_users():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    create_tables()
     seed_demo_users()
     yield
 
