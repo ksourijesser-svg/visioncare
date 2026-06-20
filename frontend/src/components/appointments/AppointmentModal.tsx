@@ -14,6 +14,9 @@ import type { Appointment } from '@/store/appointmentsStore'
 import type { Patient } from '@/store/patientsStore'
 import { usePatients } from '@/hooks/usePatients'
 import { useCreateAppointment, useUpdateAppointment } from '@/hooks/useAppointments'
+import { patientsApi } from '@/lib/api'
+import { useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
 function toTitleCase(str: string) {
   return str.replace(/\w\S*/g, (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
@@ -43,6 +46,7 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
   const { data: patients = [] } = usePatients()
   const createAppointment = useCreateAppointment()
   const updateAppointment = useUpdateAppointment()
+  const queryClient = useQueryClient()
   const isEdit = !!appointment
 
   const [patientId, setPatientId] = useState<number>(0)
@@ -114,9 +118,31 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
     setValue('patient_telephone', '')
   }
 
-  function onSubmit(data: FormData) {
+  async function onSubmit(data: FormData) {
+    let pid = patientId
+
+    // If no existing patient selected, create one automatically
+    if (!pid) {
+      try {
+        const res = await patientsApi.create({
+          nom: toTitleCase(data.patient_nom),
+          prenom: toTitleCase(data.patient_prenom),
+          telephone: data.patient_telephone || '',
+          email: '',
+          adresse: '',
+          date_naissance: '',
+          notes: '',
+        })
+        pid = (res.data as { id: number }).id
+        queryClient.invalidateQueries({ queryKey: ['patients'] })
+      } catch {
+        toast.error('Impossible de créer le patient')
+        return
+      }
+    }
+
     const rdvData = {
-      patient_id: patientId,
+      patient_id: pid,
       patient_nom: toTitleCase(data.patient_nom),
       patient_prenom: toTitleCase(data.patient_prenom),
       patient_telephone: data.patient_telephone || '',
@@ -127,10 +153,17 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
       statut: data.statut,
       notes: data.notes || '',
     }
+
     if (isEdit && appointment) {
-      updateAppointment.mutate({ id: appointment.id, data: rdvData }, { onSuccess: onClose })
+      updateAppointment.mutate({ id: appointment.id, data: rdvData }, {
+        onSuccess: onClose,
+        onError: () => toast.error('Erreur lors de la mise à jour'),
+      })
     } else {
-      createAppointment.mutate(rdvData, { onSuccess: onClose })
+      createAppointment.mutate(rdvData, {
+        onSuccess: onClose,
+        onError: () => toast.error('Erreur lors de la création du rendez-vous'),
+      })
     }
   }
 
