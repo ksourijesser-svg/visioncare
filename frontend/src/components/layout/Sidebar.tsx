@@ -35,7 +35,7 @@ export function Sidebar() {
 
   function handleLogout() {
     removeToken()
-    router.push('/login')
+    router.push('/')
   }
 
   const initials = user ? `${user.prenom[0]}${user.nom[0]}`.toUpperCase() : 'VC'

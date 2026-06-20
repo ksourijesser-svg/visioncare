@@ -18,7 +18,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401 && typeof window !== 'undefined') {
       localStorage.removeItem('access_token')
-      window.location.href = '/login'
+      window.location.href = '/'
     }
     return Promise.reject(error)
   }
