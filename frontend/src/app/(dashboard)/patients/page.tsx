@@ -40,7 +40,10 @@ export default function PatientsPage() {
     derniere_visite: statsMap.get(p.id)?.derniere ?? '',
   }))
 
-  const filtered = enriched.filter(
+  // Only show patients who have at least one completed appointment
+  const withCompleted = enriched.filter((p) => p.nb_consultations > 0)
+
+  const filtered = withCompleted.filter(
     (p) =>
       `${p.prenom} ${p.nom}`.toLowerCase().includes(search.toLowerCase()) ||
       p.telephone.includes(search)
@@ -98,7 +101,7 @@ export default function PatientsPage() {
           <div className="text-center py-20 text-gray-400">
             <User size={48} className="mx-auto mb-4 opacity-20" />
             <p className="font-medium">Aucun patient pour le moment</p>
-            <p className="text-sm mt-1">Ajoutez des patients en créant un rendez-vous.</p>
+            <p className="text-sm mt-1">Les patients apparaissent ici dès qu&apos;un rendez-vous est marqué <strong>Complété</strong>.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
