@@ -83,11 +83,11 @@ export function Sidebar() {
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150',
                   active
-                    ? 'bg-[#70B1C4] text-white shadow-md shadow-[#70B1C4]/25'
-                    : 'text-gray-500 hover:bg-gray-50 hover:text-[#1A2B3C]'
+                    ? 'bg-[#3d8fa8] text-white shadow-md shadow-[#3d8fa8]/30'
+                    : 'text-gray-600 hover:bg-[#E4EEF4] hover:text-[#1A2B3C]'
                 )}
               >
-                <Icon size={17} className={active ? 'text-white' : 'text-gray-400'} />
+                <Icon size={17} className={active ? 'text-white' : 'text-gray-500'} />
                 {label}
               </Link>
             )
