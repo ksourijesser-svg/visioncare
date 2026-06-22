@@ -320,7 +320,7 @@ export default function LandingPage() {
                 {i < STEPS.length - 1 && (
                   <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-px bg-gradient-to-r from-[#3d8fa8]/50 to-transparent" />
                 )}
-                <div className="w-16 h-16 rounded-2xl bg-[#3d8fa8] text-white text-xl font-bold flex items-center justify-center mx-auto mb-5 shadow-lg shadow-[#3d8fa8]/35">
+                <div className="btn-neon w-16 h-16 rounded-2xl bg-[#3d8fa8] text-white text-xl font-bold flex items-center justify-center mx-auto mb-5 shadow-lg shadow-[#3d8fa8]/35 cursor-default">
                   {s.n}
                 </div>
                 <h3 className="font-bold text-[#1A2B3C] text-lg mb-2">{s.title}</h3>
