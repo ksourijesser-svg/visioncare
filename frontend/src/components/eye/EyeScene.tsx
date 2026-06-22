@@ -183,45 +183,59 @@ function Cornea() {
   )
 }
 
-// ─── Eyelids ──────────────────────────────────────────────────────────────────
-function UpperEyelid({ tex }: { tex: THREE.Texture }) {
-  const pivotRef = useRef<THREE.Group>(null!)
+// ─── Eyelids — flat semicircle discs that slide apart to reveal the iris ──────
+function Eyelids() {
+  const upperRef = useRef<THREE.Group>(null!)
+  const lowerRef = useRef<THREE.Group>(null!)
 
   useFrame(() => {
-    if (!pivotRef.current) return
-    const t = remap(S.p, 0.0, 0.32, 0, 1)
-    // Pivot at top of eye, open upward
-    pivotRef.current.rotation.x = -(t * Math.PI * 0.62)
+    const t = remap(S.p, 0.0, 0.38, 0, 1)
+    if (upperRef.current) {
+      upperRef.current.position.y = t * 0.64
+      upperRef.current.rotation.x = -t * 0.28
+    }
+    if (lowerRef.current) {
+      lowerRef.current.position.y = -t * 0.46
+      lowerRef.current.rotation.x = t * 0.18
+    }
   })
 
-  return (
-    // Pivot point at top of eye
-    <group ref={pivotRef} position={[0, 0.45, 0.9]}>
-      {/* Lid mesh hangs below pivot */}
-      <mesh position={[0, -0.45, 0.08]} rotation={[0.2, 0, 0]}>
-        <sphereGeometry args={[0.52, 48, 24, 0, Math.PI*2, 0, Math.PI*0.52]} />
-        <meshStandardMaterial map={tex} roughness={0.75} metalness={0.0} side={THREE.DoubleSide} />
-      </mesh>
-    </group>
+  const mat = (
+    <meshStandardMaterial
+      color="#d8c8b8"
+      roughness={0.68}
+      metalness={0.03}
+      side={THREE.DoubleSide}
+    />
   )
-}
-
-function LowerEyelid({ tex }: { tex: THREE.Texture }) {
-  const pivotRef = useRef<THREE.Group>(null!)
-
-  useFrame(() => {
-    if (!pivotRef.current) return
-    const t = remap(S.p, 0.0, 0.32, 0, 1)
-    pivotRef.current.rotation.x = t * Math.PI * 0.38
-  })
 
   return (
-    <group ref={pivotRef} position={[0, -0.45, 0.9]}>
-      <mesh position={[0, 0.45, 0.08]} rotation={[-0.2, 0, 0]}>
-        <sphereGeometry args={[0.52, 48, 24, 0, Math.PI*2, Math.PI*0.48, Math.PI*0.52]} />
-        <meshStandardMaterial map={tex} roughness={0.75} metalness={0.0} side={THREE.DoubleSide} />
-      </mesh>
-    </group>
+    <>
+      {/* Upper lid: top semicircle, slides up */}
+      <group ref={upperRef} position={[0, 0, 1.045]}>
+        <mesh>
+          <circleGeometry args={[0.52, 96, 0, Math.PI]} />
+          {mat}
+        </mesh>
+        {/* Eyelash edge line */}
+        <mesh position={[0, 0, 0.002]}>
+          <ringGeometry args={[0.50, 0.52, 96, 1, 0, Math.PI]} />
+          <meshBasicMaterial color="#1a0f08" />
+        </mesh>
+      </group>
+
+      {/* Lower lid: bottom semicircle, slides down */}
+      <group ref={lowerRef} position={[0, 0, 1.045]}>
+        <mesh>
+          <circleGeometry args={[0.52, 96, Math.PI, Math.PI]} />
+          {mat}
+        </mesh>
+        <mesh position={[0, 0, 0.002]}>
+          <ringGeometry args={[0.50, 0.52, 96, 1, Math.PI, Math.PI]} />
+          <meshBasicMaterial color="#1a0f08" />
+        </mesh>
+      </group>
+    </>
   )
 }
 
