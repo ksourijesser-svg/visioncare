@@ -522,21 +522,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Specialisations ────────────────────────────────────────────────── */}
-      <section id="specialites" className="py-14 bg-[#F0F6FA] border-y border-gray-200">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <p className="text-[#1A2B3C]/55 text-sm font-medium mb-6 uppercase tracking-widest">Adapté à toutes les spécialités</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {SPECIALISATIONS.map((s) => (
-              <span key={s} className="bg-white border border-gray-300 text-[#1A2B3C]/75 text-sm font-medium px-4 py-1.5 rounded-full hover:border-[#3d8fa8]/60 hover:text-[#3d8fa8] transition-colors cursor-default shadow-sm">
-                {s}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ── CTA ────────────────────────────────────────────────────────────── */}
+{/* ── CTA ────────────────────────────────────────────────────────────── */}
       <section className="py-24 bg-gradient-to-br from-[#0A1828] to-[#1a3a5c] relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none"
           style={{
