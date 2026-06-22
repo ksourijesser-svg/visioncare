@@ -71,7 +71,7 @@ export function Sidebar() {
 
         {/* Nav */}
         <nav className="px-4 pt-5 pb-4 space-y-1">
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.1em] px-2 mb-3">Navigation</p>
+          <p className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.1em] px-2 mb-3">Navigation</p>
 
           {navItems.map(({ href, label, icon: Icon }) => {
             const active = pathname === href || pathname.startsWith(href + '/')
