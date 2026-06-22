@@ -12,7 +12,7 @@ interface StatCardProps {
 
 export function StatCard({
   title, value, icon: Icon,
-  color = '#70B1C4', bgColor = '#DCEEF3',
+  color = '#3d8fa8', bgColor = '#A8CCDE',
   trend, glowClass = 'glow',
 }: StatCardProps) {
   return (
