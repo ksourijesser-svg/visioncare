@@ -22,4 +22,5 @@ await page.waitForTimeout(2000)
 await page.screenshot({ path: 'C:/Users/jasserk/Desktop/landing-scroll.png' })
 console.log('SCROLL DONE')
 
+if (errors.length) console.log('ERRORS:', errors.join('\n'))
 await browser.close()
