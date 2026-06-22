@@ -16,10 +16,16 @@ await page.waitForTimeout(7000)
 await page.screenshot({ path: 'C:/Users/jasserk/Desktop/landing-hero.png' })
 console.log('DONE')
 
-// Scroll halfway and screenshot
-await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.5))
-await page.waitForTimeout(2000)
-await page.screenshot({ path: 'C:/Users/jasserk/Desktop/landing-scroll.png' })
+// Scroll to retina section (80% into 3D scene)
+await page.evaluate(() => window.scrollTo(0, window.innerHeight * 3.5))
+await page.waitForTimeout(2500)
+await page.screenshot({ path: 'C:/Users/jasserk/Desktop/landing-retina.png' })
+console.log('RETINA DONE')
+
+// Scroll past the 3D scene into normal page content
+await page.evaluate(() => window.scrollTo(0, window.innerHeight * 5.5))
+await page.waitForTimeout(1500)
+await page.screenshot({ path: 'C:/Users/jasserk/Desktop/landing-below.png' })
 console.log('SCROLL DONE')
 
 if (errors.length) console.log('ERRORS:', errors.join('\n'))
