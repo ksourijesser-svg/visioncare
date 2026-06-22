@@ -402,13 +402,13 @@ export default function LandingPage() {
                 <circle cx="20" cy="172" r="4" fill="#3d8fa8" fillOpacity="0.18"/>
                 <circle cx="198" cy="178" r="5" fill="#70B1C4" fillOpacity="0.2"/>
               </svg>
-              <p className="text-[#3d8fa8] text-sm leading-relaxed font-semibold max-w-[200px]">
+              <p className="text-[#3d8fa8] text-base leading-relaxed font-bold max-w-[200px]">
                 Prenez rendez-vous en ligne à tout moment
               </p>
             </div>
 
             {/* ─ Feature 3: SMS / email reminders ─ */}
-            <div className="flex flex-col items-center gap-5">
+            <div className="flex flex-col items-center gap-6 bg-[#F4FAFD] rounded-3xl p-8 border border-[#C5DEE9] hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 h-auto drop-shadow-lg">
                 <circle cx="110" cy="120" r="100" fill="#B8D5E8"/>
                 {/* Dashed rings */}
