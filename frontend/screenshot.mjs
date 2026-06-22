@@ -12,7 +12,7 @@ page.on('pageerror', e => errors.push(e.message))
 await page.goto('http://localhost:3000', { waitUntil: 'networkidle', timeout: 20000 })
 const webgl = await page.evaluate(() => !!document.createElement('canvas').getContext('webgl2'))
 console.log('WebGL2 available:', webgl)
-await page.waitForTimeout(4000)
+await page.waitForTimeout(7000)
 await page.screenshot({ path: 'C:/Users/jasserk/Desktop/landing-hero.png' })
 console.log('DONE')
 
