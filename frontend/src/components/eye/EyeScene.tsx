@@ -15,13 +15,14 @@ function SceneBackground() {
   return null
 }
 
-// ─── Cornea ───────────────────────────────────────────────────────────────────
+// ─── Cornea (dome sitting on top of iris, in front of sclera) ────────────────
 
 function Cornea() {
   return (
-    <mesh position={[0, 0, 0.06]}>
-      <sphereGeometry args={[1.08, 64, 64, 0, Math.PI * 2, 0, Math.PI * 0.48]} />
-      <meshStandardMaterial color="#c8ecf8" transparent opacity={0.2} roughness={0.02} metalness={0.1} side={THREE.DoubleSide} />
+    // hemisphere dome centred at the iris plane (z=1.0), protrudes forward
+    <mesh position={[0, 0, 1.0]}>
+      <sphereGeometry args={[0.52, 64, 32, 0, Math.PI * 2, 0, Math.PI * 0.5]} />
+      <meshStandardMaterial color="#d8f0ff" transparent opacity={0.18} roughness={0.0} metalness={0.15} side={THREE.DoubleSide} />
     </mesh>
   )
 }
