@@ -147,7 +147,7 @@ export function Sidebar() {
 
         {/* User section */}
         <div className="px-4 pb-5 space-y-2">
-          <div className="mx-1 h-px bg-gray-100 mb-3" />
+          <div className="mx-1 h-px bg-gray-200 mb-3" />
 
           <Link
             href="/profil"
