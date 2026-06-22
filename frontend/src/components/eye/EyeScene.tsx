@@ -5,35 +5,26 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useScroll, ScrollControls, Scroll } from '@react-three/drei'
 import * as THREE from 'three'
 
-// ─── Scene background ────────────────────────────────────────────────────────
+// ─── Scene background ─────────────────────────────────────────────────────────
 
 function SceneBackground() {
   const { scene } = useThree()
-  useMemo(() => {
-    scene.background = new THREE.Color('#0d1f2e')
-  }, [scene])
+  useMemo(() => { scene.background = new THREE.Color('#0d1f2e') }, [scene])
   return null
 }
 
-// ─── Cornea (glass dome) ─────────────────────────────────────────────────────
+// ─── Cornea ───────────────────────────────────────────────────────────────────
 
 function Cornea() {
   return (
     <mesh position={[0, 0, 0.06]}>
       <sphereGeometry args={[1.08, 64, 64, 0, Math.PI * 2, 0, Math.PI * 0.48]} />
-      <meshStandardMaterial
-        color="#c8ecf8"
-        transparent
-        opacity={0.18}
-        roughness={0.02}
-        metalness={0.1}
-        side={THREE.DoubleSide}
-      />
+      <meshStandardMaterial color="#c8ecf8" transparent opacity={0.2} roughness={0.02} metalness={0.1} side={THREE.DoubleSide} />
     </mesh>
   )
 }
 
-// ─── Sclera ──────────────────────────────────────────────────────────────────
+// ─── Sclera ───────────────────────────────────────────────────────────────────
 
 function Sclera() {
   return (
@@ -44,15 +35,15 @@ function Sclera() {
   )
 }
 
-// ─── Iris with procedural canvas texture ─────────────────────────────────────
+// ─── Iris ─────────────────────────────────────────────────────────────────────
 
 function Iris({ scrollVal }: { scrollVal: React.MutableRefObject<number> }) {
   const pupilRef = useRef<THREE.Mesh>(null!)
 
   useFrame(() => {
     if (!pupilRef.current) return
-    const dilate = 0.18 + scrollVal.current * 0.18
-    pupilRef.current.scale.setScalar(dilate / 0.18)
+    const scale = (0.18 + scrollVal.current * 0.18) / 0.18
+    pupilRef.current.scale.setScalar(scale)
   })
 
   const irisMap = useMemo(() => {
@@ -70,18 +61,14 @@ function Iris({ scrollVal }: { scrollVal: React.MutableRefObject<number> }) {
     ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill()
 
     for (let i = 0; i < 200; i++) {
-      const angle = (i / 200) * Math.PI * 2
-      const grad = ctx.createLinearGradient(
-        cx + Math.cos(angle) * 32, cy + Math.sin(angle) * 32,
-        cx + Math.cos(angle) * r, cy + Math.sin(angle) * r
-      )
-      grad.addColorStop(0, 'rgba(112,177,196,0.4)')
-      grad.addColorStop(1, 'rgba(0,20,40,0.1)')
-      ctx.strokeStyle = grad
-      ctx.lineWidth = 0.7
+      const a = (i / 200) * Math.PI * 2
+      const g = ctx.createLinearGradient(cx + Math.cos(a) * 32, cy + Math.sin(a) * 32, cx + Math.cos(a) * r, cy + Math.sin(a) * r)
+      g.addColorStop(0, 'rgba(112,177,196,0.4)')
+      g.addColorStop(1, 'rgba(0,20,40,0.1)')
+      ctx.strokeStyle = g; ctx.lineWidth = 0.7
       ctx.beginPath()
-      ctx.moveTo(cx + Math.cos(angle) * 32, cy + Math.sin(angle) * 32)
-      ctx.lineTo(cx + Math.cos(angle) * r * 0.92, cy + Math.sin(angle) * r * 0.92)
+      ctx.moveTo(cx + Math.cos(a) * 32, cy + Math.sin(a) * 32)
+      ctx.lineTo(cx + Math.cos(a) * r * 0.92, cy + Math.sin(a) * r * 0.92)
       ctx.stroke()
     }
 
@@ -108,19 +95,13 @@ function Iris({ scrollVal }: { scrollVal: React.MutableRefObject<number> }) {
   )
 }
 
-// ─── Crystalline lens ────────────────────────────────────────────────────────
+// ─── Lens ─────────────────────────────────────────────────────────────────────
 
 function Lens() {
   return (
     <mesh position={[0, 0, 0.45]}>
       <sphereGeometry args={[0.36, 32, 32]} />
-      <meshStandardMaterial
-        color="#cce8f5"
-        transparent
-        opacity={0.25}
-        roughness={0}
-        metalness={0.05}
-      />
+      <meshStandardMaterial color="#cce8f5" transparent opacity={0.25} roughness={0} metalness={0.05} />
     </mesh>
   )
 }
@@ -146,25 +127,15 @@ function Retina() {
 
     const vessel = (x: number, y: number, a: number, len: number, d: number, w: number) => {
       if (d <= 0 || len < 6) return
-      const ex = x + Math.cos(a) * len
-      const ey = y + Math.sin(a) * len
-      ctx.strokeStyle = `rgba(210,60,60,${0.5 + d * 0.08})`
-      ctx.lineWidth = w
-      ctx.beginPath()
-      ctx.moveTo(x, y)
-      ctx.quadraticCurveTo(
-        x + Math.cos(a + 0.25) * len * 0.55,
-        y + Math.sin(a + 0.25) * len * 0.55,
-        ex, ey
-      )
+      const ex = x + Math.cos(a) * len, ey = y + Math.sin(a) * len
+      ctx.strokeStyle = `rgba(210,60,60,${0.5 + d * 0.08})`; ctx.lineWidth = w
+      ctx.beginPath(); ctx.moveTo(x, y)
+      ctx.quadraticCurveTo(x + Math.cos(a + 0.25) * len * 0.55, y + Math.sin(a + 0.25) * len * 0.55, ex, ey)
       ctx.stroke()
       vessel(ex, ey, a - 0.38, len * 0.68, d - 1, w * 0.7)
       vessel(ex, ey, a + 0.45, len * 0.6, d - 1, w * 0.7)
     }
-
-    for (let i = 0; i < 7; i++) {
-      vessel(cx, cy, (i / 7) * Math.PI * 2, 90, 5, 2.8)
-    }
+    for (let i = 0; i < 7; i++) vessel(cx, cy, (i / 7) * Math.PI * 2, 90, 5, 2.8)
 
     return new THREE.CanvasTexture(c)
   }, [])
@@ -172,18 +143,12 @@ function Retina() {
   return (
     <mesh>
       <sphereGeometry args={[0.88, 64, 64]} />
-      <meshStandardMaterial
-        map={map}
-        side={THREE.BackSide}
-        roughness={0.85}
-        emissive={new THREE.Color('#3a0808')}
-        emissiveIntensity={0.4}
-      />
+      <meshStandardMaterial map={map} side={THREE.BackSide} roughness={0.85} emissive={new THREE.Color('#3a0808')} emissiveIntensity={0.4} />
     </mesh>
   )
 }
 
-// ─── Camera controller + eye group ───────────────────────────────────────────
+// ─── Eye + camera ─────────────────────────────────────────────────────────────
 
 function Eye() {
   const { scroll } = useScroll()
@@ -206,8 +171,7 @@ function Eye() {
 
     let targetZ = 4.5, targetY = 0
     for (let i = 0; i < kf.length - 1; i++) {
-      const [s0, z0, y0] = kf[i]
-      const [s1, z1, y1] = kf[i + 1]
+      const [s0, z0, y0] = kf[i], [s1, z1, y1] = kf[i + 1]
       if (raw >= s0 && raw <= s1) {
         const t = (raw - s0) / (s1 - s0)
         const ease = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
@@ -222,8 +186,7 @@ function Eye() {
     camera.lookAt(0, 0, 0)
 
     if (groupRef.current) {
-      const idleSpeed = Math.max(0, 1 - raw * 8) * 0.18
-      groupRef.current.rotation.y += delta * idleSpeed
+      groupRef.current.rotation.y += delta * Math.max(0, 1 - raw * 8) * 0.18
     }
   })
 
@@ -238,7 +201,7 @@ function Eye() {
   )
 }
 
-// ─── Section text overlays ────────────────────────────────────────────────────
+// ─── Section overlays ─────────────────────────────────────────────────────────
 
 const SECTIONS = [
   { title: 'VisionCare', sub: 'La plateforme médicale la plus avancée pour votre cabinet.' },
@@ -257,8 +220,7 @@ function Overlays() {
           style={{
             position: 'absolute',
             top: `${i * 100}vh`,
-            left: 0,
-            right: 0,
+            left: 0, right: 0,
             height: '100vh',
             display: 'flex',
             alignItems: 'center',
@@ -268,22 +230,10 @@ function Overlays() {
           }}
         >
           <div style={{ maxWidth: 420, textAlign: 'right' }}>
-            <h2 style={{
-              fontSize: 'clamp(1.4rem, 3vw, 2.2rem)',
-              fontWeight: 700,
-              color: '#ffffff',
-              textShadow: '0 2px 20px rgba(0,0,0,0.8)',
-              marginBottom: '0.6rem',
-              lineHeight: 1.25,
-            }}>
+            <h2 style={{ fontSize: 'clamp(1.4rem,3vw,2.2rem)', fontWeight: 700, color: '#fff', textShadow: '0 2px 20px rgba(0,0,0,0.8)', marginBottom: '0.6rem', lineHeight: 1.25 }}>
               {sec.title}
             </h2>
-            <p style={{
-              fontSize: 'clamp(0.85rem, 1.4vw, 1rem)',
-              color: 'rgba(255,255,255,0.65)',
-              textShadow: '0 1px 10px rgba(0,0,0,0.6)',
-              lineHeight: 1.65,
-            }}>
+            <p style={{ fontSize: 'clamp(0.85rem,1.4vw,1rem)', color: 'rgba(255,255,255,0.65)', textShadow: '0 1px 10px rgba(0,0,0,0.6)', lineHeight: 1.65 }}>
               {sec.sub}
             </p>
           </div>
@@ -293,29 +243,26 @@ function Overlays() {
   )
 }
 
-// ─── Root export ─────────────────────────────────────────────────────────────
+// ─── Root export ──────────────────────────────────────────────────────────────
 
 export default function EyeScene() {
   return (
-    <div style={{ height: '500vh', position: 'relative' }}>
-      <div style={{ position: 'sticky', top: 0, height: '100vh', width: '100%' }}>
-        <Canvas
-          camera={{ position: [0, 0, 4.5], fov: 44 }}
-          gl={{ antialias: true, alpha: false }}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <SceneBackground />
-          <ambientLight intensity={0.5} />
-          <pointLight position={[4, 3, 5]} intensity={3} color="#ffffff" />
-          <pointLight position={[-3, -2, 4]} intensity={1.5} color="#70B1C4" />
-          <pointLight position={[0, 0, -4]} intensity={2} color="#ff5020" />
+    // ScrollControls owns the sticky layout — no outer wrapper needed
+    <Canvas
+      camera={{ position: [0, 0, 4.5], fov: 44 }}
+      gl={{ antialias: true, alpha: false }}
+      style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%' }}
+    >
+      <SceneBackground />
+      <ambientLight intensity={0.5} />
+      <pointLight position={[4, 3, 5]} intensity={3} color="#ffffff" />
+      <pointLight position={[-3, -2, 4]} intensity={1.5} color="#70B1C4" />
+      <pointLight position={[0, 0, -4]} intensity={2} color="#ff5020" />
 
-          <ScrollControls pages={5} damping={0.25}>
-            <Eye />
-            <Overlays />
-          </ScrollControls>
-        </Canvas>
-      </div>
-    </div>
+      <ScrollControls pages={5} damping={0.25}>
+        <Eye />
+        <Overlays />
+      </ScrollControls>
+    </Canvas>
   )
 }
