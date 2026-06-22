@@ -55,8 +55,8 @@ function Iris() {
     const cx = sz / 2, cy = sz / 2, r = sz / 2
 
     const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, r)
-    bg.addColorStop(0, '#3a7a9c')
-    bg.addColorStop(0.6, '#1e5570')
+    bg.addColorStop(0, '#5ab4d4')
+    bg.addColorStop(0.5, '#2a7a9c')
     bg.addColorStop(1, '#0d2a3a')
     ctx.fillStyle = bg
     ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill()
