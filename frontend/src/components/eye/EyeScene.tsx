@@ -277,12 +277,11 @@ function CameraRig() {
 function Eye() {
   const scleraTex = useScleraTexture()
   const irisTex   = useIrisTexture()
-  const lidTex    = useScleraTexture() // eyelids match sclera skin
   const floatRef  = useRef<THREE.Group>(null!)
 
   useFrame(() => {
     if (!floatRef.current) return
-    const idle = Math.max(0, 1 - S.p * 4)
+    const idle = Math.max(0, 1 - S.p * 3.5)
     floatRef.current.position.y = Math.sin(Date.now()*0.0006)*0.025*idle
   })
 
@@ -291,8 +290,7 @@ function Eye() {
       <Sclera tex={scleraTex} />
       <IrisPupil tex={irisTex} />
       <Cornea />
-      <UpperEyelid tex={lidTex} />
-      <LowerEyelid tex={lidTex} />
+      <Eyelids />
     </group>
   )
 }
