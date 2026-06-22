@@ -158,7 +158,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto relative">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-white/8 border border-white/12 text-white/80 text-sm font-semibold rounded-full px-4 py-1.5 mb-6 backdrop-blur-sm">
-              <span className="w-2 h-2 bg-[#70B1C4] rounded-full animate-pulse" />
+              <span className="w-2 h-2 bg-[#16a34a] rounded-full animate-pulse" />
               Support 7j/7 — Réponse en moins de 2h
             </div>
 
