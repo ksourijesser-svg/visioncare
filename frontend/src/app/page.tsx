@@ -48,71 +48,44 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* ── Hero ── */}
-      <section className="pt-16 bg-gradient-to-br from-[#0f2d3d] via-[#1a4a5e] to-[#2d7a94] min-h-[92vh] flex items-center relative overflow-hidden">
-        {/* Decorative blobs */}
-        <div className="absolute top-20 right-10 w-96 h-96 bg-[#70B1C4]/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-10 left-0 w-72 h-72 bg-[#70B1C4]/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-6xl mx-auto px-6 py-24 grid lg:grid-cols-2 gap-16 items-center relative z-10">
-          <div>
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-1.5 mb-6">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-white/80 text-sm font-medium">Plateforme médicale certifiée</span>
-            </div>
-            <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
-              La plateforme la plus{' '}
-              <span className="text-[#70B1C4]">sécurisée</span> pour gérer votre cabinet
-            </h1>
-            <p className="text-white/70 text-lg leading-relaxed mb-8">
-              Patients, rendez-vous, dossiers médicaux — tout centralisé dans une interface simple et élégante.
-              Rejoignez des centaines de médecins qui font confiance à VisionCare.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/inscription" className="inline-flex items-center gap-2 bg-[#70B1C4] hover:bg-[#5a9db8] text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-[#70B1C4]/40 transition-all hover:-translate-y-0.5 text-base">
-                Créer mon compte gratuitement →
-              </Link>
-              <Link href="/login" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-medium px-8 py-3.5 rounded-xl backdrop-blur transition-all text-base">
-                Déjà inscrit ? Se connecter
-              </Link>
-            </div>
-            <div className="flex items-center gap-6 mt-10">
-              {['Aucune carte requise', 'Installation en 2 min', 'Support inclus'].map((t) => (
-                <div key={t} className="flex items-center gap-1.5 text-white/60 text-sm">
-                  <span className="text-green-400">✓</span> {t}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Dashboard preview card */}
-          <div className="hidden lg:block">
-            <div className="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 p-6 shadow-2xl">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-3 h-3 rounded-full bg-red-400" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                <div className="w-3 h-3 rounded-full bg-green-400" />
-                <span className="text-white/40 text-xs ml-2">VisionCare Dashboard</span>
+      {/* ── 3D Eye Hero (scroll-driven) ── */}
+      <section className="pt-16 relative">
+        {/* CTA pinned over first viewport of the 3D scene */}
+        <div className="absolute top-16 left-0 right-0 z-10 pointer-events-none" style={{ height: '100vh' }}>
+          <div className="h-full flex items-center px-8 md:px-16 lg:px-24">
+            <div className="max-w-lg pointer-events-auto">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-1.5 mb-6">
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span className="text-white/80 text-sm font-medium">Plateforme médicale certifiée</span>
               </div>
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                {[['12', 'Patients aujourd\'hui'], ['3', 'En attente'], ['8', 'Confirmés'], ['1', 'Annulé']].map(([v, l]) => (
-                  <div key={l} className="bg-white/10 rounded-2xl p-3">
-                    <p className="text-2xl font-bold text-white">{v}</p>
-                    <p className="text-white/50 text-xs mt-0.5">{l}</p>
-                  </div>
-                ))}
+              <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mb-6 drop-shadow-lg">
+                La plateforme la plus{' '}
+                <span className="text-[#70B1C4]">sécurisée</span> pour gérer votre cabinet
+              </h1>
+              <p className="text-white/70 text-lg leading-relaxed mb-8 drop-shadow">
+                Patients, rendez-vous, dossiers médicaux — tout centralisé.
+                Faites défiler pour explorer.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link href="/inscription" className="inline-flex items-center gap-2 bg-[#70B1C4] hover:bg-[#5a9db8] text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-[#70B1C4]/40 transition-all hover:-translate-y-0.5 text-base">
+                  Créer mon compte gratuitement →
+                </Link>
+                <Link href="/login" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-medium px-8 py-3.5 rounded-xl backdrop-blur transition-all text-base">
+                  Se connecter
+                </Link>
               </div>
-              <div className="space-y-2">
-                {['Sophie Martin — 09:00 — Bilan visuel', 'Ahmed Benali — 10:30 — Contrôle', 'Marie Dupont — 11:00 — Consultation'].map((rdv) => (
-                  <div key={rdv} className="bg-white/10 rounded-xl px-3 py-2.5 text-white/70 text-xs flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-[#70B1C4] rounded-full shrink-0" />
-                    {rdv}
+              <div className="flex items-center gap-6 mt-10">
+                {['Aucune carte requise', 'Installation en 2 min', 'Support inclus'].map((t) => (
+                  <div key={t} className="flex items-center gap-1.5 text-white/60 text-sm">
+                    <span className="text-green-400">✓</span> {t}
                   </div>
                 ))}
               </div>
             </div>
           </div>
         </div>
+
+        <EyeSceneClient />
       </section>
 
       {/* ── Stats ── */}
