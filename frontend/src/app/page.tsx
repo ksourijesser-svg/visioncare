@@ -110,7 +110,7 @@ export default function LandingPage() {
             <Link href="/login" className="text-sm font-medium text-white/60 hover:text-white transition-colors px-4 py-2">
               Se connecter
             </Link>
-            <Link href="/inscription" className="text-sm font-semibold bg-[#3d8fa8] hover:bg-[#2d7a94] text-white px-5 py-2.5 rounded-xl shadow-lg shadow-[#3d8fa8]/30 transition-all hover:-translate-y-0.5">
+            <Link href="/inscription" className="btn-neon text-sm font-semibold bg-[#3d8fa8] hover:bg-[#2d7a94] text-white px-5 py-2.5 rounded-xl shadow-lg shadow-[#3d8fa8]/30">
               Essai gratuit
             </Link>
           </div>
