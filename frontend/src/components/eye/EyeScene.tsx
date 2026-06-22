@@ -373,15 +373,6 @@ function Eye() {
   )
 }
 
-// ─── Annotation labels ────────────────────────────────────────────────────────
-
-const ANNOTATIONS = [
-  { range: [0.12, 0.32] as [number,number], name: 'Cornée',     sub: 'Protège et focalise la lumière',      x: '61%', y: '14%' },
-  { range: [0.32, 0.52] as [number,number], name: 'Iris',       sub: "Contrôle l'entrée de lumière",        x: '64%', y: '44%' },
-  { range: [0.52, 0.72] as [number,number], name: 'Cristallin', sub: 'Focalise l\'image sur la rétine',     x: '60%', y: '40%' },
-  { range: [0.72, 0.92] as [number,number], name: 'Rétine',     sub: 'Convertit la lumière en signaux nerveux', x: '58%', y: '36%' },
-]
-
 // ─── Root export ─────────────────────────────────────────────────────────────
 
 export default function EyeScene() {
@@ -391,20 +382,16 @@ export default function EyeScene() {
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight
       if (max <= 0) return
-      const prog = Math.max(0, Math.min(1, window.scrollY / max))
-      S.p = prog
-      setP(prog)
+      S.p = Math.max(0, Math.min(1, window.scrollY / max))
+      setP(S.p)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const active = ANNOTATIONS.findIndex(a => p >= a.range[0] && p < a.range[1])
-
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
-      {/* Three.js canvas */}
       <Canvas
         camera={{ position: [0, 0, 4.6], fov: 44 }}
         gl={{ antialias: true, alpha: false }}
@@ -412,50 +399,20 @@ export default function EyeScene() {
       >
         <SceneBg />
         <Stars />
-
         <ambientLight intensity={0.4} />
         <directionalLight position={[2, 4, 6]} intensity={3.5} color="#ffffff" />
         <pointLight position={[-3, 2, 4]} intensity={2} color="#5080c0" />
         <pointLight position={[0, -2, -3]} intensity={1.5} color="#c04010" />
         <pointLight position={[3, -1, 2]} intensity={1} color="#ffffff" />
-
         <CameraRig />
         <Eye />
       </Canvas>
 
-      {/* Anatomical annotations */}
-      {ANNOTATIONS.map((a, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute',
-            left: a.x, top: a.y,
-            opacity:   active === i ? 1 : 0,
-            transform: active === i ? 'translateY(0px)' : 'translateY(10px)',
-            transition: 'opacity 0.5s ease, transform 0.5s ease',
-            pointerEvents: 'none',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#70B1C4', boxShadow: '0 0 8px #70B1C4' }} />
-            <div style={{ width: 44, height: 1, background: 'rgba(255,255,255,0.35)' }} />
-            <div>
-              <div style={{ color: '#fff', fontWeight: 700, fontSize: 22, letterSpacing: '-0.02em', textShadow: '0 2px 16px rgba(0,0,0,0.8)' }}>
-                {a.name}
-              </div>
-              <div style={{ color: 'rgba(255,255,255,0.55)', fontSize: 13, marginTop: 2, textShadow: '0 1px 8px rgba(0,0,0,0.7)' }}>
-                {a.sub}
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-
-      {/* Scroll hint — only at top */}
+      {/* Scroll hint */}
       <div style={{
         position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)',
         opacity: p < 0.04 ? 1 : 0, transition: 'opacity 0.4s',
-        textAlign: 'center', pointerEvents: 'none',
+        textAlign: 'center',
       }}>
         <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase' }}>Défiler</span>
         <div style={{ width: 1, height: 32, background: 'linear-gradient(#70B1C4, transparent)', margin: '8px auto 0', animation: 'blink 1.8s infinite' }} />
