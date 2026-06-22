@@ -1,11 +1,13 @@
 'use client'
 
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useEffect, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useScroll, ScrollControls, Scroll } from '@react-three/drei'
 import * as THREE from 'three'
 
-// ─── Scene background ─────────────────────────────────────────────────────────
+// Module-level mutable ref — bridges the window scroll listener → useFrame
+const progress = { value: 0 }
+
+// ─── Background ───────────────────────────────────────────────────────────────
 
 function SceneBackground() {
   const { scene } = useThree()
@@ -37,13 +39,12 @@ function Sclera() {
 
 // ─── Iris ─────────────────────────────────────────────────────────────────────
 
-function Iris({ scrollVal }: { scrollVal: React.MutableRefObject<number> }) {
+function Iris() {
   const pupilRef = useRef<THREE.Mesh>(null!)
 
   useFrame(() => {
     if (!pupilRef.current) return
-    const scale = (0.18 + scrollVal.current * 0.18) / 0.18
-    pupilRef.current.scale.setScalar(scale)
+    pupilRef.current.scale.setScalar(1 + progress.value * 1.0)
   })
 
   const irisMap = useMemo(() => {
@@ -62,7 +63,10 @@ function Iris({ scrollVal }: { scrollVal: React.MutableRefObject<number> }) {
 
     for (let i = 0; i < 200; i++) {
       const a = (i / 200) * Math.PI * 2
-      const g = ctx.createLinearGradient(cx + Math.cos(a) * 32, cy + Math.sin(a) * 32, cx + Math.cos(a) * r, cy + Math.sin(a) * r)
+      const g = ctx.createLinearGradient(
+        cx + Math.cos(a) * 32, cy + Math.sin(a) * 32,
+        cx + Math.cos(a) * r, cy + Math.sin(a) * r,
+      )
       g.addColorStop(0, 'rgba(112,177,196,0.4)')
       g.addColorStop(1, 'rgba(0,20,40,0.1)')
       ctx.strokeStyle = g; ctx.lineWidth = 0.7
@@ -148,17 +152,14 @@ function Retina() {
   )
 }
 
-// ─── Eye + camera ─────────────────────────────────────────────────────────────
+// ─── Eye + camera controller ──────────────────────────────────────────────────
 
 function Eye() {
-  const { scroll } = useScroll()
   const groupRef = useRef<THREE.Group>(null!)
-  const scrollSmooth = useRef(0)
   const { camera } = useThree()
 
   useFrame((_s, delta) => {
-    const raw = scroll.offset
-    scrollSmooth.current += (raw - scrollSmooth.current) * 0.07
+    const raw = progress.value
 
     const kf: [number, number, number][] = [
       [0,    4.5,  0],
@@ -194,75 +195,124 @@ function Eye() {
     <group ref={groupRef}>
       <Retina />
       <Lens />
-      <Iris scrollVal={scrollSmooth} />
+      <Iris />
       <Sclera />
       <Cornea />
     </group>
   )
 }
 
-// ─── Section overlays ─────────────────────────────────────────────────────────
+// ─── Section text labels ──────────────────────────────────────────────────────
 
 const SECTIONS = [
   { title: 'VisionCare', sub: 'La plateforme médicale la plus avancée pour votre cabinet.' },
-  { title: 'Cornée — Précision diagnostique', sub: 'Chaque donnée patient analysée avec une précision clinique absolue.' },
-  { title: 'Iris — Intelligence adaptative', sub: 'Votre flux de patients géré en temps réel, sans effort.' },
-  { title: 'Cristallin — Clarté absolue', sub: 'Des dossiers médicaux limpides, accessibles en un clic.' },
-  { title: 'Rétine — Cœur de votre activité', sub: 'Analyses profondes, tableaux de bord et historiques complets.' },
+  { title: 'Cornée — Précision', sub: 'Chaque donnée patient analysée avec une précision clinique absolue.' },
+  { title: 'Iris — Intelligence', sub: 'Votre flux de patients géré en temps réel, sans effort.' },
+  { title: 'Cristallin — Clarté', sub: 'Des dossiers médicaux limpides, accessibles en un clic.' },
+  { title: 'Rétine — Profondeur', sub: 'Analyses, tableaux de bord et historiques complets.' },
 ]
-
-function Overlays() {
-  return (
-    <Scroll html style={{ width: '100%' }}>
-      {SECTIONS.map((sec, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute',
-            top: `${i * 100}vh`,
-            left: 0, right: 0,
-            height: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            paddingRight: '8vw',
-            pointerEvents: 'none',
-          }}
-        >
-          <div style={{ maxWidth: 420, textAlign: 'right' }}>
-            <h2 style={{ fontSize: 'clamp(1.4rem,3vw,2.2rem)', fontWeight: 700, color: '#fff', textShadow: '0 2px 20px rgba(0,0,0,0.8)', marginBottom: '0.6rem', lineHeight: 1.25 }}>
-              {sec.title}
-            </h2>
-            <p style={{ fontSize: 'clamp(0.85rem,1.4vw,1rem)', color: 'rgba(255,255,255,0.65)', textShadow: '0 1px 10px rgba(0,0,0,0.6)', lineHeight: 1.65 }}>
-              {sec.sub}
-            </p>
-          </div>
-        </div>
-      ))}
-    </Scroll>
-  )
-}
 
 // ─── Root export ──────────────────────────────────────────────────────────────
 
 export default function EyeScene() {
-  return (
-    // ScrollControls owns the sticky layout — no outer wrapper needed
-    <Canvas
-      camera={{ position: [0, 0, 4.5], fov: 44 }}
-      gl={{ antialias: true, alpha: false }}
-      style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%' }}
-    >
-      <SceneBackground />
-      <ambientLight intensity={0.5} />
-      <pointLight position={[4, 3, 5]} intensity={3} color="#ffffff" />
-      <pointLight position={[-3, -2, 4]} intensity={1.5} color="#70B1C4" />
-      <pointLight position={[0, 0, -4]} intensity={2} color="#ff5020" />
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const [activeSection, setActiveSection] = useState(0)
 
-      <ScrollControls pages={5} damping={0.25}>
-        <Eye />
-        <Overlays />
-      </ScrollControls>
-    </Canvas>
+  useEffect(() => {
+    const onScroll = () => {
+      const el = sectionRef.current
+      if (!el) return
+      const scrolled = window.scrollY - el.offsetTop
+      const totalH = el.offsetHeight - window.innerHeight
+      const p = Math.max(0, Math.min(1, scrolled / totalH))
+      progress.value = p
+      setActiveSection(Math.min(SECTIONS.length - 1, Math.floor(p * SECTIONS.length)))
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return (
+    <div ref={sectionRef} style={{ height: '500vh', position: 'relative' }}>
+      {/* Sticky canvas viewport */}
+      <div style={{ position: 'sticky', top: 0, height: '100vh', width: '100%' }}>
+        <Canvas
+          camera={{ position: [0, 0, 4.5], fov: 44 }}
+          gl={{ antialias: true, alpha: false }}
+          style={{ width: '100%', height: '100%' }}
+        >
+          <SceneBackground />
+          <ambientLight intensity={0.5} />
+          <pointLight position={[4, 3, 5]} intensity={3} color="#ffffff" />
+          <pointLight position={[-3, -2, 4]} intensity={1.5} color="#70B1C4" />
+          <pointLight position={[0, 0, -4]} intensity={2} color="#ff5020" />
+          <Eye />
+        </Canvas>
+
+        {/* Section labels overlaid on canvas, right-aligned */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0, right: 0,
+            width: '42%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            paddingRight: '6vw',
+            pointerEvents: 'none',
+          }}
+        >
+          {SECTIONS.map((sec, i) => (
+            <div
+              key={i}
+              style={{
+                position: 'absolute',
+                textAlign: 'right',
+                maxWidth: 380,
+                right: '6vw',
+                opacity: activeSection === i ? 1 : 0,
+                transform: activeSection === i ? 'translateY(0)' : 'translateY(16px)',
+                transition: 'opacity 0.55s ease, transform 0.55s ease',
+              }}
+            >
+              <h2 style={{ fontSize: 'clamp(1.3rem,2.8vw,2.1rem)', fontWeight: 700, color: '#fff', textShadow: '0 2px 24px rgba(0,0,0,0.85)', marginBottom: '0.55rem', lineHeight: 1.25 }}>
+                {sec.title}
+              </h2>
+              <p style={{ fontSize: 'clamp(0.82rem,1.35vw,1rem)', color: 'rgba(255,255,255,0.62)', textShadow: '0 1px 12px rgba(0,0,0,0.7)', lineHeight: 1.65 }}>
+                {sec.sub}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Scroll indicator — fades after first scroll */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 32,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            opacity: activeSection === 0 ? 1 : 0,
+            transition: 'opacity 0.4s ease',
+            pointerEvents: 'none',
+            textAlign: 'center',
+          }}
+        >
+          <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 8 }}>
+            Défiler
+          </div>
+          <div style={{
+            width: 1,
+            height: 36,
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0.4), transparent)',
+            margin: '0 auto',
+            animation: 'pulse-line 1.8s ease-in-out infinite',
+          }} />
+          <style>{`@keyframes pulse-line { 0%,100%{opacity:.3} 50%{opacity:.9} }`}</style>
+        </div>
+      </div>
+    </div>
   )
 }
