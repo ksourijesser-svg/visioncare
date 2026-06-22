@@ -53,7 +53,7 @@ export default function DashboardPage() {
       <div className="p-6 space-y-6">
 
         {/* Welcome banner */}
-        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#3d8fa8] via-[#70B1C4] to-[#9dd0e0] p-6 text-white shadow-lg">
+        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#1e6c87] via-[#3d8fa8] to-[#5eacc2] p-6 text-white shadow-lg">
           <div className="relative z-10">
             <p className="text-white/70 text-sm capitalize mb-1">{todayLabel}</p>
             <h2 className="text-2xl font-bold">
