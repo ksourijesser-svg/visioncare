@@ -323,7 +323,7 @@ export default function LandingPage() {
                 <rect x="197" y="122" width="2.5" height="12" rx="1" fill="#70B1C4" fillOpacity="0.24"/>
                 <rect x="192" y="127" width="12" height="2.5" rx="1" fill="#70B1C4" fillOpacity="0.24"/>
               </svg>
-              <p className="text-[#1A2B3C] text-base leading-relaxed font-bold max-w-[200px]">
+              <p className="text-white text-base leading-relaxed font-bold max-w-[200px] drop-shadow">
                 Accédez rapidement à votre médecin
               </p>
             </div>
