@@ -87,12 +87,13 @@ function Iris() {
   }, [])
 
   return (
-    <group position={[0, 0, 0.97]}>
+    // Iris sits just in front of the sclera surface (sclera radius = 1.0)
+    <group position={[0, 0, 1.005]}>
       <mesh>
         <circleGeometry args={[0.47, 128]} />
         <meshStandardMaterial map={irisMap} roughness={0.15} metalness={0.2} emissive="#1a4a60" emissiveIntensity={0.3} />
       </mesh>
-      <mesh ref={pupilRef} position={[0, 0, 0.001]}>
+      <mesh ref={pupilRef} position={[0, 0, 0.002]}>
         <circleGeometry args={[0.18, 64]} />
         <meshStandardMaterial color="#040608" roughness={1} />
       </mesh>
