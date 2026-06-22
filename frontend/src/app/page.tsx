@@ -405,7 +405,7 @@ export default function LandingPage() {
                 <circle cx="20" cy="172" r="4" fill="#3d8fa8" fillOpacity="0.18"/>
                 <circle cx="198" cy="178" r="5" fill="#70B1C4" fillOpacity="0.2"/>
               </svg>
-              <p className="text-white text-base leading-relaxed font-bold max-w-[200px] drop-shadow">
+              <p className="text-[#3d8fa8] text-base leading-relaxed font-bold max-w-[200px]">
                 Prenez rendez-vous en ligne à tout moment
               </p>
             </div>
