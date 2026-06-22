@@ -101,7 +101,7 @@ export default function LandingPage() {
         </section>
 
         {/* ── Features ── */}
-        <section className="py-24 bg-[#05090f]/80 backdrop-blur-sm">
+        <section className="py-24 bg-[#05090f]/55 backdrop-blur-sm">
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-14">
               <p className="text-[#70B1C4] text-sm font-bold uppercase tracking-widest mb-3">Fonctionnalités</p>
