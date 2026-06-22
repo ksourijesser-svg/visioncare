@@ -22,10 +22,10 @@ const activityData = [
 ]
 
 const statusColors: Record<string, string> = {
-  programme: 'bg-blue-50 text-blue-600',
-  confirme:  'bg-emerald-50 text-emerald-600',
-  complete:  'bg-gray-100 text-gray-600',
-  annule:    'bg-red-50 text-red-500',
+  programme: 'bg-blue-100 text-blue-700',
+  confirme:  'bg-emerald-100 text-emerald-700',
+  complete:  'bg-gray-200 text-gray-700',
+  annule:    'bg-red-100 text-red-600',
 }
 
 const statusLabels: Record<string, string> = {
