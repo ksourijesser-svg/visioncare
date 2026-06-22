@@ -171,7 +171,7 @@ export function Sidebar() {
               <p className="text-xs font-semibold text-[#1A2B3C] truncate">
                 Dr. {user?.prenom} {user?.nom}
               </p>
-              <p className="text-[10px] text-gray-400 capitalize">{user?.role}</p>
+              <p className="text-[10px] text-gray-500 capitalize">{user?.role}</p>
             </div>
             <button
               onClick={handleLogout}
