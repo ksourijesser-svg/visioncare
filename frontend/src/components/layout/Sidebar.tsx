@@ -67,7 +67,7 @@ export function Sidebar() {
           </div>
         </div>
 
-        <div className="mx-5 h-px bg-gray-100" />
+        <div className="mx-5 h-px bg-gray-200" />
 
         {/* Nav */}
         <nav className="px-4 pt-5 pb-4 space-y-1">
