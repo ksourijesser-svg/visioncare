@@ -105,9 +105,10 @@ function Iris() {
 
 function Lens() {
   return (
-    <mesh position={[0, 0, 0.45]}>
-      <sphereGeometry args={[0.36, 32, 32]} />
-      <meshStandardMaterial color="#cce8f5" transparent opacity={0.25} roughness={0} metalness={0.05} />
+    // Lens visible when camera is past the iris (inside the eye)
+    <mesh position={[0, 0, 0.65]}>
+      <sphereGeometry args={[0.32, 32, 32]} />
+      <meshStandardMaterial color="#b8ddf5" transparent opacity={0.35} roughness={0} metalness={0.1} />
     </mesh>
   )
 }
