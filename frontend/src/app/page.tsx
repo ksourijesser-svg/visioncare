@@ -82,29 +82,29 @@ const STEPS = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white text-[#1A2B3C]">
+    <div className="min-h-screen text-[#1A2B3C]">
 
       {/* ── Navigation ─────────────────────────────────────────────────────── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#060F1E]/85 backdrop-blur-md border-b border-white/8">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#70B1C4] flex items-center justify-center shadow-sm">
+            <div className="w-9 h-9 rounded-xl bg-[#3d8fa8] flex items-center justify-center shadow-md shadow-[#3d8fa8]/40">
               <svg viewBox="0 0 24 24" fill="white" className="w-5 h-5">
                 <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
               </svg>
             </div>
-            <span className="text-lg font-bold text-[#1A2B3C]">VisionCare</span>
+            <span className="text-lg font-bold text-white">VisionCare</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-[#1A2B3C]/60">
-            <a href="#fonctionnalites" className="hover:text-[#70B1C4] transition-colors">Fonctionnalités</a>
-            <a href="#comment" className="hover:text-[#70B1C4] transition-colors">Comment ça marche</a>
-            <a href="#specialites" className="hover:text-[#70B1C4] transition-colors">Spécialités</a>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/55">
+            <a href="#fonctionnalites" className="hover:text-white transition-colors">Fonctionnalités</a>
+            <a href="#comment" className="hover:text-white transition-colors">Comment ça marche</a>
+            <a href="#specialites" className="hover:text-white transition-colors">Spécialités</a>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/login" className="text-sm font-medium text-[#1A2B3C]/70 hover:text-[#1A2B3C] transition-colors px-4 py-2">
+            <Link href="/login" className="text-sm font-medium text-white/60 hover:text-white transition-colors px-4 py-2">
               Se connecter
             </Link>
-            <Link href="/inscription" className="text-sm font-semibold bg-[#70B1C4] hover:bg-[#5a9db8] text-white px-5 py-2.5 rounded-xl shadow-sm transition-all hover:-translate-y-0.5">
+            <Link href="/inscription" className="text-sm font-semibold bg-[#3d8fa8] hover:bg-[#2d7a94] text-white px-5 py-2.5 rounded-xl shadow-lg shadow-[#3d8fa8]/30 transition-all hover:-translate-y-0.5">
               Essai gratuit
             </Link>
           </div>
@@ -112,42 +112,81 @@ export default function LandingPage() {
       </nav>
 
       {/* ── Hero ───────────────────────────────────────────────────────────── */}
-      <section className="pt-32 pb-24 px-6 relative overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#E4EEF4] via-white to-white pointer-events-none" />
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#70B1C4]/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/4" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#70B1C4]/8 rounded-full blur-3xl pointer-events-none translate-y-1/3 -translate-x-1/4" />
+      <section className="pt-32 pb-24 px-6 relative overflow-hidden bg-[#060F1E]">
+        {/* Dot grid overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(circle, rgba(112,177,196,0.14) 1px, transparent 1px)',
+            backgroundSize: '30px 30px',
+          }}
+        />
+
+        {/* Gradient orbs */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            top: '-180px', right: '-80px',
+            width: '700px', height: '700px',
+            background: 'radial-gradient(circle, rgba(61,143,168,0.22) 0%, transparent 65%)',
+          }}
+        />
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            bottom: '-120px', left: '-60px',
+            width: '500px', height: '500px',
+            background: 'radial-gradient(circle, rgba(112,177,196,0.16) 0%, transparent 65%)',
+          }}
+        />
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            top: '40%', left: '35%',
+            width: '350px', height: '350px',
+            background: 'radial-gradient(circle, rgba(29,100,140,0.12) 0%, transparent 70%)',
+          }}
+        />
+
+        {/* Horizontal accent line */}
+        <div
+          className="absolute left-0 right-0 pointer-events-none"
+          style={{
+            top: '42%', height: '1px',
+            background: 'linear-gradient(to right, transparent 5%, rgba(112,177,196,0.15) 40%, rgba(112,177,196,0.15) 60%, transparent 95%)',
+          }}
+        />
 
         <div className="max-w-6xl mx-auto relative">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 bg-[#70B1C4]/10 border border-[#70B1C4]/20 text-[#70B1C4] text-sm font-semibold rounded-full px-4 py-1.5 mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/8 border border-white/12 text-white/80 text-sm font-semibold rounded-full px-4 py-1.5 mb-6 backdrop-blur-sm">
               <span className="w-2 h-2 bg-[#70B1C4] rounded-full animate-pulse" />
               Plateforme médicale certifiée
             </div>
 
-            <h1 className="text-5xl lg:text-6xl font-bold text-[#1A2B3C] leading-tight mb-6">
+            <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               Gérez votre cabinet{' '}
               <span className="text-[#70B1C4]">médical</span>{' '}
               en toute simplicité
             </h1>
 
-            <p className="text-lg text-[#1A2B3C]/60 leading-relaxed mb-10">
+            <p className="text-lg text-white/60 leading-relaxed mb-10">
               Patients, rendez-vous, dossiers médicaux — tout centralisé dans une interface
               pensée pour les professionnels de santé.
             </p>
 
             <div className="flex flex-wrap gap-4 mb-10">
-              <Link href="/inscription" className="inline-flex items-center gap-2 bg-[#70B1C4] hover:bg-[#5a9db8] text-white font-semibold px-8 py-3.5 rounded-xl shadow-md shadow-[#70B1C4]/25 transition-all hover:-translate-y-0.5">
+              <Link href="/inscription" className="inline-flex items-center gap-2 bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-[#3d8fa8]/35 transition-all hover:-translate-y-0.5">
                 Commencer gratuitement →
               </Link>
-              <Link href="/login" className="inline-flex items-center gap-2 border border-gray-200 hover:border-[#70B1C4]/40 bg-white text-[#1A2B3C] font-medium px-8 py-3.5 rounded-xl transition-all hover:-translate-y-0.5">
+              <Link href="/login" className="inline-flex items-center gap-2 border border-white/18 hover:border-white/35 bg-white/6 hover:bg-white/10 text-white font-medium px-8 py-3.5 rounded-xl transition-all hover:-translate-y-0.5 backdrop-blur-sm">
                 Voir la démo
               </Link>
             </div>
 
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 flex-wrap">
               {['Aucune carte requise', 'Installation en 2 min', 'Support inclus'].map((t) => (
-                <div key={t} className="flex items-center gap-1.5 text-[#1A2B3C]/50 text-sm">
+                <div key={t} className="flex items-center gap-1.5 text-white/45 text-sm">
                   <svg className="w-4 h-4 text-[#70B1C4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -159,44 +198,48 @@ export default function LandingPage() {
 
           {/* Dashboard preview card */}
           <div className="absolute right-0 top-0 w-[480px] hidden lg:block">
-            <div className="bg-white rounded-2xl shadow-2xl shadow-[#70B1C4]/10 border border-gray-100 overflow-hidden">
+            <div className="bg-[#0D1E30] rounded-2xl shadow-2xl shadow-black/40 border border-white/10 overflow-hidden">
               {/* Mock top bar */}
-              <div className="h-10 bg-[#E4EEF4] flex items-center px-4 gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-300" />
-                <div className="w-3 h-3 rounded-full bg-yellow-300" />
-                <div className="w-3 h-3 rounded-full bg-green-300" />
-                <div className="flex-1 mx-4 h-5 bg-white/60 rounded-md" />
+              <div className="h-10 bg-[#0A1828] flex items-center px-4 gap-2 border-b border-white/6">
+                <div className="w-3 h-3 rounded-full bg-red-400/70" />
+                <div className="w-3 h-3 rounded-full bg-yellow-400/70" />
+                <div className="w-3 h-3 rounded-full bg-green-400/70" />
+                <div className="flex-1 mx-4 h-5 bg-white/8 rounded-md" />
               </div>
               {/* Mock dashboard */}
-              <div className="p-5 bg-[#E4EEF4]">
+              <div className="p-5 bg-[#0D1E30]">
                 {/* Stat row */}
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   {[['24', 'Patients'], ['8', 'RDV aujourd\'hui'], ['3', 'En attente']].map(([v, l]) => (
-                    <div key={l} className="bg-white rounded-xl p-3 shadow-sm">
-                      <p className="text-xl font-bold text-[#1A2B3C]">{v}</p>
-                      <p className="text-[10px] text-[#1A2B3C]/50 mt-0.5">{l}</p>
+                    <div key={l} className="bg-white/8 border border-white/10 rounded-xl p-3">
+                      <p className="text-xl font-bold text-white">{v}</p>
+                      <p className="text-[10px] text-white/45 mt-0.5">{l}</p>
                     </div>
                   ))}
                 </div>
                 {/* Mock chart */}
-                <div className="bg-white rounded-xl p-4 mb-4 shadow-sm">
+                <div className="bg-white/6 border border-white/8 rounded-xl p-4 mb-4">
                   <div className="flex items-end gap-2 h-20">
                     {[40, 65, 55, 80, 70, 90, 75].map((h, i) => (
-                      <div key={i} className="flex-1 rounded-t-sm" style={{ height: `${h}%`, background: i===5 ? '#70B1C4' : '#70B1C4' + '33' }} />
+                      <div
+                        key={i}
+                        className="flex-1 rounded-t-sm"
+                        style={{ height: `${h}%`, background: i === 5 ? '#3d8fa8' : 'rgba(112,177,196,0.25)' }}
+                      />
                     ))}
                   </div>
                 </div>
                 {/* Mock list */}
-                <div className="bg-white rounded-xl p-3 shadow-sm space-y-2">
+                <div className="bg-white/6 border border-white/8 rounded-xl p-3 space-y-2">
                   {['Martin Dupont — 09:00', 'Claire Bernard — 09:30', 'Paul Richard — 10:00'].map((r) => (
                     <div key={r} className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-[#70B1C4]/20 flex items-center justify-center text-[10px] font-bold text-[#70B1C4]">
+                        <div className="w-7 h-7 rounded-full bg-[#3d8fa8]/30 flex items-center justify-center text-[10px] font-bold text-[#70B1C4]">
                           {r[0]}
                         </div>
-                        <span className="text-xs text-[#1A2B3C]/70">{r}</span>
+                        <span className="text-xs text-white/65">{r}</span>
                       </div>
-                      <span className="text-[10px] bg-green-50 text-green-600 px-2 py-0.5 rounded-full font-medium">Confirmé</span>
+                      <span className="text-[10px] bg-emerald-500/15 text-emerald-400 px-2 py-0.5 rounded-full font-medium border border-emerald-400/20">Confirmé</span>
                     </div>
                   ))}
                 </div>
@@ -207,35 +250,35 @@ export default function LandingPage() {
       </section>
 
       {/* ── Stats ──────────────────────────────────────────────────────────── */}
-      <section className="py-14 border-y border-gray-100 bg-white">
+      <section className="py-14 border-y border-white/6 bg-[#081220]">
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
           {STATS.map((s) => (
             <div key={s.label} className="text-center">
-              <p className="text-3xl font-bold text-[#1A2B3C]">{s.value}</p>
-              <p className="text-sm text-[#1A2B3C]/45 mt-1">{s.label}</p>
+              <p className="text-3xl font-bold text-white">{s.value}</p>
+              <p className="text-sm text-white/45 mt-1">{s.label}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ── Features ───────────────────────────────────────────────────────── */}
-      <section id="fonctionnalites" className="py-24 bg-[#E4EEF4]/30">
+      <section id="fonctionnalites" className="py-24 bg-[#F0F6FA]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
-            <span className="text-[#70B1C4] text-sm font-bold uppercase tracking-widest">Fonctionnalités</span>
+            <span className="text-[#3d8fa8] text-sm font-bold uppercase tracking-widest">Fonctionnalités</span>
             <h2 className="text-3xl font-bold text-[#1A2B3C] mt-3">Tout ce dont votre cabinet a besoin</h2>
-            <p className="text-[#1A2B3C]/50 mt-3 max-w-xl mx-auto">
+            <p className="text-[#1A2B3C]/65 mt-3 max-w-xl mx-auto">
               Une solution complète pensée par des professionnels de santé.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {FEATURES.map((f) => (
-              <div key={f.title} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all group">
-                <div className="w-12 h-12 rounded-xl bg-[#70B1C4]/10 text-[#70B1C4] flex items-center justify-center mb-4 group-hover:bg-[#70B1C4] group-hover:text-white transition-colors">
+              <div key={f.title} className="bg-white rounded-2xl p-6 shadow-md border border-gray-200/80 hover:shadow-lg hover:-translate-y-0.5 transition-all group">
+                <div className="w-12 h-12 rounded-xl bg-[#3d8fa8]/12 text-[#3d8fa8] flex items-center justify-center mb-4 group-hover:bg-[#3d8fa8] group-hover:text-white transition-colors">
                   {f.icon}
                 </div>
                 <h3 className="font-bold text-[#1A2B3C] mb-2">{f.title}</h3>
-                <p className="text-sm text-[#1A2B3C]/55 leading-relaxed">{f.desc}</p>
+                <p className="text-sm text-[#1A2B3C]/65 leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -246,20 +289,20 @@ export default function LandingPage() {
       <section id="comment" className="py-24 bg-white">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-14">
-            <span className="text-[#70B1C4] text-sm font-bold uppercase tracking-widest">Simple & Rapide</span>
+            <span className="text-[#3d8fa8] text-sm font-bold uppercase tracking-widest">Simple & Rapide</span>
             <h2 className="text-3xl font-bold text-[#1A2B3C] mt-3">Démarrez en 3 étapes</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {STEPS.map((s, i) => (
               <div key={s.n} className="relative text-center">
                 {i < STEPS.length - 1 && (
-                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-px bg-gradient-to-r from-[#70B1C4]/40 to-transparent" />
+                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-px bg-gradient-to-r from-[#3d8fa8]/50 to-transparent" />
                 )}
-                <div className="w-16 h-16 rounded-2xl bg-[#70B1C4] text-white text-xl font-bold flex items-center justify-center mx-auto mb-5 shadow-md shadow-[#70B1C4]/25">
+                <div className="w-16 h-16 rounded-2xl bg-[#3d8fa8] text-white text-xl font-bold flex items-center justify-center mx-auto mb-5 shadow-lg shadow-[#3d8fa8]/35">
                   {s.n}
                 </div>
                 <h3 className="font-bold text-[#1A2B3C] text-lg mb-2">{s.title}</h3>
-                <p className="text-sm text-[#1A2B3C]/55 leading-relaxed">{s.desc}</p>
+                <p className="text-sm text-[#1A2B3C]/65 leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -267,12 +310,12 @@ export default function LandingPage() {
       </section>
 
       {/* ── Specialisations ────────────────────────────────────────────────── */}
-      <section id="specialites" className="py-14 bg-[#E4EEF4]/30 border-y border-gray-100">
+      <section id="specialites" className="py-14 bg-[#F0F6FA] border-y border-gray-200">
         <div className="max-w-5xl mx-auto px-6 text-center">
-          <p className="text-[#1A2B3C]/40 text-sm font-medium mb-6 uppercase tracking-widest">Adapté à toutes les spécialités</p>
+          <p className="text-[#1A2B3C]/55 text-sm font-medium mb-6 uppercase tracking-widest">Adapté à toutes les spécialités</p>
           <div className="flex flex-wrap justify-center gap-3">
             {SPECIALISATIONS.map((s) => (
-              <span key={s} className="bg-white border border-gray-200 text-[#1A2B3C]/70 text-sm font-medium px-4 py-1.5 rounded-full hover:border-[#70B1C4]/40 hover:text-[#70B1C4] transition-colors cursor-default">
+              <span key={s} className="bg-white border border-gray-300 text-[#1A2B3C]/75 text-sm font-medium px-4 py-1.5 rounded-full hover:border-[#3d8fa8]/60 hover:text-[#3d8fa8] transition-colors cursor-default shadow-sm">
                 {s}
               </span>
             ))}
@@ -281,30 +324,38 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA ────────────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-gradient-to-br from-[#1A2B3C] to-[#2a4a6b] relative overflow-hidden">
-        <div className="absolute inset-0 bg-[#70B1C4]/5 pointer-events-none" />
-        <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#70B1C4]/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="py-24 bg-gradient-to-br from-[#0A1828] to-[#1a3a5c] relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(circle, rgba(112,177,196,0.08) 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
+        />
+        <div
+          className="absolute -top-32 -right-32 w-96 h-96 pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(61,143,168,0.18) 0%, transparent 70%)' }}
+        />
         <div className="max-w-2xl mx-auto px-6 text-center relative">
           <h2 className="text-3xl font-bold text-white mb-4">Prêt à moderniser votre cabinet ?</h2>
-          <p className="text-white/55 mb-8 text-lg">
+          <p className="text-white/60 mb-8 text-lg">
             Créez votre compte en 2 minutes. Aucune installation, aucune carte bancaire requise.
           </p>
-          <Link href="/inscription" className="inline-block bg-[#70B1C4] hover:bg-[#5a9db8] text-white font-bold px-10 py-4 rounded-xl shadow-lg shadow-[#70B1C4]/30 transition-all hover:-translate-y-0.5 text-lg">
+          <Link href="/inscription" className="inline-block bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-bold px-10 py-4 rounded-xl shadow-xl shadow-[#3d8fa8]/35 transition-all hover:-translate-y-0.5 text-lg">
             Commencer gratuitement →
           </Link>
         </div>
       </section>
 
       {/* ── Footer ─────────────────────────────────────────────────────────── */}
-      <footer className="bg-[#1A2B3C] text-white/40 text-sm py-10">
+      <footer className="bg-[#060F1E] text-white/40 text-sm py-10 border-t border-white/6">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-[#70B1C4] flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-[#3d8fa8] flex items-center justify-center">
               <svg viewBox="0 0 24 24" fill="white" className="w-4 h-4">
                 <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
               </svg>
             </div>
-            <span className="text-white/60 font-semibold text-base">VisionCare</span>
+            <span className="text-white/65 font-semibold text-base">VisionCare</span>
           </div>
           <p>© 2026 VisionCare. Tous droits réservés. · Données sécurisées · Conformité RGPD</p>
           <div className="flex items-center gap-6 text-white/40">
