@@ -243,10 +243,11 @@ export default function EyeScene() {
           style={{ width: '100%', height: '100%' }}
         >
           <SceneBackground />
-          <ambientLight intensity={0.5} />
+          <ambientLight intensity={1.2} />
+          <directionalLight position={[0, 0, 6]} intensity={4} color="#ffffff" />
           <pointLight position={[4, 3, 5]} intensity={3} color="#ffffff" />
-          <pointLight position={[-3, -2, 4]} intensity={1.5} color="#70B1C4" />
-          <pointLight position={[0, 0, -4]} intensity={2} color="#ff5020" />
+          <pointLight position={[-3, 2, 4]} intensity={2} color="#b8d8e8" />
+          <pointLight position={[0, 0, -3]} intensity={1.5} color="#ff6030" />
           <Eye />
         </Canvas>
 
