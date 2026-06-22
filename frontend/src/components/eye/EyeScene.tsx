@@ -89,7 +89,7 @@ function Iris() {
     <group position={[0, 0, 0.97]}>
       <mesh>
         <circleGeometry args={[0.47, 128]} />
-        <meshStandardMaterial map={irisMap} roughness={0.25} metalness={0.08} />
+        <meshStandardMaterial map={irisMap} roughness={0.15} metalness={0.2} emissive="#1a4a60" emissiveIntensity={0.3} />
       </mesh>
       <mesh ref={pupilRef} position={[0, 0, 0.001]}>
         <circleGeometry args={[0.18, 64]} />
