@@ -279,7 +279,7 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-3 gap-6 items-stretch text-center">
 
             {/* ─ Feature 1: Medical team ─ */}
-            <div className="flex flex-col items-center gap-6 bg-[#F4FAFD] rounded-3xl p-8 border border-[#C5DEE9] hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div className="flex flex-col items-center gap-6 bg-[#A8C8DC] rounded-3xl p-8 border border-[#7AACC4] shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 h-auto drop-shadow-lg">
                 <circle cx="110" cy="120" r="100" fill="#B8D5E8"/>
                 {/* Doctor - left */}
@@ -411,7 +411,7 @@ export default function LandingPage() {
             </div>
 
             {/* ─ Feature 3: SMS / email reminders ─ */}
-            <div className="flex flex-col items-center gap-6 bg-[#F4FAFD] rounded-3xl p-8 border border-[#C5DEE9] hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div className="flex flex-col items-center gap-6 bg-[#A8C8DC] rounded-3xl p-8 border border-[#7AACC4] shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 h-auto drop-shadow-lg">
                 <circle cx="110" cy="120" r="100" fill="#B8D5E8"/>
                 {/* Dashed rings */}
