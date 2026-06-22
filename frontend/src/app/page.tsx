@@ -276,7 +276,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 items-start text-center">
+          <div className="grid md:grid-cols-3 gap-6 items-stretch text-center">
 
             {/* ─ Feature 1: Medical team ─ */}
             <div className="flex flex-col items-center gap-6 bg-[#F4FAFD] rounded-3xl p-8 border border-[#C5DEE9] hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
