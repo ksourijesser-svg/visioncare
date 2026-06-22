@@ -300,10 +300,10 @@ export default function LandingPage() {
                 <circle cx="148" cy="75" r="22" fill="#F5C9A0"/>
                 <path d="M126 80 Q126 53 148 53 Q170 53 170 80 Q164 65 148 61 Q132 65 126 80Z" fill="#C8A050"/>
                 <ellipse cx="148" cy="54" rx="11" ry="9" fill="#C8A050"/>
-                <path d="M126 96 L126 168 L170 168 L170 96 Q162 88 148 88 Q134 88 126 96Z" fill="#70B1C4"/>
-                <path d="M148 88 L141 106 L148 102 L155 106 L148 88Z" fill="#3d8fa8"/>
-                <path d="M126 98 Q112 102 109 134 L124 136 L129 104Z" fill="#70B1C4"/>
-                <path d="M170 98 Q184 102 187 134 L172 136 L167 104Z" fill="#70B1C4"/>
+                <path d="M126 96 L126 168 L170 168 L170 96 Q162 88 148 88 Q134 88 126 96Z" fill="#1E6B8A"/>
+                <path d="M148 88 L141 106 L148 102 L155 106 L148 88Z" fill="#154E68"/>
+                <path d="M126 98 Q112 102 109 134 L124 136 L129 104Z" fill="#1E6B8A"/>
+                <path d="M170 98 Q184 102 187 134 L172 136 L167 104Z" fill="#1E6B8A"/>
                 <rect x="178" y="115" width="26" height="33" rx="3" fill="#DCEEF3" stroke="#3d8fa8" strokeWidth="1.5"/>
                 <rect x="185" y="111" width="12" height="8" rx="2" fill="#3d8fa8"/>
                 <line x1="182" y1="125" x2="200" y2="125" stroke="#3d8fa8" strokeWidth="1.2"/>
