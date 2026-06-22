@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import EyeSceneClient from '@/components/eye/EyeSceneClient'
 
 const FEATURES = [
   { icon: '🔒', title: 'Sécurité maximale', desc: 'Chiffrement 256-bit, authentification JWT et données hébergées en conformité totale avec les normes médicales.' },
