@@ -329,7 +329,7 @@ export default function LandingPage() {
             </div>
 
             {/* ─ Feature 2: Online booking — highlighted center ─ */}
-            <div className="flex flex-col items-center gap-6 bg-[#EEF7FC] rounded-3xl p-8 border-2 border-[#3d8fa8]/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative">
+            <div className="flex flex-col items-center gap-6 bg-[#8FB8D0] rounded-3xl p-8 border-2 border-[#3d8fa8] shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#3d8fa8] text-white text-xs font-bold px-4 py-1 rounded-full shadow-md shadow-[#3d8fa8]/30 whitespace-nowrap">
                 ✦ Le plus utilisé
               </div>
