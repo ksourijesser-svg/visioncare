@@ -61,3 +61,16 @@ export const appointmentsApi = {
 export const dashboardApi = {
   stats: () => api.get('/dashboard/stats'),
 }
+
+export const publicApi = {
+  searchDoctors: (q: string) => api.get('/public/doctors/search', { params: { q } }),
+  createRdv: (data: {
+    medecin_id: number
+    nom: string
+    prenom: string
+    telephone: string
+    adresse?: string | null
+    date_heure: string
+    motif?: string | null
+  }) => api.post('/public/rendez-vous', data),
+}
