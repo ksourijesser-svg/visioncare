@@ -2,8 +2,18 @@
 
 import { useRef, useMemo } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useScroll, ScrollControls, Scroll, Environment } from '@react-three/drei'
+import { useScroll, ScrollControls, Scroll } from '@react-three/drei'
 import * as THREE from 'three'
+
+// ─── Scene background ────────────────────────────────────────────────────────
+
+function SceneBackground() {
+  const { scene } = useThree()
+  useMemo(() => {
+    scene.background = new THREE.Color('#0d1f2e')
+  }, [scene])
+  return null
+}
 
 // ─── Cornea (glass dome) ─────────────────────────────────────────────────────
 
@@ -11,22 +21,19 @@ function Cornea() {
   return (
     <mesh position={[0, 0, 0.06]}>
       <sphereGeometry args={[1.08, 64, 64, 0, Math.PI * 2, 0, Math.PI * 0.48]} />
-      <meshPhysicalMaterial
-        color="#c8e8f4"
+      <meshStandardMaterial
+        color="#c8ecf8"
         transparent
-        opacity={0.22}
+        opacity={0.18}
         roughness={0.02}
-        metalness={0}
-        transmission={0.9}
-        thickness={0.15}
-        ior={1.37}
+        metalness={0.1}
         side={THREE.DoubleSide}
       />
     </mesh>
   )
 }
 
-// ─── Sclera (white of eye) ───────────────────────────────────────────────────
+// ─── Sclera ──────────────────────────────────────────────────────────────────
 
 function Sclera() {
   return (
@@ -37,7 +44,7 @@ function Sclera() {
   )
 }
 
-// ─── Iris with procedural texture ────────────────────────────────────────────
+// ─── Iris with procedural canvas texture ─────────────────────────────────────
 
 function Iris({ scrollVal }: { scrollVal: React.MutableRefObject<number> }) {
   const pupilRef = useRef<THREE.Mesh>(null!)
@@ -55,7 +62,6 @@ function Iris({ scrollVal }: { scrollVal: React.MutableRefObject<number> }) {
     const ctx = c.getContext('2d')!
     const cx = sz / 2, cy = sz / 2, r = sz / 2
 
-    // base teal
     const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, r)
     bg.addColorStop(0, '#3a7a9c')
     bg.addColorStop(0.6, '#1e5570')
@@ -63,7 +69,6 @@ function Iris({ scrollVal }: { scrollVal: React.MutableRefObject<number> }) {
     ctx.fillStyle = bg
     ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill()
 
-    // fibres
     for (let i = 0; i < 200; i++) {
       const angle = (i / 200) * Math.PI * 2
       const grad = ctx.createLinearGradient(
@@ -80,7 +85,6 @@ function Iris({ scrollVal }: { scrollVal: React.MutableRefObject<number> }) {
       ctx.stroke()
     }
 
-    // limbal ring
     const rim = ctx.createRadialGradient(cx, cy, r * 0.78, cx, cy, r)
     rim.addColorStop(0, 'transparent')
     rim.addColorStop(1, 'rgba(5,15,25,0.9)')
@@ -110,20 +114,18 @@ function Lens() {
   return (
     <mesh position={[0, 0, 0.45]}>
       <sphereGeometry args={[0.36, 32, 32]} />
-      <meshPhysicalMaterial
+      <meshStandardMaterial
         color="#cce8f5"
         transparent
-        opacity={0.28}
+        opacity={0.25}
         roughness={0}
-        metalness={0}
-        transmission={0.85}
-        ior={1.42}
+        metalness={0.05}
       />
     </mesh>
   )
 }
 
-// ─── Retina (back of eye) ────────────────────────────────────────────────────
+// ─── Retina ───────────────────────────────────────────────────────────────────
 
 function Retina() {
   const map = useMemo(() => {
@@ -136,14 +138,12 @@ function Retina() {
     ctx.fillStyle = '#6b1010'
     ctx.beginPath(); ctx.arc(cx, cy, sz / 2, 0, Math.PI * 2); ctx.fill()
 
-    // fovea
     const fov = ctx.createRadialGradient(cx, cy, 0, cx, cy, sz * 0.12)
     fov.addColorStop(0, 'rgba(255,180,80,0.7)')
     fov.addColorStop(1, 'transparent')
     ctx.fillStyle = fov
     ctx.beginPath(); ctx.arc(cx, cy, sz * 0.12, 0, Math.PI * 2); ctx.fill()
 
-    // blood vessels recursive
     const vessel = (x: number, y: number, a: number, len: number, d: number, w: number) => {
       if (d <= 0 || len < 6) return
       const ex = x + Math.cos(a) * len
@@ -183,7 +183,7 @@ function Retina() {
   )
 }
 
-// ─── Animated eye + camera controller ───────────────────────────────────────
+// ─── Camera controller + eye group ───────────────────────────────────────────
 
 function Eye() {
   const { scroll } = useScroll()
@@ -195,8 +195,7 @@ function Eye() {
     const raw = scroll.offset
     scrollSmooth.current += (raw - scrollSmooth.current) * 0.07
 
-    // camera z keyframes:  s=0→4.5  s=.2→2.2  s=.4→1.1  s=.6→0.2  s=.85→-1.3  s=1→3.5
-    const kf = [
+    const kf: [number, number, number][] = [
       [0,    4.5,  0],
       [0.2,  2.2,  0],
       [0.4,  1.1,  0],
@@ -222,7 +221,6 @@ function Eye() {
     camera.position.y += (targetY - camera.position.y) * 0.055
     camera.lookAt(0, 0, 0)
 
-    // idle rotation (fades out as user scrolls in)
     if (groupRef.current) {
       const idleSpeed = Math.max(0, 1 - raw * 8) * 0.18
       groupRef.current.rotation.y += delta * idleSpeed
@@ -240,14 +238,14 @@ function Eye() {
   )
 }
 
-// ─── HTML overlays synced to scroll ─────────────────────────────────────────
+// ─── Section text overlays ────────────────────────────────────────────────────
 
 const SECTIONS = [
-  { page: 0, title: 'VisionCare', sub: 'La plateforme médicale la plus avancée pour votre cabinet.' },
-  { page: 1, title: 'Cornée — Précision diagnostique', sub: 'Chaque donnée patient analysée avec une précision clinique absolue.' },
-  { page: 2, title: 'Iris — Intelligence adaptative', sub: 'Votre flux de patients géré en temps réel, sans effort.' },
-  { page: 3, title: 'Cristallin — Clarté absolue', sub: 'Des dossiers médicaux limpides, accessibles en un clic.' },
-  { page: 4, title: 'Rétine — Cœur de votre activité', sub: 'Analyses profondes, tableaux de bord et historiques complets.' },
+  { title: 'VisionCare', sub: 'La plateforme médicale la plus avancée pour votre cabinet.' },
+  { title: 'Cornée — Précision diagnostique', sub: 'Chaque donnée patient analysée avec une précision clinique absolue.' },
+  { title: 'Iris — Intelligence adaptative', sub: 'Votre flux de patients géré en temps réel, sans effort.' },
+  { title: 'Cristallin — Clarté absolue', sub: 'Des dossiers médicaux limpides, accessibles en un clic.' },
+  { title: 'Rétine — Cœur de votre activité', sub: 'Analyses profondes, tableaux de bord et historiques complets.' },
 ]
 
 function Overlays() {
@@ -271,20 +269,20 @@ function Overlays() {
         >
           <div style={{ maxWidth: 420, textAlign: 'right' }}>
             <h2 style={{
-              fontSize: 'clamp(1.4rem, 3vw, 2.4rem)',
+              fontSize: 'clamp(1.4rem, 3vw, 2.2rem)',
               fontWeight: 700,
               color: '#ffffff',
-              textShadow: '0 2px 20px rgba(0,0,0,0.7)',
-              marginBottom: '0.75rem',
-              lineHeight: 1.2,
+              textShadow: '0 2px 20px rgba(0,0,0,0.8)',
+              marginBottom: '0.6rem',
+              lineHeight: 1.25,
             }}>
               {sec.title}
             </h2>
             <p style={{
-              fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)',
-              color: 'rgba(255,255,255,0.68)',
-              textShadow: '0 1px 10px rgba(0,0,0,0.5)',
-              lineHeight: 1.6,
+              fontSize: 'clamp(0.85rem, 1.4vw, 1rem)',
+              color: 'rgba(255,255,255,0.65)',
+              textShadow: '0 1px 10px rgba(0,0,0,0.6)',
+              lineHeight: 1.65,
             }}>
               {sec.sub}
             </p>
@@ -304,17 +302,13 @@ export default function EyeScene() {
         <Canvas
           camera={{ position: [0, 0, 4.5], fov: 44 }}
           gl={{ antialias: true, alpha: false }}
-          style={{
-            width: '100%',
-            height: '100%',
-            background: 'linear-gradient(150deg, #0a1e2d 0%, #133045 45%, #0d1f2e 100%)',
-          }}
+          style={{ width: '100%', height: '100%' }}
         >
-          <ambientLight intensity={0.35} />
-          <pointLight position={[4, 3, 5]} intensity={2.5} color="#ffffff" />
-          <pointLight position={[-3, -2, 4]} intensity={1.2} color="#70B1C4" />
-          <pointLight position={[0, 0, -4]} intensity={1.8} color="#ff5020" />
-          <Environment preset="studio" />
+          <SceneBackground />
+          <ambientLight intensity={0.5} />
+          <pointLight position={[4, 3, 5]} intensity={3} color="#ffffff" />
+          <pointLight position={[-3, -2, 4]} intensity={1.5} color="#70B1C4" />
+          <pointLight position={[0, 0, -4]} intensity={2} color="#ff5020" />
 
           <ScrollControls pages={5} damping={0.25}>
             <Eye />
