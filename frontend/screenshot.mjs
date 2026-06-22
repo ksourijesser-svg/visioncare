@@ -1,6 +1,9 @@
 import { chromium } from 'playwright'
 
-const browser = await chromium.launch({ headless: true })
+const browser = await chromium.launch({
+  headless: true,
+  args: ['--enable-webgl', '--use-gl=swiftshader', '--ignore-gpu-blocklist', '--enable-gpu-rasterization'],
+})
 const page = await browser.newPage()
 await page.setViewportSize({ width: 1440, height: 900 })
 await page.goto('http://localhost:3000', { waitUntil: 'networkidle', timeout: 20000 })
