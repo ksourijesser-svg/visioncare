@@ -323,13 +323,13 @@ export default function LandingPage() {
                 <rect x="197" y="122" width="2.5" height="12" rx="1" fill="#70B1C4" fillOpacity="0.24"/>
                 <rect x="192" y="127" width="12" height="2.5" rx="1" fill="#70B1C4" fillOpacity="0.24"/>
               </svg>
-              <p className="text-[#1A2B3C]/70 text-sm leading-relaxed font-medium max-w-[200px]">
+              <p className="text-[#1A2B3C] text-base leading-relaxed font-bold max-w-[200px]">
                 Accédez rapidement à votre médecin
               </p>
             </div>
 
             {/* ─ Feature 2: Online booking — highlighted center ─ */}
-            <div className="flex flex-col items-center gap-5">
+            <div className="flex flex-col items-center gap-6 bg-[#EEF7FC] rounded-3xl p-8 border-2 border-[#3d8fa8]/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative">
               <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 h-auto drop-shadow-lg">
                 <circle cx="110" cy="120" r="100" fill="#B8D5E8"/>
                 {/* Clock background */}
