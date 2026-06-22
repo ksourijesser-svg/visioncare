@@ -83,9 +83,9 @@ export default function LandingPage() {
             </div>
             <span className="text-lg font-bold text-white">VisionCare</span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/55">
-            <a href="#fonctionnalites" className="hover:text-white transition-colors">Fonctionnalités</a>
-            <a href="#comment" className="hover:text-white transition-colors">Comment ça marche</a>
+          <div className="hidden md:flex items-center gap-2">
+            <a href="#fonctionnalites" className="text-[15px] font-semibold text-white/80 hover:text-white hover:bg-white/10 px-4 py-2 rounded-xl transition-all duration-200 tracking-wide">Fonctionnalités</a>
+            <a href="#comment" className="text-[15px] font-semibold text-white/80 hover:text-white hover:bg-white/10 px-4 py-2 rounded-xl transition-all duration-200 tracking-wide">Comment ça marche</a>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/prise-rdv" className="btn-neon hidden md:inline-flex items-center gap-1.5 text-sm font-semibold border border-[#3d8fa8]/50 hover:border-[#3d8fa8] text-[#70B1C4] hover:text-white px-4 py-2 rounded-xl hover:bg-[#3d8fa8]/15">
@@ -94,7 +94,12 @@ export default function LandingPage() {
               </svg>
               Prendre RDV
             </Link>
-            <Link href="/login" className="text-sm font-medium text-white/60 hover:text-white transition-colors px-4 py-2">
+            <Link href="/login" className="btn-neon-white inline-flex items-center gap-1.5 text-sm font-semibold border border-white/30 hover:border-white/70 text-white/75 hover:text-white px-4 py-2 rounded-xl hover:bg-white/8">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-3.5 h-3.5">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" strokeLinecap="round" strokeLinejoin="round"/>
+                <polyline points="10 17 15 12 10 7" strokeLinecap="round" strokeLinejoin="round"/>
+                <line x1="15" y1="12" x2="3" y2="12" strokeLinecap="round"/>
+              </svg>
               Se connecter
             </Link>
             <Link href="/inscription" className="btn-neon text-sm font-semibold bg-[#3d8fa8] hover:bg-[#2d7a94] text-white px-5 py-2.5 rounded-xl shadow-lg shadow-[#3d8fa8]/30">
