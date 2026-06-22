@@ -1,20 +1,72 @@
 import Link from 'next/link'
-import EyeSceneClient from '@/components/eye/EyeSceneClient'
 
 const FEATURES = [
-  { icon: '🔒', title: 'Sécurité maximale', desc: 'Chiffrement 256-bit, authentification JWT et données hébergées en conformité totale avec les normes médicales.' },
-  { icon: '🕐', title: 'Support 7j/7 – 24h/24', desc: 'Notre équipe est disponible à tout moment pour vous accompagner et résoudre chaque problème en moins de 2h.' },
-  { icon: '📋', title: 'Dossiers médicaux complets', desc: 'Historique, diagnostics, traitements et ordonnances centralisés en un seul endroit, accessibles en un clic.' },
-  { icon: '📅', title: 'Agenda intelligent', desc: 'Calendrier mensuel, hebdomadaire et journalier avec gestion des statuts et rappels automatiques.' },
-  { icon: '📊', title: 'Tableau de bord analytique', desc: "Visualisez vos statistiques, l'évolution de votre activité et vos performances en temps réel." },
-  { icon: '☁️', title: 'Accès depuis partout', desc: 'Aucune installation requise. Connectez-vous depuis votre ordinateur, tablette ou smartphone à tout moment.' },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-6 h-6">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    title: 'Sécurité maximale',
+    desc: 'Chiffrement 256-bit, authentification JWT et conformité totale avec les normes médicales françaises.',
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-6 h-6">
+        <rect x="3" y="4" width="18" height="18" rx="2" strokeLinecap="round"/>
+        <path d="M16 2v4M8 2v4M3 10h18" strokeLinecap="round"/>
+        <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01" strokeLinecap="round" strokeWidth={2.5}/>
+      </svg>
+    ),
+    title: 'Agenda intelligent',
+    desc: 'Calendrier mensuel, hebdomadaire et journalier avec rappels automatiques et gestion des statuts.',
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-6 h-6">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" strokeLinecap="round"/>
+      </svg>
+    ),
+    title: 'Dossiers médicaux',
+    desc: 'Historique complet, diagnostics, traitements et ordonnances centralisés en un seul endroit.',
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-6 h-6">
+        <path d="M18 20V10M12 20V4M6 20v-6" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    title: 'Tableau de bord',
+    desc: 'Statistiques en temps réel, évolution de votre activité et indicateurs de performance.',
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-6 h-6">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v4l3 3" strokeLinecap="round"/>
+      </svg>
+    ),
+    title: 'Support 24h/24',
+    desc: 'Notre équipe répond en moins de 2h, 7j/7, pour résoudre chaque problème rapidement.',
+  },
+  {
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-6 h-6">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4" strokeLinecap="round"/>
+      </svg>
+    ),
+    title: 'Multi-appareils',
+    desc: 'Accédez à votre cabinet depuis n\'importe quel ordinateur, tablette ou smartphone, sans installation.',
+  },
 ]
 
 const STATS = [
-  { value: '500+',   label: 'Médecins actifs' },
+  { value: '500+',    label: 'Médecins actifs' },
   { value: '50 000+', label: 'Rendez-vous gérés' },
-  { value: '98%',    label: 'Taux de satisfaction' },
-  { value: '< 2h',   label: 'Temps de réponse support' },
+  { value: '98%',     label: 'Satisfaction client' },
+  { value: '< 2h',    label: 'Temps de réponse' },
 ]
 
 const SPECIALISATIONS = [
@@ -22,143 +74,247 @@ const SPECIALISATIONS = [
   'Pédiatrie', 'Gynécologie', 'Orthopédie', 'Neurologie', 'Psychiatrie',
 ]
 
+const STEPS = [
+  { n: '01', title: 'Créez votre compte',    desc: 'Inscription en 2 minutes, aucune carte bancaire requise.' },
+  { n: '02', title: 'Configurez votre cabinet', desc: 'Ajoutez vos informations, votre spécialité et votre équipe.' },
+  { n: '03', title: 'Gérez vos patients',    desc: 'Prenez des rendez-vous, rédigez des dossiers, suivez vos stats.' },
+]
+
 export default function LandingPage() {
   return (
-    <>
-      {/* ── Fixed 3D background (always behind everything) ── */}
-      <EyeSceneClient />
+    <div className="min-h-screen bg-white text-[#1A2B3C]">
 
-      {/* ── Page content scrolls over the 3D ── */}
-      <div className="relative" style={{ zIndex: 10 }}>
-
-        {/* ── Navigation ── */}
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-black/30 backdrop-blur-md border-b border-white/10">
-          <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#70B1C4] flex items-center justify-center shadow-md shadow-[#70B1C4]/30">
-                <svg viewBox="0 0 24 24" fill="white" className="w-5 h-5">
-                  <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
-                </svg>
-              </div>
-              <span className="text-xl font-bold text-white">VisionCare</span>
+      {/* ── Navigation ─────────────────────────────────────────────────────── */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-[#70B1C4] flex items-center justify-center shadow-sm">
+              <svg viewBox="0 0 24 24" fill="white" className="w-5 h-5">
+                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+              </svg>
             </div>
-            <div className="flex items-center gap-3">
-              <Link href="/login" className="text-sm font-medium text-white/70 hover:text-white transition-colors px-4 py-2">
-                Se connecter
+            <span className="text-lg font-bold text-[#1A2B3C]">VisionCare</span>
+          </div>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-[#1A2B3C]/60">
+            <a href="#fonctionnalites" className="hover:text-[#70B1C4] transition-colors">Fonctionnalités</a>
+            <a href="#comment" className="hover:text-[#70B1C4] transition-colors">Comment ça marche</a>
+            <a href="#specialites" className="hover:text-[#70B1C4] transition-colors">Spécialités</a>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link href="/login" className="text-sm font-medium text-[#1A2B3C]/70 hover:text-[#1A2B3C] transition-colors px-4 py-2">
+              Se connecter
+            </Link>
+            <Link href="/inscription" className="text-sm font-semibold bg-[#70B1C4] hover:bg-[#5a9db8] text-white px-5 py-2.5 rounded-xl shadow-sm transition-all hover:-translate-y-0.5">
+              Essai gratuit
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* ── Hero ───────────────────────────────────────────────────────────── */}
+      <section className="pt-32 pb-24 px-6 relative overflow-hidden">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#E4EEF4] via-white to-white pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#70B1C4]/10 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/4" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#70B1C4]/8 rounded-full blur-3xl pointer-events-none translate-y-1/3 -translate-x-1/4" />
+
+        <div className="max-w-6xl mx-auto relative">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 bg-[#70B1C4]/10 border border-[#70B1C4]/20 text-[#70B1C4] text-sm font-semibold rounded-full px-4 py-1.5 mb-6">
+              <span className="w-2 h-2 bg-[#70B1C4] rounded-full animate-pulse" />
+              Plateforme médicale certifiée
+            </div>
+
+            <h1 className="text-5xl lg:text-6xl font-bold text-[#1A2B3C] leading-tight mb-6">
+              Gérez votre cabinet{' '}
+              <span className="text-[#70B1C4]">médical</span>{' '}
+              en toute simplicité
+            </h1>
+
+            <p className="text-lg text-[#1A2B3C]/60 leading-relaxed mb-10">
+              Patients, rendez-vous, dossiers médicaux — tout centralisé dans une interface
+              pensée pour les professionnels de santé.
+            </p>
+
+            <div className="flex flex-wrap gap-4 mb-10">
+              <Link href="/inscription" className="inline-flex items-center gap-2 bg-[#70B1C4] hover:bg-[#5a9db8] text-white font-semibold px-8 py-3.5 rounded-xl shadow-md shadow-[#70B1C4]/25 transition-all hover:-translate-y-0.5">
+                Commencer gratuitement →
               </Link>
-              <Link href="/inscription" className="text-sm font-semibold bg-[#70B1C4] hover:bg-[#5a9db8] text-white px-5 py-2 rounded-xl shadow-md shadow-[#70B1C4]/30 transition-all hover:shadow-lg hover:-translate-y-0.5">
-                Essai gratuit
+              <Link href="/login" className="inline-flex items-center gap-2 border border-gray-200 hover:border-[#70B1C4]/40 bg-white text-[#1A2B3C] font-medium px-8 py-3.5 rounded-xl transition-all hover:-translate-y-0.5">
+                Voir la démo
               </Link>
             </div>
-          </div>
-        </nav>
 
-        {/* ── Hero — transparent, CTA floats over the eye ── */}
-        <section className="min-h-screen flex items-center pt-16">
-          <div className="max-w-6xl mx-auto px-6 py-24 w-full">
-            <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur rounded-full px-4 py-1.5 mb-6 border border-white/10">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-white/80 text-sm font-medium">Plateforme médicale certifiée</span>
-              </div>
-              <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 drop-shadow-lg">
-                La plateforme la plus{' '}
-                <span className="text-[#70B1C4]">sécurisée</span>{' '}
-                pour gérer votre cabinet
-              </h1>
-              <p className="text-white/65 text-lg leading-relaxed mb-8">
-                Patients, rendez-vous, dossiers médicaux — tout centralisé dans une interface simple et élégante.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link href="/inscription" className="inline-flex items-center gap-2 bg-[#70B1C4] hover:bg-[#5a9db8] text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-[#70B1C4]/40 transition-all hover:-translate-y-0.5 text-base">
-                  Créer mon compte gratuitement →
-                </Link>
-                <Link href="/login" className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-medium px-8 py-3.5 rounded-xl backdrop-blur border border-white/10 transition-all text-base">
-                  Se connecter
-                </Link>
-              </div>
-              <div className="flex items-center gap-6 mt-10">
-                {['Aucune carte requise', 'Installation en 2 min', 'Support inclus'].map((t) => (
-                  <div key={t} className="flex items-center gap-1.5 text-white/50 text-sm">
-                    <span className="text-green-400">✓</span> {t}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Stats ── */}
-        <section className="py-14 bg-black/40 backdrop-blur-md border-y border-white/10">
-          <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
-            {STATS.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="text-3xl font-bold text-white">{s.value}</p>
-                <p className="text-white/45 text-sm mt-1">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── Features ── */}
-        <section className="py-24 bg-[#05090f]/55 backdrop-blur-sm">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center mb-14">
-              <p className="text-[#70B1C4] text-sm font-bold uppercase tracking-widest mb-3">Fonctionnalités</p>
-              <h2 className="text-3xl font-bold text-white">Tout ce dont votre cabinet a besoin</h2>
-              <p className="text-white/45 mt-3 max-w-xl mx-auto">Une solution complète pensée par des professionnels de santé, pour des professionnels de santé.</p>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {FEATURES.map((f) => (
-                <div key={f.title} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all hover:-translate-y-0.5 backdrop-blur-sm">
-                  <div className="w-12 h-12 rounded-2xl bg-[#70B1C4]/20 border border-[#70B1C4]/30 flex items-center justify-center text-2xl mb-4">{f.icon}</div>
-                  <h3 className="font-bold text-white mb-2">{f.title}</h3>
-                  <p className="text-white/45 text-sm leading-relaxed">{f.desc}</p>
+            <div className="flex items-center gap-6">
+              {['Aucune carte requise', 'Installation en 2 min', 'Support inclus'].map((t) => (
+                <div key={t} className="flex items-center gap-1.5 text-[#1A2B3C]/50 text-sm">
+                  <svg className="w-4 h-4 text-[#70B1C4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  {t}
                 </div>
               ))}
             </div>
           </div>
-        </section>
 
-        {/* ── Specialisations ── */}
-        <section className="py-12 bg-black/40 backdrop-blur-md border-y border-white/10">
-          <div className="max-w-5xl mx-auto px-6 text-center">
-            <p className="text-white/30 text-sm font-medium mb-6 uppercase tracking-widest">Adapté à toutes les spécialités</p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {SPECIALISATIONS.map((s) => (
-                <span key={s} className="bg-white/5 border border-white/15 text-white/70 text-sm font-medium px-4 py-1.5 rounded-full">
-                  {s}
-                </span>
-              ))}
+          {/* Dashboard preview card */}
+          <div className="absolute right-0 top-0 w-[480px] hidden lg:block">
+            <div className="bg-white rounded-2xl shadow-2xl shadow-[#70B1C4]/10 border border-gray-100 overflow-hidden">
+              {/* Mock top bar */}
+              <div className="h-10 bg-[#E4EEF4] flex items-center px-4 gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-300" />
+                <div className="w-3 h-3 rounded-full bg-yellow-300" />
+                <div className="w-3 h-3 rounded-full bg-green-300" />
+                <div className="flex-1 mx-4 h-5 bg-white/60 rounded-md" />
+              </div>
+              {/* Mock dashboard */}
+              <div className="p-5 bg-[#E4EEF4]">
+                {/* Stat row */}
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  {[['24', 'Patients'], ['8', 'RDV aujourd\'hui'], ['3', 'En attente']].map(([v, l]) => (
+                    <div key={l} className="bg-white rounded-xl p-3 shadow-sm">
+                      <p className="text-xl font-bold text-[#1A2B3C]">{v}</p>
+                      <p className="text-[10px] text-[#1A2B3C]/50 mt-0.5">{l}</p>
+                    </div>
+                  ))}
+                </div>
+                {/* Mock chart */}
+                <div className="bg-white rounded-xl p-4 mb-4 shadow-sm">
+                  <div className="flex items-end gap-2 h-20">
+                    {[40, 65, 55, 80, 70, 90, 75].map((h, i) => (
+                      <div key={i} className="flex-1 rounded-t-sm" style={{ height: `${h}%`, background: i===5 ? '#70B1C4' : '#70B1C4' + '33' }} />
+                    ))}
+                  </div>
+                </div>
+                {/* Mock list */}
+                <div className="bg-white rounded-xl p-3 shadow-sm space-y-2">
+                  {['Martin Dupont — 09:00', 'Claire Bernard — 09:30', 'Paul Richard — 10:00'].map((r) => (
+                    <div key={r} className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-full bg-[#70B1C4]/20 flex items-center justify-center text-[10px] font-bold text-[#70B1C4]">
+                          {r[0]}
+                        </div>
+                        <span className="text-xs text-[#1A2B3C]/70">{r}</span>
+                      </div>
+                      <span className="text-[10px] bg-green-50 text-green-600 px-2 py-0.5 rounded-full font-medium">Confirmé</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ── CTA ── */}
-        <section className="py-24 bg-[#05090f]/90 backdrop-blur-md text-center">
-          <div className="max-w-2xl mx-auto px-6">
-            <h2 className="text-3xl font-bold text-white mb-4">Prêt à moderniser votre cabinet ?</h2>
-            <p className="text-white/50 mb-8 text-lg">Créez votre compte en 2 minutes. Aucune installation, aucune carte bancaire requise.</p>
-            <Link href="/inscription" className="inline-block bg-[#70B1C4] hover:bg-[#5a9db8] text-white font-bold px-10 py-4 rounded-xl shadow-lg shadow-[#70B1C4]/30 transition-all hover:-translate-y-0.5 text-lg">
-              Commencer gratuitement →
-            </Link>
+      {/* ── Stats ──────────────────────────────────────────────────────────── */}
+      <section className="py-14 border-y border-gray-100 bg-white">
+        <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+          {STATS.map((s) => (
+            <div key={s.label} className="text-center">
+              <p className="text-3xl font-bold text-[#1A2B3C]">{s.value}</p>
+              <p className="text-sm text-[#1A2B3C]/45 mt-1">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Features ───────────────────────────────────────────────────────── */}
+      <section id="fonctionnalites" className="py-24 bg-[#E4EEF4]/30">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <span className="text-[#70B1C4] text-sm font-bold uppercase tracking-widest">Fonctionnalités</span>
+            <h2 className="text-3xl font-bold text-[#1A2B3C] mt-3">Tout ce dont votre cabinet a besoin</h2>
+            <p className="text-[#1A2B3C]/50 mt-3 max-w-xl mx-auto">
+              Une solution complète pensée par des professionnels de santé.
+            </p>
           </div>
-        </section>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {FEATURES.map((f) => (
+              <div key={f.title} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all group">
+                <div className="w-12 h-12 rounded-xl bg-[#70B1C4]/10 text-[#70B1C4] flex items-center justify-center mb-4 group-hover:bg-[#70B1C4] group-hover:text-white transition-colors">
+                  {f.icon}
+                </div>
+                <h3 className="font-bold text-[#1A2B3C] mb-2">{f.title}</h3>
+                <p className="text-sm text-[#1A2B3C]/55 leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        {/* ── Footer ── */}
-        <footer className="bg-black/60 backdrop-blur-md text-white/30 text-sm py-8 text-center border-t border-white/10">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <div className="w-6 h-6 rounded-lg bg-[#70B1C4] flex items-center justify-center">
-              <svg viewBox="0 0 24 24" fill="white" className="w-3.5 h-3.5">
-                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+      {/* ── How it works ───────────────────────────────────────────────────── */}
+      <section id="comment" className="py-24 bg-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <span className="text-[#70B1C4] text-sm font-bold uppercase tracking-widest">Simple & Rapide</span>
+            <h2 className="text-3xl font-bold text-[#1A2B3C] mt-3">Démarrez en 3 étapes</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {STEPS.map((s, i) => (
+              <div key={s.n} className="relative text-center">
+                {i < STEPS.length - 1 && (
+                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-px bg-gradient-to-r from-[#70B1C4]/40 to-transparent" />
+                )}
+                <div className="w-16 h-16 rounded-2xl bg-[#70B1C4] text-white text-xl font-bold flex items-center justify-center mx-auto mb-5 shadow-md shadow-[#70B1C4]/25">
+                  {s.n}
+                </div>
+                <h3 className="font-bold text-[#1A2B3C] text-lg mb-2">{s.title}</h3>
+                <p className="text-sm text-[#1A2B3C]/55 leading-relaxed">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Specialisations ────────────────────────────────────────────────── */}
+      <section id="specialites" className="py-14 bg-[#E4EEF4]/30 border-y border-gray-100">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <p className="text-[#1A2B3C]/40 text-sm font-medium mb-6 uppercase tracking-widest">Adapté à toutes les spécialités</p>
+          <div className="flex flex-wrap justify-center gap-3">
+            {SPECIALISATIONS.map((s) => (
+              <span key={s} className="bg-white border border-gray-200 text-[#1A2B3C]/70 text-sm font-medium px-4 py-1.5 rounded-full hover:border-[#70B1C4]/40 hover:text-[#70B1C4] transition-colors cursor-default">
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ────────────────────────────────────────────────────────────── */}
+      <section className="py-24 bg-gradient-to-br from-[#1A2B3C] to-[#2a4a6b] relative overflow-hidden">
+        <div className="absolute inset-0 bg-[#70B1C4]/5 pointer-events-none" />
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#70B1C4]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="max-w-2xl mx-auto px-6 text-center relative">
+          <h2 className="text-3xl font-bold text-white mb-4">Prêt à moderniser votre cabinet ?</h2>
+          <p className="text-white/55 mb-8 text-lg">
+            Créez votre compte en 2 minutes. Aucune installation, aucune carte bancaire requise.
+          </p>
+          <Link href="/inscription" className="inline-block bg-[#70B1C4] hover:bg-[#5a9db8] text-white font-bold px-10 py-4 rounded-xl shadow-lg shadow-[#70B1C4]/30 transition-all hover:-translate-y-0.5 text-lg">
+            Commencer gratuitement →
+          </Link>
+        </div>
+      </section>
+
+      {/* ── Footer ─────────────────────────────────────────────────────────── */}
+      <footer className="bg-[#1A2B3C] text-white/40 text-sm py-10">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-[#70B1C4] flex items-center justify-center">
+              <svg viewBox="0 0 24 24" fill="white" className="w-4 h-4">
+                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
               </svg>
             </div>
-            <span className="text-white/50 font-semibold">VisionCare</span>
+            <span className="text-white/60 font-semibold text-base">VisionCare</span>
           </div>
           <p>© 2026 VisionCare. Tous droits réservés. · Données sécurisées · Conformité RGPD</p>
-        </footer>
+          <div className="flex items-center gap-6 text-white/40">
+            <a href="#" className="hover:text-white/70 transition-colors">Confidentialité</a>
+            <a href="#" className="hover:text-white/70 transition-colors">CGU</a>
+            <a href="#" className="hover:text-white/70 transition-colors">Contact</a>
+          </div>
+        </div>
+      </footer>
 
-      </div>
-    </>
+    </div>
   )
 }
