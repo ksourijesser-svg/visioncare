@@ -330,6 +330,9 @@ export default function LandingPage() {
 
             {/* ─ Feature 2: Online booking — highlighted center ─ */}
             <div className="flex flex-col items-center gap-6 bg-[#EEF7FC] rounded-3xl p-8 border-2 border-[#3d8fa8]/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#3d8fa8] text-white text-xs font-bold px-4 py-1 rounded-full shadow-md shadow-[#3d8fa8]/30 whitespace-nowrap">
+                ✦ Le plus utilisé
+              </div>
               <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 h-auto drop-shadow-lg">
                 <circle cx="110" cy="120" r="100" fill="#B8D5E8"/>
                 {/* Clock background */}
