@@ -179,7 +179,7 @@ export default function LandingPage() {
                 Commencer gratuitement →
               </Link>
               <Link href="/login" className="btn-neon-outline inline-flex items-center gap-2 border border-white/18 hover:border-white/35 bg-white/6 hover:bg-white/10 text-white font-medium px-8 py-3.5 rounded-xl backdrop-blur-sm">
-                Voir la démo
+                Mon espace
               </Link>
             </div>
 
