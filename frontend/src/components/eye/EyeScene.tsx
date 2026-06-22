@@ -32,7 +32,7 @@ function Sclera() {
   return (
     <mesh>
       <sphereGeometry args={[1.0, 64, 64]} />
-      <meshStandardMaterial color="#f0ece6" roughness={0.65} />
+      <meshStandardMaterial color="#ffffff" roughness={0.35} metalness={0.05} />
     </mesh>
   )
 }
