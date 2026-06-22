@@ -85,6 +85,7 @@ app.include_router(auth.router, prefix=settings.API_V1_STR)
 app.include_router(patients.router, prefix=settings.API_V1_STR)
 app.include_router(appointments.router, prefix=settings.API_V1_STR)
 app.include_router(dashboard.router, prefix=settings.API_V1_STR)
+app.include_router(public.router, prefix=settings.API_V1_STR)
 
 
 @app.get("/health")
