@@ -62,11 +62,6 @@ const FEATURES = [
   },
 ]
 
-const SPECIALISATIONS = [
-  'Ophtalmologie', 'Cardiologie', 'Dermatologie', 'Médecine générale',
-  'Pédiatrie', 'Gynécologie', 'Orthopédie', 'Neurologie', 'Psychiatrie',
-]
-
 const STEPS = [
   { n: '01', title: 'Créez votre compte',    desc: 'Inscription en 2 minutes, aucune carte bancaire requise.' },
   { n: '02', title: 'Configurez votre cabinet', desc: 'Ajoutez vos informations, votre spécialité et votre équipe.' },
