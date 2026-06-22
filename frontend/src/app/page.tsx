@@ -167,25 +167,26 @@ export default function LandingPage() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-white/8 border border-white/12 text-white/80 text-sm font-semibold rounded-full px-4 py-1.5 mb-6 backdrop-blur-sm">
               <span className="w-2 h-2 bg-[#70B1C4] rounded-full animate-pulse" />
-              Plateforme médicale certifiée
+              Support 7j/7 — Réponse en moins de 2h
             </div>
 
             <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              Gérez votre cabinet{' '}
-              <span className="text-[#70B1C4]">médical</span>{' '}
-              en toute simplicité
+              Prenez soin de vos{' '}
+              <span className="text-[#70B1C4]">patients</span>
+              {'. '}
+              On s&apos;occupe du reste.
             </h1>
 
             <p className="text-lg text-white/60 leading-relaxed mb-10">
-              Patients, rendez-vous, dossiers médicaux — tout centralisé dans une interface
-              pensée pour les professionnels de santé.
+              Rendez-vous en ligne, dossiers médicaux, agenda intelligent — tout centralisé
+              pour les médecins, les secrétaires et les patients.
             </p>
 
             <div className="flex flex-wrap gap-4 mb-10">
-              <Link href="/inscription" className="inline-flex items-center gap-2 bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-[#3d8fa8]/35 transition-all hover:-translate-y-0.5">
+              <Link href="/inscription" className="btn-neon inline-flex items-center gap-2 bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-[#3d8fa8]/35">
                 Commencer gratuitement →
               </Link>
-              <Link href="/login" className="inline-flex items-center gap-2 border border-white/18 hover:border-white/35 bg-white/6 hover:bg-white/10 text-white font-medium px-8 py-3.5 rounded-xl transition-all hover:-translate-y-0.5 backdrop-blur-sm">
+              <Link href="/login" className="btn-neon-outline inline-flex items-center gap-2 border border-white/18 hover:border-white/35 bg-white/6 hover:bg-white/10 text-white font-medium px-8 py-3.5 rounded-xl backdrop-blur-sm">
                 Voir la démo
               </Link>
             </div>
