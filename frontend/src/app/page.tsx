@@ -62,13 +62,6 @@ const FEATURES = [
   },
 ]
 
-const STATS = [
-  { value: '500+',    label: 'Médecins actifs' },
-  { value: '50 000+', label: 'Rendez-vous gérés' },
-  { value: '98%',     label: 'Satisfaction client' },
-  { value: '< 2h',    label: 'Temps de réponse' },
-]
-
 const SPECIALISATIONS = [
   'Ophtalmologie', 'Cardiologie', 'Dermatologie', 'Médecine générale',
   'Pédiatrie', 'Gynécologie', 'Orthopédie', 'Neurologie', 'Psychiatrie',
