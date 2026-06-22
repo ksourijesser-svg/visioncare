@@ -163,7 +163,7 @@ export function Sidebar() {
             Mon profil
           </Link>
 
-          <div className="flex items-center gap-3 px-3 py-2.5 bg-gray-50 rounded-xl">
+          <div className="flex items-center gap-3 px-3 py-2.5 bg-gray-100 rounded-xl">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#70B1C4] to-[#3d8fa8] flex items-center justify-center text-white text-xs font-bold shrink-0">
               {initials}
             </div>
