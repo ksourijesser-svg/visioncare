@@ -362,7 +362,7 @@ export default function LandingPage() {
           <p className="text-white/60 mb-8 text-lg">
             Créez votre compte en 2 minutes. Aucune installation, aucune carte bancaire requise.
           </p>
-          <Link href="/inscription" className="inline-block bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-bold px-10 py-4 rounded-xl shadow-xl shadow-[#3d8fa8]/35 transition-all hover:-translate-y-0.5 text-lg">
+          <Link href="/inscription" className="btn-neon inline-block bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-bold px-10 py-4 rounded-xl shadow-xl shadow-[#3d8fa8]/35 text-lg">
             Commencer gratuitement →
           </Link>
         </div>
