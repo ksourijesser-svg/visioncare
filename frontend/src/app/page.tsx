@@ -91,7 +91,6 @@ export default function LandingPage() {
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/55">
             <a href="#fonctionnalites" className="hover:text-white transition-colors">Fonctionnalités</a>
             <a href="#comment" className="hover:text-white transition-colors">Comment ça marche</a>
-            <a href="#specialites" className="hover:text-white transition-colors">Spécialités</a>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/prise-rdv" className="btn-neon hidden md:inline-flex items-center gap-1.5 text-sm font-semibold border border-[#3d8fa8]/50 hover:border-[#3d8fa8] text-[#70B1C4] hover:text-white px-4 py-2 rounded-xl hover:bg-[#3d8fa8]/15">
