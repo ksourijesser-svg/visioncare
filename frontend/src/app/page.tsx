@@ -475,7 +475,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features ───────────────────────────────────────────────────────── */}
-      <section id="fonctionnalites" className="py-24 bg-[#F0F6FA]">
+      <section id="fonctionnalites" className="py-24 bg-[#C5D8E6]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
             <span className="text-[#3d8fa8] text-sm font-bold uppercase tracking-widest">Fonctionnalités</span>
