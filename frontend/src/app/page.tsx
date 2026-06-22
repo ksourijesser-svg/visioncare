@@ -462,7 +462,7 @@ export default function LandingPage() {
                   <path d="M0 2.5 L13.5 11 L27 2.5" stroke="#70B1C4" strokeWidth="1.3" fill="none" strokeLinecap="round"/>
                 </g>
               </svg>
-              <p className="text-[#1A2B3C]/70 text-sm leading-relaxed font-medium max-w-[200px]">
+              <p className="text-[#1A2B3C] text-base leading-relaxed font-bold max-w-[200px]">
                 Recevez des rappels personnalisés par SMS et email
               </p>
             </div>
