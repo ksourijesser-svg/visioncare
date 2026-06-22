@@ -280,7 +280,7 @@ export default function LandingPage() {
 
             {/* ─ Feature 1: Medical team ─ */}
             <div className="flex flex-col items-center gap-5">
-              <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-48 h-auto">
+              <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 h-auto drop-shadow-lg">
                 <circle cx="110" cy="120" r="100" fill="#EEF7FA"/>
                 {/* Doctor - left */}
                 <circle cx="72" cy="80" r="22" fill="#F5C9A0"/>
@@ -330,7 +330,7 @@ export default function LandingPage() {
 
             {/* ─ Feature 2: Online booking — highlighted center ─ */}
             <div className="flex flex-col items-center gap-5">
-              <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-48 h-auto">
+              <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 h-auto drop-shadow-lg">
                 <circle cx="110" cy="120" r="100" fill="#EEF7FA"/>
                 {/* Clock background */}
                 <circle cx="110" cy="108" r="65" fill="white" fillOpacity="0.75"/>
@@ -409,7 +409,7 @@ export default function LandingPage() {
 
             {/* ─ Feature 3: SMS / email reminders ─ */}
             <div className="flex flex-col items-center gap-5">
-              <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-48 h-auto">
+              <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-56 h-auto drop-shadow-lg">
                 <circle cx="110" cy="120" r="100" fill="#EEF7FA"/>
                 {/* Dashed rings */}
                 <circle cx="110" cy="120" r="83" stroke="#3d8fa8" strokeWidth="1.5" strokeDasharray="6 5" fill="none" strokeOpacity="0.32"/>
