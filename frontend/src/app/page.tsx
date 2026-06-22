@@ -264,15 +264,210 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Stats ──────────────────────────────────────────────────────────── */}
-      <section className="py-14 border-y border-white/6 bg-[#081220]">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
-          {STATS.map((s) => (
-            <div key={s.label} className="text-center">
-              <p className="text-3xl font-bold text-white">{s.value}</p>
-              <p className="text-sm text-white/45 mt-1">{s.label}</p>
+      {/* ── Why VisionCare ─────────────────────────────────────────────────── */}
+      <section className="py-20 bg-white border-b border-gray-100">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1A2B3C] mb-4">
+              Pourquoi choisir VisionCare ?
+            </h2>
+            <p className="text-[#1A2B3C]/55 text-base max-w-xl mx-auto">
+              Avec VisionCare, prenez rendez-vous en ligne avec votre médecin autrement.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 items-start text-center">
+
+            {/* ─ Feature 1: Medical team ─ */}
+            <div className="flex flex-col items-center gap-5">
+              <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-48 h-auto">
+                <circle cx="110" cy="120" r="100" fill="#EEF7FA"/>
+                {/* Doctor - left */}
+                <circle cx="72" cy="80" r="22" fill="#F5C9A0"/>
+                <path d="M50 80 Q50 58 72 58 Q94 58 94 80 Q90 68 72 64 Q54 68 50 80Z" fill="#3D2B1F"/>
+                <path d="M50 100 L50 165 L94 165 L94 100 Q86 94 72 94 Q58 94 50 100Z" fill="#F8FAFB"/>
+                <path d="M72 94 L65 114 L72 110 L79 114 L72 94Z" fill="#DCEEF3"/>
+                <path d="M50 102 Q36 106 33 138 L47 140 L53 108Z" fill="#F8FAFB"/>
+                <path d="M94 102 Q108 106 111 138 L97 140 L91 108Z" fill="#F8FAFB"/>
+                <path d="M67 108 Q58 116 58 128 Q58 138 66 142 Q74 146 82 142 Q90 138 90 128" stroke="#2C3E50" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+                <circle cx="90" cy="128" r="7" fill="#3d8fa8"/>
+                <circle cx="90" cy="128" r="4" fill="#2d7a94"/>
+                <rect x="58" y="165" width="13" height="40" rx="5" fill="#2C3E50"/>
+                <rect x="73" y="165" width="13" height="40" rx="5" fill="#2C3E50"/>
+                <ellipse cx="64" cy="205" rx="11" ry="4.5" fill="#1A2B3C"/>
+                <ellipse cx="79" cy="205" rx="11" ry="4.5" fill="#1A2B3C"/>
+                {/* Nurse - right */}
+                <circle cx="148" cy="75" r="22" fill="#F5C9A0"/>
+                <path d="M126 80 Q126 53 148 53 Q170 53 170 80 Q164 65 148 61 Q132 65 126 80Z" fill="#C8A050"/>
+                <ellipse cx="148" cy="54" rx="11" ry="9" fill="#C8A050"/>
+                <path d="M126 96 L126 168 L170 168 L170 96 Q162 88 148 88 Q134 88 126 96Z" fill="#70B1C4"/>
+                <path d="M148 88 L141 106 L148 102 L155 106 L148 88Z" fill="#3d8fa8"/>
+                <path d="M126 98 Q112 102 109 134 L124 136 L129 104Z" fill="#70B1C4"/>
+                <path d="M170 98 Q184 102 187 134 L172 136 L167 104Z" fill="#70B1C4"/>
+                <rect x="178" y="115" width="26" height="33" rx="3" fill="#DCEEF3" stroke="#3d8fa8" strokeWidth="1.5"/>
+                <rect x="185" y="111" width="12" height="8" rx="2" fill="#3d8fa8"/>
+                <line x1="182" y1="125" x2="200" y2="125" stroke="#3d8fa8" strokeWidth="1.2"/>
+                <line x1="182" y1="131" x2="200" y2="131" stroke="#3d8fa8" strokeWidth="1.2"/>
+                <line x1="182" y1="137" x2="192" y2="137" stroke="#3d8fa8" strokeWidth="1.2"/>
+                <rect x="135" y="168" width="13" height="38" rx="5" fill="#2C3E50"/>
+                <rect x="150" y="168" width="13" height="38" rx="5" fill="#2C3E50"/>
+                <ellipse cx="141" cy="206" rx="11" ry="4.5" fill="#1A2B3C"/>
+                <ellipse cx="156" cy="206" rx="11" ry="4.5" fill="#1A2B3C"/>
+                {/* Decorative */}
+                <circle cx="22" cy="70" r="6" fill="#70B1C4" fillOpacity="0.22"/>
+                <circle cx="200" cy="55" r="5" fill="#3d8fa8" fillOpacity="0.18"/>
+                <circle cx="16" cy="170" r="4" fill="#3d8fa8" fillOpacity="0.18"/>
+                <circle cx="202" cy="175" r="5" fill="#70B1C4" fillOpacity="0.2"/>
+                <rect x="19" y="110" width="3" height="14" rx="1.5" fill="#3d8fa8" fillOpacity="0.28"/>
+                <rect x="13" y="116" width="14" height="3" rx="1.5" fill="#3d8fa8" fillOpacity="0.28"/>
+                <rect x="197" y="122" width="2.5" height="12" rx="1" fill="#70B1C4" fillOpacity="0.24"/>
+                <rect x="192" y="127" width="12" height="2.5" rx="1" fill="#70B1C4" fillOpacity="0.24"/>
+              </svg>
+              <p className="text-[#1A2B3C]/70 text-sm leading-relaxed font-medium max-w-[200px]">
+                Accédez rapidement à votre médecin
+              </p>
             </div>
-          ))}
+
+            {/* ─ Feature 2: Online booking — highlighted center ─ */}
+            <div className="flex flex-col items-center gap-5">
+              <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-48 h-auto">
+                <circle cx="110" cy="120" r="100" fill="#EEF7FA"/>
+                {/* Clock background */}
+                <circle cx="110" cy="108" r="65" fill="white" fillOpacity="0.75"/>
+                <circle cx="110" cy="108" r="62" stroke="#C8E4EE" strokeWidth="2" fill="none"/>
+                <line x1="110" y1="50" x2="110" y2="58" stroke="#B0D0DC" strokeWidth="2.5"/>
+                <line x1="110" y1="156" x2="110" y2="164" stroke="#B0D0DC" strokeWidth="2.5"/>
+                <line x1="48" y1="108" x2="56" y2="108" stroke="#B0D0DC" strokeWidth="2.5"/>
+                <line x1="164" y1="108" x2="172" y2="108" stroke="#B0D0DC" strokeWidth="2.5"/>
+                <line x1="143" y1="55" x2="146" y2="61" stroke="#B0D0DC" strokeWidth="1.5"/>
+                <line x1="162" y1="73" x2="156" y2="78" stroke="#B0D0DC" strokeWidth="1.5"/>
+                <line x1="162" y1="143" x2="156" y2="138" stroke="#B0D0DC" strokeWidth="1.5"/>
+                <line x1="143" y1="161" x2="146" y2="155" stroke="#B0D0DC" strokeWidth="1.5"/>
+                <line x1="77" y1="55" x2="74" y2="61" stroke="#B0D0DC" strokeWidth="1.5"/>
+                <line x1="58" y1="73" x2="64" y2="78" stroke="#B0D0DC" strokeWidth="1.5"/>
+                <line x1="58" y1="143" x2="64" y2="138" stroke="#B0D0DC" strokeWidth="1.5"/>
+                <line x1="77" y1="161" x2="74" y2="155" stroke="#B0D0DC" strokeWidth="1.5"/>
+                {/* Clock hands */}
+                <line x1="110" y1="108" x2="110" y2="70" stroke="#3d8fa8" strokeWidth="3" strokeLinecap="round"/>
+                <line x1="110" y1="108" x2="138" y2="122" stroke="#3d8fa8" strokeWidth="2.5" strokeLinecap="round"/>
+                <circle cx="110" cy="108" r="5" fill="#3d8fa8"/>
+                {/* Phone */}
+                <rect x="72" y="92" width="76" height="122" rx="10" fill="#1A2B3C"/>
+                <rect x="76" y="100" width="68" height="98" rx="5" fill="white"/>
+                <rect x="97" y="94" width="26" height="5" rx="2.5" fill="#2C3E50"/>
+                <rect x="94" y="208" width="32" height="3" rx="1.5" fill="#2C3E50"/>
+                {/* Calendar header */}
+                <rect x="79" y="104" width="62" height="16" rx="3" fill="#3d8fa8"/>
+                <rect x="88" y="110" width="44" height="4" rx="2" fill="white" fillOpacity="0.65"/>
+                <path d="M82 112 L86 109 L86 115Z" fill="white" fillOpacity="0.65"/>
+                <path d="M138 112 L134 109 L134 115Z" fill="white" fillOpacity="0.65"/>
+                {/* Day header dots */}
+                <rect x="81" y="124" width="6" height="4" rx="1" fill="#9CA3AF" fillOpacity="0.5"/>
+                <rect x="90" y="124" width="6" height="4" rx="1" fill="#9CA3AF" fillOpacity="0.5"/>
+                <rect x="99" y="124" width="6" height="4" rx="1" fill="#9CA3AF" fillOpacity="0.5"/>
+                <rect x="108" y="124" width="6" height="4" rx="1" fill="#9CA3AF" fillOpacity="0.5"/>
+                <rect x="117" y="124" width="6" height="4" rx="1" fill="#9CA3AF" fillOpacity="0.5"/>
+                <rect x="126" y="124" width="6" height="4" rx="1" fill="#9CA3AF" fillOpacity="0.5"/>
+                <rect x="135" y="124" width="6" height="4" rx="1" fill="#9CA3AF" fillOpacity="0.5"/>
+                {/* Week 1 */}
+                <rect x="81" y="131" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="90" y="131" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="99" y="131" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="108" y="131" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="117" y="131" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="126" y="131" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="135" y="131" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                {/* Week 2 — selected day highlighted */}
+                <rect x="81" y="139" width="6" height="5" rx="1" fill="#3d8fa8"/>
+                <rect x="90" y="139" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="99" y="139" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="108" y="139" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="117" y="139" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="126" y="139" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="135" y="139" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                {/* Week 3 */}
+                <rect x="81" y="147" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="90" y="147" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="99" y="147" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="108" y="147" width="6" height="5" rx="1" fill="#70B1C4" fillOpacity="0.5"/>
+                <rect x="117" y="147" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="126" y="147" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                <rect x="135" y="147" width="6" height="5" rx="1" fill="#E5E7EB"/>
+                {/* Location pin outside phone */}
+                <path d="M150 145 Q150 133 162 133 Q174 133 174 145 Q174 155 162 167 Q150 155 150 145Z" fill="#70B1C4"/>
+                <circle cx="162" cy="144" r="5" fill="white"/>
+                {/* Decorative */}
+                <circle cx="22" cy="72" r="6" fill="#70B1C4" fillOpacity="0.22"/>
+                <circle cx="200" cy="58" r="4" fill="#3d8fa8" fillOpacity="0.18"/>
+                <circle cx="20" cy="172" r="4" fill="#3d8fa8" fillOpacity="0.18"/>
+                <circle cx="198" cy="178" r="5" fill="#70B1C4" fillOpacity="0.2"/>
+              </svg>
+              <p className="text-[#3d8fa8] text-sm leading-relaxed font-semibold max-w-[200px]">
+                Prenez rendez-vous en ligne à tout moment
+              </p>
+            </div>
+
+            {/* ─ Feature 3: SMS / email reminders ─ */}
+            <div className="flex flex-col items-center gap-5">
+              <svg viewBox="0 0 220 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-48 h-auto">
+                <circle cx="110" cy="120" r="100" fill="#EEF7FA"/>
+                {/* Dashed rings */}
+                <circle cx="110" cy="120" r="83" stroke="#3d8fa8" strokeWidth="1.5" strokeDasharray="6 5" fill="none" strokeOpacity="0.32"/>
+                <circle cx="110" cy="120" r="60" stroke="#70B1C4" strokeWidth="1" strokeDasharray="4 4" fill="none" strokeOpacity="0.28"/>
+                {/* Ring dots */}
+                <circle cx="110" cy="37" r="4" fill="#3d8fa8" fillOpacity="0.38"/>
+                <circle cx="193" cy="120" r="4" fill="#3d8fa8" fillOpacity="0.32"/>
+                <circle cx="27" cy="120" r="4" fill="#70B1C4" fillOpacity="0.32"/>
+                <circle cx="110" cy="203" r="4" fill="#70B1C4" fillOpacity="0.32"/>
+                {/* Hand */}
+                <path d="M96 188 Q89 185 87 173 L85 143 Q85 138 90 137 Q95 136 96 141 L96 151 Q97 148 101 147 Q106 146 107 151 L107 155 Q108 152 113 151 Q118 150 118 156 L118 159 Q120 156 125 156 Q130 156 130 162 L130 178 Q130 188 121 195 L111 199 L96 199Z" fill="#F5C9A0"/>
+                <path d="M96 141 Q89 133 87 123 Q85 115 91 113 Q97 111 99 119 L101 141" fill="#F5C9A0"/>
+                {/* Phone */}
+                <rect x="80" y="98" width="60" height="97" rx="9" fill="#1A2B3C"/>
+                <rect x="84" y="106" width="52" height="77" rx="5" fill="white"/>
+                <rect x="97" y="100" width="26" height="4" rx="2" fill="#2C3E50"/>
+                {/* Screen notification content */}
+                <rect x="88" y="110" width="44" height="28" rx="4" fill="#F0F6FA"/>
+                <circle cx="100" cy="124" r="8" fill="#3d8fa8" fillOpacity="0.25"/>
+                <path d="M96 124 Q100 119 104 124 Q100 129 96 124Z" fill="#3d8fa8" fillOpacity="0.6"/>
+                <rect x="88" y="142" width="44" height="4" rx="2" fill="#E5E7EB"/>
+                <rect x="88" y="149" width="36" height="3" rx="1.5" fill="#E5E7EB"/>
+                <rect x="88" y="155" width="40" height="3" rx="1.5" fill="#E5E7EB"/>
+                <rect x="88" y="161" width="28" height="3" rx="1.5" fill="#E5E7EB"/>
+                {/* Connection lines */}
+                <line x1="140" y1="128" x2="163" y2="76" stroke="#3d8fa8" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.32"/>
+                <line x1="84" y1="128" x2="53" y2="116" stroke="#70B1C4" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.32"/>
+                <line x1="84" y1="118" x2="58" y2="63" stroke="#3d8fa8" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.28"/>
+                <line x1="140" y1="155" x2="166" y2="168" stroke="#70B1C4" strokeWidth="1" strokeDasharray="3 3" strokeOpacity="0.32"/>
+                {/* Envelope 1 - top right */}
+                <g transform="translate(152,58) rotate(14)">
+                  <rect x="0" y="0" width="30" height="21" rx="3" fill="white" stroke="#3d8fa8" strokeWidth="1.5"/>
+                  <path d="M0 3 L15 13 L30 3" stroke="#3d8fa8" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                </g>
+                {/* Envelope 2 - left (with badge) */}
+                <g transform="translate(30,104) rotate(-9)">
+                  <rect x="0" y="0" width="26" height="18" rx="2.5" fill="white" stroke="#70B1C4" strokeWidth="1.5"/>
+                  <path d="M0 2.5 L13 11 L26 2.5" stroke="#70B1C4" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                  <circle cx="24" cy="2" r="5.5" fill="#ef4444"/>
+                  <text x="24" y="5.5" textAnchor="middle" fontSize="6" fill="white" fontWeight="bold">1</text>
+                </g>
+                {/* Envelope 3 - top left */}
+                <g transform="translate(44,52) rotate(7)">
+                  <rect x="0" y="0" width="22" height="15" rx="2" fill="white" stroke="#3d8fa8" strokeWidth="1.2" fillOpacity="0.9"/>
+                  <path d="M0 2 L11 9 L22 2" stroke="#3d8fa8" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+                </g>
+                {/* Envelope 4 - bottom right */}
+                <g transform="translate(158,157) rotate(-11)">
+                  <rect x="0" y="0" width="27" height="19" rx="2.5" fill="white" stroke="#70B1C4" strokeWidth="1.3" fillOpacity="0.9"/>
+                  <path d="M0 2.5 L13.5 11 L27 2.5" stroke="#70B1C4" strokeWidth="1.3" fill="none" strokeLinecap="round"/>
+                </g>
+              </svg>
+              <p className="text-[#1A2B3C]/70 text-sm leading-relaxed font-medium max-w-[200px]">
+                Recevez des rappels personnalisés par SMS et email
+              </p>
+            </div>
+
+          </div>
         </div>
       </section>
 
