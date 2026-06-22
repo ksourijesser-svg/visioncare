@@ -189,8 +189,9 @@ function Eye() {
     camera.position.y += (targetY - camera.position.y) * 0.055
     camera.lookAt(0, 0, 0)
 
+    // Gentle float — no y-rotation (would turn iris sideways)
     if (groupRef.current) {
-      groupRef.current.rotation.y += delta * Math.max(0, 1 - raw * 8) * 0.18
+      groupRef.current.position.y = Math.sin(Date.now() * 0.0008) * 0.04 * Math.max(0, 1 - raw * 4)
     }
   })
 
