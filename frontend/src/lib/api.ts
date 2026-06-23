@@ -35,6 +35,12 @@ export const authApi = {
   },
   me: () => api.get('/auth/me'),
   register: (data: unknown) => api.post('/auth/register', data),
+  sendCode: (email: string, type: 'signup' | 'reset') =>
+    api.post('/auth/send-code', { email, type }),
+  verifyCode: (email: string, code: string, type: 'signup' | 'reset') =>
+    api.post('/auth/verify-code', { email, code, type }),
+  resetPassword: (email: string, code: string, new_password: string) =>
+    api.post('/auth/reset-password', { email, code, new_password }),
 }
 
 export const patientsApi = {
