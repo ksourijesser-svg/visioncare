@@ -1,12 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Link from 'next/link'
-import { Eye, EyeOff, Loader2, Stethoscope, ClipboardList, ArrowLeft } from 'lucide-react'
+import { Eye, EyeOff, Loader2, Stethoscope, ClipboardList, ArrowLeft, Mail, RefreshCw, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -49,8 +49,12 @@ const secretaireSchema = z.object({
 
 type MedecinData = z.infer<typeof medecinSchema>
 type SecretaireData = z.infer<typeof secretaireSchema>
-
 type Role = 'medecin' | 'secretaire'
+
+type PendingRegistration = {
+  email: string
+  registerFn: () => Promise<void>
+}
 
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
@@ -58,6 +62,196 @@ function Field({ label, error, children }: { label: string; error?: string; chil
       <Label className="text-sm text-gray-600 font-medium">{label}</Label>
       {children}
       {error && <p className="text-red-500 text-xs">{error}</p>}
+    </div>
+  )
+}
+
+// ── 6-digit OTP input ──────────────────────────────────────────────────────────
+function OtpInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([])
+
+  function handleChange(i: number, v: string) {
+    if (!/^\d*$/.test(v)) return
+    const chars = value.padEnd(6, '').split('')
+    chars[i] = v.slice(-1)
+    const next = chars.join('')
+    onChange(next)
+    if (v && i < 5) inputRefs.current[i + 1]?.focus()
+  }
+
+  function handleKeyDown(i: number, e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Backspace' && !value[i] && i > 0) {
+      inputRefs.current[i - 1]?.focus()
+    }
+  }
+
+  function handlePaste(e: React.ClipboardEvent) {
+    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6)
+    if (pasted) {
+      onChange(pasted.padEnd(6, '').slice(0, 6))
+      inputRefs.current[Math.min(pasted.length, 5)]?.focus()
+    }
+    e.preventDefault()
+  }
+
+  return (
+    <div className="flex gap-3 justify-center" onPaste={handlePaste}>
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <input
+          key={i}
+          ref={(el) => { inputRefs.current[i] = el }}
+          type="text"
+          inputMode="numeric"
+          maxLength={1}
+          value={value[i] || ''}
+          onChange={(e) => handleChange(i, e.target.value)}
+          onKeyDown={(e) => handleKeyDown(i, e)}
+          className="w-12 h-14 text-center text-2xl font-bold rounded-xl border-2 transition-all outline-none"
+          style={{
+            background: 'rgba(0,25,55,0.55)',
+            borderColor: value[i] ? '#00C8FF' : 'rgba(0,150,210,0.3)',
+            color: '#C8E8FF',
+            boxShadow: value[i] ? '0 0 10px rgba(0,200,255,0.3)' : 'none',
+          }}
+          onFocus={(e) => { e.currentTarget.style.borderColor = 'rgba(0,200,255,0.7)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,180,255,0.15)' }}
+          onBlur={(e) => { e.currentTarget.style.borderColor = value[i] ? '#00C8FF' : 'rgba(0,150,210,0.3)'; e.currentTarget.style.boxShadow = value[i] ? '0 0 10px rgba(0,200,255,0.3)' : 'none' }}
+        />
+      ))}
+    </div>
+  )
+}
+
+// ── Email verification step ────────────────────────────────────────────────────
+function VerificationStep({
+  email,
+  onVerified,
+  onBack,
+}: {
+  email: string
+  onVerified: () => Promise<void>
+  onBack: () => void
+}) {
+  const [code, setCode] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [resending, setResending] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
+
+  async function handleVerify() {
+    if (code.length < 6) { setError('Entrez les 6 chiffres du code'); return }
+    setLoading(true)
+    setError('')
+    try {
+      await authApi.verifyCode(email, code, 'signup')
+      setSuccess(true)
+      await onVerified()
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail
+      setError(msg || 'Code incorrect')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function handleResend() {
+    setResending(true)
+    setError('')
+    setCode('')
+    try {
+      await authApi.sendCode(email, 'signup')
+    } catch {
+      setError('Erreur lors du renvoi. Réessayez.')
+    } finally {
+      setResending(false)
+    }
+  }
+
+  return (
+    <div className="w-full max-w-md mx-auto">
+      <div className="text-center mb-6">
+        <button onClick={onBack} className="inline-flex items-center gap-2 text-white/50 hover:text-white text-sm mb-5 transition-colors">
+          <ArrowLeft size={14} /> Retour au formulaire
+        </button>
+        <div
+          className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
+          style={{
+            background: 'linear-gradient(135deg, rgba(0,100,180,0.35), rgba(0,60,120,0.45))',
+            border: '1px solid rgba(0,200,255,0.35)',
+            boxShadow: '0 0 24px rgba(0,180,255,0.25)',
+          }}
+        >
+          <Mail size={28} style={{ color: '#00D4FF' }} />
+        </div>
+        <h1 className="text-2xl font-bold text-white mb-1">Vérification email</h1>
+        <p className="text-white/50 text-sm">
+          Un code à 6 chiffres a été envoyé à<br />
+          <span className="text-[#00C8FF] font-semibold">{email}</span>
+        </p>
+      </div>
+
+      <div
+        style={{
+          borderRadius: '20px',
+          padding: '2px',
+          background: 'linear-gradient(135deg, rgba(0,200,255,0.45), rgba(0,100,200,0.18), rgba(0,200,255,0.38))',
+          boxShadow: '0 0 18px rgba(0,200,255,0.4), 0 0 50px rgba(0,150,220,0.22)',
+        }}
+      >
+        <div className="rounded-[18px] p-8" style={{ background: 'rgba(3,16,34,0.92)', backdropFilter: 'blur(20px)' }}>
+          {success ? (
+            <div className="text-center py-4">
+              <CheckCircle size={48} className="mx-auto mb-3" style={{ color: '#00D4FF' }} />
+              <p className="text-white font-semibold">Email vérifié !</p>
+              <p className="text-white/50 text-sm mt-1">Création du compte en cours…</p>
+            </div>
+          ) : (
+            <>
+              <p className="text-center text-sm mb-6" style={{ color: 'rgba(150,210,255,0.7)' }}>
+                Entrez le code reçu par email
+              </p>
+
+              <OtpInput value={code} onChange={setCode} />
+
+              {error && (
+                <div className="mt-4 rounded-lg px-3 py-2 text-sm text-center" style={{ background: 'rgba(220,38,38,0.12)', border: '1px solid rgba(220,38,38,0.3)', color: '#FCA5A5' }}>
+                  {error}
+                </div>
+              )}
+
+              <button
+                onClick={handleVerify}
+                disabled={loading || code.length < 6}
+                className="mt-6 w-full h-11 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all duration-200"
+                style={{
+                  background: code.length === 6 ? 'linear-gradient(135deg, #007BB8, #00AADD, #0095CC)' : 'rgba(0,100,160,0.3)',
+                  color: code.length === 6 ? '#fff' : 'rgba(255,255,255,0.4)',
+                  border: '1px solid rgba(0,200,255,0.35)',
+                  cursor: code.length === 6 ? 'pointer' : 'not-allowed',
+                }}
+                onMouseEnter={(e) => { if (code.length === 6) { e.currentTarget.style.boxShadow = '0 0 14px rgba(0,200,255,0.9), 0 0 30px rgba(0,150,220,0.55)'; e.currentTarget.style.transform = 'translateY(-1px)' } }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'translateY(0)' }}
+              >
+                {loading ? <Loader2 size={16} className="animate-spin" /> : null}
+                Vérifier et créer mon compte
+              </button>
+
+              <div className="mt-4 text-center">
+                <button
+                  onClick={handleResend}
+                  disabled={resending}
+                  className="text-sm flex items-center gap-1.5 mx-auto transition-colors"
+                  style={{ color: 'rgba(0,200,255,0.7)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = '#00D4FF'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(0,200,255,0.7)'}
+                >
+                  {resending ? <Loader2 size={13} className="animate-spin" /> : <RefreshCw size={13} />}
+                  Renvoyer le code
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
@@ -120,7 +314,7 @@ function RoleStep({ onSelect }: { onSelect: (r: Role) => void }) {
 }
 
 // ── Médecin form ───────────────────────────────────────────────────────────────
-function MedecinForm({ onBack }: { onBack: () => void }) {
+function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; onPendingVerification: (p: PendingRegistration) => void }) {
   const router = useRouter()
   const [showPw, setShowPw] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
@@ -133,16 +327,23 @@ function MedecinForm({ onBack }: { onBack: () => void }) {
 
   async function onSubmit(data: MedecinData) {
     setError('')
-    const parts = data.nom_complet.trim().split(' ')
-    const prenom = parts[0]
-    const nom = parts.slice(1).join(' ') || prenom
     try {
-      await authApi.register({ email: data.email, password: data.password, nom, prenom, role: 'medecin', telephone: data.telephone, cabinet: data.cabinet, specialisation: data.specialisation, type_cabinet: data.type_cabinet })
-      const loginRes = await authApi.login(data.email, data.password)
-      setToken(loginRes.data.access_token)
-      const me = await authApi.me()
-      setUser(me.data)
-      router.push('/dashboard')
+      await authApi.sendCode(data.email, 'signup')
+      const parts = data.nom_complet.trim().split(' ')
+      const prenom = parts[0]
+      const nom = parts.slice(1).join(' ') || prenom
+
+      onPendingVerification({
+        email: data.email,
+        registerFn: async () => {
+          await authApi.register({ email: data.email, password: data.password, nom, prenom, role: 'medecin', telephone: data.telephone, cabinet: data.cabinet, specialisation: data.specialisation, type_cabinet: data.type_cabinet })
+          const loginRes = await authApi.login(data.email, data.password)
+          setToken(loginRes.data.access_token)
+          const me = await authApi.me()
+          setUser(me.data)
+          router.push('/dashboard')
+        },
+      })
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail
       setError(msg || 'Une erreur est survenue. Veuillez réessayer.')
@@ -235,7 +436,7 @@ function MedecinForm({ onBack }: { onBack: () => void }) {
 
           <Button type="submit" disabled={isSubmitting} className="w-full bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-semibold h-12 rounded-xl shadow-md shadow-[#3d8fa8]/30 text-base">
             {isSubmitting && <Loader2 size={18} className="animate-spin mr-2" />}
-            Créer mon compte et accéder au tableau de bord
+            {isSubmitting ? 'Envoi du code…' : 'Continuer — vérifier mon email'}
           </Button>
 
           <p className="text-center text-sm text-gray-500">
@@ -249,7 +450,7 @@ function MedecinForm({ onBack }: { onBack: () => void }) {
 }
 
 // ── Secrétaire form ────────────────────────────────────────────────────────────
-function SecretaireForm({ onBack }: { onBack: () => void }) {
+function SecretaireForm({ onBack, onPendingVerification }: { onBack: () => void; onPendingVerification: (p: PendingRegistration) => void }) {
   const router = useRouter()
   const [showPw, setShowPw] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
@@ -262,16 +463,23 @@ function SecretaireForm({ onBack }: { onBack: () => void }) {
 
   async function onSubmit(data: SecretaireData) {
     setError('')
-    const parts = data.nom_complet.trim().split(' ')
-    const prenom = parts[0]
-    const nom = parts.slice(1).join(' ') || prenom
     try {
-      await authApi.register({ email: data.email, password: data.password, nom, prenom, role: 'secretaire', telephone: data.telephone })
-      const loginRes = await authApi.login(data.email, data.password)
-      setToken(loginRes.data.access_token)
-      const me = await authApi.me()
-      setUser(me.data)
-      router.push('/dashboard')
+      await authApi.sendCode(data.email, 'signup')
+      const parts = data.nom_complet.trim().split(' ')
+      const prenom = parts[0]
+      const nom = parts.slice(1).join(' ') || prenom
+
+      onPendingVerification({
+        email: data.email,
+        registerFn: async () => {
+          await authApi.register({ email: data.email, password: data.password, nom, prenom, role: 'secretaire', telephone: data.telephone })
+          const loginRes = await authApi.login(data.email, data.password)
+          setToken(loginRes.data.access_token)
+          const me = await authApi.me()
+          setUser(me.data)
+          router.push('/dashboard')
+        },
+      })
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail
       setError(msg || 'Une erreur est survenue. Veuillez réessayer.')
@@ -335,7 +543,7 @@ function SecretaireForm({ onBack }: { onBack: () => void }) {
 
           <Button type="submit" disabled={isSubmitting} className="w-full bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-semibold h-12 rounded-xl shadow-md shadow-[#3d8fa8]/30 text-base">
             {isSubmitting && <Loader2 size={18} className="animate-spin mr-2" />}
-            Créer mon compte
+            {isSubmitting ? 'Envoi du code…' : 'Continuer — vérifier mon email'}
           </Button>
 
           <p className="text-center text-sm text-gray-500">
@@ -351,18 +559,25 @@ function SecretaireForm({ onBack }: { onBack: () => void }) {
 // ── Main page ──────────────────────────────────────────────────────────────────
 export default function InscriptionPage() {
   const [role, setRole] = useState<Role | null>(null)
+  const [pending, setPending] = useState<PendingRegistration | null>(null)
 
   return (
     <div className="min-h-screen bg-[#060F1E] flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, rgba(112,177,196,0.10) 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
       <div className="absolute top-[-200px] right-[-100px] w-[600px] h-[600px] pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(61,143,168,0.20) 0%, transparent 65%)' }} />
       <div className="absolute bottom-[-150px] left-[-80px] w-[500px] h-[500px] pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(112,177,196,0.14) 0%, transparent 65%)' }} />
 
       <div className="relative z-10 w-full flex items-center justify-center py-8">
-        {role === null && <RoleStep onSelect={setRole} />}
-        {role === 'medecin' && <MedecinForm onBack={() => setRole(null)} />}
-        {role === 'secretaire' && <SecretaireForm onBack={() => setRole(null)} />}
+        {!pending && role === null && <RoleStep onSelect={setRole} />}
+        {!pending && role === 'medecin' && <MedecinForm onBack={() => setRole(null)} onPendingVerification={setPending} />}
+        {!pending && role === 'secretaire' && <SecretaireForm onBack={() => setRole(null)} onPendingVerification={setPending} />}
+        {pending && (
+          <VerificationStep
+            email={pending.email}
+            onVerified={pending.registerFn}
+            onBack={() => setPending(null)}
+          />
+        )}
       </div>
 
       <p className="absolute bottom-4 left-0 right-0 text-center text-white/25 text-xs">
