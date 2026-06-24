@@ -120,7 +120,7 @@ export default function CalendrierPage() {
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                     view === v
                       ? 'bg-[#70B1C4] text-white shadow-md shadow-[#70B1C4]/30'
-                      : 'text-gray-500 dark:text-[#6A8E9F] hover:text-[#1A2B3C] dark:hover:text-[#E2EDF5]'
+                      : 'text-gray-500 dark:text-[#7AAABB] hover:text-[#1A2B3C] dark:hover:text-[#E2EDF5]'
                   }`}
                 >
                   {v === 'jour' ? 'Jour' : v === 'semaine' ? 'Semaine' : 'Mois'}
@@ -141,7 +141,7 @@ export default function CalendrierPage() {
           <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden transition-colors duration-300">
             <div className="grid grid-cols-7 border-b border-gray-100 dark:border-[#1A3A5C]/40">
               {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day) => (
-                <div key={day} className="py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#6A8E9F] uppercase tracking-wide">
+                <div key={day} className="py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#7AAABB] uppercase tracking-wide">
                   {day}
                 </div>
               ))}
@@ -173,7 +173,7 @@ export default function CalendrierPage() {
                       {events.length > 3 && (
                         <p
                           onClick={() => { setCurrentDate(day); setView('jour') }}
-                          className="text-xs text-gray-400 dark:text-[#6A8E9F] pl-1 cursor-pointer hover:text-[#70B1C4]"
+                          className="text-xs text-gray-400 dark:text-[#7AAABB] pl-1 cursor-pointer hover:text-[#70B1C4]"
                         >
                           +{events.length - 3} autres
                         </p>
@@ -199,7 +199,7 @@ export default function CalendrierPage() {
                     className="py-2 text-center border-l border-gray-50 dark:border-[#1A3A5C]/20 cursor-pointer hover:bg-[#F5F9FA] dark:hover:bg-[#1A3A5C]/30 transition-colors"
                     onClick={() => { setCurrentDate(day); setView('jour') }}
                   >
-                    <p className="text-xs text-gray-400 dark:text-[#6A8E9F] uppercase">
+                    <p className="text-xs text-gray-400 dark:text-[#7AAABB] uppercase">
                       {format(day, 'EEE', { locale: fr })}
                     </p>
                     <div className={`w-8 h-8 mx-auto flex items-center justify-center rounded-full text-sm font-semibold mt-0.5
@@ -217,7 +217,7 @@ export default function CalendrierPage() {
                   className="grid border-b border-gray-50 dark:border-[#1A3A5C]/20"
                   style={{ gridTemplateColumns: '56px repeat(7, 1fr)', minHeight: '64px' }}
                 >
-                  <div className="px-2 pt-1.5 text-xs text-gray-400 dark:text-[#6A8E9F] text-right shrink-0">
+                  <div className="px-2 pt-1.5 text-xs text-gray-400 dark:text-[#7AAABB] text-right shrink-0">
                     {hour}:00
                   </div>
                   {weekDays.map((day, i) => {
@@ -254,7 +254,7 @@ export default function CalendrierPage() {
                 <p className="text-sm font-semibold text-[#2D3748] dark:text-[#EDF8FF] capitalize">
                   {format(currentDate, 'EEEE', { locale: fr })}
                 </p>
-                <p className="text-xs text-gray-400 dark:text-[#6A8E9F] capitalize">
+                <p className="text-xs text-gray-400 dark:text-[#7AAABB] capitalize">
                   {format(currentDate, 'MMMM yyyy', { locale: fr })}
                 </p>
               </div>
@@ -269,7 +269,7 @@ export default function CalendrierPage() {
                 const appts = getApptForDayHour(currentDate, hour)
                 return (
                   <div key={hour} className="flex border-b border-gray-50 dark:border-[#1A3A5C]/20" style={{ minHeight: '68px' }}>
-                    <div className="w-16 px-3 pt-2 text-xs text-gray-400 dark:text-[#6A8E9F] text-right shrink-0 border-r border-gray-50 dark:border-[#1A3A5C]/20">
+                    <div className="w-16 px-3 pt-2 text-xs text-gray-400 dark:text-[#7AAABB] text-right shrink-0 border-r border-gray-50 dark:border-[#1A3A5C]/20">
                       {hour}:00
                     </div>
                     <div className="flex-1 p-2 space-y-1.5">
@@ -297,7 +297,7 @@ export default function CalendrierPage() {
 
         {/* Legend card */}
         <div className="bg-white dark:bg-[#102844] rounded-2xl glow px-5 py-3 flex items-center gap-6 self-start transition-colors duration-300">
-          <span className="text-[11px] font-bold text-gray-400 dark:text-[#6A8E9F] uppercase tracking-widest">Légende</span>
+          <span className="text-[11px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Légende</span>
           {[
             { label: 'Programmé', color: 'bg-blue-400' },
             { label: 'Confirmé',  color: 'bg-green-400' },
