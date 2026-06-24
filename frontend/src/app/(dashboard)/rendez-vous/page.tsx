@@ -83,15 +83,15 @@ export default function RendezVousPage() {
           </Button>
         </div>
 
-        {/* Column headers */}
-        <div className="hidden sm:grid grid-cols-[1fr_160px_1fr_80px_148px_96px] px-5 gap-4">
-          {['Patient', 'Date & Heure', 'Motif', 'Durée', 'Statut', 'Actions'].map((h) => (
-            <p key={h} className="text-[11px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">{h}</p>
-          ))}
-        </div>
-
         {/* ── Row cards ── */}
-        <div className="space-y-2.5">
+        <div className="space-y-0">
+          {/* Column headers — attached to the rows */}
+          <div className="hidden sm:grid grid-cols-[1fr_160px_1fr_80px_148px_96px] px-5 gap-4 pb-2 pt-1">
+            {['Patient', 'Date & Heure', 'Motif', 'Durée', 'Statut', 'Actions'].map((h) => (
+              <p key={h} className="text-[11px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">{h}</p>
+            ))}
+          </div>
+          <div className="space-y-2.5">
           {isLoading ? (
             <div className="bg-white dark:bg-[#102844] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#7AAABB]">
               <Loader2 size={32} className="mx-auto mb-3 animate-spin opacity-40" />
