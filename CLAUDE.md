@@ -13,6 +13,7 @@
 | UI | Shadcn/ui (Base UI based) + Lucide icons + Recharts |
 | Backend | FastAPI (Python), SQLAlchemy 2, PostgreSQL 16 |
 | Auth | JWT (python-jose + bcrypt==4.0.1 + passlib==1.7.4) |
+| Email | Resend API (HTTPS, no SMTP — Railway blocks SMTP ports) |
 | Infra | Railway (backend + PostgreSQL) + Vercel (frontend) |
 
 ## Dev Commands
@@ -25,10 +26,9 @@ npm run lint
 # Backend (from backend/)
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
-
-# Full stack
-docker-compose up --build
 ```
+
+**No Docker** — user has no admin rights to install Docker Desktop. Run backend + frontend directly.
 
 ## Demo Credentials
 
@@ -48,8 +48,9 @@ app/
   page.tsx              # Landing page (public, dark #060F1E bg, dot grid + orbs)
   prise-rdv/page.tsx    # Public patient booking — doctor autocomplete, creates RDV
   (auth)/
-    login/              # login page
-    inscription/        # Multi-step role selection: Médecin form | Secrétaire form
+    login/              # Login page — dark medical theme (hex grid + ECG lines + glassmorphism card)
+                        #   3 inline modes: login | forgot-email | forgot-code (no page change)
+    inscription/        # Multi-step: Role selection → Médecin/Secrétaire form → Email verification (OTP)
   (dashboard)/          # protected layout — sidebar + header
     dashboard/          # welcome banner, stat cards, charts, today's RDV
     patients/           # patient cards (only patients with ≥1 complete RDV)
@@ -82,17 +83,26 @@ store/
 
 ```
 api/routes/
-  auth.py          # POST /login (OAuth2 form), POST /register, GET /me
+  auth.py          # POST /login, POST /register, GET /me
+                   # POST /auth/send-code      — sends 6-digit OTP via Resend (signup|reset)
+                   # POST /auth/verify-code    — validates OTP for signup flow
+                   # POST /auth/reset-password — validates OTP + changes password
   patients.py      # CRUD + Excel export — filter by medecin_id
   appointments.py  # CRUD for rendez_vous — filter by medecin_id
   dashboard.py     # aggregated stats
   public.py        # Unauthenticated: GET /public/doctors/search, POST /public/rendez-vous
-core/config.py     # DATABASE_URL, SECRET_KEY, CORS_ORIGINS
+core/config.py     # DATABASE_URL, SECRET_KEY, CORS_ORIGINS, RESEND_API_KEY, EMAIL_FROM
 core/security.py   # JWT, hash_password, verify_password
+core/email.py      # send_code_email() — Resend HTTP API via urllib (no new deps)
 main.py            # lifespan: create_tables + seed_demo_users
 ```
 
 All routes prefixed `/api/v1`. Health: `GET /health`.
+
+### OTP / Email verification flow
+- **Signup**: form submit → `POST /auth/send-code {email, type:"signup"}` → OTP step (6-box input, paste support, resend) → `POST /auth/verify-code` → `POST /auth/register` → auto-login
+- **Forgot password**: "Mot de passe oublié?" → email step → `POST /auth/send-code {type:"reset"}` → code + new password step → `POST /auth/reset-password` → back to login
+- OTPs stored **in-memory** (`_otp_store` dict, `threading.Lock`), 10-min TTL. Single Railway instance — fine for now.
 
 ### Data Model
 
@@ -117,14 +127,29 @@ Server state → React Query hooks. Zustand stores → type interfaces only. `pr
 `NEXT_PUBLIC_API_URL` → set in `frontend/.env.production` (committed). Do **not** rely on Vercel UI env vars.
 **bcrypt pin**: `passlib==1.7.4` + `bcrypt==4.0.1` separately — `passlib[bcrypt]` pulls breaking bcrypt 4.x.
 
+### Railway env vars required
+
+```
+DATABASE_URL        = (set by Railway PostgreSQL plugin)
+SECRET_KEY          = (strong random string)
+RESEND_API_KEY      = re_...
+EMAIL_FROM          = VisionCare <onboarding@resend.dev>
+```
+
 ## Key Conventions & Gotchas
+
+### No Docker — CRITICAL
+User has no Docker Desktop (no admin rights). Never suggest `docker-compose up`. Run backend with `uvicorn` directly and frontend with `npm run dev`. DB in production is Railway PostgreSQL.
+
+### Email — Resend only, no SMTP
+Railway blocks all outbound SMTP ports (587 and 465). Use **Resend API** (`core/email.py`) via HTTPS. Do not switch back to `smtplib`. Resend API key in Railway env vars + `backend/.env` locally. Must include `User-Agent: VisionCare/1.0` header — Cloudflare blocks requests without it.
 
 ### Multi-tenant isolation — CRITICAL
 Every backend route touching patients/appointments **must** filter `medecin_id == current_user.id`.
 
 ### User roles
 Three actors: **Médecin**, **Secrétaire** (both use dashboard), **Patient** (books via `/prise-rdv` public page).
-`inscription/page.tsx` shows a role-selection step first, then renders the matching form.
+`inscription/page.tsx` shows a role-selection step first, then renders the matching form, then email OTP verification.
 
 ### Public (unauthenticated) routes
 `GET /api/v1/public/doctors/search?q=` — searches User by name/cabinet (medecin + is_active only).
@@ -163,6 +188,7 @@ Do **not** use `absolute` positioning inside a `@base-ui/react` Dialog — stack
 
 ### UI Design System
 
+**Login page**: dark medical tech theme — navy gradient `#020B18→#051E36`, SVG hex grid (2 layers), ECG lines top-left + bottom-right, glassmorphism card with cyan neon border glow.
 **Dashboard**: background `#C5D8E6`, cards white `shadow-sm rounded-2xl`. Active nav `bg-[#3d8fa8] text-white`, inactive `text-gray-600`.
 **Landing page**: dark `#060F1E` background + dot-grid overlay + 3 gradient orbs. Navbar glass `bg-[#060F1E]/85 backdrop-blur`.
 **Landing sections**: "Pourquoi choisir VisionCare?" `bg-white` with 3 SVG illustration cards. Fonctionnalités section `bg-[#C5D8E6]`. No Spécialités section (ophthalmology-only).
