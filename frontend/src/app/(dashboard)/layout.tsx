@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         style={{
           top: '-120px', right: '-80px',
           width: '600px', height: '500px',
-          background: 'radial-gradient(ellipse at center, rgba(61,143,168,0.10) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(61,143,168,0.18) 0%, transparent 70%)',
           zIndex: 0,
         }}
       />
@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         style={{
           bottom: '-100px', left: '260px',
           width: '500px', height: '450px',
-          background: 'radial-gradient(ellipse at center, rgba(112,177,196,0.07) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(112,177,196,0.12) 0%, transparent 70%)',
           zIndex: 0,
         }}
       />
@@ -28,7 +28,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         style={{
           top: '40%', left: '35%',
           width: '700px', height: '400px',
-          background: 'radial-gradient(ellipse at center, rgba(30,108,135,0.05) 0%, transparent 65%)',
+          background: 'radial-gradient(ellipse at center, rgba(30,108,135,0.09) 0%, transparent 65%)',
           zIndex: 0,
         }}
       />
