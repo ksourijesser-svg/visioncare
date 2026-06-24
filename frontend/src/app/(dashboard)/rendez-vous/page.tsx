@@ -150,10 +150,10 @@ export default function RendezVousPage() {
                       </SelectContent>
                     </Select>
                     <div className="flex items-center gap-0.5">
-                      <button onClick={() => handleDossier(rdv)} title="Dossier médical" className="p-1.5 rounded-lg hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#70B1C4] transition-colors btn-neon">
+                      <button onClick={() => handleDossier(rdv)} title="Dossier médical" className="p-1.5 rounded-lg hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 text-[#70B1C4] transition-colors btn-neon">
                         <ClipboardList size={14} />
                       </button>
-                      <button onClick={() => handleEdit(rdv)} className="p-1.5 rounded-lg hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#70B1C4] transition-colors btn-neon">
+                      <button onClick={() => handleEdit(rdv)} className="p-1.5 rounded-lg hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 text-[#70B1C4] transition-colors btn-neon">
                         <Pencil size={14} />
                       </button>
                       <button onClick={() => handleDelete(rdv.id)} className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-400 transition-colors btn-neon-red">
