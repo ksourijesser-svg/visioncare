@@ -112,7 +112,7 @@ export default function CalendrierPage() {
 
           {/* Right: view switcher + button */}
           <div className="flex items-center gap-2">
-            <div className="flex bg-[#E4EEF4] dark:bg-[#0A1628] rounded-xl p-1 gap-0.5">
+            <div className="flex bg-[#E4EEF4] dark:bg-[#06101E] rounded-xl p-1 gap-0.5">
               {(['jour', 'semaine', 'mois'] as ViewMode[]).map((v) => (
                 <button
                   key={v}
