@@ -43,35 +43,43 @@ export function Sidebar() {
 
   return (
     <>
+      {/* Mobile toggle */}
       <button
-        className="fixed top-4 left-4 z-50 md:hidden bg-white dark:bg-[#0C1F38] rounded-xl p-2 shadow-md dark:shadow-[0_2px_12px_rgba(0,0,0,0.5)] border border-transparent dark:border-[#1C3F62]/30 transition-colors duration-300"
+        className="fixed top-4 left-4 z-50 md:hidden bg-[#050D1A]/90 backdrop-blur-sm rounded-xl p-2 shadow-md border border-[#1C3F62]/30 transition-colors duration-300"
         onClick={() => setOpen(!open)}
       >
-        {open ? <X size={20} className="text-[#1A2B3C] dark:text-[#EDF8FF]" /> : <Menu size={20} className="text-[#1A2B3C] dark:text-[#EDF8FF]" />}
+        {open ? <X size={20} className="text-[#EDF8FF]" /> : <Menu size={20} className="text-[#EDF8FF]" />}
       </button>
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-40 w-64 flex flex-col bg-white dark:bg-[#060C18] glow-sidebar transition-all duration-300',
-          open ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+          'fixed inset-y-0 left-0 z-40 w-64 flex flex-col',
+          'bg-[#050D1A] backdrop-blur-xl',
+          'border-r border-[#1C3F62]/25',
+          'shadow-[1px_0_0_rgba(112,177,196,0.10),_6px_0_40px_rgba(0,0,0,0.60)]',
+          open ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
+          'transition-all duration-300'
         )}
       >
-        {/* Logo */}
-        <div className="flex items-center gap-3 px-5 py-5">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#70B1C4] to-[#3d8fa8] flex items-center justify-center shadow-md shadow-[#70B1C4]/30">
-            <Eye size={19} className="text-white" />
-          </div>
-          <div>
-            <p className="font-bold text-[#1A2B3C] dark:text-[#EDF8FF] text-[15px] tracking-tight">VisionCare</p>
-            <p className="text-[11px] text-[#70B1C4] font-medium">Cabinet d&apos;Ophtalmologie</p>
+        {/* ── Brand ── */}
+        <div className="px-6 pt-6 pb-5">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#3d8fa8] to-[#1e6c87] flex items-center justify-center shadow-lg shadow-[#3d8fa8]/30">
+              <Eye size={17} className="text-white" />
+            </div>
+            <div>
+              <p className="font-bold text-white text-[14px] tracking-tight">VisionCare</p>
+              <p className="text-[10px] text-[#70B1C4]/70 font-medium">Cabinet d&apos;Ophtalmologie</p>
+            </div>
           </div>
         </div>
 
-        <div className="mx-5 h-px bg-gray-200 dark:bg-[#1C3F62]/40" />
+        {/* Divider */}
+        <div className="mx-6 h-px bg-white/[0.06]" />
 
-        {/* Nav */}
-        <nav className="px-4 pt-5 pb-4 space-y-1">
-          <p className="text-[10px] font-bold text-gray-500 dark:text-[#7AAABB] uppercase tracking-[0.1em] px-2 mb-3">Navigation</p>
+        {/* ── Nav ── */}
+        <nav className="px-3 pt-6 pb-4 flex-1 space-y-0.5">
+          <p className="text-[10px] font-bold text-white/25 uppercase tracking-[0.15em] px-3 mb-4">Navigation</p>
 
           {navItems.map(({ href, label, icon: Icon }) => {
             const active = pathname === href || pathname.startsWith(href + '/')
@@ -81,89 +89,93 @@ export function Sidebar() {
                 href={href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150',
+                  'flex items-center gap-3.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group relative',
                   active
-                    ? 'bg-[#3d8fa8] text-white shadow-md shadow-[#3d8fa8]/30'
-                    : 'text-gray-600 dark:text-[#B4D0E0] hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/50 hover:text-[#1A2B3C] dark:hover:text-[#EDF8FF]'
+                    ? 'bg-white/[0.08] text-white'
+                    : 'text-white/45 hover:bg-white/[0.05] hover:text-white/80'
                 )}
               >
-                <Icon size={17} className={active ? 'text-white' : 'text-gray-500 dark:text-[#7AAABB]'} />
+                {/* Active left accent bar */}
+                {active && (
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-r-full bg-[#70B1C4] shadow-[0_0_8px_rgba(112,177,196,0.8)]" />
+                )}
+                <Icon
+                  size={17}
+                  className={cn(
+                    'shrink-0 transition-colors duration-150',
+                    active ? 'text-[#70B1C4]' : 'text-white/35 group-hover:text-white/60'
+                  )}
+                />
                 {label}
               </Link>
             )
           })}
         </nav>
 
-        {/* Decorative illustration + tip */}
-        <div className="flex-1 px-4 pb-4 flex flex-col justify-end">
-          <div className="rounded-2xl bg-gradient-to-br from-[#E8F4F8] to-[#F5FAFB] dark:from-[#0C1F38] dark:to-[#102844] p-4 flex flex-col items-center gap-3 border border-[#DCEEF3]/60 dark:border-[#1C3F62]/40">
-            <svg viewBox="0 0 100 60" className="w-28 h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="8"  cy="10" r="2" fill="#70B1C4" fillOpacity="0.15" />
-              <circle cx="92" cy="10" r="2" fill="#70B1C4" fillOpacity="0.15" />
-              <circle cx="8"  cy="50" r="2" fill="#70B1C4" fillOpacity="0.15" />
-              <circle cx="92" cy="50" r="2" fill="#70B1C4" fillOpacity="0.15" />
-              <circle cx="16" cy="30" r="1.5" fill="#70B1C4" fillOpacity="0.12" />
-              <circle cx="84" cy="30" r="1.5" fill="#70B1C4" fillOpacity="0.12" />
-              <path
-                d="M10 30 Q30 6 50 6 Q70 6 90 30 Q70 54 50 54 Q30 54 10 30Z"
-                stroke="#70B1C4" strokeWidth="1.5" strokeLinejoin="round"
-                fill="#70B1C4" fillOpacity="0.05"
-              />
-              <circle cx="50" cy="30" r="16" stroke="#70B1C4" strokeWidth="1.2" fill="#70B1C4" fillOpacity="0.08" />
-              <circle cx="50" cy="30" r="10" stroke="#70B1C4" strokeWidth="1"  fill="#70B1C4" fillOpacity="0.12" />
-              <circle cx="50" cy="30" r="5.5" fill="#3d8fa8" fillOpacity="0.55" />
-              <circle cx="46" cy="26" r="2"   fill="white"   fillOpacity="0.75" />
-              <circle cx="53" cy="28" r="1"   fill="white"   fillOpacity="0.45" />
-              <line x1="12" y1="27" x2="8"  y2="24" stroke="#70B1C4" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.35" />
-              <line x1="12" y1="30" x2="7"  y2="30" stroke="#70B1C4" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.25" />
-              <line x1="88" y1="27" x2="92" y2="24" stroke="#70B1C4" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.35" />
-              <line x1="88" y1="30" x2="93" y2="30" stroke="#70B1C4" strokeWidth="1" strokeLinecap="round" strokeOpacity="0.25" />
+        {/* ── Eye widget ── */}
+        <div className="px-3 pb-4">
+          <div className="rounded-2xl bg-white/[0.04] border border-white/[0.07] p-4 flex flex-col items-center gap-3">
+            <svg viewBox="0 0 100 60" className="w-24 h-auto opacity-70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 30 Q30 6 50 6 Q70 6 90 30 Q70 54 50 54 Q30 54 10 30Z"
+                stroke="#70B1C4" strokeWidth="1.5" strokeLinejoin="round" fill="#70B1C4" fillOpacity="0.04" />
+              <circle cx="50" cy="30" r="16" stroke="#70B1C4" strokeWidth="1.2" fill="#70B1C4" fillOpacity="0.06" />
+              <circle cx="50" cy="30" r="10" stroke="#70B1C4" strokeWidth="1"  fill="#70B1C4" fillOpacity="0.10" />
+              <circle cx="50" cy="30" r="5.5" fill="#3d8fa8" fillOpacity="0.60" />
+              <circle cx="46" cy="26" r="2"   fill="white"   fillOpacity="0.70" />
+              <circle cx="53" cy="28" r="1"   fill="white"   fillOpacity="0.40" />
             </svg>
-
-            <p className="text-center text-[11px] text-[#3d8fa8] dark:text-[#70B1C4] font-medium leading-relaxed whitespace-pre-line">
+            <p className="text-center text-[11px] text-white/40 font-medium leading-relaxed whitespace-pre-line">
               {tip}
             </p>
-
             <div className="flex items-center gap-1.5">
-              <span className="w-1 h-1 rounded-full bg-[#70B1C4] opacity-40" />
-              <span className="w-5 h-0.5 rounded-full bg-[#70B1C4] opacity-25" />
-              <span className="w-1 h-1 rounded-full bg-[#70B1C4] opacity-40" />
+              <span className="w-1 h-1 rounded-full bg-[#70B1C4]/30" />
+              <span className="w-5 h-0.5 rounded-full bg-[#70B1C4]/20" />
+              <span className="w-1 h-1 rounded-full bg-[#70B1C4]/30" />
             </div>
           </div>
         </div>
 
-        {/* User section */}
-        <div className="px-4 pb-5 space-y-2">
-          <div className="mx-1 h-px bg-gray-200 dark:bg-[#1C3F62]/40 mb-3" />
+        {/* Divider */}
+        <div className="mx-6 h-px bg-white/[0.06]" />
 
+        {/* ── Bottom: profil link + user card ── */}
+        <div className="px-3 py-4 space-y-0.5">
           <Link
             href="/profil"
             onClick={() => setOpen(false)}
             className={cn(
-              'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150',
+              'flex items-center gap-3.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group relative',
               pathname === '/profil'
-                ? 'bg-[#3d8fa8] text-white shadow-md shadow-[#3d8fa8]/30'
-                : 'text-gray-600 dark:text-[#B4D0E0] hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/50 hover:text-[#1A2B3C] dark:hover:text-[#EDF8FF]'
+                ? 'bg-white/[0.08] text-white'
+                : 'text-white/45 hover:bg-white/[0.05] hover:text-white/80'
             )}
           >
-            <UserCircle size={17} className={pathname === '/profil' ? 'text-white' : 'text-gray-500 dark:text-[#7AAABB]'} />
+            {pathname === '/profil' && (
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-r-full bg-[#70B1C4] shadow-[0_0_8px_rgba(112,177,196,0.8)]" />
+            )}
+            <UserCircle
+              size={17}
+              className={cn(
+                'shrink-0 transition-colors duration-150',
+                pathname === '/profil' ? 'text-[#70B1C4]' : 'text-white/35 group-hover:text-white/60'
+              )}
+            />
             Mon profil
           </Link>
 
-          <div className="flex items-center gap-3 px-3 py-2.5 bg-gray-100 dark:bg-[#102844] rounded-xl border border-transparent dark:border-[#1C3F62]/40">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#70B1C4] to-[#3d8fa8] flex items-center justify-center text-white text-xs font-bold shrink-0">
+          {/* User card */}
+          <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.07] mt-2">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#3d8fa8] to-[#1e6c87] flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-md shadow-[#3d8fa8]/25">
               {initials}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-[#1A2B3C] dark:text-[#EDF8FF] truncate">
-                Dr. {user?.prenom} {user?.nom}
-              </p>
-              <p className="text-[10px] text-gray-500 dark:text-[#7AAABB] capitalize">{user?.role}</p>
+              <p className="text-xs font-semibold text-white/80 truncate">Dr. {user?.prenom} {user?.nom}</p>
+              <p className="text-[10px] text-white/30 capitalize">{user?.role}</p>
             </div>
             <button
               onClick={handleLogout}
               title="Déconnexion"
-              className="p-1.5 rounded-lg text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors shrink-0 btn-neon-red"
+              className="p-1.5 rounded-lg text-white/25 hover:text-red-400 hover:bg-red-900/20 transition-colors shrink-0"
             >
               <LogOut size={14} />
             </button>
@@ -172,7 +184,7 @@ export function Sidebar() {
       </aside>
 
       {open && (
-        <div className="fixed inset-0 z-30 bg-black/30 md:hidden" onClick={() => setOpen(false)} />
+        <div className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm md:hidden" onClick={() => setOpen(false)} />
       )}
     </>
   )
