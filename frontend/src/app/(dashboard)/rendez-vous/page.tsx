@@ -54,7 +54,7 @@ export default function RendezVousPage() {
         {/* ── Toolbar card ── */}
         <div className="bg-white dark:bg-[#102844] rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row gap-3 items-center transition-colors duration-300">
           <div className="relative flex-1 w-full">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#6A8E9F] pointer-events-none" />
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#7AAABB] pointer-events-none" />
             <Input
               placeholder="Rechercher un patient ou motif..."
               value={search}
@@ -64,7 +64,7 @@ export default function RendezVousPage() {
           </div>
           <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as AppointmentStatus | 'tous')}>
             <SelectTrigger className="w-48 border border-gray-200 dark:border-[#1A3A5C]/60 rounded-xl bg-[#F7FAFB] dark:bg-[#091628] dark:text-[#EDF8FF] h-10 shrink-0">
-              <Filter size={13} className="mr-1.5 text-gray-400 dark:text-[#6A8E9F] shrink-0" />
+              <Filter size={13} className="mr-1.5 text-gray-400 dark:text-[#7AAABB] shrink-0" />
               <SelectValue placeholder="Tous les statuts" />
             </SelectTrigger>
             <SelectContent>
@@ -86,19 +86,19 @@ export default function RendezVousPage() {
         {/* Column headers */}
         <div className="hidden sm:grid grid-cols-[1fr_160px_1fr_80px_148px_96px] px-5 gap-4">
           {['Patient', 'Date & Heure', 'Motif', 'Durée', 'Statut', 'Actions'].map((h) => (
-            <p key={h} className="text-[11px] font-bold text-gray-400 dark:text-[#6A8E9F] uppercase tracking-widest">{h}</p>
+            <p key={h} className="text-[11px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">{h}</p>
           ))}
         </div>
 
         {/* ── Row cards ── */}
         <div className="space-y-2.5">
           {isLoading ? (
-            <div className="bg-white dark:bg-[#102844] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#6A8E9F]">
+            <div className="bg-white dark:bg-[#102844] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#7AAABB]">
               <Loader2 size={32} className="mx-auto mb-3 animate-spin opacity-40" />
               <p className="text-sm">Chargement des rendez-vous...</p>
             </div>
           ) : filtered.length === 0 ? (
-            <div className="bg-white dark:bg-[#102844] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#6A8E9F]">
+            <div className="bg-white dark:bg-[#102844] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#7AAABB]">
               <User size={40} className="mx-auto mb-3 opacity-20" />
               <p className="font-medium">Aucun rendez-vous trouvé</p>
             </div>
@@ -118,20 +118,20 @@ export default function RendezVousPage() {
                         <p className="font-semibold text-[#1A2B3C] dark:text-[#EDF8FF] text-sm leading-tight">
                           {rdv.patient_prenom} {rdv.patient_nom}
                         </p>
-                        <p className="text-xs text-gray-400 dark:text-[#6A8E9F]">{rdv.patient_telephone}</p>
+                        <p className="text-xs text-gray-400 dark:text-[#7AAABB]">{rdv.patient_telephone}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5 text-gray-600 dark:text-[#B4D0E0] text-sm">
-                      <Calendar size={12} className="text-gray-400 dark:text-[#6A8E9F] shrink-0" />
+                      <Calendar size={12} className="text-gray-400 dark:text-[#7AAABB] shrink-0" />
                       <span>
                         {format(new Date(rdv.date), 'dd MMM', { locale: fr })}
-                        <span className="text-gray-400 dark:text-[#6A8E9F] mx-1">·</span>
+                        <span className="text-gray-400 dark:text-[#7AAABB] mx-1">·</span>
                         {rdv.heure}
                       </span>
                     </div>
                     <p className="text-sm text-gray-600 dark:text-[#B4D0E0] truncate">{rdv.motif}</p>
                     <div className="flex items-center gap-1 text-gray-500 dark:text-[#B4D0E0] text-sm">
-                      <Clock size={12} className="text-gray-400 dark:text-[#6A8E9F] shrink-0" />
+                      <Clock size={12} className="text-gray-400 dark:text-[#7AAABB] shrink-0" />
                       <span>{rdv.duree} min</span>
                     </div>
                     <Select
@@ -168,7 +168,7 @@ export default function RendezVousPage() {
         </div>
 
         {filtered.length > 0 && !isLoading && (
-          <p className="text-xs text-gray-400 dark:text-[#6A8E9F] pl-1">
+          <p className="text-xs text-gray-400 dark:text-[#7AAABB] pl-1">
             {filtered.length} rendez-vous affiché{filtered.length > 1 ? 's' : ''}
           </p>
         )}
