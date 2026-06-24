@@ -160,18 +160,18 @@ export function Sidebar() {
             </div>
 
             {/* User card */}
-            <div className="mx-2 mt-2 flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.08]">
+            <div className="mx-2 mt-2 flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.06] dark:bg-white/[0.05] dark:border-white/[0.08]">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#3d8fa8] to-[#1e5f7a] flex items-center justify-center text-white text-xs font-bold shrink-0">
                 {initials}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-white/72 truncate">Dr. {user?.prenom} {user?.nom}</p>
-                <p className="text-[10px] text-white/28 capitalize">{user?.role}</p>
+                <p className="text-xs font-semibold text-[#1A2B3C] dark:text-white/72 truncate">Dr. {user?.prenom} {user?.nom}</p>
+                <p className="text-[10px] text-gray-400 dark:text-white/28 capitalize">{user?.role}</p>
               </div>
               <button
                 onClick={handleLogout}
                 title="Déconnexion"
-                className="p-1.5 rounded-lg text-white/20 hover:text-red-400 hover:bg-red-900/25 transition-colors shrink-0"
+                className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:text-white/20 dark:hover:text-red-400 dark:hover:bg-red-900/25 transition-colors shrink-0"
               >
                 <LogOut size={14} />
               </button>
