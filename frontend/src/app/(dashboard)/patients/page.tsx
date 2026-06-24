@@ -114,7 +114,7 @@ export default function PatientsPage() {
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
                       <Avatar className="w-11 h-11">
-                        <AvatarFallback className="bg-[#DCEEF3] dark:bg-[#1A3A5C] text-[#70B1C4] font-semibold">
+                        <AvatarFallback className="bg-[#DCEEF3] dark:bg-[#1C3F62] text-[#70B1C4] font-semibold">
                           {initials}
                         </AvatarFallback>
                       </Avatar>
