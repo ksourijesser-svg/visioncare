@@ -59,11 +59,11 @@ export default function RendezVousPage() {
               placeholder="Rechercher un patient ou motif..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 border border-gray-200 dark:border-[#1A3A5C]/60 rounded-xl bg-[#F7FAFB] dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F] focus-visible:ring-[#70B1C4] h-10"
+              className="pl-9 border border-gray-200 dark:border-[#1C3F62]/60 rounded-xl bg-[#F7FAFB] dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F] focus-visible:ring-[#70B1C4] h-10"
             />
           </div>
           <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as AppointmentStatus | 'tous')}>
-            <SelectTrigger className="w-48 border border-gray-200 dark:border-[#1A3A5C]/60 rounded-xl bg-[#F7FAFB] dark:bg-[#091628] dark:text-[#EDF8FF] h-10 shrink-0">
+            <SelectTrigger className="w-48 border border-gray-200 dark:border-[#1C3F62]/60 rounded-xl bg-[#F7FAFB] dark:bg-[#091628] dark:text-[#EDF8FF] h-10 shrink-0">
               <Filter size={13} className="mr-1.5 text-gray-400 dark:text-[#7AAABB] shrink-0" />
               <SelectValue placeholder="Tous les statuts" />
             </SelectTrigger>
