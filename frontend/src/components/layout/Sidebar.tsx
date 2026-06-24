@@ -51,15 +51,15 @@ export function Sidebar() {
         className={cn(
           'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200 mx-2',
           active
-            ? 'bg-white/[0.10] text-white font-semibold'
-            : 'text-white/40 hover:bg-white/[0.06] hover:text-white/70'
+            ? 'bg-[#3d8fa8]/14 text-[#15324a] font-semibold dark:bg-white/[0.10] dark:text-white'
+            : 'text-gray-500 hover:bg-black/[0.04] hover:text-gray-800 dark:text-white/40 dark:hover:bg-white/[0.06] dark:hover:text-white/70'
         )}
       >
         <Icon
           size={16}
           className={cn(
             'shrink-0 transition-colors duration-200',
-            active ? 'text-[#70B1C4]' : 'text-white/30'
+            active ? 'text-[#3d8fa8]' : 'text-gray-400 dark:text-white/30'
           )}
         />
         {label}
