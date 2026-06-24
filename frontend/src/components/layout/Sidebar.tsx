@@ -87,18 +87,19 @@ export function Sidebar() {
       >
         {/* Inner glassmorphism card */}
         <div className="relative h-full flex flex-col rounded-[20px] overflow-hidden
-          bg-gradient-to-b from-[#16465A]/60 via-[#0C2237]/70 to-[#05101C]/85
+          bg-white/70 dark:bg-gradient-to-b dark:from-[#16465A]/60 dark:via-[#0C2237]/70 dark:to-[#05101C]/85
           backdrop-blur-2xl
-          border border-white/[0.14]
-          [box-shadow:0_0_0_1px_rgba(112,177,196,0.10),_0_10px_45px_rgba(0,0,0,0.55),_inset_0_1px_0_rgba(255,255,255,0.10)]">
+          border border-white/70 dark:border-white/[0.14]
+          shadow-[0_8px_30px_rgba(80,150,175,0.18)]
+          dark:[box-shadow:0_0_0_1px_rgba(112,177,196,0.10),_0_10px_45px_rgba(0,0,0,0.55),_inset_0_1px_0_rgba(255,255,255,0.10)]">
 
-          {/* Cyan glow radiating from top-left corner */}
-          <div className="pointer-events-none absolute -top-10 -left-10 w-56 h-56 rounded-full
-            bg-[radial-gradient(circle,_rgba(94,197,221,0.45)_0%,_rgba(94,197,221,0.12)_40%,_transparent_70%)] blur-xl" />
+          {/* Subtle cyan glow at top-left — dark mode only, kept very faint for readability */}
+          <div className="pointer-events-none absolute -top-16 -left-16 w-44 h-44 rounded-full hidden dark:block
+            bg-[radial-gradient(circle,_rgba(94,197,221,0.16)_0%,_rgba(94,197,221,0.05)_45%,_transparent_72%)] blur-2xl" />
 
-          {/* Diagonal glossy light streak */}
-          <div className="pointer-events-none absolute inset-0
-            bg-[linear-gradient(125deg,_rgba(255,255,255,0.10)_0%,_rgba(255,255,255,0.04)_22%,_transparent_38%,_transparent_100%)]" />
+          {/* Diagonal glossy light streak — dark mode only */}
+          <div className="pointer-events-none absolute inset-0 hidden dark:block
+            bg-[linear-gradient(125deg,_rgba(255,255,255,0.06)_0%,_rgba(255,255,255,0.02)_22%,_transparent_38%,_transparent_100%)]" />
 
           {/* Content sits above the gradient layers */}
           <div className="relative z-10 h-full flex flex-col">
