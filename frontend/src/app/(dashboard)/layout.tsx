@@ -4,31 +4,31 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="min-h-screen bg-[#C5D8E6] dark:bg-[#06101E] transition-colors duration-300 relative overflow-hidden">
 
-      {/* Ambient glow orbs — dark mode only, decorative background light */}
+      {/* Ambient glow orbs — dark mode only */}
       <div
         className="fixed pointer-events-none hidden dark:block"
         style={{
-          top: '-120px', right: '-80px',
+          top: '-80px', right: '-60px',
+          width: '700px', height: '600px',
+          background: 'radial-gradient(ellipse at center, rgba(61,143,168,0.32) 0%, rgba(61,143,168,0.10) 35%, transparent 70%)',
+          zIndex: 0,
+        }}
+      />
+      <div
+        className="fixed pointer-events-none hidden dark:block"
+        style={{
+          bottom: '-80px', left: '240px',
           width: '600px', height: '500px',
-          background: 'radial-gradient(ellipse at center, rgba(61,143,168,0.18) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(112,177,196,0.22) 0%, rgba(112,177,196,0.06) 40%, transparent 70%)',
           zIndex: 0,
         }}
       />
       <div
         className="fixed pointer-events-none hidden dark:block"
         style={{
-          bottom: '-100px', left: '260px',
-          width: '500px', height: '450px',
-          background: 'radial-gradient(ellipse at center, rgba(112,177,196,0.12) 0%, transparent 70%)',
-          zIndex: 0,
-        }}
-      />
-      <div
-        className="fixed pointer-events-none hidden dark:block"
-        style={{
-          top: '40%', left: '35%',
-          width: '700px', height: '400px',
-          background: 'radial-gradient(ellipse at center, rgba(30,108,135,0.09) 0%, transparent 65%)',
+          top: '30%', left: '30%',
+          width: '800px', height: '500px',
+          background: 'radial-gradient(ellipse at center, rgba(30,108,135,0.16) 0%, transparent 65%)',
           zIndex: 0,
         }}
       />
