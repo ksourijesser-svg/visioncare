@@ -283,4 +283,23 @@
       0 4px 16px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
   }
+
+  /* Thin teal scrollbar for modal scroll areas */
+  .scrollbar-modal {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(112, 177, 196, 0.22) transparent;
+  }
+  .scrollbar-modal::-webkit-scrollbar {
+    width: 3px;
+  }
+  .scrollbar-modal::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-modal::-webkit-scrollbar-thumb {
+    background: rgba(112, 177, 196, 0.22);
+    border-radius: 99px;
+  }
+  .scrollbar-modal::-webkit-scrollbar-thumb:hover {
+    background: rgba(112, 177, 196, 0.48);
+  }
 }
