@@ -81,7 +81,7 @@ export default function PatientsPage() {
               placeholder="Rechercher par nom ou téléphone..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 border-0 dark:bg-[#102844] dark:text-[#E2EDF5] dark:placeholder:text-[#6A8E9F]"
+              className="pl-9 border-0 dark:bg-[#102844] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F]"
             />
           </div>
           <Button
@@ -119,7 +119,7 @@ export default function PatientsPage() {
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-[#2D3748] dark:text-[#E2EDF5] truncate">{patient.prenom} {patient.nom}</p>
+                        <p className="font-semibold text-[#2D3748] dark:text-[#EDF8FF] truncate">{patient.prenom} {patient.nom}</p>
                         <p className="text-xs text-gray-400 dark:text-[#6A8E9F]">{patient.telephone}</p>
                         {patient.email && <p className="text-xs text-gray-400 dark:text-[#6A8E9F] truncate">{patient.email}</p>}
                       </div>
