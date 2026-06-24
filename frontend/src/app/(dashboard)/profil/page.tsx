@@ -73,7 +73,7 @@ export default function ProfilPage() {
                     {profile.prenom} {profile.nom}
                   </h2>
                   <div className="flex items-center gap-2 mt-1">
-                    <Badge className="bg-[#DCEEF3] dark:bg-[#1A3A5C] text-[#70B1C4] font-normal text-xs capitalize border-0">
+                    <Badge className="bg-[#DCEEF3] dark:bg-[#1C3F62] text-[#70B1C4] font-normal text-xs capitalize border-0">
                       Médecin
                     </Badge>
                     {profile.specialite && (
@@ -89,7 +89,7 @@ export default function ProfilPage() {
           <Card className="border-0 dark:bg-[#102844] glow">
             <CardContent className="p-6 space-y-5">
               <div className="flex items-center gap-2 mb-1">
-                <div className="w-7 h-7 rounded-lg bg-[#DCEEF3] dark:bg-[#1A3A5C] flex items-center justify-center">
+                <div className="w-7 h-7 rounded-lg bg-[#DCEEF3] dark:bg-[#1C3F62] flex items-center justify-center">
                   <User size={14} className="text-[#70B1C4]" />
                 </div>
                 <h3 className="font-semibold text-[#2D3748] dark:text-[#EDF8FF]">Informations personnelles</h3>
@@ -143,7 +143,7 @@ export default function ProfilPage() {
           <Card className="border-0 dark:bg-[#102844] glow">
             <CardContent className="p-6 space-y-5">
               <div className="flex items-center gap-2 mb-1">
-                <div className="w-7 h-7 rounded-lg bg-[#DCEEF3] dark:bg-[#1A3A5C] flex items-center justify-center">
+                <div className="w-7 h-7 rounded-lg bg-[#DCEEF3] dark:bg-[#1C3F62] flex items-center justify-center">
                   <Building2 size={14} className="text-[#70B1C4]" />
                 </div>
                 <h3 className="font-semibold text-[#2D3748] dark:text-[#EDF8FF]">Mon cabinet</h3>
