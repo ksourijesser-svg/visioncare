@@ -139,7 +139,7 @@ export default function CalendrierPage() {
         {/* ══════════════ MONTH VIEW ══════════════ */}
         {view === 'mois' && (
           <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden transition-colors duration-300">
-            <div className="grid grid-cols-7 border-b border-gray-100 dark:border-[#1A3A5C]/40">
+            <div className="grid grid-cols-7 border-b border-gray-100 dark:border-[#1C3F62]/40">
               {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day) => (
                 <div key={day} className="py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#7AAABB] uppercase tracking-wide">
                   {day}
@@ -155,7 +155,7 @@ export default function CalendrierPage() {
                 return (
                   <div
                     key={idx}
-                    className={`min-h-24 p-2 border-b border-r border-gray-50 dark:border-[#1A3A5C]/20 ${!inMonth ? 'opacity-40' : ''}`}
+                    className={`min-h-24 p-2 border-b border-r border-gray-50 dark:border-[#1C3F62]/20 ${!inMonth ? 'opacity-40' : ''}`}
                   >
                     <div
                       onClick={() => { setCurrentDate(day); setView('jour') }}
@@ -189,14 +189,14 @@ export default function CalendrierPage() {
         {/* ══════════════ WEEK VIEW ══════════════ */}
         {view === 'semaine' && (
           <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden flex flex-col flex-1 transition-colors duration-300">
-            <div className="grid border-b border-gray-100 dark:border-[#1A3A5C]/40" style={{ gridTemplateColumns: '56px repeat(7, 1fr)' }}>
+            <div className="grid border-b border-gray-100 dark:border-[#1C3F62]/40" style={{ gridTemplateColumns: '56px repeat(7, 1fr)' }}>
               <div />
               {weekDays.map((day, i) => {
                 const today = isToday(day)
                 return (
                   <div
                     key={i}
-                    className="py-2 text-center border-l border-gray-50 dark:border-[#1A3A5C]/20 cursor-pointer hover:bg-[#F5F9FA] dark:hover:bg-[#1C3F62]/30 transition-colors"
+                    className="py-2 text-center border-l border-gray-50 dark:border-[#1C3F62]/20 cursor-pointer hover:bg-[#F5F9FA] dark:hover:bg-[#1C3F62]/30 transition-colors"
                     onClick={() => { setCurrentDate(day); setView('jour') }}
                   >
                     <p className="text-xs text-gray-400 dark:text-[#7AAABB] uppercase">
@@ -214,7 +214,7 @@ export default function CalendrierPage() {
               {HOURS.map((hour) => (
                 <div
                   key={hour}
-                  className="grid border-b border-gray-50 dark:border-[#1A3A5C]/20"
+                  className="grid border-b border-gray-50 dark:border-[#1C3F62]/20"
                   style={{ gridTemplateColumns: '56px repeat(7, 1fr)', minHeight: '64px' }}
                 >
                   <div className="px-2 pt-1.5 text-xs text-gray-400 dark:text-[#7AAABB] text-right shrink-0">
@@ -225,7 +225,7 @@ export default function CalendrierPage() {
                     return (
                       <div
                         key={i}
-                        className={`border-l border-gray-50 dark:border-[#1A3A5C]/20 p-1 ${isToday(day) ? 'bg-blue-50/40 dark:bg-blue-900/10' : ''}`}
+                        className={`border-l border-gray-50 dark:border-[#1C3F62]/20 p-1 ${isToday(day) ? 'bg-blue-50/40 dark:bg-blue-900/10' : ''}`}
                       >
                         {appts.map((a) => (
                           <div key={a.id} className={`text-xs rounded px-1.5 py-1 mb-0.5 truncate ${STATUS_COLORS[a.statut]}`}>
@@ -245,7 +245,7 @@ export default function CalendrierPage() {
         {/* ══════════════ DAY VIEW ══════════════ */}
         {view === 'jour' && (
           <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden flex flex-col flex-1 transition-colors duration-300">
-            <div className="border-b border-gray-100 dark:border-[#1A3A5C]/40 px-6 py-3 flex items-center gap-3">
+            <div className="border-b border-gray-100 dark:border-[#1C3F62]/40 px-6 py-3 flex items-center gap-3">
               <div className={`w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold shrink-0
                 ${isToday(currentDate) ? 'bg-[#70B1C4] text-white' : 'bg-[#F5F9FA] dark:bg-[#1A3A5C]/50 text-[#2D3748] dark:text-[#EDF8FF]'}`}>
                 {format(currentDate, 'd')}
@@ -268,8 +268,8 @@ export default function CalendrierPage() {
               {HOURS.map((hour) => {
                 const appts = getApptForDayHour(currentDate, hour)
                 return (
-                  <div key={hour} className="flex border-b border-gray-50 dark:border-[#1A3A5C]/20" style={{ minHeight: '68px' }}>
-                    <div className="w-16 px-3 pt-2 text-xs text-gray-400 dark:text-[#7AAABB] text-right shrink-0 border-r border-gray-50 dark:border-[#1A3A5C]/20">
+                  <div key={hour} className="flex border-b border-gray-50 dark:border-[#1C3F62]/20" style={{ minHeight: '68px' }}>
+                    <div className="w-16 px-3 pt-2 text-xs text-gray-400 dark:text-[#7AAABB] text-right shrink-0 border-r border-gray-50 dark:border-[#1C3F62]/20">
                       {hour}:00
                     </div>
                     <div className="flex-1 p-2 space-y-1.5">
