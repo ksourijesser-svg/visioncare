@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         style={{
           bottom: '-80px', left: '240px',
           width: '600px', height: '500px',
-          background: 'radial-gradient(ellipse at center, rgba(112,177,196,0.22) 0%, rgba(112,177,196,0.06) 40%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(112,177,196,0.14) 0%, rgba(112,177,196,0.04) 45%, transparent 70%)',
           zIndex: 0,
         }}
       />
