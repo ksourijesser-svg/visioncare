@@ -160,7 +160,7 @@ export default function CalendrierPage() {
                     <div
                       onClick={() => { setCurrentDate(day); setView('jour') }}
                       className={`w-7 h-7 flex items-center justify-center rounded-full text-sm font-medium mb-1 cursor-pointer transition-colors
-                        ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748] dark:text-[#A0BDCC] hover:bg-[#DCEEF3] dark:hover:bg-[#1A3A5C]/60'}`}
+                        ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748] dark:text-[#B4D0E0] hover:bg-[#DCEEF3] dark:hover:bg-[#1A3A5C]/60'}`}
                     >
                       {format(day, 'd')}
                     </div>
@@ -203,7 +203,7 @@ export default function CalendrierPage() {
                       {format(day, 'EEE', { locale: fr })}
                     </p>
                     <div className={`w-8 h-8 mx-auto flex items-center justify-center rounded-full text-sm font-semibold mt-0.5
-                      ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748] dark:text-[#A0BDCC]'}`}>
+                      ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748] dark:text-[#B4D0E0]'}`}>
                       {format(day, 'd')}
                     </div>
                   </div>
@@ -304,7 +304,7 @@ export default function CalendrierPage() {
             { label: 'Complété',  color: 'bg-gray-300' },
             { label: 'Annulé',    color: 'bg-red-400' },
           ].map(({ label, color }) => (
-            <span key={label} className="flex items-center gap-2 text-xs text-gray-600 dark:text-[#A0BDCC] font-medium">
+            <span key={label} className="flex items-center gap-2 text-xs text-gray-600 dark:text-[#B4D0E0] font-medium">
               <span className={`w-2.5 h-2.5 rounded-full ${color} shrink-0`} />
               {label}
             </span>
