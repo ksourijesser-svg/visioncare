@@ -94,7 +94,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
           <Card className="xl:col-span-2 border-0 dark:bg-[#102844]">
             <CardHeader className="pb-2">
-              <CardTitle className="text-[#1A2B3C] dark:text-[#E2EDF5] text-sm font-semibold">Activité mensuelle</CardTitle>
+              <CardTitle className="text-[#1A2B3C] dark:text-[#EDF8FF] text-sm font-semibold">Activité mensuelle</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={220}>
@@ -111,7 +111,7 @@ export default function DashboardPage() {
 
           <Card className="border-0 dark:bg-[#102844]">
             <CardHeader className="pb-2">
-              <CardTitle className="text-[#1A2B3C] dark:text-[#E2EDF5] text-sm font-semibold flex items-center justify-between">
+              <CardTitle className="text-[#1A2B3C] dark:text-[#EDF8FF] text-sm font-semibold flex items-center justify-between">
                 <span>Patients du jour</span>
                 <span className="text-xs font-normal text-[#3d8fa8] bg-[#C5D8E6] dark:bg-[#1A3A5C] dark:text-[#70B1C4] px-2 py-0.5 rounded-full font-semibold">{todayRdv.length}</span>
               </CardTitle>
@@ -123,7 +123,7 @@ export default function DashboardPage() {
                 todayRdv.map((rdv) => (
                   <div key={rdv.id} className="flex items-center justify-between py-2 border-b border-gray-50 dark:border-[#1A3A5C]/40 last:border-0">
                     <div>
-                      <p className="text-sm font-medium text-[#1A2B3C] dark:text-[#E2EDF5]">{rdv.patient_prenom} {rdv.patient_nom}</p>
+                      <p className="text-sm font-medium text-[#1A2B3C] dark:text-[#EDF8FF]">{rdv.patient_prenom} {rdv.patient_nom}</p>
                       <p className="text-xs text-gray-400 dark:text-[#6A8E9F]">{rdv.heure} · {rdv.motif}</p>
                     </div>
                     <Badge className={`text-xs px-2 py-0.5 rounded-full font-normal border-0 ${statusColors[rdv.statut]}`}>
@@ -139,7 +139,7 @@ export default function DashboardPage() {
         {/* Trend chart */}
         <Card className="border-0 dark:bg-[#102844]">
           <CardHeader className="pb-2">
-            <CardTitle className="text-[#1A2B3C] dark:text-[#E2EDF5] text-sm font-semibold">Tendance des consultations</CardTitle>
+            <CardTitle className="text-[#1A2B3C] dark:text-[#EDF8FF] text-sm font-semibold">Tendance des consultations</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={140}>
