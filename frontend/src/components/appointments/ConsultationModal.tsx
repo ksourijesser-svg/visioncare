@@ -86,8 +86,8 @@ export function ConsultationModal({ open, onClose, appointment }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg dark:bg-[#0D2038] dark:border-[#1C3F62]/50 dark:[box-shadow:0_0_0_1px_rgba(112,177,196,0.50),_0_0_18px_rgba(61,143,168,0.45),_0_0_55px_rgba(61,143,168,0.28),_0_0_110px_rgba(61,143,168,0.15),_0_20px_50px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.06)]">
-        <DialogHeader>
+      <DialogContent className="max-w-lg max-h-[90vh] overflow-hidden flex flex-col dark:bg-[#0D2038] dark:border-[#1C3F62]/50 dark:[box-shadow:0_0_0_1px_rgba(112,177,196,0.50),_0_0_18px_rgba(61,143,168,0.45),_0_0_55px_rgba(61,143,168,0.28),_0_0_110px_rgba(61,143,168,0.15),_0_20px_50px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.06)]">
+        <DialogHeader className="shrink-0">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#3d8fa8] to-[#70B1C4] flex items-center justify-center shrink-0 shadow-md shadow-[#70B1C4]/30">
               <Stethoscope size={14} className="text-white" />
@@ -103,8 +103,9 @@ export function ConsultationModal({ open, onClose, appointment }: Props) {
           </div>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 pt-1">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden pt-1">
 
+          <div className="flex-1 overflow-y-auto space-y-3 pr-1">
           {/* ── Informations patient section ── */}
           <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
             <div className="flex items-center gap-2">
@@ -161,8 +162,9 @@ export function ConsultationModal({ open, onClose, appointment }: Props) {
               </div>
             </div>
           </div>
+          </div>
 
-          <DialogFooter className="gap-2 pt-1">
+          <DialogFooter className="gap-2 shrink-0 pt-3 border-t border-gray-100 dark:border-[#1C3F62]/30">
             <Button type="button" variant="outline" onClick={onClose} className="border-[#DCEEF3] dark:border-[#1C3F62]/60 dark:text-[#EDF8FF] dark:hover:bg-[#1C3F62]/30">
               Annuler
             </Button>
