@@ -59,7 +59,7 @@ export default function ProfilPage() {
         <div className="p-6 space-y-6 max-w-3xl">
 
           {/* Profile header card */}
-          <Card className="border-0 dark:bg-[#0F2035] overflow-hidden glow">
+          <Card className="border-0 dark:bg-[#102844] overflow-hidden glow">
             <div className="h-24 bg-gradient-to-r from-[#70B1C4] to-[#DCEEF3] dark:from-[#1e6c87] dark:to-[#3d8fa8]" />
             <CardContent className="pt-0 pb-5 px-6">
               <div className="flex items-end gap-4 -mt-10 mb-4">
@@ -86,7 +86,7 @@ export default function ProfilPage() {
           </Card>
 
           {/* Informations personnelles */}
-          <Card className="border-0 dark:bg-[#0F2035] glow">
+          <Card className="border-0 dark:bg-[#102844] glow">
             <CardContent className="p-6 space-y-5">
               <div className="flex items-center gap-2 mb-1">
                 <div className="w-7 h-7 rounded-lg bg-[#DCEEF3] dark:bg-[#1A3A5C] flex items-center justify-center">
@@ -140,7 +140,7 @@ export default function ProfilPage() {
           </Card>
 
           {/* Mon cabinet */}
-          <Card className="border-0 dark:bg-[#0F2035] glow">
+          <Card className="border-0 dark:bg-[#102844] glow">
             <CardContent className="p-6 space-y-5">
               <div className="flex items-center gap-2 mb-1">
                 <div className="w-7 h-7 rounded-lg bg-[#DCEEF3] dark:bg-[#1A3A5C] flex items-center justify-center">
