@@ -81,13 +81,13 @@ export default function PatientsPage() {
               placeholder="Rechercher par nom ou téléphone..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 border-0 dark:bg-[#0F2035] dark:text-[#E2EDF5] dark:placeholder:text-[#6A8E9F]"
+              className="pl-9 border-0 dark:bg-[#102844] dark:text-[#E2EDF5] dark:placeholder:text-[#6A8E9F]"
             />
           </div>
           <Button
             variant="outline"
             onClick={handleExport}
-            className="border border-[#70B1C4]/30 dark:border-[#70B1C4]/20 text-[#70B1C4] dark:bg-[#0F2035] shrink-0 btn-neon"
+            className="border border-[#70B1C4]/30 dark:border-[#70B1C4]/20 text-[#70B1C4] dark:bg-[#102844] shrink-0 btn-neon"
           >
             <Download size={16} className="mr-2" />
             Exporter Excel
@@ -110,7 +110,7 @@ export default function PatientsPage() {
             {filtered.map((patient) => {
               const initials = `${patient.prenom[0]}${patient.nom[0]}`.toUpperCase()
               return (
-                <Card key={patient.id} className="border-0 dark:bg-[#0F2035] hover:shadow-md dark:hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all glow">
+                <Card key={patient.id} className="border-0 dark:bg-[#102844] hover:shadow-md dark:hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all glow">
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
                       <Avatar className="w-11 h-11">
