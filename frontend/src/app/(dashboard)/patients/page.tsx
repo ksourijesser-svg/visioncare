@@ -126,17 +126,17 @@ export default function PatientsPage() {
                     </div>
 
                     {patient.derniere_visite ? (
-                      <div className="mt-3 flex items-center justify-between text-xs text-gray-500 dark:text-[#7AAABB] border-t border-gray-50 dark:border-[#1A3A5C]/40 pt-3">
+                      <div className="mt-3 flex items-center justify-between text-xs text-gray-500 dark:text-[#7AAABB] border-t border-gray-50 dark:border-[#1C3F62]/40 pt-3">
                         <span>
                           Dernière visite : {format(new Date(patient.derniere_visite), 'dd MMM yyyy', { locale: fr })}
                         </span>
                         <span className="font-medium text-[#70B1C4]">{patient.nb_consultations} consult.</span>
                       </div>
                     ) : (
-                      <div className="mt-3 text-xs text-gray-400 dark:text-[#7AAABB] border-t border-gray-50 dark:border-[#1A3A5C]/40 pt-3">Aucune consultation</div>
+                      <div className="mt-3 text-xs text-gray-400 dark:text-[#7AAABB] border-t border-gray-50 dark:border-[#1C3F62]/40 pt-3">Aucune consultation</div>
                     )}
 
-                    <div className="mt-3 border-t border-gray-50 dark:border-[#1A3A5C]/40 pt-3">
+                    <div className="mt-3 border-t border-gray-50 dark:border-[#1C3F62]/40 pt-3">
                       <Button
                         size="sm"
                         variant="outline"
