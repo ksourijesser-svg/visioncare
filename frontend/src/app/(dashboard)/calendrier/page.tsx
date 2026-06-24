@@ -89,7 +89,7 @@ export default function CalendrierPage() {
           <div className="flex items-center gap-1">
             <button
               onClick={goPrev}
-              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#1A2B3C] dark:text-[#EDF8FF] transition-colors btn-neon"
+              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 text-[#1A2B3C] dark:text-[#EDF8FF] transition-colors btn-neon"
             >
               <ChevronLeft size={16} />
             </button>
@@ -98,13 +98,13 @@ export default function CalendrierPage() {
             </h2>
             <button
               onClick={goNext}
-              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#1A2B3C] dark:text-[#EDF8FF] transition-colors btn-neon"
+              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 text-[#1A2B3C] dark:text-[#EDF8FF] transition-colors btn-neon"
             >
               <ChevronRight size={16} />
             </button>
             <button
               onClick={() => setCurrentDate(new Date())}
-              className="ml-2 text-xs font-medium text-[#70B1C4] border border-[#70B1C4]/30 rounded-lg px-3 py-1.5 hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 transition-colors btn-neon"
+              className="ml-2 text-xs font-medium text-[#70B1C4] border border-[#70B1C4]/30 rounded-lg px-3 py-1.5 hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 transition-colors btn-neon"
             >
               Aujourd&apos;hui
             </button>
@@ -160,7 +160,7 @@ export default function CalendrierPage() {
                     <div
                       onClick={() => { setCurrentDate(day); setView('jour') }}
                       className={`w-7 h-7 flex items-center justify-center rounded-full text-sm font-medium mb-1 cursor-pointer transition-colors
-                        ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748] dark:text-[#B4D0E0] hover:bg-[#DCEEF3] dark:hover:bg-[#1A3A5C]/60'}`}
+                        ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748] dark:text-[#B4D0E0] hover:bg-[#DCEEF3] dark:hover:bg-[#1C3F62]/60'}`}
                     >
                       {format(day, 'd')}
                     </div>
@@ -196,7 +196,7 @@ export default function CalendrierPage() {
                 return (
                   <div
                     key={i}
-                    className="py-2 text-center border-l border-gray-50 dark:border-[#1A3A5C]/20 cursor-pointer hover:bg-[#F5F9FA] dark:hover:bg-[#1A3A5C]/30 transition-colors"
+                    className="py-2 text-center border-l border-gray-50 dark:border-[#1A3A5C]/20 cursor-pointer hover:bg-[#F5F9FA] dark:hover:bg-[#1C3F62]/30 transition-colors"
                     onClick={() => { setCurrentDate(day); setView('jour') }}
                   >
                     <p className="text-xs text-gray-400 dark:text-[#7AAABB] uppercase">
