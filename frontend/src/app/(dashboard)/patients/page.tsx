@@ -76,7 +76,7 @@ export default function PatientsPage() {
 
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
           <div className="relative flex-1 w-full">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#6A8E9F]" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#7AAABB]" />
             <Input
               placeholder="Rechercher par nom ou téléphone..."
               value={search}
@@ -95,12 +95,12 @@ export default function PatientsPage() {
         </div>
 
         {isLoading ? (
-          <div className="text-center py-20 text-gray-400 dark:text-[#6A8E9F]">
+          <div className="text-center py-20 text-gray-400 dark:text-[#7AAABB]">
             <Loader2 size={40} className="mx-auto mb-4 opacity-30 animate-spin" />
             <p className="font-medium">Chargement des patients...</p>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-20 text-gray-400 dark:text-[#6A8E9F]">
+          <div className="text-center py-20 text-gray-400 dark:text-[#7AAABB]">
             <User size={48} className="mx-auto mb-4 opacity-20" />
             <p className="font-medium">Aucun patient pour le moment</p>
             <p className="text-sm mt-1">Les patients apparaissent ici dès qu&apos;un rendez-vous est marqué <strong>Complété</strong>.</p>
@@ -120,20 +120,20 @@ export default function PatientsPage() {
                       </Avatar>
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-[#2D3748] dark:text-[#EDF8FF] truncate">{patient.prenom} {patient.nom}</p>
-                        <p className="text-xs text-gray-400 dark:text-[#6A8E9F]">{patient.telephone}</p>
-                        {patient.email && <p className="text-xs text-gray-400 dark:text-[#6A8E9F] truncate">{patient.email}</p>}
+                        <p className="text-xs text-gray-400 dark:text-[#7AAABB]">{patient.telephone}</p>
+                        {patient.email && <p className="text-xs text-gray-400 dark:text-[#7AAABB] truncate">{patient.email}</p>}
                       </div>
                     </div>
 
                     {patient.derniere_visite ? (
-                      <div className="mt-3 flex items-center justify-between text-xs text-gray-500 dark:text-[#6A8E9F] border-t border-gray-50 dark:border-[#1A3A5C]/40 pt-3">
+                      <div className="mt-3 flex items-center justify-between text-xs text-gray-500 dark:text-[#7AAABB] border-t border-gray-50 dark:border-[#1A3A5C]/40 pt-3">
                         <span>
                           Dernière visite : {format(new Date(patient.derniere_visite), 'dd MMM yyyy', { locale: fr })}
                         </span>
                         <span className="font-medium text-[#70B1C4]">{patient.nb_consultations} consult.</span>
                       </div>
                     ) : (
-                      <div className="mt-3 text-xs text-gray-400 dark:text-[#6A8E9F] border-t border-gray-50 dark:border-[#1A3A5C]/40 pt-3">Aucune consultation</div>
+                      <div className="mt-3 text-xs text-gray-400 dark:text-[#7AAABB] border-t border-gray-50 dark:border-[#1A3A5C]/40 pt-3">Aucune consultation</div>
                     )}
 
                     <div className="mt-3 border-t border-gray-50 dark:border-[#1A3A5C]/40 pt-3">
@@ -154,7 +154,7 @@ export default function PatientsPage() {
         )}
 
         {filtered.length > 0 && !isLoading && (
-          <p className="text-sm text-gray-400 dark:text-[#6A8E9F]">{filtered.length} patient{filtered.length > 1 ? 's' : ''}</p>
+          <p className="text-sm text-gray-400 dark:text-[#7AAABB]">{filtered.length} patient{filtered.length > 1 ? 's' : ''}</p>
         )}
       </div>
 
