@@ -183,7 +183,7 @@ export function PatientDetail({ patient, open, onClose }: Props) {
         </div>
 
         {/* ── Scrollable body ── */}
-        <form onSubmit={handleSubmit(onSubmit)} className="flex-1 overflow-y-auto px-5 py-5 space-y-4 bg-[#F0F5F8] dark:bg-[#06101E]">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex-1 overflow-y-auto scrollbar-modal px-5 py-5 space-y-4 bg-[#F0F5F8] dark:bg-[#06101E]">
 
           {/* Informations section */}
           <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden">
