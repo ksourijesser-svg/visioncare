@@ -58,6 +58,7 @@ def send_code_email(to_email: str, code: str, code_type: str) -> None:
         headers={
             "Authorization": f"Bearer {settings.RESEND_API_KEY}",
             "Content-Type": "application/json",
+            "User-Agent": "VisionCare/1.0",
         },
         method="POST",
     )
