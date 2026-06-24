@@ -86,10 +86,22 @@ export function Sidebar() {
         )}
       >
         {/* Inner glassmorphism card */}
-        <div className="h-full flex flex-col rounded-2xl overflow-hidden
-          bg-[#0B1E38]/55 backdrop-blur-2xl
-          border border-white/[0.13]
-          [box-shadow:0_0_0_1px_rgba(112,177,196,0.10),_0_8px_40px_rgba(0,0,0,0.55),_inset_0_1px_0_rgba(255,255,255,0.06)]">
+        <div className="relative h-full flex flex-col rounded-[20px] overflow-hidden
+          bg-gradient-to-b from-[#16465A]/60 via-[#0C2237]/70 to-[#05101C]/85
+          backdrop-blur-2xl
+          border border-white/[0.14]
+          [box-shadow:0_0_0_1px_rgba(112,177,196,0.10),_0_10px_45px_rgba(0,0,0,0.55),_inset_0_1px_0_rgba(255,255,255,0.10)]">
+
+          {/* Cyan glow radiating from top-left corner */}
+          <div className="pointer-events-none absolute -top-10 -left-10 w-56 h-56 rounded-full
+            bg-[radial-gradient(circle,_rgba(94,197,221,0.45)_0%,_rgba(94,197,221,0.12)_40%,_transparent_70%)] blur-xl" />
+
+          {/* Diagonal glossy light streak */}
+          <div className="pointer-events-none absolute inset-0
+            bg-[linear-gradient(125deg,_rgba(255,255,255,0.10)_0%,_rgba(255,255,255,0.04)_22%,_transparent_38%,_transparent_100%)]" />
+
+          {/* Content sits above the gradient layers */}
+          <div className="relative z-10 h-full flex flex-col">
 
           {/* ── Brand ── */}
           <div className="flex items-center gap-3 px-4 pt-5 pb-4">
