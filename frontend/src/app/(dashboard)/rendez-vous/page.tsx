@@ -83,89 +83,95 @@ export default function RendezVousPage() {
           </Button>
         </div>
 
-        {/* ── Row cards ── */}
-        <div className="space-y-0">
-          {/* Column headers — attached to the rows */}
-          <div className="hidden sm:grid grid-cols-[1fr_160px_1fr_80px_148px_96px] px-5 gap-4 pb-2 pt-1">
-            {['Patient', 'Date & Heure', 'Motif', 'Durée', 'Statut', 'Actions'].map((h) => (
-              <p key={h} className="text-[11px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">{h}</p>
-            ))}
-          </div>
-          <div className="space-y-2.5">
+        {/* ── Unified table card ── */}
+        <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden">
+
+          {/* Loading / empty states */}
           {isLoading ? (
-            <div className="bg-white dark:bg-[#102844] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#7AAABB]">
+            <div className="text-center py-14 text-gray-400 dark:text-[#7AAABB]">
               <Loader2 size={32} className="mx-auto mb-3 animate-spin opacity-40" />
               <p className="text-sm">Chargement des rendez-vous...</p>
             </div>
           ) : filtered.length === 0 ? (
-            <div className="bg-white dark:bg-[#102844] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#7AAABB]">
+            <div className="text-center py-14 text-gray-400 dark:text-[#7AAABB]">
               <User size={40} className="mx-auto mb-3 opacity-20" />
               <p className="font-medium">Aucun rendez-vous trouvé</p>
             </div>
           ) : (
-            filtered.map((rdv) => {
-              const s = STATUS_CONFIG[rdv.statut]
-              return (
-                <div key={rdv.id} className={`bg-white dark:bg-[#102844] rounded-2xl glow hover:glow-md transition-all duration-200 border-l-4 ${s.border} overflow-hidden`}>
-                  <div className="grid grid-cols-1 sm:grid-cols-[1fr_160px_1fr_80px_148px_96px] items-center gap-x-4 gap-y-1 px-5 py-3.5">
-                    <div className="flex items-center gap-2.5">
-                      <div className={`w-8 h-8 rounded-full ${s.bg} flex items-center justify-center shrink-0`}>
-                        <span className={`text-xs font-bold ${s.text}`}>
-                          {rdv.patient_prenom[0]}{rdv.patient_nom[0]}
-                        </span>
+            <>
+              {/* Column headers — part of the same card */}
+              <div className="hidden sm:grid grid-cols-[1fr_160px_1fr_80px_148px_96px] px-5 gap-4 py-3 border-b border-gray-100 dark:border-[#1C3F62]/40">
+                {['Patient', 'Date & Heure', 'Motif', 'Durée', 'Statut', 'Actions'].map((h) => (
+                  <p key={h} className="text-[11px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">{h}</p>
+                ))}
+              </div>
+
+              {/* Rows */}
+              <div className="divide-y divide-gray-50 dark:divide-[#1C3F62]/30">
+                {filtered.map((rdv) => {
+                  const s = STATUS_CONFIG[rdv.statut]
+                  return (
+                    <div key={rdv.id} className={`border-l-4 ${s.border} hover:bg-[#F7FAFB] dark:hover:bg-[#1A3655]/40 transition-colors duration-150`}>
+                      <div className="grid grid-cols-1 sm:grid-cols-[1fr_160px_1fr_80px_148px_96px] items-center gap-x-4 gap-y-1 px-5 py-3.5">
+                        <div className="flex items-center gap-2.5">
+                          <div className={`w-8 h-8 rounded-full ${s.bg} flex items-center justify-center shrink-0`}>
+                            <span className={`text-xs font-bold ${s.text}`}>
+                              {rdv.patient_prenom[0]}{rdv.patient_nom[0]}
+                            </span>
+                          </div>
+                          <div>
+                            <p className="font-semibold text-[#1A2B3C] dark:text-[#EDF8FF] text-sm leading-tight">
+                              {rdv.patient_prenom} {rdv.patient_nom}
+                            </p>
+                            <p className="text-xs text-gray-400 dark:text-[#7AAABB]">{rdv.patient_telephone}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-gray-600 dark:text-[#B4D0E0] text-sm">
+                          <Calendar size={12} className="text-gray-400 dark:text-[#7AAABB] shrink-0" />
+                          <span>
+                            {format(new Date(rdv.date), 'dd MMM', { locale: fr })}
+                            <span className="text-gray-400 dark:text-[#7AAABB] mx-1">·</span>
+                            {rdv.heure}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-600 dark:text-[#B4D0E0] truncate">{rdv.motif}</p>
+                        <div className="flex items-center gap-1 text-gray-500 dark:text-[#B4D0E0] text-sm">
+                          <Clock size={12} className="text-gray-400 dark:text-[#7AAABB] shrink-0" />
+                          <span>{rdv.duree} min</span>
+                        </div>
+                        <Select
+                          value={rdv.statut}
+                          onValueChange={(v) => { if (v) updateStatus.mutate({ id: rdv.id, statut: v as AppointmentStatus }) }}
+                        >
+                          <SelectTrigger className={`h-7 text-xs border-0 rounded-lg px-2 font-medium w-full ${s.bg} ${s.text}`}>
+                            <span className={`w-1.5 h-1.5 rounded-full ${s.dot} mr-1.5 shrink-0`} />
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="programme">Programmé</SelectItem>
+                            <SelectItem value="confirme">Confirmé</SelectItem>
+                            <SelectItem value="complete">Complété</SelectItem>
+                            <SelectItem value="annule">Annulé</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <div className="flex items-center gap-0.5">
+                          <button onClick={() => handleDossier(rdv)} title="Dossier médical" className="p-1.5 rounded-lg hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 text-[#70B1C4] transition-colors btn-neon">
+                            <ClipboardList size={14} />
+                          </button>
+                          <button onClick={() => handleEdit(rdv)} className="p-1.5 rounded-lg hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 text-[#70B1C4] transition-colors btn-neon">
+                            <Pencil size={14} />
+                          </button>
+                          <button onClick={() => handleDelete(rdv.id)} className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-400 transition-colors btn-neon-red">
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-semibold text-[#1A2B3C] dark:text-[#EDF8FF] text-sm leading-tight">
-                          {rdv.patient_prenom} {rdv.patient_nom}
-                        </p>
-                        <p className="text-xs text-gray-400 dark:text-[#7AAABB]">{rdv.patient_telephone}</p>
-                      </div>
                     </div>
-                    <div className="flex items-center gap-1.5 text-gray-600 dark:text-[#B4D0E0] text-sm">
-                      <Calendar size={12} className="text-gray-400 dark:text-[#7AAABB] shrink-0" />
-                      <span>
-                        {format(new Date(rdv.date), 'dd MMM', { locale: fr })}
-                        <span className="text-gray-400 dark:text-[#7AAABB] mx-1">·</span>
-                        {rdv.heure}
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-600 dark:text-[#B4D0E0] truncate">{rdv.motif}</p>
-                    <div className="flex items-center gap-1 text-gray-500 dark:text-[#B4D0E0] text-sm">
-                      <Clock size={12} className="text-gray-400 dark:text-[#7AAABB] shrink-0" />
-                      <span>{rdv.duree} min</span>
-                    </div>
-                    <Select
-                      value={rdv.statut}
-                      onValueChange={(v) => { if (v) updateStatus.mutate({ id: rdv.id, statut: v as AppointmentStatus }) }}
-                    >
-                      <SelectTrigger className={`h-7 text-xs border-0 rounded-lg px-2 font-medium w-full ${s.bg} ${s.text}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${s.dot} mr-1.5 shrink-0`} />
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="programme">Programmé</SelectItem>
-                        <SelectItem value="confirme">Confirmé</SelectItem>
-                        <SelectItem value="complete">Complété</SelectItem>
-                        <SelectItem value="annule">Annulé</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <div className="flex items-center gap-0.5">
-                      <button onClick={() => handleDossier(rdv)} title="Dossier médical" className="p-1.5 rounded-lg hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 text-[#70B1C4] transition-colors btn-neon">
-                        <ClipboardList size={14} />
-                      </button>
-                      <button onClick={() => handleEdit(rdv)} className="p-1.5 rounded-lg hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 text-[#70B1C4] transition-colors btn-neon">
-                        <Pencil size={14} />
-                      </button>
-                      <button onClick={() => handleDelete(rdv.id)} className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-400 transition-colors btn-neon-red">
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )
-            })
+                  )
+                })}
+              </div>
+            </>
           )}
-          </div>
         </div>
 
         {filtered.length > 0 && !isLoading && (
