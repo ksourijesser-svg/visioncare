@@ -74,7 +74,7 @@ export default function PatientsPage() {
       <Header title="Patients" />
       <div className="p-6 space-y-5">
 
-        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between bg-white dark:bg-[#102844] rounded-2xl glow px-4 py-3">
           <div className="relative flex-1 w-full">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#7AAABB]" />
             <Input
