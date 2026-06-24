@@ -118,13 +118,13 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent className="space-y-2.5">
               {todayRdv.length === 0 ? (
-                <p className="text-sm text-gray-400 dark:text-[#6A8E9F] text-center py-6">Aucun RDV aujourd&apos;hui</p>
+                <p className="text-sm text-gray-400 dark:text-[#7AAABB] text-center py-6">Aucun RDV aujourd&apos;hui</p>
               ) : (
                 todayRdv.map((rdv) => (
                   <div key={rdv.id} className="flex items-center justify-between py-2 border-b border-gray-50 dark:border-[#1A3A5C]/40 last:border-0">
                     <div>
                       <p className="text-sm font-medium text-[#1A2B3C] dark:text-[#EDF8FF]">{rdv.patient_prenom} {rdv.patient_nom}</p>
-                      <p className="text-xs text-gray-400 dark:text-[#6A8E9F]">{rdv.heure} · {rdv.motif}</p>
+                      <p className="text-xs text-gray-400 dark:text-[#7AAABB]">{rdv.heure} · {rdv.motif}</p>
                     </div>
                     <Badge className={`text-xs px-2 py-0.5 rounded-full font-normal border-0 ${statusColors[rdv.statut]}`}>
                       {statusLabels[rdv.statut]}
