@@ -92,7 +92,7 @@ export default function DashboardPage() {
 
         {/* Charts row */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
-          <Card className="xl:col-span-2 border-0 dark:bg-[#0F2035]">
+          <Card className="xl:col-span-2 border-0 dark:bg-[#102844]">
             <CardHeader className="pb-2">
               <CardTitle className="text-[#1A2B3C] dark:text-[#E2EDF5] text-sm font-semibold">Activité mensuelle</CardTitle>
             </CardHeader>
@@ -109,7 +109,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-0 dark:bg-[#0F2035]">
+          <Card className="border-0 dark:bg-[#102844]">
             <CardHeader className="pb-2">
               <CardTitle className="text-[#1A2B3C] dark:text-[#E2EDF5] text-sm font-semibold flex items-center justify-between">
                 <span>Patients du jour</span>
@@ -137,7 +137,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Trend chart */}
-        <Card className="border-0 dark:bg-[#0F2035]">
+        <Card className="border-0 dark:bg-[#102844]">
           <CardHeader className="pb-2">
             <CardTitle className="text-[#1A2B3C] dark:text-[#E2EDF5] text-sm font-semibold">Tendance des consultations</CardTitle>
           </CardHeader>
