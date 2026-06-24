@@ -165,6 +165,7 @@ export default function RendezVousPage() {
               )
             })
           )}
+          </div>
         </div>
 
         {filtered.length > 0 && !isLoading && (
