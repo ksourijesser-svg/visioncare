@@ -139,7 +139,7 @@ export function Sidebar() {
                 <circle cx="46" cy="26" r="2"   fill="white"   fillOpacity="0.70" />
                 <circle cx="53" cy="28" r="1"   fill="white"   fillOpacity="0.40" />
               </svg>
-              <p className="text-center text-[10px] text-white/30 font-medium leading-relaxed whitespace-pre-line">
+              <p className="text-center text-[10px] text-gray-500 dark:text-white/30 font-medium leading-relaxed whitespace-pre-line">
                 {tip}
               </p>
               <div className="flex items-center gap-1.5">
