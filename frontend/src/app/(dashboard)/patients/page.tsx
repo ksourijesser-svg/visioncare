@@ -22,7 +22,6 @@ export default function PatientsPage() {
   const [detailOpen, setDetailOpen] = useState(false)
   const [viewingPatient, setViewingPatient] = useState<Patient | null>(null)
 
-  // Compute per-patient stats from appointments
   const statsMap = new Map<number, { nb: number; derniere: string }>()
   appointments.filter((a) => a.statut === 'complete').forEach((a) => {
     const existing = statsMap.get(a.patient_id)
@@ -40,7 +39,6 @@ export default function PatientsPage() {
     derniere_visite: statsMap.get(p.id)?.derniere ?? '',
   }))
 
-  // Only show patients who have at least one completed appointment
   const withCompleted = enriched.filter((p) => p.nb_consultations > 0)
 
   const filtered = withCompleted.filter(
@@ -78,27 +76,31 @@ export default function PatientsPage() {
 
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
           <div className="relative flex-1 w-full">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#6A8E9F]" />
             <Input
               placeholder="Rechercher par nom ou téléphone..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 border-0"
+              className="pl-9 border-0 dark:bg-[#0F2035] dark:text-[#E2EDF5] dark:placeholder:text-[#6A8E9F]"
             />
           </div>
-          <Button variant="outline" onClick={handleExport} className="border-0 text-[#70B1C4] shrink-0">
+          <Button
+            variant="outline"
+            onClick={handleExport}
+            className="border border-[#70B1C4]/30 dark:border-[#70B1C4]/20 text-[#70B1C4] dark:bg-[#0F2035] shrink-0 btn-neon"
+          >
             <Download size={16} className="mr-2" />
             Exporter Excel
           </Button>
         </div>
 
         {isLoading ? (
-          <div className="text-center py-20 text-gray-400">
+          <div className="text-center py-20 text-gray-400 dark:text-[#6A8E9F]">
             <Loader2 size={40} className="mx-auto mb-4 opacity-30 animate-spin" />
             <p className="font-medium">Chargement des patients...</p>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">
+          <div className="text-center py-20 text-gray-400 dark:text-[#6A8E9F]">
             <User size={48} className="mx-auto mb-4 opacity-20" />
             <p className="font-medium">Aucun patient pour le moment</p>
             <p className="text-sm mt-1">Les patients apparaissent ici dès qu&apos;un rendez-vous est marqué <strong>Complété</strong>.</p>
@@ -108,38 +110,38 @@ export default function PatientsPage() {
             {filtered.map((patient) => {
               const initials = `${patient.prenom[0]}${patient.nom[0]}`.toUpperCase()
               return (
-                <Card key={patient.id} className="border-0 hover:shadow-md transition-all">
+                <Card key={patient.id} className="border-0 dark:bg-[#0F2035] hover:shadow-md dark:hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all glow">
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
                       <Avatar className="w-11 h-11">
-                        <AvatarFallback className="bg-[#DCEEF3] text-[#70B1C4] font-semibold">
+                        <AvatarFallback className="bg-[#DCEEF3] dark:bg-[#1A3A5C] text-[#70B1C4] font-semibold">
                           {initials}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-[#2D3748] truncate">{patient.prenom} {patient.nom}</p>
-                        <p className="text-xs text-gray-400">{patient.telephone}</p>
-                        {patient.email && <p className="text-xs text-gray-400 truncate">{patient.email}</p>}
+                        <p className="font-semibold text-[#2D3748] dark:text-[#E2EDF5] truncate">{patient.prenom} {patient.nom}</p>
+                        <p className="text-xs text-gray-400 dark:text-[#6A8E9F]">{patient.telephone}</p>
+                        {patient.email && <p className="text-xs text-gray-400 dark:text-[#6A8E9F] truncate">{patient.email}</p>}
                       </div>
                     </div>
 
                     {patient.derniere_visite ? (
-                      <div className="mt-3 flex items-center justify-between text-xs text-gray-500 border-t border-gray-50 pt-3">
+                      <div className="mt-3 flex items-center justify-between text-xs text-gray-500 dark:text-[#6A8E9F] border-t border-gray-50 dark:border-[#1A3A5C]/40 pt-3">
                         <span>
                           Dernière visite : {format(new Date(patient.derniere_visite), 'dd MMM yyyy', { locale: fr })}
                         </span>
                         <span className="font-medium text-[#70B1C4]">{patient.nb_consultations} consult.</span>
                       </div>
                     ) : (
-                      <div className="mt-3 text-xs text-gray-400 border-t border-gray-50 pt-3">Aucune consultation</div>
+                      <div className="mt-3 text-xs text-gray-400 dark:text-[#6A8E9F] border-t border-gray-50 dark:border-[#1A3A5C]/40 pt-3">Aucune consultation</div>
                     )}
 
-                    <div className="mt-3 border-t border-gray-50 pt-3">
+                    <div className="mt-3 border-t border-gray-50 dark:border-[#1A3A5C]/40 pt-3">
                       <Button
                         size="sm"
                         variant="outline"
                         onClick={() => handleView(patient)}
-                        className="w-full border-0 text-[#70B1C4] text-xs h-8"
+                        className="w-full border border-[#70B1C4]/20 dark:border-[#70B1C4]/20 text-[#70B1C4] dark:bg-[#0A1628]/50 text-xs h-8 btn-neon"
                       >
                         <Eye size={12} className="mr-1" /> Voir dossier
                       </Button>
@@ -152,7 +154,7 @@ export default function PatientsPage() {
         )}
 
         {filtered.length > 0 && !isLoading && (
-          <p className="text-sm text-gray-400">{filtered.length} patient{filtered.length > 1 ? 's' : ''}</p>
+          <p className="text-sm text-gray-400 dark:text-[#6A8E9F]">{filtered.length} patient{filtered.length > 1 ? 's' : ''}</p>
         )}
       </div>
 
