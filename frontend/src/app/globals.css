@@ -83,38 +83,39 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* VisionCare dark navy theme */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --background: oklch(0.11 0.025 237);    /* #0A1628 deep navy */
+  --foreground: oklch(0.93 0.015 215);    /* #E2EDF5 soft white */
+  --card: oklch(0.14 0.025 237);          /* #0F2035 card navy */
+  --card-foreground: oklch(0.93 0.015 215);
+  --popover: oklch(0.13 0.025 237);       /* slightly deeper */
+  --popover-foreground: oklch(0.93 0.015 215);
+  --primary: oklch(0.58 0.09 213);        /* #3d8fa8 teal */
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.18 0.03 237);      /* #1A3A5C muted navy */
+  --secondary-foreground: oklch(0.93 0.015 215);
+  --muted: oklch(0.16 0.025 237);         /* #152230 */
+  --muted-foreground: oklch(0.62 0.04 210); /* #6A8E9F muted teal-grey */
+  --accent: oklch(0.18 0.03 237);
+  --accent-foreground: oklch(0.93 0.015 215);
+  --destructive: oklch(0.65 0.19 25);
+  --border: oklch(0.28 0.04 237 / 40%);
+  --input: oklch(0.16 0.025 237);
+  --ring: oklch(0.58 0.09 213);
+  --chart-1: oklch(0.70 0.08 210);
+  --chart-2: oklch(0.75 0.06 200);
+  --chart-3: oklch(0.55 0.1 215);
+  --chart-4: oklch(0.45 0.07 205);
+  --chart-5: oklch(0.35 0.05 210);
+  --sidebar: oklch(0.08 0.02 237);        /* #071220 sidebar navy */
+  --sidebar-foreground: oklch(0.93 0.015 215);
+  --sidebar-primary: oklch(0.58 0.09 213);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-accent: oklch(0.18 0.03 237);
+  --sidebar-accent-foreground: oklch(0.93 0.015 215);
+  --sidebar-border: oklch(0.28 0.04 237 / 25%);
+  --sidebar-ring: oklch(0.58 0.09 213);
 }
 
 @layer base {
@@ -153,6 +154,28 @@
       2px 0 8px  rgba(0, 0, 0, 0.10);
   }
 
+  /* Dark mode glow overrides — more vivid teal borders on dark bg */
+  .dark .glow {
+    box-shadow:
+      0 4px 24px rgba(112, 177, 196, 0.10),
+      0 1px 8px  rgba(0, 0, 0, 0.35),
+      0 0 0 1px  rgba(112, 177, 196, 0.07);
+  }
+  .dark .glow-md {
+    box-shadow:
+      0 8px 40px rgba(112, 177, 196, 0.18),
+      0 2px 12px rgba(0, 0, 0, 0.45),
+      0 0 0 1px  rgba(112, 177, 196, 0.10);
+  }
+  .dark .glow-green  { box-shadow: 0 6px 28px rgba(16, 185, 129, 0.22),  0 1px 4px rgba(0,0,0,0.35), 0 0 0 1px rgba(16,185,129,0.10); }
+  .dark .glow-violet { box-shadow: 0 6px 28px rgba(99, 102, 241, 0.22),  0 1px 4px rgba(0,0,0,0.35), 0 0 0 1px rgba(99,102,241,0.10); }
+  .dark .glow-red    { box-shadow: 0 6px 28px rgba(239, 68, 68, 0.20),   0 1px 4px rgba(0,0,0,0.35), 0 0 0 1px rgba(239,68,68,0.10); }
+  .dark .glow-sidebar {
+    box-shadow:
+      4px 0 32px rgba(112, 177, 196, 0.08),
+      0  0 0  1px rgba(112, 177, 196, 0.08);
+  }
+
   /* Neon button hover effects */
   .btn-neon {
     transition: box-shadow 0.25s ease, transform 0.2s ease, background-color 0.2s ease;
@@ -163,6 +186,14 @@
       0 0 20px rgba(61, 143, 168, 0.65),
       0 0 45px rgba(61, 143, 168, 0.35),
       0 4px 16px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+  }
+  .dark .btn-neon:hover {
+    box-shadow:
+      0 0 10px rgba(112, 177, 196, 1.0),
+      0 0 25px rgba(112, 177, 196, 0.75),
+      0 0 55px rgba(112, 177, 196, 0.45),
+      0 4px 20px rgba(0, 0, 0, 0.6);
     transform: translateY(-2px);
   }
   .btn-neon-outline {
@@ -176,6 +207,14 @@
       0 4px 16px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
   }
+  .dark .btn-neon-outline:hover {
+    box-shadow:
+      0 0 8px  rgba(112, 177, 196, 0.60),
+      0 0 22px rgba(112, 177, 196, 0.40),
+      0 0 40px rgba(112, 177, 196, 0.20),
+      0 4px 20px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+  }
   /* White/silver neon — used on Se connecter */
   .btn-neon-white {
     transition: box-shadow 0.25s ease, transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
@@ -186,6 +225,19 @@
       0 0 18px rgba(255, 255, 255, 0.40),
       0 0 36px rgba(255, 255, 255, 0.18),
       0 4px 16px rgba(0, 0, 0, 0.30);
+    transform: translateY(-2px);
+  }
+
+  /* Neon red glow for delete buttons */
+  .btn-neon-red {
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
+  }
+  .btn-neon-red:hover {
+    box-shadow:
+      0 0 8px  rgba(239, 68, 68, 0.90),
+      0 0 20px rgba(239, 68, 68, 0.55),
+      0 0 40px rgba(239, 68, 68, 0.25),
+      0 4px 16px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
   }
 }
