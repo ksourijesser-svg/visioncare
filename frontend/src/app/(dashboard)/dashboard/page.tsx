@@ -121,7 +121,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-gray-400 dark:text-[#7AAABB] text-center py-6">Aucun RDV aujourd&apos;hui</p>
               ) : (
                 todayRdv.map((rdv) => (
-                  <div key={rdv.id} className="flex items-center justify-between py-2 border-b border-gray-50 dark:border-[#1A3A5C]/40 last:border-0">
+                  <div key={rdv.id} className="flex items-center justify-between py-2 border-b border-gray-50 dark:border-[#1C3F62]/40 last:border-0">
                     <div>
                       <p className="text-sm font-medium text-[#1A2B3C] dark:text-[#EDF8FF]">{rdv.patient_prenom} {rdv.patient_nom}</p>
                       <p className="text-xs text-gray-400 dark:text-[#7AAABB]">{rdv.heure} · {rdv.motif}</p>
