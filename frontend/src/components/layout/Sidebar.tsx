@@ -87,9 +87,9 @@ export function Sidebar() {
       >
         {/* Inner glassmorphism card */}
         <div className="h-full flex flex-col rounded-2xl overflow-hidden
-          bg-[#0A1628]/95 backdrop-blur-2xl
-          border border-white/[0.09]
-          [box-shadow:0_0_0_1px_rgba(112,177,196,0.08),_0_8px_32px_rgba(0,0,0,0.60),_0_0_60px_rgba(0,0,0,0.40)]">
+          bg-[#0B1E38]/55 backdrop-blur-2xl
+          border border-white/[0.13]
+          [box-shadow:0_0_0_1px_rgba(112,177,196,0.10),_0_8px_40px_rgba(0,0,0,0.55),_inset_0_1px_0_rgba(255,255,255,0.06)]">
 
           {/* ── Brand ── */}
           <div className="flex items-center gap-3 px-4 pt-5 pb-4">
