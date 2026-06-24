@@ -141,7 +141,7 @@ export default function PatientsPage() {
                         size="sm"
                         variant="outline"
                         onClick={() => handleView(patient)}
-                        className="w-full border border-[#70B1C4]/20 dark:border-[#70B1C4]/20 text-[#70B1C4] dark:bg-[#0A1628]/50 text-xs h-8 btn-neon"
+                        className="w-full border border-[#70B1C4]/20 dark:border-[#70B1C4]/20 text-[#70B1C4] dark:bg-[#091628]/50 text-xs h-8 btn-neon"
                       >
                         <Eye size={12} className="mr-1" /> Voir dossier
                       </Button>
