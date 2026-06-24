@@ -14,10 +14,10 @@ import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
 const STATUS_CONFIG: Record<AppointmentStatus, { label: string; text: string; bg: string; border: string; dot: string }> = {
-  programme: { label: 'Programmé', text: 'text-blue-600',   bg: 'bg-blue-50',   border: 'border-blue-400',   dot: 'bg-blue-400' },
-  confirme:  { label: 'Confirmé',  text: 'text-green-600',  bg: 'bg-green-50',  border: 'border-green-400',  dot: 'bg-green-400' },
-  complete:  { label: 'Complété',  text: 'text-gray-500',   bg: 'bg-gray-100',  border: 'border-gray-300',   dot: 'bg-gray-400' },
-  annule:    { label: 'Annulé',    text: 'text-red-500',    bg: 'bg-red-50',    border: 'border-red-400',    dot: 'bg-red-400' },
+  programme: { label: 'Programmé', text: 'text-blue-600 dark:text-blue-400',  bg: 'bg-blue-50 dark:bg-blue-900/30',  border: 'border-blue-400',                            dot: 'bg-blue-400' },
+  confirme:  { label: 'Confirmé',  text: 'text-green-600 dark:text-green-400', bg: 'bg-green-50 dark:bg-green-900/30', border: 'border-green-400',                           dot: 'bg-green-400' },
+  complete:  { label: 'Complété',  text: 'text-gray-500 dark:text-gray-400',  bg: 'bg-gray-100 dark:bg-gray-700/30',  border: 'border-gray-300 dark:border-gray-600',       dot: 'bg-gray-400' },
+  annule:    { label: 'Annulé',    text: 'text-red-500 dark:text-red-400',    bg: 'bg-red-50 dark:bg-red-900/20',     border: 'border-red-400',                             dot: 'bg-red-400' },
 }
 
 export default function RendezVousPage() {
@@ -52,19 +52,19 @@ export default function RendezVousPage() {
       <div className="p-6 space-y-4">
 
         {/* ── Toolbar card ── */}
-        <div className="bg-white rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row gap-3 items-center">
+        <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row gap-3 items-center transition-colors duration-300">
           <div className="relative flex-1 w-full">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#6A8E9F] pointer-events-none" />
             <Input
               placeholder="Rechercher un patient ou motif..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 border border-gray-200 rounded-xl bg-[#F7FAFB] focus-visible:ring-[#70B1C4] h-10"
+              className="pl-9 border border-gray-200 dark:border-[#1A3A5C]/60 rounded-xl bg-[#F7FAFB] dark:bg-[#0A1628] dark:text-[#E2EDF5] dark:placeholder:text-[#6A8E9F] focus-visible:ring-[#70B1C4] h-10"
             />
           </div>
           <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as AppointmentStatus | 'tous')}>
-            <SelectTrigger className="w-48 border border-gray-200 rounded-xl bg-[#F7FAFB] h-10 shrink-0">
-              <Filter size={13} className="mr-1.5 text-gray-400 shrink-0" />
+            <SelectTrigger className="w-48 border border-gray-200 dark:border-[#1A3A5C]/60 rounded-xl bg-[#F7FAFB] dark:bg-[#0A1628] dark:text-[#E2EDF5] h-10 shrink-0">
+              <Filter size={13} className="mr-1.5 text-gray-400 dark:text-[#6A8E9F] shrink-0" />
               <SelectValue placeholder="Tous les statuts" />
             </SelectTrigger>
             <SelectContent>
@@ -77,7 +77,7 @@ export default function RendezVousPage() {
           </Select>
           <Button
             onClick={() => { setEditingRdv(null); setModalOpen(true) }}
-            className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30 shrink-0 h-10"
+            className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30 shrink-0 h-10 btn-neon"
           >
             <Plus size={16} className="mr-1.5" /> Nouveau RDV
           </Button>
@@ -86,19 +86,19 @@ export default function RendezVousPage() {
         {/* Column headers */}
         <div className="hidden sm:grid grid-cols-[1fr_160px_1fr_80px_148px_96px] px-5 gap-4">
           {['Patient', 'Date & Heure', 'Motif', 'Durée', 'Statut', 'Actions'].map((h) => (
-            <p key={h} className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">{h}</p>
+            <p key={h} className="text-[11px] font-bold text-gray-400 dark:text-[#6A8E9F] uppercase tracking-widest">{h}</p>
           ))}
         </div>
 
         {/* ── Row cards ── */}
         <div className="space-y-2.5">
           {isLoading ? (
-            <div className="bg-white rounded-2xl glow text-center py-14 text-gray-400">
+            <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#6A8E9F]">
               <Loader2 size={32} className="mx-auto mb-3 animate-spin opacity-40" />
               <p className="text-sm">Chargement des rendez-vous...</p>
             </div>
           ) : filtered.length === 0 ? (
-            <div className="bg-white rounded-2xl glow text-center py-14 text-gray-400">
+            <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#6A8E9F]">
               <User size={40} className="mx-auto mb-3 opacity-20" />
               <p className="font-medium">Aucun rendez-vous trouvé</p>
             </div>
@@ -106,7 +106,7 @@ export default function RendezVousPage() {
             filtered.map((rdv) => {
               const s = STATUS_CONFIG[rdv.statut]
               return (
-                <div key={rdv.id} className={`bg-white rounded-2xl glow hover:glow-md transition-all duration-200 border-l-4 ${s.border} overflow-hidden`}>
+                <div key={rdv.id} className={`bg-white dark:bg-[#0F2035] rounded-2xl glow hover:glow-md transition-all duration-200 border-l-4 ${s.border} overflow-hidden`}>
                   <div className="grid grid-cols-1 sm:grid-cols-[1fr_160px_1fr_80px_148px_96px] items-center gap-x-4 gap-y-1 px-5 py-3.5">
                     <div className="flex items-center gap-2.5">
                       <div className={`w-8 h-8 rounded-full ${s.bg} flex items-center justify-center shrink-0`}>
@@ -115,23 +115,23 @@ export default function RendezVousPage() {
                         </span>
                       </div>
                       <div>
-                        <p className="font-semibold text-[#1A2B3C] text-sm leading-tight">
+                        <p className="font-semibold text-[#1A2B3C] dark:text-[#E2EDF5] text-sm leading-tight">
                           {rdv.patient_prenom} {rdv.patient_nom}
                         </p>
-                        <p className="text-xs text-gray-400">{rdv.patient_telephone}</p>
+                        <p className="text-xs text-gray-400 dark:text-[#6A8E9F]">{rdv.patient_telephone}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1.5 text-gray-600 text-sm">
-                      <Calendar size={12} className="text-gray-400 shrink-0" />
+                    <div className="flex items-center gap-1.5 text-gray-600 dark:text-[#A0BDCC] text-sm">
+                      <Calendar size={12} className="text-gray-400 dark:text-[#6A8E9F] shrink-0" />
                       <span>
                         {format(new Date(rdv.date), 'dd MMM', { locale: fr })}
-                        <span className="text-gray-400 mx-1">·</span>
+                        <span className="text-gray-400 dark:text-[#6A8E9F] mx-1">·</span>
                         {rdv.heure}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600 truncate">{rdv.motif}</p>
-                    <div className="flex items-center gap-1 text-gray-500 text-sm">
-                      <Clock size={12} className="text-gray-400 shrink-0" />
+                    <p className="text-sm text-gray-600 dark:text-[#A0BDCC] truncate">{rdv.motif}</p>
+                    <div className="flex items-center gap-1 text-gray-500 dark:text-[#A0BDCC] text-sm">
+                      <Clock size={12} className="text-gray-400 dark:text-[#6A8E9F] shrink-0" />
                       <span>{rdv.duree} min</span>
                     </div>
                     <Select
@@ -150,13 +150,13 @@ export default function RendezVousPage() {
                       </SelectContent>
                     </Select>
                     <div className="flex items-center gap-0.5">
-                      <button onClick={() => handleDossier(rdv)} title="Dossier médical" className="p-1.5 rounded-lg hover:bg-[#E4EEF4] text-[#70B1C4] transition-colors">
+                      <button onClick={() => handleDossier(rdv)} title="Dossier médical" className="p-1.5 rounded-lg hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#70B1C4] transition-colors btn-neon">
                         <ClipboardList size={14} />
                       </button>
-                      <button onClick={() => handleEdit(rdv)} className="p-1.5 rounded-lg hover:bg-[#E4EEF4] text-[#70B1C4] transition-colors">
+                      <button onClick={() => handleEdit(rdv)} className="p-1.5 rounded-lg hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#70B1C4] transition-colors btn-neon">
                         <Pencil size={14} />
                       </button>
-                      <button onClick={() => handleDelete(rdv.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-red-400 transition-colors">
+                      <button onClick={() => handleDelete(rdv.id)} className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-400 transition-colors btn-neon-red">
                         <Trash2 size={14} />
                       </button>
                     </div>
@@ -168,7 +168,7 @@ export default function RendezVousPage() {
         </div>
 
         {filtered.length > 0 && !isLoading && (
-          <p className="text-xs text-gray-400 pl-1">
+          <p className="text-xs text-gray-400 dark:text-[#6A8E9F] pl-1">
             {filtered.length} rendez-vous affiché{filtered.length > 1 ? 's' : ''}
           </p>
         )}
