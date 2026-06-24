@@ -87,17 +87,17 @@ export function Sidebar() {
                 href={href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  'flex items-center gap-3.5 py-2.5 text-sm transition-all duration-150 border-l-[3px] pl-[17px] pr-5',
+                  'flex items-center gap-3.5 py-2.5 text-sm transition-all duration-200 border-l-[3px] pl-[17px] pr-5',
                   active
-                    ? 'border-[#70B1C4] bg-[#70B1C4]/10 text-white font-semibold'
-                    : 'border-transparent text-white/40 hover:bg-white/5 hover:text-white/70'
+                    ? 'border-[#70B1C4] bg-gradient-to-r from-[#70B1C4]/20 to-[#70B1C4]/5 text-white font-semibold [box-shadow:inset_0_1px_0_rgba(112,177,196,0.10)]'
+                    : 'border-transparent text-white/35 hover:bg-white/[0.06] hover:text-white/65 hover:border-white/15'
                 )}
               >
                 <Icon
                   size={16}
                   className={cn(
-                    'shrink-0 transition-colors duration-150',
-                    active ? 'text-[#70B1C4]' : 'text-white/30'
+                    'shrink-0 transition-colors duration-200',
+                    active ? 'text-[#70B1C4] drop-shadow-[0_0_6px_rgba(112,177,196,0.8)]' : 'text-white/25'
                   )}
                 />
                 {label}
