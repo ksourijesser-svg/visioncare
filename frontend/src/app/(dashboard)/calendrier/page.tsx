@@ -89,16 +89,16 @@ export default function CalendrierPage() {
           <div className="flex items-center gap-1">
             <button
               onClick={goPrev}
-              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#1A2B3C] dark:text-[#E2EDF5] transition-colors btn-neon"
+              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#1A2B3C] dark:text-[#EDF8FF] transition-colors btn-neon"
             >
               <ChevronLeft size={16} />
             </button>
-            <h2 className="text-base font-bold text-[#1A2B3C] dark:text-[#E2EDF5] capitalize min-w-52 text-center px-1">
+            <h2 className="text-base font-bold text-[#1A2B3C] dark:text-[#EDF8FF] capitalize min-w-52 text-center px-1">
               {getTitle()}
             </h2>
             <button
               onClick={goNext}
-              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#1A2B3C] dark:text-[#E2EDF5] transition-colors btn-neon"
+              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#1A2B3C] dark:text-[#EDF8FF] transition-colors btn-neon"
             >
               <ChevronRight size={16} />
             </button>
@@ -247,11 +247,11 @@ export default function CalendrierPage() {
           <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden flex flex-col flex-1 transition-colors duration-300">
             <div className="border-b border-gray-100 dark:border-[#1A3A5C]/40 px-6 py-3 flex items-center gap-3">
               <div className={`w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold shrink-0
-                ${isToday(currentDate) ? 'bg-[#70B1C4] text-white' : 'bg-[#F5F9FA] dark:bg-[#1A3A5C]/50 text-[#2D3748] dark:text-[#E2EDF5]'}`}>
+                ${isToday(currentDate) ? 'bg-[#70B1C4] text-white' : 'bg-[#F5F9FA] dark:bg-[#1A3A5C]/50 text-[#2D3748] dark:text-[#EDF8FF]'}`}>
                 {format(currentDate, 'd')}
               </div>
               <div>
-                <p className="text-sm font-semibold text-[#2D3748] dark:text-[#E2EDF5] capitalize">
+                <p className="text-sm font-semibold text-[#2D3748] dark:text-[#EDF8FF] capitalize">
                   {format(currentDate, 'EEEE', { locale: fr })}
                 </p>
                 <p className="text-xs text-gray-400 dark:text-[#6A8E9F] capitalize">
