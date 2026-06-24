@@ -63,7 +63,7 @@ export default function ProfilPage() {
             <div className="h-24 bg-gradient-to-r from-[#70B1C4] to-[#DCEEF3] dark:from-[#1e6c87] dark:to-[#3d8fa8]" />
             <CardContent className="pt-0 pb-5 px-6">
               <div className="flex items-end gap-4 -mt-10 mb-4">
-                <Avatar className="w-20 h-20 border-4 border-white dark:border-[#0F2035] shadow-md">
+                <Avatar className="w-20 h-20 border-4 border-white dark:border-[#102844] shadow-md">
                   <AvatarFallback className="bg-[#70B1C4] text-white text-2xl font-bold">
                     {initials}
                   </AvatarFallback>
