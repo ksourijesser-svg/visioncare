@@ -121,7 +121,7 @@ export default function RendezVousPage() {
                         <p className="text-xs text-gray-400 dark:text-[#6A8E9F]">{rdv.patient_telephone}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1.5 text-gray-600 dark:text-[#A0BDCC] text-sm">
+                    <div className="flex items-center gap-1.5 text-gray-600 dark:text-[#B4D0E0] text-sm">
                       <Calendar size={12} className="text-gray-400 dark:text-[#6A8E9F] shrink-0" />
                       <span>
                         {format(new Date(rdv.date), 'dd MMM', { locale: fr })}
@@ -129,8 +129,8 @@ export default function RendezVousPage() {
                         {rdv.heure}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-[#A0BDCC] truncate">{rdv.motif}</p>
-                    <div className="flex items-center gap-1 text-gray-500 dark:text-[#A0BDCC] text-sm">
+                    <p className="text-sm text-gray-600 dark:text-[#B4D0E0] truncate">{rdv.motif}</p>
+                    <div className="flex items-center gap-1 text-gray-500 dark:text-[#B4D0E0] text-sm">
                       <Clock size={12} className="text-gray-400 dark:text-[#6A8E9F] shrink-0" />
                       <span>{rdv.duree} min</span>
                     </div>
