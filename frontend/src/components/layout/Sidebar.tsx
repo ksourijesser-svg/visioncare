@@ -111,17 +111,17 @@ export function Sidebar() {
               <Eye size={17} className="text-white" />
             </div>
             <div>
-              <p className="font-bold text-white text-sm tracking-tight">VisionCare</p>
-              <p className="text-[10px] text-[#70B1C4]/55 font-medium">Cabinet d&apos;Ophtalmologie</p>
+              <p className="font-bold text-[#1A2B3C] dark:text-white text-sm tracking-tight">VisionCare</p>
+              <p className="text-[10px] text-[#3d8fa8]/80 dark:text-[#70B1C4]/55 font-medium">Cabinet d&apos;Ophtalmologie</p>
             </div>
           </div>
 
           {/* Divider */}
-          <div className="mx-4 h-px bg-white/[0.07]" />
+          <div className="mx-4 h-px bg-black/[0.06] dark:bg-white/[0.07]" />
 
           {/* ── Nav ── */}
           <nav className="pt-4 pb-3 flex-1">
-            <p className="text-[9px] font-bold text-white/18 uppercase tracking-[0.20em] px-5 mb-2">Navigation</p>
+            <p className="text-[9px] font-bold text-gray-400 dark:text-white/18 uppercase tracking-[0.20em] px-5 mb-2">Navigation</p>
             <div className="space-y-0.5">
               {navItems.map(({ href, label, icon: Icon }) => navLink(href, label, Icon))}
             </div>
