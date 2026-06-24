@@ -17,10 +17,10 @@ import { fr } from 'date-fns/locale'
 type ViewMode = 'mois' | 'semaine' | 'jour'
 
 const STATUS_COLORS: Record<AppointmentStatus, string> = {
-  programme: 'bg-blue-100 text-blue-700',
-  confirme:  'bg-green-100 text-green-700',
-  complete:  'bg-gray-100 text-gray-600',
-  annule:    'bg-red-100 text-red-500 line-through',
+  programme: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+  confirme:  'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+  complete:  'bg-gray-100 text-gray-600 dark:bg-gray-700/30 dark:text-gray-400',
+  annule:    'bg-red-100 text-red-500 line-through dark:bg-red-900/20 dark:text-red-400',
 }
 
 const HOURS = Array.from({ length: 12 }, (_, i) => i + 8) // 08:00 → 19:00
@@ -84,27 +84,27 @@ export default function CalendrierPage() {
       <div className="p-6 flex flex-col gap-4 flex-1">
 
         {/* ── Toolbar card ── */}
-        <div className="bg-white rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-colors duration-300">
           {/* Left: navigation */}
           <div className="flex items-center gap-1">
             <button
               onClick={goPrev}
-              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] text-[#1A2B3C] transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#1A2B3C] dark:text-[#E2EDF5] transition-colors btn-neon"
             >
               <ChevronLeft size={16} />
             </button>
-            <h2 className="text-base font-bold text-[#1A2B3C] capitalize min-w-52 text-center px-1">
+            <h2 className="text-base font-bold text-[#1A2B3C] dark:text-[#E2EDF5] capitalize min-w-52 text-center px-1">
               {getTitle()}
             </h2>
             <button
               onClick={goNext}
-              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] text-[#1A2B3C] transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 text-[#1A2B3C] dark:text-[#E2EDF5] transition-colors btn-neon"
             >
               <ChevronRight size={16} />
             </button>
             <button
               onClick={() => setCurrentDate(new Date())}
-              className="ml-2 text-xs font-medium text-[#70B1C4] border border-[#70B1C4]/30 rounded-lg px-3 py-1.5 hover:bg-[#E4EEF4] transition-colors"
+              className="ml-2 text-xs font-medium text-[#70B1C4] border border-[#70B1C4]/30 rounded-lg px-3 py-1.5 hover:bg-[#E4EEF4] dark:hover:bg-[#1A3A5C]/60 transition-colors btn-neon"
             >
               Aujourd&apos;hui
             </button>
@@ -112,7 +112,7 @@ export default function CalendrierPage() {
 
           {/* Right: view switcher + button */}
           <div className="flex items-center gap-2">
-            <div className="flex bg-[#E4EEF4] rounded-xl p-1 gap-0.5">
+            <div className="flex bg-[#E4EEF4] dark:bg-[#0A1628] rounded-xl p-1 gap-0.5">
               {(['jour', 'semaine', 'mois'] as ViewMode[]).map((v) => (
                 <button
                   key={v}
@@ -120,7 +120,7 @@ export default function CalendrierPage() {
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                     view === v
                       ? 'bg-[#70B1C4] text-white shadow-md shadow-[#70B1C4]/30'
-                      : 'text-gray-500 hover:text-[#1A2B3C]'
+                      : 'text-gray-500 dark:text-[#6A8E9F] hover:text-[#1A2B3C] dark:hover:text-[#E2EDF5]'
                   }`}
                 >
                   {v === 'jour' ? 'Jour' : v === 'semaine' ? 'Semaine' : 'Mois'}
@@ -129,7 +129,7 @@ export default function CalendrierPage() {
             </div>
             <Button
               onClick={() => setModalOpen(true)}
-              className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30"
+              className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30 btn-neon"
             >
               <Plus size={16} className="mr-1.5" /> Nouveau RDV
             </Button>
@@ -138,10 +138,10 @@ export default function CalendrierPage() {
 
         {/* ══════════════ MONTH VIEW ══════════════ */}
         {view === 'mois' && (
-          <div className="bg-white rounded-2xl glow overflow-hidden">
-            <div className="grid grid-cols-7 border-b border-0">
+          <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow overflow-hidden transition-colors duration-300">
+            <div className="grid grid-cols-7 border-b border-gray-100 dark:border-[#1A3A5C]/40">
               {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day) => (
-                <div key={day} className="py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                <div key={day} className="py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#6A8E9F] uppercase tracking-wide">
                   {day}
                 </div>
               ))}
@@ -155,12 +155,12 @@ export default function CalendrierPage() {
                 return (
                   <div
                     key={idx}
-                    className={`min-h-24 p-2 border-b border-r border-gray-50 ${!inMonth ? 'opacity-40' : ''}`}
+                    className={`min-h-24 p-2 border-b border-r border-gray-50 dark:border-[#1A3A5C]/20 ${!inMonth ? 'opacity-40' : ''}`}
                   >
                     <div
                       onClick={() => { setCurrentDate(day); setView('jour') }}
                       className={`w-7 h-7 flex items-center justify-center rounded-full text-sm font-medium mb-1 cursor-pointer transition-colors
-                        ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748] hover:bg-[#DCEEF3]'}`}
+                        ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748] dark:text-[#A0BDCC] hover:bg-[#DCEEF3] dark:hover:bg-[#1A3A5C]/60'}`}
                     >
                       {format(day, 'd')}
                     </div>
@@ -173,7 +173,7 @@ export default function CalendrierPage() {
                       {events.length > 3 && (
                         <p
                           onClick={() => { setCurrentDate(day); setView('jour') }}
-                          className="text-xs text-gray-400 pl-1 cursor-pointer hover:text-[#70B1C4]"
+                          className="text-xs text-gray-400 dark:text-[#6A8E9F] pl-1 cursor-pointer hover:text-[#70B1C4]"
                         >
                           +{events.length - 3} autres
                         </p>
@@ -188,38 +188,36 @@ export default function CalendrierPage() {
 
         {/* ══════════════ WEEK VIEW ══════════════ */}
         {view === 'semaine' && (
-          <div className="bg-white rounded-2xl glow overflow-hidden flex flex-col flex-1">
-            {/* Day headers */}
-            <div className="grid border-b border-0" style={{ gridTemplateColumns: '56px repeat(7, 1fr)' }}>
+          <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow overflow-hidden flex flex-col flex-1 transition-colors duration-300">
+            <div className="grid border-b border-gray-100 dark:border-[#1A3A5C]/40" style={{ gridTemplateColumns: '56px repeat(7, 1fr)' }}>
               <div />
               {weekDays.map((day, i) => {
                 const today = isToday(day)
                 return (
                   <div
                     key={i}
-                    className="py-2 text-center border-l border-0 cursor-pointer hover:bg-[#F5F9FA] transition-colors"
+                    className="py-2 text-center border-l border-gray-50 dark:border-[#1A3A5C]/20 cursor-pointer hover:bg-[#F5F9FA] dark:hover:bg-[#1A3A5C]/30 transition-colors"
                     onClick={() => { setCurrentDate(day); setView('jour') }}
                   >
-                    <p className="text-xs text-gray-400 uppercase">
+                    <p className="text-xs text-gray-400 dark:text-[#6A8E9F] uppercase">
                       {format(day, 'EEE', { locale: fr })}
                     </p>
                     <div className={`w-8 h-8 mx-auto flex items-center justify-center rounded-full text-sm font-semibold mt-0.5
-                      ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748]'}`}>
+                      ${today ? 'bg-[#70B1C4] text-white' : 'text-[#2D3748] dark:text-[#A0BDCC]'}`}>
                       {format(day, 'd')}
                     </div>
                   </div>
                 )
               })}
             </div>
-            {/* Time grid */}
             <div className="overflow-y-auto flex-1">
               {HOURS.map((hour) => (
                 <div
                   key={hour}
-                  className="grid border-b border-gray-50"
+                  className="grid border-b border-gray-50 dark:border-[#1A3A5C]/20"
                   style={{ gridTemplateColumns: '56px repeat(7, 1fr)', minHeight: '64px' }}
                 >
-                  <div className="px-2 pt-1.5 text-xs text-gray-400 text-right shrink-0">
+                  <div className="px-2 pt-1.5 text-xs text-gray-400 dark:text-[#6A8E9F] text-right shrink-0">
                     {hour}:00
                   </div>
                   {weekDays.map((day, i) => {
@@ -227,7 +225,7 @@ export default function CalendrierPage() {
                     return (
                       <div
                         key={i}
-                        className={`border-l border-gray-50 p-1 ${isToday(day) ? 'bg-blue-50/40' : ''}`}
+                        className={`border-l border-gray-50 dark:border-[#1A3A5C]/20 p-1 ${isToday(day) ? 'bg-blue-50/40 dark:bg-blue-900/10' : ''}`}
                       >
                         {appts.map((a) => (
                           <div key={a.id} className={`text-xs rounded px-1.5 py-1 mb-0.5 truncate ${STATUS_COLORS[a.statut]}`}>
@@ -246,34 +244,32 @@ export default function CalendrierPage() {
 
         {/* ══════════════ DAY VIEW ══════════════ */}
         {view === 'jour' && (
-          <div className="bg-white rounded-2xl glow overflow-hidden flex flex-col flex-1">
-            {/* Day header */}
-            <div className="border-b border-0 px-6 py-3 flex items-center gap-3">
+          <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow overflow-hidden flex flex-col flex-1 transition-colors duration-300">
+            <div className="border-b border-gray-100 dark:border-[#1A3A5C]/40 px-6 py-3 flex items-center gap-3">
               <div className={`w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold shrink-0
-                ${isToday(currentDate) ? 'bg-[#70B1C4] text-white' : 'bg-[#F5F9FA] text-[#2D3748]'}`}>
+                ${isToday(currentDate) ? 'bg-[#70B1C4] text-white' : 'bg-[#F5F9FA] dark:bg-[#1A3A5C]/50 text-[#2D3748] dark:text-[#E2EDF5]'}`}>
                 {format(currentDate, 'd')}
               </div>
               <div>
-                <p className="text-sm font-semibold text-[#2D3748] capitalize">
+                <p className="text-sm font-semibold text-[#2D3748] dark:text-[#E2EDF5] capitalize">
                   {format(currentDate, 'EEEE', { locale: fr })}
                 </p>
-                <p className="text-xs text-gray-400 capitalize">
+                <p className="text-xs text-gray-400 dark:text-[#6A8E9F] capitalize">
                   {format(currentDate, 'MMMM yyyy', { locale: fr })}
                 </p>
               </div>
               <div className="ml-auto">
-                <span className="text-xs bg-[#DCEEF3] text-[#70B1C4] px-2.5 py-1 rounded-full font-medium">
+                <span className="text-xs bg-[#DCEEF3] dark:bg-[#1A3A5C] text-[#70B1C4] dark:text-[#70B1C4] px-2.5 py-1 rounded-full font-medium">
                   {(eventsByDay[format(currentDate, 'yyyy-MM-dd')] || []).length} rendez-vous
                 </span>
               </div>
             </div>
-            {/* Time grid */}
             <div className="overflow-y-auto flex-1">
               {HOURS.map((hour) => {
                 const appts = getApptForDayHour(currentDate, hour)
                 return (
-                  <div key={hour} className="flex border-b border-gray-50" style={{ minHeight: '68px' }}>
-                    <div className="w-16 px-3 pt-2 text-xs text-gray-400 text-right shrink-0 border-r border-0">
+                  <div key={hour} className="flex border-b border-gray-50 dark:border-[#1A3A5C]/20" style={{ minHeight: '68px' }}>
+                    <div className="w-16 px-3 pt-2 text-xs text-gray-400 dark:text-[#6A8E9F] text-right shrink-0 border-r border-gray-50 dark:border-[#1A3A5C]/20">
                       {hour}:00
                     </div>
                     <div className="flex-1 p-2 space-y-1.5">
@@ -300,15 +296,15 @@ export default function CalendrierPage() {
         )}
 
         {/* Legend card */}
-        <div className="bg-white rounded-2xl glow px-5 py-3 flex items-center gap-6 self-start">
-          <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Légende</span>
+        <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow px-5 py-3 flex items-center gap-6 self-start transition-colors duration-300">
+          <span className="text-[11px] font-bold text-gray-400 dark:text-[#6A8E9F] uppercase tracking-widest">Légende</span>
           {[
             { label: 'Programmé', color: 'bg-blue-400' },
             { label: 'Confirmé',  color: 'bg-green-400' },
             { label: 'Complété',  color: 'bg-gray-300' },
             { label: 'Annulé',    color: 'bg-red-400' },
           ].map(({ label, color }) => (
-            <span key={label} className="flex items-center gap-2 text-xs text-gray-600 font-medium">
+            <span key={label} className="flex items-center gap-2 text-xs text-gray-600 dark:text-[#A0BDCC] font-medium">
               <span className={`w-2.5 h-2.5 rounded-full ${color} shrink-0`} />
               {label}
             </span>
