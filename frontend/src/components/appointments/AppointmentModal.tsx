@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Loader2, Search, CheckCircle2, X } from 'lucide-react'
+import { Loader2, Search, CheckCircle2, X, User, Calendar, ClipboardList } from 'lucide-react'
 import type { Appointment } from '@/store/appointmentsStore'
 import type { Patient } from '@/store/patientsStore'
 import { usePatients } from '@/hooks/usePatients'
@@ -41,6 +41,9 @@ interface Props {
   onClose: () => void
   appointment?: Appointment | null
 }
+
+const inputCls = 'border border-[#DCEEF3] dark:border-[#1C3F62]/60 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F] focus-visible:ring-[#70B1C4]'
+const labelCls = 'text-xs text-gray-500 dark:text-[#7AAABB]'
 
 export function AppointmentModal({ open, onClose, appointment }: Props) {
   const { data: patients = [] } = usePatients()
@@ -121,7 +124,6 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
   async function onSubmit(data: FormData) {
     let pid = patientId
 
-    // If no existing patient selected, create one automatically
     if (!pid) {
       try {
         const res = await patientsApi.create({
@@ -169,196 +171,184 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg">
-        <DialogHeader>
-          <DialogTitle className="text-[#2D3748]">
-            {isEdit ? 'Modifier le rendez-vous' : 'Nouveau rendez-vous'}
-          </DialogTitle>
+      <DialogContent className="max-w-lg dark:bg-[#0D2038] dark:border-[#1C3F62]/60 dark:[box-shadow:0_0_0_1px_rgba(112,177,196,0.18),0_24px_80px_rgba(0,0,0,0.75),inset_0_0_60px_rgba(61,143,168,0.04)]">
+        <DialogHeader className="pb-1">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#3d8fa8] to-[#70B1C4] flex items-center justify-center shrink-0 shadow-md shadow-[#70B1C4]/30">
+              <Calendar size={14} className="text-white" />
+            </div>
+            <DialogTitle className="text-[#2D3748] dark:text-[#EDF8FF]">
+              {isEdit ? 'Modifier le rendez-vous' : 'Nouveau rendez-vous'}
+            </DialogTitle>
+          </div>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
 
-          {/* Patient search */}
-          <div className="space-y-2">
-            <Label className="text-sm font-medium text-[#2D3748]">Patient</Label>
+          {/* ── Patient section ── */}
+          <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <User size={13} className="text-[#70B1C4]" />
+              <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Patient</span>
+            </div>
 
             {linkedPatient ? (
-              <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg px-3 py-2.5">
+              <div className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700/40 rounded-lg px-3 py-2.5">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 size={15} className="text-green-500 shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-green-800">
+                    <p className="text-sm font-medium text-green-800 dark:text-green-300">
                       {linkedPatient.prenom} {linkedPatient.nom}
                     </p>
-                    <p className="text-xs text-green-600">{linkedPatient.telephone}</p>
+                    <p className="text-xs text-green-600 dark:text-green-400">{linkedPatient.telephone}</p>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  onClick={handleClearPatient}
-                  className="text-green-400 hover:text-green-600 p-1 rounded"
-                >
+                <button type="button" onClick={handleClearPatient} className="text-green-400 hover:text-green-600 p-1 rounded">
                   <X size={14} />
                 </button>
               </div>
             ) : (
               <div>
                 <div className="relative">
-                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#7AAABB] pointer-events-none" />
                   <Input
                     value={searchQuery}
-                    onChange={(e) => {
-                      setSearchQuery(e.target.value)
-                      setShowDropdown(true)
-                    }}
+                    onChange={(e) => { setSearchQuery(e.target.value); setShowDropdown(true) }}
                     onFocus={() => setShowDropdown(true)}
                     onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
                     placeholder="Rechercher un patient existant..."
-                    className="pl-9 border-[#DCEEF3]"
+                    className={`pl-9 ${inputCls}`}
                   />
                 </div>
-                {/* Suggestions rendered inline — avoids dialog stacking-context clipping */}
+                {/* Inline dropdown — avoids dialog stacking-context clipping */}
                 {showDropdown && suggestions.length > 0 && (
-                  <div className="mt-1 bg-white border border-[#DCEEF3] rounded-lg shadow-sm overflow-hidden">
+                  <div className="mt-1 bg-white dark:bg-[#102844] border border-[#DCEEF3] dark:border-[#1C3F62]/60 rounded-lg shadow-sm dark:shadow-black/40 overflow-hidden">
                     {suggestions.map((p) => (
                       <button
                         key={p.id}
                         type="button"
                         onMouseDown={() => handleSelectPatient(p)}
-                        className="w-full text-left px-4 py-2.5 hover:bg-[#F5F9FA] flex items-center justify-between border-b border-[#F5F9FA] last:border-0 transition-colors"
+                        className="w-full text-left px-4 py-2.5 hover:bg-[#F5F9FA] dark:hover:bg-[#1C3F62]/50 flex items-center justify-between border-b border-[#F5F9FA] dark:border-[#1C3F62]/30 last:border-0 transition-colors"
                       >
                         <div className="flex items-center gap-2.5">
-                          <div className="w-7 h-7 rounded-full bg-[#E4EEF4] flex items-center justify-center shrink-0">
-                            <span className="text-[10px] font-bold text-[#70B1C4]">
-                              {p.prenom[0]}{p.nom[0]}
-                            </span>
+                          <div className="w-7 h-7 rounded-full bg-[#E4EEF4] dark:bg-[#1C3F62] flex items-center justify-center shrink-0">
+                            <span className="text-[10px] font-bold text-[#70B1C4]">{p.prenom[0]}{p.nom[0]}</span>
                           </div>
-                          <span className="text-sm font-medium text-[#2D3748]">
-                            {p.prenom} {p.nom}
-                          </span>
+                          <span className="text-sm font-medium text-[#2D3748] dark:text-[#EDF8FF]">{p.prenom} {p.nom}</span>
                         </div>
-                        <span className="text-xs text-gray-400">{p.telephone}</span>
+                        <span className="text-xs text-gray-400 dark:text-[#7AAABB]">{p.telephone}</span>
                       </button>
                     ))}
                   </div>
                 )}
                 {showDropdown && searchQuery.length >= 2 && suggestions.length === 0 && (
-                  <p className="mt-1 text-xs text-gray-400 px-1">Aucun patient trouvé — saisissez manuellement ci-dessous.</p>
+                  <p className="mt-1 text-xs text-gray-400 dark:text-[#7AAABB] px-1">Aucun patient trouvé — saisissez manuellement ci-dessous.</p>
                 )}
               </div>
             )}
 
-            {/* Divider */}
-            <div className="flex items-center gap-3 py-1">
-              <div className="flex-1 h-px bg-[#DCEEF3]" />
-              <span className="text-xs text-gray-400">ou saisir manuellement</span>
-              <div className="flex-1 h-px bg-[#DCEEF3]" />
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-[#DCEEF3] dark:bg-[#1C3F62]/40" />
+              <span className="text-xs text-gray-400 dark:text-[#7AAABB]">ou saisir manuellement</span>
+              <div className="flex-1 h-px bg-[#DCEEF3] dark:bg-[#1C3F62]/40" />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1">
-                <Label className="text-xs text-gray-500">Prénom *</Label>
-                <Input
-                  {...register('patient_prenom')}
-                  className="border-[#DCEEF3]"
-                  placeholder="Prénom"
-                />
+                <Label className={labelCls}>Prénom *</Label>
+                <Input {...register('patient_prenom')} className={inputCls} placeholder="Prénom" />
                 {errors.patient_prenom && <p className="text-red-500 text-xs">{errors.patient_prenom.message}</p>}
               </div>
               <div className="space-y-1">
-                <Label className="text-xs text-gray-500">Nom *</Label>
-                <Input
-                  {...register('patient_nom')}
-                  className="border-[#DCEEF3]"
-                  placeholder="Nom"
-                />
+                <Label className={labelCls}>Nom *</Label>
+                <Input {...register('patient_nom')} className={inputCls} placeholder="Nom" />
                 {errors.patient_nom && <p className="text-red-500 text-xs">{errors.patient_nom.message}</p>}
               </div>
             </div>
 
             <div className="space-y-1">
-              <Label className="text-xs text-gray-500">Téléphone</Label>
-              <Input
-                {...register('patient_telephone')}
-                className="border-[#DCEEF3]"
-                placeholder="Numéro de téléphone"
+              <Label className={labelCls}>Téléphone</Label>
+              <Input {...register('patient_telephone')} className={inputCls} placeholder="Numéro de téléphone" />
+            </div>
+          </div>
+
+          {/* ── Date / Heure / Durée / Statut ── */}
+          <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <Calendar size={13} className="text-[#70B1C4]" />
+              <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Date & heure</span>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label className={labelCls}>Date *</Label>
+                <Input {...register('date')} type="date" className={inputCls} />
+                {errors.date && <p className="text-red-500 text-xs">{errors.date.message}</p>}
+              </div>
+              <div className="space-y-1">
+                <Label className={labelCls}>Heure *</Label>
+                <Input {...register('heure')} type="time" className={inputCls} />
+                {errors.heure && <p className="text-red-500 text-xs">{errors.heure.message}</p>}
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label className={labelCls}>Durée (minutes)</Label>
+                <Select value={watch('duree') ?? '30'} onValueChange={(v) => { if (v) setValue('duree', v) }}>
+                  <SelectTrigger className={`${inputCls} h-9`}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="15">15 min</SelectItem>
+                    <SelectItem value="30">30 min</SelectItem>
+                    <SelectItem value="45">45 min</SelectItem>
+                    <SelectItem value="60">60 min</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1">
+                <Label className={labelCls}>Statut</Label>
+                <Select value={watch('statut') ?? 'programme'} onValueChange={(v) => { if (v) setValue('statut', v as FormData['statut']) }}>
+                  <SelectTrigger className={`${inputCls} h-9`}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="programme">Programmé</SelectItem>
+                    <SelectItem value="confirme">Confirmé</SelectItem>
+                    <SelectItem value="complete">Complété</SelectItem>
+                    <SelectItem value="annule">Annulé</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Motif & Notes ── */}
+          <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <ClipboardList size={13} className="text-[#70B1C4]" />
+              <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Motif & notes</span>
+            </div>
+            <div className="space-y-1">
+              <Label className={labelCls}>Motif *</Label>
+              <Input {...register('motif')} className={inputCls} placeholder="Bilan visuel, contrôle glaucome..." />
+              {errors.motif && <p className="text-red-500 text-xs">{errors.motif.message}</p>}
+            </div>
+            <div className="space-y-1">
+              <Label className={labelCls}>Notes</Label>
+              <textarea
+                {...register('notes')}
+                rows={2}
+                className="w-full rounded-md border border-[#DCEEF3] dark:border-[#1C3F62]/60 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#70B1C4] resize-none bg-white dark:bg-[#06101E] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F]"
+                placeholder="Instructions particulières..."
               />
             </div>
           </div>
 
-          {/* Date / Heure */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-1">
-              <Label>Date *</Label>
-              <Input {...register('date')} type="date" className="border-[#DCEEF3]" />
-              {errors.date && <p className="text-red-500 text-xs">{errors.date.message}</p>}
-            </div>
-            <div className="space-y-1">
-              <Label>Heure *</Label>
-              <Input {...register('heure')} type="time" className="border-[#DCEEF3]" />
-              {errors.heure && <p className="text-red-500 text-xs">{errors.heure.message}</p>}
-            </div>
-          </div>
-
-          {/* Durée / Statut */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-1">
-              <Label>Durée (minutes)</Label>
-              <Select value={watch('duree') ?? '30'} onValueChange={(v) => { if (v) setValue('duree', v) }}>
-                <SelectTrigger className="border-[#DCEEF3]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="15">15 min</SelectItem>
-                  <SelectItem value="30">30 min</SelectItem>
-                  <SelectItem value="45">45 min</SelectItem>
-                  <SelectItem value="60">60 min</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-1">
-              <Label>Statut</Label>
-              <Select value={watch('statut') ?? 'programme'} onValueChange={(v) => { if (v) setValue('statut', v as FormData['statut']) }}>
-                <SelectTrigger className="border-[#DCEEF3]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="programme">Programmé</SelectItem>
-                  <SelectItem value="confirme">Confirmé</SelectItem>
-                  <SelectItem value="complete">Complété</SelectItem>
-                  <SelectItem value="annule">Annulé</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {/* Motif */}
-          <div className="space-y-1">
-            <Label>Motif *</Label>
-            <Input
-              {...register('motif')}
-              className="border-[#DCEEF3]"
-              placeholder="Bilan visuel, contrôle glaucome..."
-            />
-            {errors.motif && <p className="text-red-500 text-xs">{errors.motif.message}</p>}
-          </div>
-
-          {/* Notes */}
-          <div className="space-y-1">
-            <Label>Notes</Label>
-            <textarea
-              {...register('notes')}
-              rows={2}
-              className="w-full rounded-md border border-[#DCEEF3] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#70B1C4] resize-none"
-              placeholder="Instructions particulières..."
-            />
-          </div>
-
           <DialogFooter className="gap-2">
-            <Button type="button" variant="outline" onClick={onClose} className="border-[#DCEEF3]">
+            <Button type="button" variant="outline" onClick={onClose} className="border-[#DCEEF3] dark:border-[#1C3F62]/60 dark:text-[#EDF8FF] dark:hover:bg-[#1C3F62]/30">
               Annuler
             </Button>
-            <Button type="submit" disabled={createAppointment.isPending || updateAppointment.isPending} className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white">
+            <Button type="submit" disabled={createAppointment.isPending || updateAppointment.isPending} className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white btn-neon">
               {(createAppointment.isPending || updateAppointment.isPending) && <Loader2 size={14} className="animate-spin mr-2" />}
               {isEdit ? 'Enregistrer' : 'Créer le RDV'}
             </Button>
