@@ -81,7 +81,7 @@ export default function PatientsPage() {
               placeholder="Rechercher par nom ou téléphone..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 border-0 dark:bg-[#102844] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F]"
+              className="pl-9 border border-gray-200 dark:border-[#1C3F62]/60 rounded-xl bg-white dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB] h-10"
             />
           </div>
           <Button
