@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         style={{
           top: '-80px', right: '-60px',
           width: '700px', height: '600px',
-          background: 'radial-gradient(ellipse at center, rgba(61,143,168,0.32) 0%, rgba(61,143,168,0.10) 35%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(61,143,168,0.20) 0%, rgba(61,143,168,0.06) 40%, transparent 70%)',
           zIndex: 0,
         }}
       />
