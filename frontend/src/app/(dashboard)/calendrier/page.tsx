@@ -84,7 +84,7 @@ export default function CalendrierPage() {
       <div className="p-6 flex flex-col gap-4 flex-1">
 
         {/* ── Toolbar card ── */}
-        <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-colors duration-300">
+        <div className="bg-white dark:bg-[#102844] rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-colors duration-300">
           {/* Left: navigation */}
           <div className="flex items-center gap-1">
             <button
@@ -138,7 +138,7 @@ export default function CalendrierPage() {
 
         {/* ══════════════ MONTH VIEW ══════════════ */}
         {view === 'mois' && (
-          <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow overflow-hidden transition-colors duration-300">
+          <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden transition-colors duration-300">
             <div className="grid grid-cols-7 border-b border-gray-100 dark:border-[#1A3A5C]/40">
               {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day) => (
                 <div key={day} className="py-3 text-center text-xs font-semibold text-gray-500 dark:text-[#6A8E9F] uppercase tracking-wide">
@@ -188,7 +188,7 @@ export default function CalendrierPage() {
 
         {/* ══════════════ WEEK VIEW ══════════════ */}
         {view === 'semaine' && (
-          <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow overflow-hidden flex flex-col flex-1 transition-colors duration-300">
+          <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden flex flex-col flex-1 transition-colors duration-300">
             <div className="grid border-b border-gray-100 dark:border-[#1A3A5C]/40" style={{ gridTemplateColumns: '56px repeat(7, 1fr)' }}>
               <div />
               {weekDays.map((day, i) => {
@@ -244,7 +244,7 @@ export default function CalendrierPage() {
 
         {/* ══════════════ DAY VIEW ══════════════ */}
         {view === 'jour' && (
-          <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow overflow-hidden flex flex-col flex-1 transition-colors duration-300">
+          <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden flex flex-col flex-1 transition-colors duration-300">
             <div className="border-b border-gray-100 dark:border-[#1A3A5C]/40 px-6 py-3 flex items-center gap-3">
               <div className={`w-11 h-11 rounded-full flex items-center justify-center text-lg font-bold shrink-0
                 ${isToday(currentDate) ? 'bg-[#70B1C4] text-white' : 'bg-[#F5F9FA] dark:bg-[#1A3A5C]/50 text-[#2D3748] dark:text-[#E2EDF5]'}`}>
@@ -296,7 +296,7 @@ export default function CalendrierPage() {
         )}
 
         {/* Legend card */}
-        <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow px-5 py-3 flex items-center gap-6 self-start transition-colors duration-300">
+        <div className="bg-white dark:bg-[#102844] rounded-2xl glow px-5 py-3 flex items-center gap-6 self-start transition-colors duration-300">
           <span className="text-[11px] font-bold text-gray-400 dark:text-[#6A8E9F] uppercase tracking-widest">Légende</span>
           {[
             { label: 'Programmé', color: 'bg-blue-400' },
