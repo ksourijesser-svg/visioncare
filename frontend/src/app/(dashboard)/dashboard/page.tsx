@@ -113,7 +113,7 @@ export default function DashboardPage() {
             <CardHeader className="pb-2">
               <CardTitle className="text-[#1A2B3C] dark:text-[#EDF8FF] text-sm font-semibold flex items-center justify-between">
                 <span>Patients du jour</span>
-                <span className="text-xs font-normal text-[#3d8fa8] bg-[#C5D8E6] dark:bg-[#1A3A5C] dark:text-[#70B1C4] px-2 py-0.5 rounded-full font-semibold">{todayRdv.length}</span>
+                <span className="text-xs font-normal text-[#3d8fa8] bg-[#C5D8E6] dark:bg-[#1C3F62] dark:text-[#70B1C4] px-2 py-0.5 rounded-full font-semibold">{todayRdv.length}</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2.5">
