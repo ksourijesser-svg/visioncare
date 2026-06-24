@@ -69,7 +69,7 @@ export default function ProfilPage() {
                   </AvatarFallback>
                 </Avatar>
                 <div className="pb-1">
-                  <h2 className="text-xl font-bold text-[#2D3748] dark:text-[#E2EDF5]">
+                  <h2 className="text-xl font-bold text-[#2D3748] dark:text-[#EDF8FF]">
                     {profile.prenom} {profile.nom}
                   </h2>
                   <div className="flex items-center gap-2 mt-1">
@@ -92,18 +92,18 @@ export default function ProfilPage() {
                 <div className="w-7 h-7 rounded-lg bg-[#DCEEF3] dark:bg-[#1A3A5C] flex items-center justify-center">
                   <User size={14} className="text-[#70B1C4]" />
                 </div>
-                <h3 className="font-semibold text-[#2D3748] dark:text-[#E2EDF5]">Informations personnelles</h3>
+                <h3 className="font-semibold text-[#2D3748] dark:text-[#EDF8FF]">Informations personnelles</h3>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#6A8E9F]">Prénom *</Label>
-                  <Input {...register('prenom')} className="border-0 dark:bg-[#091628] dark:text-[#E2EDF5]" />
+                  <Input {...register('prenom')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" />
                   {errors.prenom && <p className="text-red-500 text-xs">{errors.prenom.message}</p>}
                 </div>
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#6A8E9F]">Nom *</Label>
-                  <Input {...register('nom')} className="border-0 dark:bg-[#091628] dark:text-[#E2EDF5]" />
+                  <Input {...register('nom')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" />
                   {errors.nom && <p className="text-red-500 text-xs">{errors.nom.message}</p>}
                 </div>
               </div>
@@ -113,27 +113,27 @@ export default function ProfilPage() {
                   <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
                     <Mail size={11} /> Email *
                   </Label>
-                  <Input {...register('email')} type="email" className="border-0 dark:bg-[#091628] dark:text-[#E2EDF5]" />
+                  <Input {...register('email')} type="email" className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" />
                   {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
                 </div>
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
                     <Phone size={11} /> Téléphone
                   </Label>
-                  <Input {...register('telephone')} className="border-0 dark:bg-[#091628] dark:text-[#E2EDF5]" placeholder="+33 6 00 00 00 00" />
+                  <Input {...register('telephone')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="+33 6 00 00 00 00" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#6A8E9F]">Spécialité</Label>
-                  <Input {...register('specialite')} className="border-0 dark:bg-[#091628] dark:text-[#E2EDF5]" placeholder="Ophtalmologue" />
+                  <Input {...register('specialite')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="Ophtalmologue" />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
                     <ShieldCheck size={11} /> N° RPPS
                   </Label>
-                  <Input {...register('rpps')} className="border-0 dark:bg-[#091628] dark:text-[#E2EDF5]" placeholder="10 chiffres" />
+                  <Input {...register('rpps')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="10 chiffres" />
                 </div>
               </div>
             </CardContent>
@@ -146,12 +146,12 @@ export default function ProfilPage() {
                 <div className="w-7 h-7 rounded-lg bg-[#DCEEF3] dark:bg-[#1A3A5C] flex items-center justify-center">
                   <Building2 size={14} className="text-[#70B1C4]" />
                 </div>
-                <h3 className="font-semibold text-[#2D3748] dark:text-[#E2EDF5]">Mon cabinet</h3>
+                <h3 className="font-semibold text-[#2D3748] dark:text-[#EDF8FF]">Mon cabinet</h3>
               </div>
 
               <div className="space-y-1">
                 <Label className="text-xs text-gray-500 dark:text-[#6A8E9F]">Nom du cabinet *</Label>
-                <Input {...register('cabinet_nom')} className="border-0 dark:bg-[#091628] dark:text-[#E2EDF5]" placeholder="Cabinet VisionCare" />
+                <Input {...register('cabinet_nom')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="Cabinet VisionCare" />
                 {errors.cabinet_nom && <p className="text-red-500 text-xs">{errors.cabinet_nom.message}</p>}
               </div>
 
@@ -159,7 +159,7 @@ export default function ProfilPage() {
                 <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
                   <MapPin size={11} /> Adresse
                 </Label>
-                <Input {...register('cabinet_adresse')} className="border-0 dark:bg-[#091628] dark:text-[#E2EDF5]" placeholder="12 rue de la Santé, 75014 Paris" />
+                <Input {...register('cabinet_adresse')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="12 rue de la Santé, 75014 Paris" />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -167,13 +167,13 @@ export default function ProfilPage() {
                   <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
                     <Phone size={11} /> Téléphone du cabinet
                   </Label>
-                  <Input {...register('cabinet_telephone')} className="border-0 dark:bg-[#091628] dark:text-[#E2EDF5]" placeholder="01 00 00 00 00" />
+                  <Input {...register('cabinet_telephone')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="01 00 00 00 00" />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
                     <Mail size={11} /> Email du cabinet
                   </Label>
-                  <Input {...register('cabinet_email')} type="email" className="border-0 dark:bg-[#091628] dark:text-[#E2EDF5]" placeholder="contact@cabinet.fr" />
+                  <Input {...register('cabinet_email')} type="email" className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="contact@cabinet.fr" />
                   {errors.cabinet_email && <p className="text-red-500 text-xs">{errors.cabinet_email.message}</p>}
                 </div>
               </div>
@@ -182,7 +182,7 @@ export default function ProfilPage() {
                 <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
                   <Globe size={11} /> Site web <span className="text-gray-300 dark:text-[#1A3A5C]">(optionnel)</span>
                 </Label>
-                <Input {...register('cabinet_site')} className="border-0 dark:bg-[#091628] dark:text-[#E2EDF5]" placeholder="https://www.moncabinet.fr" />
+                <Input {...register('cabinet_site')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="https://www.moncabinet.fr" />
               </div>
             </CardContent>
           </Card>
