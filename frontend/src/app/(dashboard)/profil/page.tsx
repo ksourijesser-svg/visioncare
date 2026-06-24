@@ -77,7 +77,7 @@ export default function ProfilPage() {
                       Médecin
                     </Badge>
                     {profile.specialite && (
-                      <span className="text-xs text-gray-400 dark:text-[#6A8E9F]">{profile.specialite}</span>
+                      <span className="text-xs text-gray-400 dark:text-[#7AAABB]">{profile.specialite}</span>
                     )}
                   </div>
                 </div>
@@ -97,12 +97,12 @@ export default function ProfilPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <Label className="text-xs text-gray-500 dark:text-[#6A8E9F]">Prénom *</Label>
+                  <Label className="text-xs text-gray-500 dark:text-[#7AAABB]">Prénom *</Label>
                   <Input {...register('prenom')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" />
                   {errors.prenom && <p className="text-red-500 text-xs">{errors.prenom.message}</p>}
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs text-gray-500 dark:text-[#6A8E9F]">Nom *</Label>
+                  <Label className="text-xs text-gray-500 dark:text-[#7AAABB]">Nom *</Label>
                   <Input {...register('nom')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" />
                   {errors.nom && <p className="text-red-500 text-xs">{errors.nom.message}</p>}
                 </div>
@@ -110,14 +110,14 @@ export default function ProfilPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
+                  <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
                     <Mail size={11} /> Email *
                   </Label>
                   <Input {...register('email')} type="email" className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" />
                   {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
+                  <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
                     <Phone size={11} /> Téléphone
                   </Label>
                   <Input {...register('telephone')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="+33 6 00 00 00 00" />
@@ -126,11 +126,11 @@ export default function ProfilPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <Label className="text-xs text-gray-500 dark:text-[#6A8E9F]">Spécialité</Label>
+                  <Label className="text-xs text-gray-500 dark:text-[#7AAABB]">Spécialité</Label>
                   <Input {...register('specialite')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="Ophtalmologue" />
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
+                  <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
                     <ShieldCheck size={11} /> N° RPPS
                   </Label>
                   <Input {...register('rpps')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="10 chiffres" />
@@ -150,13 +150,13 @@ export default function ProfilPage() {
               </div>
 
               <div className="space-y-1">
-                <Label className="text-xs text-gray-500 dark:text-[#6A8E9F]">Nom du cabinet *</Label>
+                <Label className="text-xs text-gray-500 dark:text-[#7AAABB]">Nom du cabinet *</Label>
                 <Input {...register('cabinet_nom')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="Cabinet VisionCare" />
                 {errors.cabinet_nom && <p className="text-red-500 text-xs">{errors.cabinet_nom.message}</p>}
               </div>
 
               <div className="space-y-1">
-                <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
+                <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
                   <MapPin size={11} /> Adresse
                 </Label>
                 <Input {...register('cabinet_adresse')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="12 rue de la Santé, 75014 Paris" />
@@ -164,13 +164,13 @@ export default function ProfilPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
+                  <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
                     <Phone size={11} /> Téléphone du cabinet
                   </Label>
                   <Input {...register('cabinet_telephone')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="01 00 00 00 00" />
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
+                  <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
                     <Mail size={11} /> Email du cabinet
                   </Label>
                   <Input {...register('cabinet_email')} type="email" className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="contact@cabinet.fr" />
@@ -179,7 +179,7 @@ export default function ProfilPage() {
               </div>
 
               <div className="space-y-1">
-                <Label className="text-xs text-gray-500 dark:text-[#6A8E9F] flex items-center gap-1">
+                <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
                   <Globe size={11} /> Site web <span className="text-gray-300 dark:text-[#1A3A5C]">(optionnel)</span>
                 </Label>
                 <Input {...register('cabinet_site')} className="border-0 dark:bg-[#091628] dark:text-[#EDF8FF]" placeholder="https://www.moncabinet.fr" />
