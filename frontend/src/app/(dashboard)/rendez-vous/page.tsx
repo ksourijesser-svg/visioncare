@@ -52,7 +52,7 @@ export default function RendezVousPage() {
       <div className="p-6 space-y-4">
 
         {/* ── Toolbar card ── */}
-        <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row gap-3 items-center transition-colors duration-300">
+        <div className="bg-white dark:bg-[#102844] rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row gap-3 items-center transition-colors duration-300">
           <div className="relative flex-1 w-full">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#6A8E9F] pointer-events-none" />
             <Input
@@ -93,12 +93,12 @@ export default function RendezVousPage() {
         {/* ── Row cards ── */}
         <div className="space-y-2.5">
           {isLoading ? (
-            <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#6A8E9F]">
+            <div className="bg-white dark:bg-[#102844] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#6A8E9F]">
               <Loader2 size={32} className="mx-auto mb-3 animate-spin opacity-40" />
               <p className="text-sm">Chargement des rendez-vous...</p>
             </div>
           ) : filtered.length === 0 ? (
-            <div className="bg-white dark:bg-[#0F2035] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#6A8E9F]">
+            <div className="bg-white dark:bg-[#102844] rounded-2xl glow text-center py-14 text-gray-400 dark:text-[#6A8E9F]">
               <User size={40} className="mx-auto mb-3 opacity-20" />
               <p className="font-medium">Aucun rendez-vous trouvé</p>
             </div>
@@ -106,7 +106,7 @@ export default function RendezVousPage() {
             filtered.map((rdv) => {
               const s = STATUS_CONFIG[rdv.statut]
               return (
-                <div key={rdv.id} className={`bg-white dark:bg-[#0F2035] rounded-2xl glow hover:glow-md transition-all duration-200 border-l-4 ${s.border} overflow-hidden`}>
+                <div key={rdv.id} className={`bg-white dark:bg-[#102844] rounded-2xl glow hover:glow-md transition-all duration-200 border-l-4 ${s.border} overflow-hidden`}>
                   <div className="grid grid-cols-1 sm:grid-cols-[1fr_160px_1fr_80px_148px_96px] items-center gap-x-4 gap-y-1 px-5 py-3.5">
                     <div className="flex items-center gap-2.5">
                       <div className={`w-8 h-8 rounded-full ${s.bg} flex items-center justify-center shrink-0`}>
