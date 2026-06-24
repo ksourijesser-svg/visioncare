@@ -105,7 +105,7 @@ export function ConsultationModal({ open, onClose, appointment }: Props) {
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden pt-1">
 
-          <div className="flex-1 overflow-y-auto space-y-3 pr-1">
+          <div className="flex-1 overflow-y-auto space-y-3 pr-1 scrollbar-modal">
           {/* ── Informations patient section ── */}
           <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
             <div className="flex items-center gap-2">
