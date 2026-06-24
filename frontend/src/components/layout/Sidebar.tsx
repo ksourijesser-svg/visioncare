@@ -87,9 +87,9 @@ export function Sidebar() {
       >
         {/* Inner glassmorphism card */}
         <div className="relative h-full flex flex-col rounded-[20px] overflow-hidden
-          bg-white/70 dark:bg-gradient-to-b dark:from-[#16465A]/60 dark:via-[#0C2237]/70 dark:to-[#05101C]/85
+          bg-white/70 dark:bg-[#0A1A2E]/40
           backdrop-blur-2xl
-          border border-white/70 dark:border-white/[0.14]
+          border border-white/70 dark:border-white/[0.10]
           shadow-[0_8px_30px_rgba(80,150,175,0.18)]
           dark:[box-shadow:0_0_0_1px_rgba(112,177,196,0.10),_0_10px_45px_rgba(0,0,0,0.55),_inset_0_1px_0_rgba(255,255,255,0.10)]">
 
