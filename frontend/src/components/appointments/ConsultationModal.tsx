@@ -86,7 +86,7 @@ export function ConsultationModal({ open, onClose, appointment }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-lg dark:bg-[#0D2038] dark:border-[#1C3F62]/60 dark:[box-shadow:0_0_0_1px_rgba(112,177,196,0.18),0_24px_80px_rgba(0,0,0,0.75),inset_0_0_60px_rgba(61,143,168,0.04)]">
+      <DialogContent className="max-w-lg dark:bg-[#0D2038] dark:border-[#1C3F62]/50 dark:[box-shadow:0_0_0_1px_rgba(112,177,196,0.50),_0_0_18px_rgba(61,143,168,0.45),_0_0_55px_rgba(61,143,168,0.28),_0_0_110px_rgba(61,143,168,0.15),_0_20px_50px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.06)]">
         <DialogHeader>
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#3d8fa8] to-[#70B1C4] flex items-center justify-center shrink-0 shadow-md shadow-[#70B1C4]/30">
