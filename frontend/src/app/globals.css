@@ -131,64 +131,92 @@
 }
 
 @layer utilities {
-  /* Teal glow — used on cards and containers */
+  /* Teal glow — light source beneath containers */
   .glow {
     box-shadow:
-      0 4px 24px rgba(80, 150, 175, 0.28),
-      0 1px 4px  rgba(0, 0, 0, 0.10);
+      0 0 0 1px  rgba(112, 177, 196, 0.18),   /* faint teal ring */
+      0 4px 18px rgba(80, 150, 175, 0.22),     /* lift shadow */
+      0 0 55px   rgba(80, 150, 175, 0.14),     /* wide ambient backlight */
+      0 1px 3px  rgba(0, 0, 0, 0.08);
   }
-  /* Stronger glow — hero cards, stat cards on hover */
+  /* Stronger glow — hero cards, stat cards */
   .glow-md {
     box-shadow:
-      0 8px 40px rgba(80, 150, 175, 0.38),
-      0 2px 8px  rgba(0, 0, 0, 0.13);
+      0 0 0 1px  rgba(112, 177, 196, 0.24),
+      0 8px 32px rgba(80, 150, 175, 0.30),
+      0 0 75px   rgba(80, 150, 175, 0.18),
+      0 2px 6px  rgba(0, 0, 0, 0.11);
   }
-  /* Coloured accent glow — matches a specific icon/status colour */
-  .glow-green  { box-shadow: 0 6px 28px rgba(16,  185, 129, 0.32), 0 1px 4px rgba(0,0,0,0.09); }
-  .glow-violet { box-shadow: 0 6px 28px rgba(99,  102, 241, 0.32), 0 1px 4px rgba(0,0,0,0.09); }
-  .glow-red    { box-shadow: 0 6px 28px rgba(239, 68,  68,  0.30), 0 1px 4px rgba(0,0,0,0.09); }
+  /* Coloured accent glow */
+  .glow-green  {
+    box-shadow:
+      0 0 0 1px rgba(16, 185, 129, 0.18),
+      0 6px 24px rgba(16,  185, 129, 0.28),
+      0 0 55px   rgba(16,  185, 129, 0.12),
+      0 1px 3px  rgba(0,0,0,0.08);
+  }
+  .glow-violet {
+    box-shadow:
+      0 0 0 1px rgba(99, 102, 241, 0.18),
+      0 6px 24px rgba(99,  102, 241, 0.28),
+      0 0 55px   rgba(99,  102, 241, 0.12),
+      0 1px 3px  rgba(0,0,0,0.08);
+  }
+  .glow-red {
+    box-shadow:
+      0 0 0 1px rgba(239, 68, 68, 0.16),
+      0 6px 24px rgba(239, 68,  68,  0.26),
+      0 0 55px   rgba(239, 68,  68,  0.10),
+      0 1px 3px  rgba(0,0,0,0.08);
+  }
   /* Sidebar glow */
   .glow-sidebar {
     box-shadow:
-      4px 0 32px rgba(80, 150, 175, 0.22),
+      4px 0 40px rgba(80, 150, 175, 0.26),
       2px 0 8px  rgba(0, 0, 0, 0.10);
   }
 
-  /* Dark mode glow overrides — clear teal ring + elevation shadow */
+  /* Dark mode glow — teal ring + deep shadow + wide teal backlight */
   .dark .glow {
     box-shadow:
-      0 0 0 1px  rgba(112, 177, 196, 0.22),  /* teal ring border */
-      0 6px 28px rgba(0, 0, 0, 0.65),          /* deep elevation shadow */
-      inset 0 1px 0 rgba(255, 255, 255, 0.05); /* subtle inner top highlight */
+      0 0 0 1px  rgba(112, 177, 196, 0.28),    /* visible teal ring */
+      0 8px 32px rgba(0, 0, 0, 0.65),            /* elevation shadow */
+      0 0 60px   rgba(61, 143, 168, 0.18),       /* teal backlight behind card */
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);   /* inner top highlight */
   }
   .dark .glow-md {
     box-shadow:
-      0 0 0 1px  rgba(112, 177, 196, 0.30),
+      0 0 0 1px  rgba(112, 177, 196, 0.36),
       0 12px 48px rgba(0, 0, 0, 0.75),
-      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      0 0 80px   rgba(61, 143, 168, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
   }
-  .dark .glow-green  {
+  .dark .glow-green {
     box-shadow:
-      0 0 0 1px rgba(16, 185, 129, 0.25),
+      0 0 0 1px rgba(16, 185, 129, 0.28),
       0 6px 28px rgba(0, 0, 0, 0.60),
-      inset 0 1px 0 rgba(255,255,255,0.04);
+      0 0 60px   rgba(16, 185, 129, 0.18),
+      inset 0 1px 0 rgba(255,255,255,0.05);
   }
   .dark .glow-violet {
     box-shadow:
-      0 0 0 1px rgba(99, 102, 241, 0.25),
+      0 0 0 1px rgba(99, 102, 241, 0.28),
       0 6px 28px rgba(0, 0, 0, 0.60),
-      inset 0 1px 0 rgba(255,255,255,0.04);
+      0 0 60px   rgba(99, 102, 241, 0.18),
+      inset 0 1px 0 rgba(255,255,255,0.05);
   }
   .dark .glow-red {
     box-shadow:
-      0 0 0 1px rgba(239, 68, 68, 0.22),
+      0 0 0 1px rgba(239, 68, 68, 0.25),
       0 6px 28px rgba(0, 0, 0, 0.60),
+      0 0 60px   rgba(239, 68, 68, 0.15),
       inset 0 1px 0 rgba(255,255,255,0.04);
   }
   .dark .glow-sidebar {
     box-shadow:
-      1px 0 0 rgba(112, 177, 196, 0.12),
-      4px 0 32px rgba(0, 0, 0, 0.50);
+      1px 0 0 rgba(112, 177, 196, 0.15),
+      4px 0 40px rgba(61, 143, 168, 0.18),
+      6px 0 60px rgba(0, 0, 0, 0.55);
   }
 
   /* Neon button hover effects */
