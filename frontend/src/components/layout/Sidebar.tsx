@@ -151,7 +151,7 @@ export function Sidebar() {
           </div>
 
           {/* Divider */}
-          <div className="mx-4 h-px bg-white/[0.07]" />
+          <div className="mx-4 h-px bg-black/[0.06] dark:bg-white/[0.07]" />
 
           {/* ── Bottom ── */}
           <div className="pt-2 pb-3">
