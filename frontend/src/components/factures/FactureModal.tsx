@@ -42,12 +42,15 @@ export function FactureModal({ open, onClose, facture }: Props) {
   const [lignes, setLignes] = useState<LigneFacture[]>([{ ...emptyLine }])
   const [notes, setNotes] = useState('')
 
-  useEffect(() => {
-    if (!open) return
+  // Initialise form when the dialog opens / target facture changes — render-phase
+  // reset (React's "adjust state during render" pattern) instead of an effect.
+  const [initKey, setInitKey] = useState('')
+  const currentKey = open ? (facture ? `edit-${facture.id}` : 'new') : ''
+  if (currentKey && currentKey !== initKey) {
+    setInitKey(currentKey)
     if (facture) {
       setPatientId(facture.patient_id)
-      const existing = patients.find((p) => p.id === facture.patient_id)
-      setLinkedPatient(existing ?? null)
+      setLinkedPatient({ id: facture.patient_id, prenom: facture.patient_prenom, nom: facture.patient_nom, telephone: '' } as Patient)
       setSearchQuery(`${facture.patient_prenom} ${facture.patient_nom}`)
       setDateEmission(facture.date_emission || todayISO())
       setDateEcheance(facture.date_echeance || '')
@@ -63,7 +66,7 @@ export function FactureModal({ open, onClose, facture }: Props) {
       setNotes('')
     }
     setShowDropdown(false)
-  }, [open, facture, patients])
+  }
 
   const suggestions = searchQuery.length >= 2 && !linkedPatient
     ? patients.filter((p) => {
