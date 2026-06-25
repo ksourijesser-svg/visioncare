@@ -68,6 +68,28 @@ export const dashboardApi = {
   stats: () => api.get('/dashboard/stats'),
 }
 
+export const facturesApi = {
+  list: (params?: { statut?: string; patient_id?: number }) =>
+    api.get('/factures', { params }),
+  get: (id: number) => api.get(`/factures/${id}`),
+  create: (data: unknown) => api.post('/factures', data),
+  update: (id: number, data: unknown) => api.put(`/factures/${id}`, data),
+  delete: (id: number) => api.delete(`/factures/${id}`),
+  pay: (id: number, data: { montant: number; methode_paiement: string; date_paiement?: string }) =>
+    api.post(`/factures/${id}/paiement`, data),
+}
+
+export const salleAttenteApi = {
+  list: () => api.get('/salle-attente'),
+  updateStatut: (id: number, salle_statut: string | null) =>
+    api.patch(`/salle-attente/${id}`, { salle_statut }),
+}
+
+export const rapportsApi = {
+  get: (periode: 'mois' | 'trimestre' | 'annee') =>
+    api.get('/rapports', { params: { periode } }),
+}
+
 export const publicApi = {
   searchDoctors: (q: string) => api.get('/public/doctors/search', { params: { q } }),
   createRdv: (data: {
