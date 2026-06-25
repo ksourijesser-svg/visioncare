@@ -26,12 +26,15 @@ export function PaymentModal({ open, onClose, facture }: Props) {
   const [montant, setMontant] = useState('')
   const [methode, setMethode] = useState<PaymentMethod>('carte')
 
-  useEffect(() => {
-    if (open && facture) {
-      setMontant(reste.toFixed(2))
-      setMethode('carte')
-    }
-  }, [open, facture, reste])
+  // Render-phase init when the dialog opens for a facture (no effect → satisfies
+  // react-hooks/set-state-in-effect).
+  const [initId, setInitId] = useState<number | null>(null)
+  if (open && facture && facture.id !== initId) {
+    setInitId(facture.id)
+    setMontant(reste.toFixed(2))
+    setMethode('carte')
+  }
+  if (!open && initId !== null) setInitId(null)
 
   function submit() {
     if (!facture) return
