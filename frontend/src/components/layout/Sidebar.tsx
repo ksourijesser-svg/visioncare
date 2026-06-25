@@ -11,10 +11,13 @@ import { cn } from '@/lib/utils'
 import { removeToken, getUser } from '@/lib/auth'
 
 const navItems = [
-  { href: '/dashboard',   label: 'Tableau de bord', icon: LayoutDashboard },
-  { href: '/calendrier',  label: 'Calendrier',       icon: Calendar },
-  { href: '/rendez-vous', label: 'Rendez-vous',      icon: ClipboardList },
-  { href: '/patients',    label: 'Patients',         icon: Users },
+  { href: '/dashboard',     label: 'Tableau de bord', icon: LayoutDashboard },
+  { href: '/calendrier',    label: 'Calendrier',       icon: Calendar },
+  { href: '/rendez-vous',   label: 'Rendez-vous',      icon: ClipboardList },
+  { href: '/salle-attente', label: "Salle d'attente",  icon: Armchair },
+  { href: '/patients',      label: 'Patients',         icon: Users },
+  { href: '/facturation',   label: 'Facturation',      icon: Receipt },
+  { href: '/rapports',      label: 'Rapports',         icon: BarChart3 },
 ]
 
 const TIPS = [
