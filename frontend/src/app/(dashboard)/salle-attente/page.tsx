@@ -73,7 +73,7 @@ export default function SalleAttentePage() {
               <span className="text-xs text-gray-400 dark:text-[#7AAABB]">{c.title}</span>
             </div>
           ))}
-          <span className="ml-auto text-[11px] text-gray-300 dark:text-[#456], flex items-center gap-1 text-gray-400">
+          <span className="ml-auto flex items-center gap-1 text-[11px] text-gray-400 dark:text-[#7AAABB]">
             <Loader2 size={11} className={update.isPending ? 'animate-spin' : 'hidden'} /> Actualisation auto · 30s
           </span>
         </div>
