@@ -26,6 +26,10 @@ class Appointment(Base):
     diagnostic = Column(Text, nullable=True)
     traitement = Column(Text, nullable=True)
 
+    # Salle d'attente — null = pas encore arrivé. attente | en_consultation | termine
+    salle_statut = Column(String, nullable=True)
+    heure_arrivee = Column(DateTime(timezone=True), nullable=True)
+
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
