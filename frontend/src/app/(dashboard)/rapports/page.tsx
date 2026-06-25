@@ -95,7 +95,7 @@ export default function RapportsPage() {
                     <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
                     <XAxis dataKey="mois" tick={{ fontSize: 12, fill: axisColor }} axisLine={false} tickLine={false} />
                     <YAxis tick={{ fontSize: 12, fill: axisColor }} axisLine={false} tickLine={false} />
-                    <Tooltip contentStyle={tooltipStyle} cursor={{ fill: cursorFill }} formatter={(v: number) => eur(v)} />
+                    <Tooltip contentStyle={tooltipStyle} cursor={{ fill: cursorFill }} formatter={(v) => eur(Number(v))} />
                     <Legend wrapperStyle={{ fontSize: 12 }} />
                     <Bar dataKey="facture" name="Facturé" fill="#70B1C4" radius={[6, 6, 0, 0]} barSize={18} />
                     <Bar dataKey="encaisse" name="Encaissé" fill="#34d399" radius={[6, 6, 0, 0]} barSize={18} />
