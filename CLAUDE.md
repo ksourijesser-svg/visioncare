@@ -189,7 +189,8 @@ Do **not** use `absolute` positioning inside a `@base-ui/react` Dialog — stack
 ### UI Design System
 
 **Login page**: dark medical tech theme — navy gradient `#020B18→#051E36`, SVG hex grid (2 layers), ECG lines top-left + bottom-right, glassmorphism card with cyan neon border glow.
-**Dashboard**: background `#C5D8E6`, cards white `shadow-sm rounded-2xl`. Active nav `bg-[#3d8fa8] text-white`, inactive `text-gray-600`.
+**Dashboard**: background `#C5D8E6`, cards white `shadow-sm rounded-2xl`.
+**Sidebar** (`layout/Sidebar.tsx`): two-layer glassmorphism — transparent `<aside>` shell (`w-64 p-3`, keeps the `md:pl-64` layout footprint) wrapping an inner floating card (`rounded-[20px] backdrop-blur-2xl`). Light mode: `bg-white/70`, dark text, teal active state (`bg-[#3d8fa8]/14 text-[#15324a]`). Dark mode: translucent `bg-[#0A1A2E]/40` (glass — background shows through), active `bg-white/[0.10] text-white`. Nav items `rounded-xl mx-2`. Decorative cyan corner glow + diagonal sheen are **dark-mode only** (`hidden dark:block`) and kept very faint so brand text stays readable. Every text/border/bg has an explicit light + `dark:` variant.
 **Landing page**: dark `#060F1E` background + dot-grid overlay + 3 gradient orbs. Navbar glass `bg-[#060F1E]/85 backdrop-blur`.
 **Landing sections**: "Pourquoi choisir VisionCare?" `bg-white` with 3 SVG illustration cards. Fonctionnalités section `bg-[#C5D8E6]`. No Spécialités section (ophthalmology-only).
 **Colors**: primary teal `#70B1C4`, active teal `#3d8fa8`, dark text `#1A2B3C`.
