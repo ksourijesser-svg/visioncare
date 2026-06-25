@@ -11,12 +11,15 @@ def create_tables():
     import app.models.user        # noqa — register models
     import app.models.patient     # noqa
     import app.models.appointment # noqa
+    import app.models.facture     # noqa
     Base.metadata.create_all(bind=engine)
     # Add columns that may be missing on existing tables
     with engine.connect() as conn:
         for stmt in [
             "ALTER TABLE rendez_vous ADD COLUMN IF NOT EXISTS diagnostic TEXT",
             "ALTER TABLE rendez_vous ADD COLUMN IF NOT EXISTS traitement TEXT",
+            "ALTER TABLE rendez_vous ADD COLUMN IF NOT EXISTS salle_statut VARCHAR",
+            "ALTER TABLE rendez_vous ADD COLUMN IF NOT EXISTS heure_arrivee TIMESTAMP WITH TIME ZONE",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS specialisation VARCHAR",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS type_cabinet VARCHAR",
         ]:
