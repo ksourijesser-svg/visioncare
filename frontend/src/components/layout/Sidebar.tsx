@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   LayoutDashboard, Calendar, ClipboardList, Users,
-  LogOut, Eye, Menu, X, UserCircle,
+  LogOut, Eye, Menu, X, UserCircle, Receipt, Armchair, BarChart3,
 } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
