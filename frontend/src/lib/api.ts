@@ -90,6 +90,30 @@ export const rapportsApi = {
     api.get('/rapports', { params: { periode } }),
 }
 
+export const patientFilesApi = {
+  list: (patientId: number) => api.get(`/patients/${patientId}/files`),
+  upload: (patientId: number, file: File) => {
+    const form = new FormData()
+    form.append('file', file)
+    return api.post(`/patients/${patientId}/files`, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+  },
+  download: (patientId: number, fileId: number) =>
+    api.get(`/patients/${patientId}/files/${fileId}`, { responseType: 'blob' }),
+  delete: (patientId: number, fileId: number) =>
+    api.delete(`/patients/${patientId}/files/${fileId}`),
+}
+
+export const operationsApi = {
+  list: (params?: { statut?: string; patient_id?: number }) =>
+    api.get('/operations', { params }),
+  get: (id: number) => api.get(`/operations/${id}`),
+  create: (data: unknown) => api.post('/operations', data),
+  update: (id: number, data: unknown) => api.put(`/operations/${id}`, data),
+  delete: (id: number) => api.delete(`/operations/${id}`),
+}
+
 export const publicApi = {
   searchDoctors: (q: string) => api.get('/public/doctors/search', { params: { q } }),
   createRdv: (data: {
