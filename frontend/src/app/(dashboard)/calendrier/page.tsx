@@ -93,7 +93,7 @@ export default function CalendrierPage() {
             >
               <ChevronLeft size={16} />
             </button>
-            <h2 className="text-base font-bold text-[#1A2B3C] dark:text-[#EDF8FF] capitalize min-w-52 text-center px-1">
+            <h2 className="text-sm sm:text-base font-bold text-[#1A2B3C] dark:text-[#EDF8FF] capitalize min-w-32 sm:min-w-52 text-center px-1">
               {getTitle()}
             </h2>
             <button
