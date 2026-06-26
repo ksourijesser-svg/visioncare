@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import {
   Plus, Search, Filter, Pencil, Trash2, Scissors, Loader2,
-  CalendarClock, CheckCircle2, CalendarRange, Clock, MapPin, Eye, Syringe,
+  CalendarClock, CheckCircle2, CalendarRange, MapPin, Eye, Syringe,
 } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { Button } from '@/components/ui/button'
