@@ -62,9 +62,9 @@ export function PaymentModal({ open, onClose, facture }: Props) {
           <div className="space-y-4">
             <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-3 text-sm space-y-1">
               <div className="flex justify-between"><span className="text-gray-500 dark:text-[#7AAABB]">Facture</span><span className="font-semibold text-[#1A2B3C] dark:text-[#EDF8FF]">{facture.numero}</span></div>
-              <div className="flex justify-between"><span className="text-gray-500 dark:text-[#7AAABB]">Total</span><span className="font-semibold text-[#1A2B3C] dark:text-[#EDF8FF]">{facture.montant_total.toFixed(2)} €</span></div>
-              <div className="flex justify-between"><span className="text-gray-500 dark:text-[#7AAABB]">Déjà payé</span><span className="font-semibold text-emerald-600 dark:text-emerald-400">{facture.montant_paye.toFixed(2)} €</span></div>
-              <div className="flex justify-between border-t border-[#DCEEF3] dark:border-[#1C3F62]/40 pt-1 mt-1"><span className="text-gray-500 dark:text-[#7AAABB]">Reste à payer</span><span className="font-bold text-[#3d8fa8] dark:text-[#70B1C4]">{reste.toFixed(2)} €</span></div>
+              <div className="flex justify-between"><span className="text-gray-500 dark:text-[#7AAABB]">Total</span><span className="font-semibold text-[#1A2B3C] dark:text-[#EDF8FF]">{facture.montant_total.toFixed(2)} TND</span></div>
+              <div className="flex justify-between"><span className="text-gray-500 dark:text-[#7AAABB]">Déjà payé</span><span className="font-semibold text-emerald-600 dark:text-emerald-400">{facture.montant_paye.toFixed(2)} TND</span></div>
+              <div className="flex justify-between border-t border-[#DCEEF3] dark:border-[#1C3F62]/40 pt-1 mt-1"><span className="text-gray-500 dark:text-[#7AAABB]">Reste à payer</span><span className="font-bold text-[#3d8fa8] dark:text-[#70B1C4]">{reste.toFixed(2)} TND</span></div>
             </div>
 
             <div className="space-y-1">
