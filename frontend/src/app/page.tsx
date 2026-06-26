@@ -267,7 +267,7 @@ export default function LandingPage() {
             {/* Soft rim light hugging the eye */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none"
-              style={{ boxShadow: 'inset 0 0 70px rgba(94,200,216,0.25), 0 0 90px rgba(94,200,216,0.18)' }}
+              style={{ boxShadow: 'inset 0 0 80px rgba(94,200,216,0.35), 0 0 120px rgba(94,200,216,0.45), 0 0 60px rgba(180,235,245,0.35)' }}
             />
           </div>
         </div>
