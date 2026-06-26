@@ -88,6 +88,12 @@ def create_public_rdv(data: PublicRdvCreate, db: Session = Depends(get_db)):
     if not doctor:
         raise HTTPException(status_code=404, detail="Médecin introuvable")
 
+    if _slot_conflict(db, data.medecin_id, data.date_heure):
+        raise HTTPException(
+            status_code=409,
+            detail="Temps occupé, voir le calendrier du médecin",
+        )
+
     patient = Patient(
         nom=data.nom,
         prenom=data.prenom,
