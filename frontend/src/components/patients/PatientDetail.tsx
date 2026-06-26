@@ -641,6 +641,9 @@ export function PatientDetail({ patient, open, onClose }: Props) {
         </form>
       </DialogContent>
     </Dialog>
+
+    <OrdonnanceModal open={ordModalOpen} onClose={() => setOrdModalOpen(false)} patient={patient} />
+    </>
   )
 }
 
