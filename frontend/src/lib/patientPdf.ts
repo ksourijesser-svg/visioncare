@@ -119,6 +119,10 @@ export function exportPatientDossierPdf(data: DossierData) {
   .docs { list-style:none; padding:0; margin:0; }
   .docs li { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #eef3f6; font-size:13px; }
   .doc-date { color:#7a8a99; }
+  .gallery { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:12px; }
+  .shot { margin:0; border:1px solid #e3ebf0; border-radius:10px; overflow:hidden; break-inside:avoid; }
+  .shot img { display:block; width:100%; max-height:300px; object-fit:contain; background:#f4f7f9; }
+  .shot figcaption { font-size:11px; color:#7a8a99; padding:7px 10px; border-top:1px solid #eef3f6; }
   .empty { color:#9aa8b4; font-style:italic; font-size:13px; }
   .footer { margin-top:36px; padding-top:14px; border-top:1px solid #eef3f6; font-size:10.5px; color:#9aa8b4; text-align:center; }
   @media print { body { padding:0 8px; } .card, .patient { break-inside: avoid; } }
