@@ -2,13 +2,38 @@ from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, timedelta
 from app.db.base import get_db
 from app.models.user import User, UserRole
 from app.models.patient import Patient
 from app.models.appointment import Appointment, AppointmentStatus
 
 router = APIRouter(prefix="/public", tags=["Public"])
+
+
+def _naive(dt: datetime) -> datetime:
+    """Strip tzinfo so naive (incoming) and aware (DB) datetimes compare cleanly."""
+    return dt.replace(tzinfo=None) if dt.tzinfo is not None else dt
+
+
+def _slot_conflict(db: Session, medecin_id: int, start: datetime, duree: int = 30) -> bool:
+    """True if [start, start+duree) overlaps an existing (non-cancelled) RDV of the doctor."""
+    start = _naive(start)
+    end = start + timedelta(minutes=duree)
+    appts = (
+        db.query(Appointment)
+        .filter(
+            Appointment.medecin_id == medecin_id,
+            Appointment.statut != AppointmentStatus.annule,
+        )
+        .all()
+    )
+    for appt in appts:
+        s = _naive(appt.date_heure)
+        e = s + timedelta(minutes=appt.duree or 30)
+        if start < e and s < end:  # overlap
+            return True
+    return False
 
 
 @router.get("/doctors/search")
