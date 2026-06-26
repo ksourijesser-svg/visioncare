@@ -21,16 +21,6 @@ const navItems = [
   { href: '/rapports',      label: 'Rapports',         icon: BarChart3 },
 ]
 
-const TIPS = [
-  'La vision est au cœur\nde notre mission.',
-  'Chaque patient mérite\nune vision claire.',
-  'La prévention est la\nmeilleure des thérapies.',
-  'Votre expertise fait\nla différence.',
-  'Un œil sain, une vie\npleinement épanouie.',
-  'Excellence et bienveillance,\nchaque jour.',
-  'Prenons soin ensemble\nde votre vue.',
-]
-
 export function Sidebar() {
   const pathname = usePathname()
   const router   = useRouter()
