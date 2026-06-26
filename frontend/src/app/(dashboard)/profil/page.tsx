@@ -56,7 +56,7 @@ export default function ProfilPage() {
       <Header title="Mon profil" />
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="p-6 space-y-6 max-w-3xl">
+        <div className="p-4 sm:p-6 space-y-6 max-w-3xl">
 
           {/* Profile header card */}
           <Card className="border-0 dark:bg-[#102844] overflow-hidden glow">
