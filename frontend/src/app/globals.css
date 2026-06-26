@@ -303,3 +303,9 @@
     background: rgba(112, 177, 196, 0.48);
   }
 }
+
+/* Gentle floating motion for the hero eye visual */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
