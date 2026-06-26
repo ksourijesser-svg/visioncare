@@ -53,7 +53,7 @@ export default function SalleAttentePage() {
   return (
     <div className="flex flex-col flex-1">
       <Header title="Salle d'attente" />
-      <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
 
         {/* Summary strip */}
         <div className="bg-white dark:bg-[#102844] rounded-2xl glow px-5 py-4 flex flex-wrap items-center gap-x-8 gap-y-3">
