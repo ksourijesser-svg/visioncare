@@ -252,8 +252,8 @@ export default function LandingPage() {
                 backgroundImage: 'url(/eye.png)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                WebkitMaskImage: 'radial-gradient(circle, #000 47%, transparent 53%)',
-                maskImage: 'radial-gradient(circle, #000 47%, transparent 53%)',
+                WebkitMaskImage: 'radial-gradient(circle closest-side, #000 92%, transparent 100%)',
+                maskImage: 'radial-gradient(circle closest-side, #000 92%, transparent 100%)',
               }}
             />
 
