@@ -47,6 +47,12 @@ export function PatientDetail({ patient, open, onClose }: Props) {
   const updatePatientMutation       = useUpdatePatient()
   const [isEditing, setIsEditing]   = useState(false)
 
+  const { data: files = [] }  = usePatientFiles(patient?.id ?? null)
+  const uploadFile            = useUploadPatientFile()
+  const deleteFile            = useDeletePatientFile()
+  const fileInputRef          = useRef<HTMLInputElement>(null)
+  const [openingId, setOpeningId] = useState<number | null>(null)
+
   const { register, handleSubmit, reset, formState: { errors, isDirty } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { adresse: '', notes: '', email: '' },
