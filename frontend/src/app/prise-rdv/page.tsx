@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
-import { Loader2, CheckCircle2, Search, ArrowLeft, X } from 'lucide-react'
+import { Loader2, CheckCircle2, Search, ArrowLeft, X, Calendar, Clock } from 'lucide-react'
 import { publicApi } from '@/lib/api'
 
 interface Doctor {
@@ -11,6 +11,11 @@ interface Doctor {
   prenom: string
   cabinet: string | null
   specialisation: string | null
+}
+
+interface BusySlot {
+  date_heure: string
+  duree: number
 }
 
 function Field({ label, error, children, required }: { label: string; error?: string; children: React.ReactNode; required?: boolean }) {
