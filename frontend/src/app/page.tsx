@@ -267,7 +267,7 @@ export default function LandingPage() {
             {/* Soft outer glow only — no hard inset ring */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none blur-2xl"
-              style={{ boxShadow: '0 0 120px rgba(94,200,216,0.4), 0 0 70px rgba(180,235,245,0.3)' }}
+              style={{ boxShadow: '0 0 60px rgba(94,200,216,0.35), 0 0 35px rgba(180,235,245,0.25)' }}
             />
           </div>
         </div>
