@@ -52,6 +52,7 @@ export function PatientDetail({ patient, open, onClose }: Props) {
   const deleteFile            = useDeletePatientFile()
   const fileInputRef          = useRef<HTMLInputElement>(null)
   const [openingId, setOpeningId] = useState<number | null>(null)
+  const [exportingPdf, setExportingPdf] = useState(false)
 
   const { register, handleSubmit, reset, formState: { errors, isDirty } } = useForm<FormData>({
     resolver: zodResolver(schema),
