@@ -184,11 +184,10 @@ export default function LandingPage() {
               Support 7j/7 — Réponse en moins de 2h
             </div>
 
-            <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              Prenez soin de vos{' '}
-              <span className="text-[#70B1C4]">patients</span>
-              {'. '}
-              On s&apos;occupe du reste.
+            <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
+              Moins d&apos;attente, plus de{' '}
+              <span className="text-[#70B1C4]">visibilité</span>, une gestion{' '}
+              <span className="text-[#70B1C4]">intelligente</span> de chaque consultation
             </h1>
 
             <p className="text-lg text-white/60 leading-relaxed mb-10">
