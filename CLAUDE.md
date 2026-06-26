@@ -56,20 +56,38 @@ app/
     patients/           # patient cards (only patients with ≥1 complete RDV)
     rendez-vous/        # appointments table + status update + dossier modal
     calendrier/         # Mois / Semaine / Jour calendar views
+    salle-attente/      # live kanban board (À venir/En attente/En consultation/Terminé), auto-refresh 30s
+    operations/         # surgery scheduling — agenda grouped by day + KPIs
+    facturation/        # invoices: line items, payments, auto-status; KPIs + table
+    rapports/           # analytics — revenue/RDV/patients charts, period selector
     profil/             # doctor profile + cabinet info editor
 
 hooks/
   usePatients.ts        # list, create, update, delete — filtered by medecin_id
   useAppointments.ts    # list, create, update, updateStatus, delete
                         #   transforms date_heure ↔ date+heure strings
+  useFactures.ts        # invoices CRUD + recordPayment
+  useSalleAttente.ts    # waiting-room list (refetch 30s) + updateStatut (invalidates appointments too)
+  useRapports.ts        # reports aggregation (periode: mois|trimestre|annee)
+  useOperations.ts      # surgeries CRUD
+  usePatientFiles.ts    # list/upload/delete + fetchFileObjectUrl / fetchFileDataUrl (blob→url/base64)
+  useOrdonnances.ts     # prescriptions list/create/delete (medicale|lunettes)
 
 components/
-  layout/Sidebar.tsx    # nav + SVG eye widget + rotating tip + logout
+  layout/Sidebar.tsx    # nav + user card + logout (no eye widget — removed)
   layout/Header.tsx     # page title + bell + avatar dropdown
   appointments/AppointmentModal.tsx   # create/edit RDV, auto-creates patient
   appointments/ConsultationModal.tsx  # saves diagnostic/traitement via API
-  patients/PatientDetail.tsx          # slide-over, consultation history
+  patients/PatientDetail.tsx          # slide-over: info, consultations, documents upload, ordonnances, export PDF
+  patients/OrdonnanceModal.tsx        # create ordonnance (médicale meds rows / lunettes OD-OG grid)
+  factures/FactureModal.tsx           # create/edit invoice — patient autocomplete + line items
+  factures/PaymentModal.tsx           # record a payment against an invoice
+  operations/OperationModal.tsx       # schedule/edit a surgery
   dashboard/StatCard.tsx              # KPI card
+
+lib/
+  patientPdf.ts         # client-side dossier PDF via print window (embeds image attachments as base64)
+  ordonnancePdf.ts      # client-side prescription PDF (medicale + lunettes), doctor header from profileStore
 
 store/
   appointmentsStore.ts  # Zustand — type source only (do not use CRUD methods)
