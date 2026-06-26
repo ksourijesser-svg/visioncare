@@ -235,13 +235,20 @@ export default function LandingPage() {
           <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[460px] h-[460px] hidden lg:block">
             {/* Ambient light behind the eye, matching the blue page */}
             <div className="absolute inset-0 -z-10 pointer-events-none">
+              {/* wide outer halo */}
               <div
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[560px] rounded-full blur-[100px]"
-                style={{ background: 'radial-gradient(circle, rgba(94,200,216,0.55) 0%, rgba(61,143,168,0.32) 42%, transparent 72%)' }}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[680px] h-[680px] rounded-full blur-[120px]"
+                style={{ background: 'radial-gradient(circle, rgba(94,200,216,0.75) 0%, rgba(61,143,168,0.45) 40%, transparent 72%)' }}
               />
+              {/* mid glow */}
               <div
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] rounded-full blur-[55px]"
-                style={{ background: 'radial-gradient(circle, rgba(112,177,196,0.50) 0%, transparent 65%)' }}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[460px] h-[460px] rounded-full blur-[70px] animate-[pulse-glow_5s_ease-in-out_infinite]"
+                style={{ background: 'radial-gradient(circle, rgba(112,177,196,0.85) 0%, rgba(94,200,216,0.40) 50%, transparent 70%)' }}
+              />
+              {/* bright core right behind the eye */}
+              <div
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full blur-[40px]"
+                style={{ background: 'radial-gradient(circle, rgba(180,235,245,0.85) 0%, rgba(94,200,216,0.55) 45%, transparent 70%)' }}
               />
             </div>
 
