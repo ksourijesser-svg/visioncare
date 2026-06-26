@@ -15,6 +15,7 @@ const navItems = [
   { href: '/calendrier',    label: 'Calendrier',       icon: Calendar },
   { href: '/rendez-vous',   label: 'Rendez-vous',      icon: ClipboardList },
   { href: '/salle-attente', label: "Salle d'attente",  icon: Armchair },
+  { href: '/operations',    label: 'Opérations',       icon: Scissors },
   { href: '/patients',      label: 'Patients',         icon: Users },
   { href: '/facturation',   label: 'Facturation',      icon: Receipt },
   { href: '/rapports',      label: 'Rapports',         icon: BarChart3 },
