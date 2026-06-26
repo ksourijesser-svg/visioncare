@@ -362,7 +362,7 @@ export default function PriseRdvPage() {
                     <input
                       type="date"
                       value={date}
-                      onChange={e => setDate(e.target.value)}
+                      onChange={e => { setDate(e.target.value); setConflict(false); setError('') }}
                       min={new Date().toISOString().split('T')[0]}
                       className={inputClass(fieldErrors.date)}
                     />
