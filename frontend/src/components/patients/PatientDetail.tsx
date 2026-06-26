@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -12,10 +12,14 @@ import { Label } from '@/components/ui/label'
 import {
   Phone, Mail, MapPin, Calendar, ClipboardList,
   Pencil, X, Save, Hash, Activity, FileText,
+  Paperclip, Upload, Trash2, ImageIcon, FileDown, Loader2, ExternalLink,
 } from 'lucide-react'
 import { Patient } from '@/store/patientsStore'
 import { useUpdatePatient } from '@/hooks/usePatients'
 import { useAppointments } from '@/hooks/useAppointments'
+import { usePatientFiles, useUploadPatientFile, useDeletePatientFile, fetchFileObjectUrl } from '@/hooks/usePatientFiles'
+import { exportPatientDossierPdf } from '@/lib/patientPdf'
+import { getUser } from '@/lib/auth'
 import { differenceInYears, format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { toast } from 'sonner'
