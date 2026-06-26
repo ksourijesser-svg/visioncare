@@ -81,7 +81,7 @@ export default function CalendrierPage() {
   return (
     <div className="flex flex-col flex-1">
       <Header title="Calendrier" />
-      <div className="p-6 flex flex-col gap-4 flex-1">
+      <div className="p-4 sm:p-6 flex flex-col gap-4 flex-1">
 
         {/* ── Toolbar card ── */}
         <div className="bg-white dark:bg-[#102844] rounded-2xl glow px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-colors duration-300">
