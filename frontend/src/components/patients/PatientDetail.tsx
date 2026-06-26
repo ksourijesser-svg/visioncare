@@ -192,12 +192,20 @@ export function PatientDetail({ patient, open, onClose }: Props) {
             <span className="text-white/70 text-xs font-bold uppercase tracking-widest">Dossier patient</span>
             <div className="flex items-center gap-2">
               {!isEditing ? (
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors btn-neon"
-                >
-                  <Pencil size={12} /> Modifier
-                </button>
+                <>
+                  <button
+                    onClick={handleExportPdf}
+                    className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors btn-neon"
+                  >
+                    <FileDown size={12} /> Exporter PDF
+                  </button>
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors btn-neon"
+                  >
+                    <Pencil size={12} /> Modifier
+                  </button>
+                </>
               ) : (
                 <button
                   onClick={handleCancelEdit}
