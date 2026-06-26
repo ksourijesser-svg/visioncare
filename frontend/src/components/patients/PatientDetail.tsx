@@ -504,6 +504,70 @@ export function PatientDetail({ patient, open, onClose }: Props) {
             </div>
           )}
 
+          {/* Ordonnances */}
+          {!isEditing && (
+            <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden">
+              <div className="px-4 pt-4 pb-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Pill size={13} className="text-[#70B1C4]" />
+                  <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Ordonnances</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOrdModalOpen(true)}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#3d8fa8] dark:text-[#70B1C4] hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/50 px-2.5 py-1 rounded-lg transition-colors"
+                >
+                  <Plus size={13} /> Nouvelle
+                </button>
+              </div>
+
+              <div className="px-4 pb-4">
+                {ordonnances.length === 0 ? (
+                  <button
+                    type="button"
+                    onClick={() => setOrdModalOpen(true)}
+                    className="w-full text-center py-6 text-gray-400 dark:text-[#7AAABB] border border-dashed border-gray-200 dark:border-[#1C3F62]/50 rounded-xl hover:border-[#70B1C4] hover:bg-[#F7FAFB] dark:hover:bg-[#0D2038] transition-colors"
+                  >
+                    <Pill size={22} className="mx-auto mb-2 opacity-30" />
+                    <p className="text-xs">Créer une ordonnance médicale ou de lunettes</p>
+                  </button>
+                ) : (
+                  <div className="space-y-2">
+                    {ordonnances.map((o) => {
+                      const isLun = o.type === 'lunettes'
+                      const summary = isLun
+                        ? `OD ${o.verres?.od.sphere || '—'} · OG ${o.verres?.og.sphere || '—'}`
+                        : `${o.medicaments.length} médicament${o.medicaments.length > 1 ? 's' : ''}`
+                      return (
+                        <div key={o.id} className="flex items-center gap-3 rounded-xl border border-gray-100 dark:border-[#1C3F62]/40 bg-[#F7FAFB] dark:bg-[#091628] px-3 py-2.5">
+                          <div className="w-9 h-9 rounded-lg bg-[#E4EEF4] dark:bg-[#1C3F62] flex items-center justify-center shrink-0">
+                            {isLun ? <Glasses size={15} className="text-[#3d8fa8] dark:text-[#70B1C4]" /> : <Pill size={15} className="text-[#3d8fa8] dark:text-[#70B1C4]" />}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-[#1A2B3C] dark:text-[#EDF8FF] truncate leading-tight">
+                              Ordonnance {isLun ? 'de lunettes' : 'médicale'}
+                            </p>
+                            <p className="text-[11px] text-gray-400 dark:text-[#7AAABB]">
+                              {format(new Date(o.date_ordonnance), 'dd MMM yyyy', { locale: fr })} · {summary}
+                            </p>
+                          </div>
+                          <button type="button" onClick={() => printOrdonnance(o)} title="Imprimer / PDF"
+                            className="p-1.5 rounded-lg text-[#70B1C4] hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 transition-colors shrink-0">
+                            <Printer size={14} />
+                          </button>
+                          <button type="button" onClick={() => handleDeleteOrdonnance(o.id)} title="Supprimer"
+                            className="p-1.5 rounded-lg text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors shrink-0">
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Save button (edit mode) */}
           {isEditing && (
             <Button
