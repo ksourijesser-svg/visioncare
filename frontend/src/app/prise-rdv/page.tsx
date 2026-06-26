@@ -378,6 +378,20 @@ export default function PriseRdvPage() {
                     />
                   </Field>
                 </div>
+                <div className="mt-3">
+                  <button
+                    type="button"
+                    onClick={openCalendar}
+                    disabled={!selectedDoctor}
+                    className="inline-flex items-center gap-1.5 text-[#3d8fa8] hover:text-[#2d7a94] disabled:text-gray-400 disabled:cursor-not-allowed font-semibold text-sm transition-colors"
+                  >
+                    <Calendar size={15} />
+                    Voir calendrier
+                  </button>
+                  {!selectedDoctor && (
+                    <p className="text-xs text-gray-400 mt-1">Sélectionnez d&apos;abord un médecin pour voir ses disponibilités.</p>
+                  )}
+                </div>
                 <div className="mt-4">
                   <Field label="Motif (optionnel)">
                     <input value={motif} onChange={e => setMotif(e.target.value)} placeholder="Ex: Contrôle annuel, douleur, consultation..." className={inputClass()} />
