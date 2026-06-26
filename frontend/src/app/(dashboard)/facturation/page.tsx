@@ -20,7 +20,7 @@ const STATUS_CONFIG: Record<FactureStatus, { label: string; text: string; bg: st
   annulee:   { label: 'Annulée',   text: 'text-gray-500 dark:text-gray-400',    bg: 'bg-gray-100 dark:bg-gray-700/30',    border: 'border-gray-300 dark:border-gray-600', dot: 'bg-gray-400' },
 }
 
-const eur = (n: number) => n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'
+const eur = (n: number) => n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' TND'
 
 export default function FacturationPage() {
   const { data: factures = [], isLoading } = useFactures()
