@@ -131,32 +131,6 @@ export function Sidebar() {
             </div>
           </nav>
 
-          {/* ── Eye widget ── */}
-          <div className="px-3 pb-3">
-            <div className="rounded-xl bg-black/[0.03] border border-black/[0.05] dark:bg-white/[0.04] dark:border-white/[0.07] p-3.5 flex flex-col items-center gap-2.5">
-              <svg viewBox="0 0 100 60" className="w-20 h-auto opacity-55" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 30 Q30 6 50 6 Q70 6 90 30 Q70 54 50 54 Q30 54 10 30Z"
-                  stroke="#70B1C4" strokeWidth="1.5" strokeLinejoin="round" fill="#70B1C4" fillOpacity="0.04" />
-                <circle cx="50" cy="30" r="16" stroke="#70B1C4" strokeWidth="1.2" fill="#70B1C4" fillOpacity="0.06" />
-                <circle cx="50" cy="30" r="10" stroke="#70B1C4" strokeWidth="1"  fill="#70B1C4" fillOpacity="0.10" />
-                <circle cx="50" cy="30" r="5.5" fill="#3d8fa8" fillOpacity="0.60" />
-                <circle cx="46" cy="26" r="2"   fill="white"   fillOpacity="0.70" />
-                <circle cx="53" cy="28" r="1"   fill="white"   fillOpacity="0.40" />
-              </svg>
-              <p className="text-center text-[10px] text-gray-500 dark:text-white/30 font-medium leading-relaxed whitespace-pre-line">
-                {tip}
-              </p>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1 h-1 rounded-full bg-[#70B1C4]/22" />
-                <span className="w-4 h-0.5 rounded-full bg-[#70B1C4]/15" />
-                <span className="w-1 h-1 rounded-full bg-[#70B1C4]/22" />
-              </div>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="mx-4 h-px bg-black/[0.06] dark:bg-white/[0.07]" />
-
           {/* ── Bottom ── */}
           <div className="pt-2 pb-3">
             <div className="space-y-0.5">
