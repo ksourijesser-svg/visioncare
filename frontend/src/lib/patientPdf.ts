@@ -68,8 +68,23 @@ export function exportPatientDossierPdf(data: DossierData) {
         </div>`).join('')
     : `<p class="empty">Aucun compte-rendu enregistré.</p>`
 
+  const images = data.documents.filter((d) => !!d.dataUrl)
+  const others = data.documents.filter((d) => !d.dataUrl)
+
+  const imageGallery = images.length
+    ? `<div class="gallery">${images.map((d) => `
+        <figure class="shot">
+          <img src="${d.dataUrl}" alt="${esc(d.filename)}" />
+          <figcaption>${esc(d.filename)} · ${frDate(d.created_at)}</figcaption>
+        </figure>`).join('')}</div>`
+    : ''
+
+  const otherList = others.length
+    ? `<ul class="docs">${others.map((d) => `<li><span class="doc-name">${esc(d.filename)}</span><span class="doc-date">${frDate(d.created_at)}</span></li>`).join('')}</ul>`
+    : ''
+
   const documents = data.documents.length
-    ? `<ul class="docs">${data.documents.map((d) => `<li><span class="doc-name">${esc(d.filename)}</span><span class="doc-date">${frDate(d.created_at)}</span></li>`).join('')}</ul>`
+    ? `${imageGallery}${otherList}`
     : `<p class="empty">Aucun document joint.</p>`
 
   const html = `<!DOCTYPE html>
