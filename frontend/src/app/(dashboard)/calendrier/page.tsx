@@ -240,6 +240,7 @@ export default function CalendrierPage() {
                 </div>
               ))}
             </div>
+            </div>
           </div>
         )}
 
