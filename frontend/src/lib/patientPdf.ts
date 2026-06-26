@@ -23,7 +23,7 @@ export interface DossierData {
   adresse?: string
   notes?: string
   consultations: DossierConsultation[]
-  documents: { filename: string; created_at: string }[]
+  documents: { filename: string; created_at: string; dataUrl?: string | null }[]
   doctorName?: string
 }
 
