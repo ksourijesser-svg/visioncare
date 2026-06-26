@@ -63,7 +63,7 @@ export default function RendezVousPage() {
             />
           </div>
           <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as AppointmentStatus | 'tous')}>
-            <SelectTrigger className="w-48 border border-gray-200 dark:border-[#1C3F62]/60 rounded-xl bg-[#F7FAFB] dark:bg-[#091628] dark:text-[#EDF8FF] h-10 shrink-0">
+            <SelectTrigger className="w-full sm:w-48 border border-gray-200 dark:border-[#1C3F62]/60 rounded-xl bg-[#F7FAFB] dark:bg-[#091628] dark:text-[#EDF8FF] h-10 shrink-0">
               <Filter size={13} className="mr-1.5 text-gray-400 dark:text-[#7AAABB] shrink-0" />
               <SelectValue placeholder="Tous les statuts" />
             </SelectTrigger>
