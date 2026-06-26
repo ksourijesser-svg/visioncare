@@ -17,6 +17,7 @@ def create_tables():
     import app.models.facture     # noqa
     import app.models.patient_file # noqa
     import app.models.operation   # noqa
+    import app.models.ordonnance  # noqa
     Base.metadata.create_all(bind=engine)
     # Add columns that may be missing on existing tables
     with engine.connect() as conn:
