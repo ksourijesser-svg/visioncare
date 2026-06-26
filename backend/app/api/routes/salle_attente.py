@@ -69,8 +69,11 @@ def update_salle_statut(
         raise HTTPException(status_code=400, detail="Statut de salle invalide")
 
     rdv.salle_statut = new
-    if new == "attente" and rdv.heure_arrivee is None:
-        rdv.heure_arrivee = datetime.now()
+    if new == "attente":
+        if rdv.heure_arrivee is None:
+            rdv.heure_arrivee = datetime.now()
+        # L'arrivée du patient en salle d'attente confirme le rendez-vous
+        rdv.statut = AppointmentStatus.confirme
     if new is None:
         rdv.heure_arrivee = None
     if new == "termine":
