@@ -60,7 +60,7 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col flex-1">
       <Header title="Tableau de bord" />
-      <div className="p-6 space-y-6">
+      <div className="p-4 sm:p-6 space-y-6">
 
         {/* Welcome banner */}
         <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#1e6c87] via-[#3d8fa8] to-[#5eacc2] p-6 text-white shadow-lg">
