@@ -114,15 +114,15 @@ export default function LandingPage() {
                   </svg>
                   Prendre RDV
                 </Link>
-                <Link href="/login" className="inline-flex items-center gap-1.5 text-sm font-semibold border border-white/25 hover:border-white/60 text-white/75 hover:text-white px-4 py-2 rounded-full hover:bg-white/8 transition-all duration-200">
+                <Link href="/login" className="inline-flex items-center gap-1.5 text-sm font-semibold border border-white/25 hover:border-white/60 text-white/75 hover:text-white px-3 sm:px-4 py-2 rounded-full hover:bg-white/8 transition-all duration-200">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-3.5 h-3.5">
                     <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" strokeLinecap="round" strokeLinejoin="round"/>
                     <polyline points="10 17 15 12 10 7" strokeLinecap="round" strokeLinejoin="round"/>
                     <line x1="15" y1="12" x2="3" y2="12" strokeLinecap="round"/>
                   </svg>
-                  Se connecter
+                  <span className="hidden sm:inline">Se connecter</span>
                 </Link>
-                <Link href="/inscription" className="text-sm font-semibold bg-gradient-to-r from-[#5EC8D8] to-[#A78BFA] hover:opacity-90 text-[#0A1525] px-5 py-2 rounded-full shadow-lg shadow-[#5EC8D8]/30 transition-opacity duration-200">
+                <Link href="/inscription" className="text-sm font-semibold bg-gradient-to-r from-[#5EC8D8] to-[#A78BFA] hover:opacity-90 text-[#0A1525] px-3.5 sm:px-5 py-2 rounded-full shadow-lg shadow-[#5EC8D8]/30 transition-opacity duration-200 whitespace-nowrap">
                   Essai gratuit
                 </Link>
               </div>
