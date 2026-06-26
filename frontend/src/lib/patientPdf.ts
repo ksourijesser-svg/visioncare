@@ -161,6 +161,33 @@ export function exportPatientDossierPdf(data: DossierData) {
   ${documents}
 
   <div class="footer">Document généré par VisionCare — confidentiel · usage médical strictement réservé.</div>
+  <script>
+    (function () {
+      var printed = false;
+      function go() {
+        if (printed) return;
+        printed = true;
+        window.focus();
+        window.print();
+      }
+      // Wait for all images (data URLs) to decode before printing.
+      function ready() {
+        var imgs = Array.prototype.slice.call(document.images);
+        var pending = imgs.filter(function (i) { return !i.complete; });
+        if (pending.length === 0) { setTimeout(go, 150); return; }
+        var left = pending.length;
+        pending.forEach(function (i) {
+          i.addEventListener('load', done);
+          i.addEventListener('error', done);
+        });
+        function done() { if (--left <= 0) setTimeout(go, 150); }
+        // Safety net: never hang.
+        setTimeout(go, 2500);
+      }
+      if (document.readyState === 'complete') ready();
+      else window.addEventListener('load', ready);
+    })();
+  </script>
 </body></html>`
 
   const win = window.open('', '_blank', 'width=900,height=1000')
@@ -168,14 +195,5 @@ export function exportPatientDossierPdf(data: DossierData) {
   win.document.open()
   win.document.write(html)
   win.document.close()
-  // Give the new document a tick to lay out before invoking print.
-  win.onload = () => {
-    win.focus()
-    win.print()
-  }
-  // Fallback in case onload already fired (cached/instant).
-  setTimeout(() => {
-    try { win.focus(); win.print() } catch { /* noop */ }
-  }, 400)
   return true
 }
