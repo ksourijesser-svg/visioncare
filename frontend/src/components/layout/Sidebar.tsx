@@ -33,7 +33,6 @@ export function Sidebar() {
   }
 
   const initials = user ? `${user.prenom[0]}${user.nom[0]}`.toUpperCase() : 'VC'
-  const tip = TIPS[new Date().getDay()]
 
   const navLink = (href: string, label: string, Icon: React.ElementType) => {
     const active = pathname === href || pathname.startsWith(href + '/')
