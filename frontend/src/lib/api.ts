@@ -114,6 +114,14 @@ export const operationsApi = {
   delete: (id: number) => api.delete(`/operations/${id}`),
 }
 
+export const ordonnancesApi = {
+  list: (params?: { patient_id?: number; type?: string }) =>
+    api.get('/ordonnances', { params }),
+  get: (id: number) => api.get(`/ordonnances/${id}`),
+  create: (data: unknown) => api.post('/ordonnances', data),
+  delete: (id: number) => api.delete(`/ordonnances/${id}`),
+}
+
 export const publicApi = {
   searchDoctors: (q: string) => api.get('/public/doctors/search', { params: { q } }),
   createRdv: (data: {
