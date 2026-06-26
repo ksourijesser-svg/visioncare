@@ -115,3 +115,31 @@ def create_public_rdv(data: PublicRdvCreate, db: Session = Depends(get_db)):
     db.add(rdv)
     db.commit()
     return {"message": "Rendez-vous créé avec succès", "rdv_id": rdv.id}
+
+
+@router.get("/doctors/{doctor_id}/busy")
+def doctor_busy(doctor_id: int, db: Session = Depends(get_db)):
+    """Occupied slots (from today onward) for a doctor — times only, no patient data."""
+    doctor = (
+        db.query(User)
+        .filter(User.id == doctor_id, User.role == UserRole.medecin, User.is_active == True)
+        .first()
+    )
+    if not doctor:
+        raise HTTPException(status_code=404, detail="Médecin introuvable")
+
+    today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    appts = (
+        db.query(Appointment)
+        .filter(
+            Appointment.medecin_id == doctor_id,
+            Appointment.statut != AppointmentStatus.annule,
+        )
+        .order_by(Appointment.date_heure.asc())
+        .all()
+    )
+    return [
+        {"date_heure": a.date_heure.isoformat(), "duree": a.duree or 30}
+        for a in appts
+        if _naive(a.date_heure) >= today
+    ]
