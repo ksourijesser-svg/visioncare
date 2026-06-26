@@ -371,7 +371,7 @@ export function PatientDetail({ patient, open, onClose }: Props) {
                 isEditing={isEditing}
                 editContent={
                   <>
-                    <Input {...register('telephone')} className="h-8 text-sm border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] flex-1" placeholder="06 00 00 00 00" />
+                    <Input {...register('telephone')} className="h-8 text-sm border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] flex-1" />
                     {errors.telephone && <p className="text-red-500 text-xs mt-0.5">{errors.telephone.message}</p>}
                   </>
                 }
