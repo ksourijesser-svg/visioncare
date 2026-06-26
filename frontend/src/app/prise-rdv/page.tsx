@@ -296,7 +296,7 @@ export default function PriseRdvPage() {
                     </Field>
                   </div>
                   <Field label="Téléphone" error={fieldErrors.telephone} required>
-                    <input value={telephone} onChange={e => setTelephone(e.target.value)} placeholder="+212 6 00 00 00 00" className={inputClass(fieldErrors.telephone)} />
+                    <input value={telephone} onChange={e => setTelephone(e.target.value)} className={inputClass(fieldErrors.telephone)} />
                   </Field>
                   <Field label="Adresse (optionnel)">
                     <input value={adresse} onChange={e => setAdresse(e.target.value)} placeholder="Votre adresse" className={inputClass()} />
