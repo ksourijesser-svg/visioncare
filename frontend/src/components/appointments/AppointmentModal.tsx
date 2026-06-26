@@ -269,7 +269,7 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
 
             <div className="space-y-1">
               <Label className={labelCls}>Téléphone</Label>
-              <Input {...register('patient_telephone')} className={inputCls} placeholder="Numéro de téléphone" />
+              <Input {...register('patient_telephone')} className={inputCls} />
             </div>
           </div>
 
