@@ -424,6 +424,63 @@ export default function PriseRdvPage() {
           </div>
         </div>
       </div>
+
+      {/* Doctor calendar — read-only occupied slots */}
+      {showCalendar && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={() => setShowCalendar(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] overflow-hidden flex flex-col"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+              <div className="flex items-center gap-2 min-w-0">
+                <Calendar size={18} className="text-[#3d8fa8] shrink-0" />
+                <h3 className="font-bold text-[#1A2B3C] text-sm truncate">
+                  Calendrier{selectedDoctor ? ` · Dr. ${selectedDoctor.prenom} ${selectedDoctor.nom}` : ''}
+                </h3>
+              </div>
+              <button type="button" onClick={() => setShowCalendar(false)} className="text-gray-400 hover:text-gray-600 shrink-0">
+                <X size={18} />
+              </button>
+            </div>
+            <div className="p-5 overflow-y-auto">
+              <p className="text-xs text-gray-500 mb-4">
+                Créneaux déjà occupés. Choisissez un horaire libre pour votre rendez-vous.
+              </p>
+              {loadingCalendar ? (
+                <div className="flex justify-center py-10">
+                  <Loader2 size={22} className="animate-spin text-[#3d8fa8]" />
+                </div>
+              ) : busySlots.length === 0 ? (
+                <p className="text-sm text-gray-500 text-center py-10">
+                  Aucun créneau occupé à venir. Toutes les heures sont disponibles.
+                </p>
+              ) : (
+                <div className="space-y-4">
+                  {Object.entries(groupedSlots).map(([day, slots]) => (
+                    <div key={day}>
+                      <p className="text-xs font-semibold text-[#3d8fa8] uppercase tracking-wide mb-2">{day}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {slots.map((s, i) => (
+                          <span
+                            key={i}
+                            className="inline-flex items-center gap-1 bg-red-50 text-red-600 border border-red-200 rounded-lg px-2.5 py-1 text-xs font-medium"
+                          >
+                            <Clock size={12} /> {fmtTime(s.start)} – {fmtTime(s.end)}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
