@@ -215,6 +215,32 @@ export function PatientDetail({ patient, open, onClose }: Props) {
     }
   }
 
+  function printOrdonnance(o: Ordonnance) {
+    if (!patient) return
+    const ok = exportOrdonnancePdf({
+      type: o.type,
+      date_ordonnance: o.date_ordonnance,
+      medicaments: o.medicaments,
+      verres: o.verres,
+      notes: o.notes,
+      patient: { prenom: patient.prenom, nom: patient.nom, age, date_naissance: patient.date_naissance || undefined },
+      doctor: {
+        prenom: profile.prenom, nom: profile.nom, specialite: profile.specialite, rpps: profile.rpps,
+        cabinet_nom: profile.cabinet_nom, cabinet_adresse: profile.cabinet_adresse,
+        cabinet_telephone: profile.cabinet_telephone, cabinet_email: profile.cabinet_email,
+      },
+    })
+    if (!ok) toast.error('Autorisez les fenêtres pop-up pour imprimer')
+  }
+
+  function handleDeleteOrdonnance(id: number) {
+    if (!patient || !confirm('Supprimer cette ordonnance ?')) return
+    deleteOrdonnance.mutate({ id, patientId: patient.id }, {
+      onSuccess: () => toast.success('Ordonnance supprimée'),
+      onError: () => toast.error('Erreur lors de la suppression'),
+    })
+  }
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-md p-0 overflow-hidden flex flex-col max-h-[90vh] gap-0 dark:bg-[#06101E] dark:border-[#1C3F62]/50 dark:[box-shadow:0_0_0_1px_rgba(112,177,196,0.50),_0_0_18px_rgba(61,143,168,0.45),_0_0_55px_rgba(61,143,168,0.28),_0_0_110px_rgba(61,143,168,0.15),_0_20px_50px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.06)]">
