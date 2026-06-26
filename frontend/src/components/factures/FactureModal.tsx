@@ -221,7 +221,7 @@ export function FactureModal({ open, onClose, facture }: Props) {
             <div className="hidden sm:grid grid-cols-[1fr_64px_96px_88px_28px] gap-2 px-1">
               <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-wider">Désignation</span>
               <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-wider">Qté</span>
-              <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-wider">Prix €</span>
+              <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-wider">Prix TND</span>
               <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-wider text-right">Total</span>
               <span />
             </div>
