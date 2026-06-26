@@ -187,6 +187,22 @@ Three actors: **Médecin**, **Secrétaire** (both use dashboard), **Patient** (b
 `programme` | `confirme` | `complete` | `annule`
 Patients page only shows patients with ≥1 `complete` RDV (filtered client-side).
 
+### Salle d'attente — overlay on appointments (CRITICAL)
+The waiting-room board is a **non-destructive overlay** on `rendez_vous` via two columns (`salle_statut`, `heure_arrivee`) — the core `statut` enum is never touched directly by board moves *except* the two auto-transitions below. `salle_statut`: `null` (À venir) → `attente` → `en_consultation` → `termine`.
+- Moving to **`attente`** (clicking "Arrivé") sets `heure_arrivee=now()` **and** `statut = confirme` (so the Rendez-vous page shows Confirmé).
+- Moving to **`termine`** (clicking "Terminer") sets `statut = complete`.
+- These are forward-only — moving a patient *back* does not revert `statut`.
+`useUpdateSalleStatut` invalidates both `['salle-attente']` and `['appointments']` so the RDV page refreshes.
+
+### Factures — auto-derived status (CRITICAL)
+`statut` is computed server-side in `_derive_statut`: `annulee` is preserved; `paye<=0` → `impayee`; `paye>=total` → `payee`; else `partielle`. `montant_total` recomputed from `lignes` on create/update. Numero via `_next_numero` = `FAC-{year}-{count+1:04d}`.
+
+### PDF export — client-side print window, NO backend PDF lib
+No reportlab/weasyprint on the backend. Dossier (`lib/patientPdf.ts`) and prescriptions (`lib/ordonnancePdf.ts`) build a styled HTML document, `window.open` it, and call `window.print()` (user picks "Save as PDF"). Always rendered light (medical document). Image attachments embed as **base64 data URLs** (blob: URLs don't survive the separate window); the print trigger waits for images to decode. Prescription header pulls doctor identity (name, spécialité, RPPS, cabinet) from `profileStore`.
+
+### Patient files — bytes in Postgres
+Uploaded via multipart to `/patients/{id}/files`; stored as `LargeBinary` in the DB (Railway disk is ephemeral). Because auth is a Bearer header, the browser can't use a plain `<img src>` — the frontend downloads the blob (`responseType: 'blob'`) and makes an object URL to view, or a base64 data URL to embed in the PDF.
+
 ### Appointment date/time
 Backend: `date_heure: datetime`. Frontend: separate `date + heure` strings.
 `toISO(date, heure)` in `useAppointments.ts` normalizes AM/PM → 24h. Fetch splits on `'T'`.
