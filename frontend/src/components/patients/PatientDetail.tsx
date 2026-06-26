@@ -161,29 +161,48 @@ export function PatientDetail({ patient, open, onClose }: Props) {
     })
   }
 
-  function handleExportPdf() {
-    if (!patient) return
-    const u = getUser()
-    exportPatientDossierPdf({
-      prenom: patient.prenom,
-      nom: patient.nom,
-      id: patient.id,
-      age,
-      date_naissance: patient.date_naissance || undefined,
-      telephone: patient.telephone || undefined,
-      email: patient.email || undefined,
-      adresse: patient.adresse || undefined,
-      notes: patient.notes || undefined,
-      consultations: consultationHistory.map((c) => ({
-        date: c.date,
-        motif: c.motif,
-        diagnostic: c.diagnostic || undefined,
-        traitement: c.traitement || undefined,
-        notes: c.notes || undefined,
-      })),
-      documents: files.map((f) => ({ filename: f.filename, created_at: f.created_at })),
-      doctorName: u ? `${u.prenom} ${u.nom}` : undefined,
-    })
+  async function handleExportPdf() {
+    if (!patient || exportingPdf) return
+    setExportingPdf(true)
+    try {
+      const u = getUser()
+      // Fetch image files as base64 data URLs so they embed in the PDF.
+      const documents = await Promise.all(
+        files.map(async (f) => {
+          const isImage = (f.content_type || '').startsWith('image/')
+          let dataUrl: string | null = null
+          if (isImage) {
+            try { dataUrl = await fetchFileDataUrl(patient.id, f.id) } catch { dataUrl = null }
+          }
+          return { filename: f.filename, created_at: f.created_at, dataUrl }
+        })
+      )
+      const ok = exportPatientDossierPdf({
+        prenom: patient.prenom,
+        nom: patient.nom,
+        id: patient.id,
+        age,
+        date_naissance: patient.date_naissance || undefined,
+        telephone: patient.telephone || undefined,
+        email: patient.email || undefined,
+        adresse: patient.adresse || undefined,
+        notes: patient.notes || undefined,
+        consultations: consultationHistory.map((c) => ({
+          date: c.date,
+          motif: c.motif,
+          diagnostic: c.diagnostic || undefined,
+          traitement: c.traitement || undefined,
+          notes: c.notes || undefined,
+        })),
+        documents,
+        doctorName: u ? `${u.prenom} ${u.nom}` : undefined,
+      })
+      if (!ok) toast.error('Autorisez les fenêtres pop-up pour exporter le PDF')
+    } catch {
+      toast.error("Erreur lors de l'export PDF")
+    } finally {
+      setExportingPdf(false)
+    }
   }
 
   return (
