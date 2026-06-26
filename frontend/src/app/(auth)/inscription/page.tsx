@@ -375,7 +375,7 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
               </Field>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Téléphone professionnel *" error={errors.telephone?.message}>
-                  <Input {...register('telephone')} placeholder="+212 6 00 00 00 00" className="border-gray-200 focus-visible:ring-[#3d8fa8]" />
+                  <Input {...register('telephone')} className="border-gray-200 focus-visible:ring-[#3d8fa8]" />
                 </Field>
                 <Field label="Email professionnel *" error={errors.email?.message}>
                   <Input {...register('email')} type="email" placeholder="exemple@cabinet.com" className="border-gray-200 focus-visible:ring-[#3d8fa8]" />
