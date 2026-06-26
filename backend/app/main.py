@@ -2,7 +2,10 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.api.routes import auth, patients, appointments, dashboard, public, factures, salle_attente, rapports
+from app.api.routes import (
+    auth, patients, appointments, dashboard, public, factures,
+    salle_attente, rapports, patient_files, operations,
+)
 
 
 def create_tables():
