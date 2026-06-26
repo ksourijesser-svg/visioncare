@@ -95,7 +95,7 @@ export default function ProfilPage() {
                 <h3 className="font-semibold text-[#2D3748] dark:text-[#EDF8FF]">Informations personnelles</h3>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#7AAABB]">Prénom *</Label>
                   <Input {...register('prenom')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" />
@@ -108,7 +108,7 @@ export default function ProfilPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
                     <Mail size={11} /> Email *
@@ -124,7 +124,7 @@ export default function ProfilPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#7AAABB]">Spécialité</Label>
                   <Input {...register('specialite')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" placeholder="Ophtalmologue" />
@@ -162,7 +162,7 @@ export default function ProfilPage() {
                 <Input {...register('cabinet_adresse')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" placeholder="12 rue de la Santé, 75014 Paris" />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
                     <Phone size={11} /> Téléphone du cabinet
