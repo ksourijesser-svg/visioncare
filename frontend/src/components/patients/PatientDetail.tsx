@@ -13,12 +13,17 @@ import {
   Phone, Mail, MapPin, Calendar, ClipboardList,
   Pencil, X, Save, Hash, Activity, FileText,
   Paperclip, Upload, Trash2, ImageIcon, FileDown, Loader2, ExternalLink,
+  Pill, Glasses, Printer, Plus,
 } from 'lucide-react'
 import { Patient } from '@/store/patientsStore'
 import { useUpdatePatient } from '@/hooks/usePatients'
 import { useAppointments } from '@/hooks/useAppointments'
 import { usePatientFiles, useUploadPatientFile, useDeletePatientFile, fetchFileObjectUrl, fetchFileDataUrl } from '@/hooks/usePatientFiles'
+import { useOrdonnances, useDeleteOrdonnance, type Ordonnance } from '@/hooks/useOrdonnances'
+import { OrdonnanceModal } from '@/components/patients/OrdonnanceModal'
 import { exportPatientDossierPdf } from '@/lib/patientPdf'
+import { exportOrdonnancePdf } from '@/lib/ordonnancePdf'
+import { useProfileStore } from '@/store/profileStore'
 import { getUser } from '@/lib/auth'
 import { differenceInYears, format } from 'date-fns'
 import { fr } from 'date-fns/locale'
