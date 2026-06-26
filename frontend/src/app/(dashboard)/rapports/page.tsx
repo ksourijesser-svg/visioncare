@@ -45,7 +45,7 @@ export default function RapportsPage() {
   return (
     <div className="flex flex-col flex-1">
       <Header title="Rapports & statistiques" />
-      <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
 
         {/* Period selector */}
         <div className="flex items-center justify-between flex-wrap gap-3">
