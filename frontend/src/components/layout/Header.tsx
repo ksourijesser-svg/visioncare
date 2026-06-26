@@ -27,7 +27,7 @@ export function Header({ title }: HeaderProps) {
       border border-gray-200/70 dark:border-[#1C3F62]/40
       shadow-[0_2px_20px_rgba(80,150,175,0.14)]
       dark:shadow-[0_0_0_1px_rgba(112,177,196,0.24),_0_0_18px_rgba(61,143,168,0.18),_0_8px_32px_rgba(0,0,0,0.55)]
-      flex items-center justify-between px-4 z-10 relative transition-all duration-300
+      flex items-center justify-between pl-16 pr-3 md:px-4 z-10 relative transition-all duration-300
     ">
 
       {/* ── Left: active page title pill ── */}
