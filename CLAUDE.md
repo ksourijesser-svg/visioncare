@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-**VisionCare** is a multi-tenant SaaS platform for ophthalmology practices, French-language UI. Patients, appointments, consultations, calendar, dashboard analytics. Each doctor's data is isolated by `medecin_id`.
+**VisionCare** is a multi-tenant SaaS platform for ophthalmology practices, French-language UI. Patients, appointments, consultations, calendar, dashboard analytics, billing (factures), live waiting room (salle d'attente), surgery scheduling (opérations), reports (rapports), patient document uploads, and prescriptions (ordonnances). Each doctor's data is isolated by `medecin_id`.
 
 ## Stack
 
