@@ -59,6 +59,11 @@ export function PatientDetail({ patient, open, onClose }: Props) {
   const [openingId, setOpeningId] = useState<number | null>(null)
   const [exportingPdf, setExportingPdf] = useState(false)
 
+  const { data: ordonnances = [] } = useOrdonnances(patient?.id ?? null)
+  const deleteOrdonnance          = useDeleteOrdonnance()
+  const { profile }               = useProfileStore()
+  const [ordModalOpen, setOrdModalOpen] = useState(false)
+
   const { register, handleSubmit, reset, formState: { errors, isDirty } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { adresse: '', notes: '', email: '' },
