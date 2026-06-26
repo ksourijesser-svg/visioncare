@@ -87,7 +87,7 @@ export default function PatientsPage() {
           <Button
             variant="outline"
             onClick={handleExport}
-            className="border border-[#70B1C4]/30 dark:border-[#70B1C4]/20 text-[#70B1C4] dark:bg-[#102844] shrink-0 btn-neon"
+            className="border border-[#70B1C4]/30 dark:border-[#70B1C4]/20 text-[#70B1C4] dark:bg-[#102844] shrink-0 btn-neon w-full sm:w-auto"
           >
             <Download size={16} className="mr-2" />
             Exporter Excel
