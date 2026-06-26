@@ -56,3 +56,16 @@ export async function fetchFileObjectUrl(patientId: number, fileId: number): Pro
   const res = await patientFilesApi.download(patientId, fileId)
   return URL.createObjectURL(res.data as Blob)
 }
+
+/** Fetch a file as a base64 data URL — self-contained, so it survives being
+ *  embedded into a separate print window (blob: URLs do not). */
+export async function fetchFileDataUrl(patientId: number, fileId: number): Promise<string> {
+  const res = await patientFilesApi.download(patientId, fileId)
+  const blob = res.data as Blob
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onloadend = () => resolve(reader.result as string)
+    reader.onerror = reject
+    reader.readAsDataURL(blob)
+  })
+}
