@@ -25,7 +25,7 @@ const STATUS_COLORS: Record<string, string> = {
   annule: '#f87171',
 }
 
-const eur = (n: number) => n.toLocaleString('fr-FR', { maximumFractionDigits: 0 }) + ' €'
+const eur = (n: number) => n.toLocaleString('fr-FR', { maximumFractionDigits: 0 }) + ' TND'
 
 export default function RapportsPage() {
   const [periode, setPeriode] = useState<Periode>('annee')
