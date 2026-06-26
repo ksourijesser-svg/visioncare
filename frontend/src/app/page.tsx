@@ -264,10 +264,10 @@ export default function LandingPage() {
               }}
             />
 
-            {/* Soft rim light hugging the eye */}
+            {/* Soft outer glow only — no hard inset ring */}
             <div
-              className="absolute inset-0 rounded-full pointer-events-none"
-              style={{ boxShadow: 'inset 0 0 80px rgba(94,200,216,0.35), 0 0 120px rgba(94,200,216,0.45), 0 0 60px rgba(180,235,245,0.35)' }}
+              className="absolute inset-0 rounded-full pointer-events-none blur-2xl"
+              style={{ boxShadow: '0 0 120px rgba(94,200,216,0.4), 0 0 70px rgba(180,235,245,0.3)' }}
             />
           </div>
         </div>
