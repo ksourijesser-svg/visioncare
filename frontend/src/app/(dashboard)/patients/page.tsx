@@ -72,7 +72,7 @@ export default function PatientsPage() {
   return (
     <div className="flex flex-col flex-1">
       <Header title="Patients" />
-      <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
 
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between bg-white dark:bg-[#102844] rounded-2xl glow px-4 py-3">
           <div className="relative flex-1 w-full">
