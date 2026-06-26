@@ -387,7 +387,17 @@ export default function PriseRdvPage() {
 
               {error && (
                 <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-red-600 text-sm">
-                  {error}
+                  <p>{error}</p>
+                  {conflict && (
+                    <button
+                      type="button"
+                      onClick={openCalendar}
+                      className="mt-2 inline-flex items-center gap-1.5 bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-semibold rounded-lg px-3 py-1.5 text-xs transition-colors"
+                    >
+                      <Calendar size={13} />
+                      Voir calendrier
+                    </button>
+                  )}
                 </div>
               )}
 
