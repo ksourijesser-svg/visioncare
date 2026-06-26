@@ -76,7 +76,7 @@ export default function OperationsPage() {
   return (
     <div className="flex flex-col flex-1">
       <Header title="Opérations" />
-      <div className="p-6 space-y-5">
+      <div className="p-4 sm:p-6 space-y-5">
 
         {/* ── KPI cards ── */}
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
