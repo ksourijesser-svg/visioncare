@@ -231,55 +231,37 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Dashboard preview card */}
-          <div className="absolute right-0 top-0 w-[480px] hidden lg:block">
-            <div className="bg-[#0D1E30] rounded-2xl shadow-2xl shadow-black/40 border border-white/10 overflow-hidden">
-              {/* Mock top bar */}
-              <div className="h-10 bg-[#0A1828] flex items-center px-4 gap-2 border-b border-white/6">
-                <div className="w-3 h-3 rounded-full bg-red-400/70" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400/70" />
-                <div className="w-3 h-3 rounded-full bg-green-400/70" />
-                <div className="flex-1 mx-4 h-5 bg-white/8 rounded-md" />
-              </div>
-              {/* Mock dashboard */}
-              <div className="p-5 bg-[#0D1E30]">
-                {/* Stat row */}
-                <div className="grid grid-cols-3 gap-3 mb-4">
-                  {[['24', 'Patients'], ['8', 'RDV aujourd\'hui'], ['3', 'En attente']].map(([v, l]) => (
-                    <div key={l} className="bg-white/8 border border-white/10 rounded-xl p-3">
-                      <p className="text-xl font-bold text-white">{v}</p>
-                      <p className="text-[10px] text-white/45 mt-0.5">{l}</p>
-                    </div>
-                  ))}
-                </div>
-                {/* Mock chart */}
-                <div className="bg-white/6 border border-white/8 rounded-xl p-4 mb-4">
-                  <div className="flex items-end gap-2 h-20">
-                    {[40, 65, 55, 80, 70, 90, 75].map((h, i) => (
-                      <div
-                        key={i}
-                        className="flex-1 rounded-t-sm"
-                        style={{ height: `${h}%`, background: i === 5 ? '#3d8fa8' : 'rgba(112,177,196,0.25)' }}
-                      />
-                    ))}
-                  </div>
-                </div>
-                {/* Mock list */}
-                <div className="bg-white/6 border border-white/8 rounded-xl p-3 space-y-2">
-                  {['Martin Dupont — 09:00', 'Claire Bernard — 09:30', 'Paul Richard — 10:00'].map((r) => (
-                    <div key={r} className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-[#3d8fa8]/30 flex items-center justify-center text-[10px] font-bold text-[#70B1C4]">
-                          {r[0]}
-                        </div>
-                        <span className="text-xs text-white/65">{r}</span>
-                      </div>
-                      <span className="text-[10px] bg-emerald-500/15 text-emerald-400 px-2 py-0.5 rounded-full font-medium border border-emerald-400/20">Confirmé</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* Hero visual — glowing eye */}
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[460px] h-[460px] hidden lg:block">
+            {/* Ambient light behind the eye, matching the blue page */}
+            <div className="absolute inset-0 -z-10 pointer-events-none">
+              <div
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[560px] rounded-full blur-[100px]"
+                style={{ background: 'radial-gradient(circle, rgba(94,200,216,0.55) 0%, rgba(61,143,168,0.32) 42%, transparent 72%)' }}
+              />
+              <div
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] rounded-full blur-[55px]"
+                style={{ background: 'radial-gradient(circle, rgba(112,177,196,0.50) 0%, transparent 65%)' }}
+              />
             </div>
+
+            {/* Eye — circular crop + feathered edge removes the white background */}
+            <div
+              className="relative w-full h-full rounded-full animate-[float_6s_ease-in-out_infinite]"
+              style={{
+                backgroundImage: 'url(/eye.png)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                WebkitMaskImage: 'radial-gradient(circle, #000 47%, transparent 53%)',
+                maskImage: 'radial-gradient(circle, #000 47%, transparent 53%)',
+              }}
+            />
+
+            {/* Soft rim light hugging the eye */}
+            <div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              style={{ boxShadow: 'inset 0 0 70px rgba(94,200,216,0.25), 0 0 90px rgba(94,200,216,0.18)' }}
+            />
           </div>
         </div>
       </section>
