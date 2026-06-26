@@ -113,7 +113,7 @@ export function Sidebar() {
           <div className="mx-4 h-px bg-black/[0.06] dark:bg-white/[0.07]" />
 
           {/* ── Nav ── */}
-          <nav className="pt-4 pb-3 flex-1">
+          <nav className="pt-4 pb-3 flex-1 overflow-y-auto">
             <p className="text-[11px] font-bold text-[#3d8fa8] dark:text-[#70B1C4]/80 uppercase tracking-[0.18em] px-5 mb-2">Navigation</p>
             <div className="space-y-0.5">
               {navItems.map(({ href, label, icon: Icon }) => navLink(href, label, Icon))}
