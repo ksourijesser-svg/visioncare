@@ -116,6 +116,67 @@ export function PatientDetail({ patient, open, onClose }: Props) {
     setIsEditing(false)
   }
 
+  async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const list = e.target.files
+    if (!list || !list.length || !patient) return
+    const selected = Array.from(list)
+    for (const f of selected) {
+      try {
+        await uploadFile.mutateAsync({ patientId: patient.id, file: f })
+      } catch {
+        toast.error(`Échec de l'envoi de ${f.name}`)
+      }
+    }
+    toast.success(selected.length > 1 ? `${selected.length} fichiers ajoutés` : 'Fichier ajouté')
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
+
+  async function openFile(fileId: number) {
+    if (!patient) return
+    setOpeningId(fileId)
+    try {
+      const url = await fetchFileObjectUrl(patient.id, fileId)
+      window.open(url, '_blank')
+    } catch {
+      toast.error("Impossible d'ouvrir le fichier")
+    } finally {
+      setOpeningId(null)
+    }
+  }
+
+  function handleDeleteFile(fileId: number) {
+    if (!patient || !confirm('Supprimer ce document ?')) return
+    deleteFile.mutate({ patientId: patient.id, fileId }, {
+      onSuccess: () => toast.success('Document supprimé'),
+      onError: () => toast.error('Erreur lors de la suppression'),
+    })
+  }
+
+  function handleExportPdf() {
+    if (!patient) return
+    const u = getUser()
+    exportPatientDossierPdf({
+      prenom: patient.prenom,
+      nom: patient.nom,
+      id: patient.id,
+      age,
+      date_naissance: patient.date_naissance || undefined,
+      telephone: patient.telephone || undefined,
+      email: patient.email || undefined,
+      adresse: patient.adresse || undefined,
+      notes: patient.notes || undefined,
+      consultations: consultationHistory.map((c) => ({
+        date: c.date,
+        motif: c.motif,
+        diagnostic: c.diagnostic || undefined,
+        traitement: c.traitement || undefined,
+        notes: c.notes || undefined,
+      })),
+      documents: files.map((f) => ({ filename: f.filename, created_at: f.created_at })),
+      doctorName: u ? `${u.prenom} ${u.nom}` : undefined,
+    })
+  }
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-md p-0 overflow-hidden flex flex-col max-h-[90vh] gap-0 dark:bg-[#06101E] dark:border-[#1C3F62]/50 dark:[box-shadow:0_0_0_1px_rgba(112,177,196,0.50),_0_0_18px_rgba(61,143,168,0.45),_0_0_55px_rgba(61,143,168,0.28),_0_0_110px_rgba(61,143,168,0.15),_0_20px_50px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.06)]">
