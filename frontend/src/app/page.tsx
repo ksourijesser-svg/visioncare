@@ -184,7 +184,7 @@ export default function LandingPage() {
               Support 7j/7 — Réponse en moins de 2h
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
               Moins d&apos;attente, plus de{' '}
               <span className="text-[#70B1C4]">visibilité</span>, une gestion{' '}
               <span className="text-[#70B1C4]">intelligente</span> de chaque consultation
