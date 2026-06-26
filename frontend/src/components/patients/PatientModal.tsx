@@ -91,7 +91,7 @@ export function PatientModal({ open, onClose, patient }: Props) {
             </div>
             <div className="space-y-1">
               <Label>Téléphone *</Label>
-              <Input {...register('telephone')} className="border-[#DCEEF3]" placeholder="06 12 34 56 78" />
+              <Input {...register('telephone')} className="border-[#DCEEF3]" />
               {errors.telephone && <p className="text-red-500 text-xs">{errors.telephone.message}</p>}
             </div>
           </div>
