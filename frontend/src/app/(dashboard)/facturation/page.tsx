@@ -88,7 +88,7 @@ export default function FacturationPage() {
             </SelectContent>
           </Select>
           <Button onClick={() => { setEditing(null); setModalOpen(true) }}
-            className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30 shrink-0 h-10 btn-neon">
+            className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30 shrink-0 h-10 btn-neon w-full sm:w-auto">
             <Plus size={16} className="mr-1.5" /> Nouvelle facture
           </Button>
         </div>
