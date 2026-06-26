@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.api.routes import (
     auth, patients, appointments, dashboard, public, factures,
-    salle_attente, rapports, patient_files, operations,
+    salle_attente, rapports, patient_files, operations, ordonnances,
 )
 
 
