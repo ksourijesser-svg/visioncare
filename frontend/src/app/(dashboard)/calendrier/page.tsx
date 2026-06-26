@@ -296,7 +296,7 @@ export default function CalendrierPage() {
         )}
 
         {/* Legend card */}
-        <div className="bg-white dark:bg-[#102844] rounded-2xl glow px-5 py-3 flex items-center gap-6 self-start transition-colors duration-300">
+        <div className="bg-white dark:bg-[#102844] rounded-2xl glow px-5 py-3 flex flex-wrap items-center gap-x-6 gap-y-2 self-start transition-colors duration-300">
           <span className="text-[11px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Légende</span>
           {[
             { label: 'Programmé', color: 'bg-blue-400' },
