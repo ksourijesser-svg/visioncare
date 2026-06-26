@@ -367,6 +367,78 @@ export function PatientDetail({ patient, open, onClose }: Props) {
             </div>
           </div>
 
+          {/* Documents */}
+          {!isEditing && (
+            <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden">
+              <div className="px-4 pt-4 pb-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Paperclip size={13} className="text-[#70B1C4]" />
+                  <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Documents &amp; imagerie</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploadFile.isPending}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#3d8fa8] dark:text-[#70B1C4] hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/50 px-2.5 py-1 rounded-lg transition-colors disabled:opacity-50"
+                >
+                  {uploadFile.isPending ? <Loader2 size={13} className="animate-spin" /> : <Upload size={13} />}
+                  Ajouter
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  multiple
+                  accept="image/*,application/pdf,.doc,.docx,.txt"
+                  onChange={handleUpload}
+                  className="hidden"
+                />
+              </div>
+
+              <div className="px-4 pb-4">
+                {files.length === 0 ? (
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-full text-center py-6 text-gray-400 dark:text-[#7AAABB] border border-dashed border-gray-200 dark:border-[#1C3F62]/50 rounded-xl hover:border-[#70B1C4] hover:bg-[#F7FAFB] dark:hover:bg-[#0D2038] transition-colors"
+                  >
+                    <Upload size={24} className="mx-auto mb-2 opacity-30" />
+                    <p className="text-xs">Glissez ou cliquez pour ajouter un document</p>
+                    <p className="text-[10px] mt-0.5 text-gray-300 dark:text-[#7AAABB]/60">Images, PDF · 10 Mo max</p>
+                  </button>
+                ) : (
+                  <div className="space-y-2">
+                    {files.map((f) => {
+                      const isImage = (f.content_type || '').startsWith('image/')
+                      return (
+                        <div key={f.id} className="flex items-center gap-3 rounded-xl border border-gray-100 dark:border-[#1C3F62]/40 bg-[#F7FAFB] dark:bg-[#091628] px-3 py-2.5 group">
+                          <div className="w-9 h-9 rounded-lg bg-[#E4EEF4] dark:bg-[#1C3F62] flex items-center justify-center shrink-0">
+                            {isImage
+                              ? <ImageIcon size={15} className="text-[#3d8fa8] dark:text-[#70B1C4]" />
+                              : <FileText size={15} className="text-[#3d8fa8] dark:text-[#70B1C4]" />}
+                          </div>
+                          <button type="button" onClick={() => openFile(f.id)} className="flex-1 min-w-0 text-left">
+                            <p className="text-sm font-medium text-[#1A2B3C] dark:text-[#EDF8FF] truncate leading-tight">{f.filename}</p>
+                            <p className="text-[11px] text-gray-400 dark:text-[#7AAABB]">
+                              {formatSize(f.size)} · {format(new Date(f.created_at), 'dd MMM yyyy', { locale: fr })}
+                            </p>
+                          </button>
+                          <button type="button" onClick={() => openFile(f.id)} title="Ouvrir" disabled={openingId === f.id}
+                            className="p-1.5 rounded-lg text-[#70B1C4] hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 transition-colors shrink-0">
+                            {openingId === f.id ? <Loader2 size={14} className="animate-spin" /> : <ExternalLink size={14} />}
+                          </button>
+                          <button type="button" onClick={() => handleDeleteFile(f.id)} title="Supprimer"
+                            className="p-1.5 rounded-lg text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors shrink-0">
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Save button (edit mode) */}
           {isEditing && (
             <Button
