@@ -223,9 +223,10 @@ export function PatientDetail({ patient, open, onClose }: Props) {
                 <>
                   <button
                     onClick={handleExportPdf}
-                    className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors btn-neon"
+                    disabled={exportingPdf}
+                    className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors btn-neon disabled:opacity-60"
                   >
-                    <FileDown size={12} /> Exporter PDF
+                    {exportingPdf ? <Loader2 size={12} className="animate-spin" /> : <FileDown size={12} />} Exporter PDF
                   </button>
                   <button
                     onClick={() => setIsEditing(true)}
