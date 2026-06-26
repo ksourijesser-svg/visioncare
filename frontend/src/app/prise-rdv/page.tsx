@@ -48,7 +48,12 @@ export default function PriseRdvPage() {
   const [submitting, setSubmitting] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+  const [conflict, setConflict] = useState(false)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
+
+  const [showCalendar, setShowCalendar] = useState(false)
+  const [busySlots, setBusySlots] = useState<BusySlot[]>([])
+  const [loadingCalendar, setLoadingCalendar] = useState(false)
 
   const searchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
