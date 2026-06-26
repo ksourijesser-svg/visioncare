@@ -68,7 +68,7 @@ export function PaymentModal({ open, onClose, facture }: Props) {
             </div>
 
             <div className="space-y-1">
-              <Label className={labelCls}>Montant (€)</Label>
+              <Label className={labelCls}>Montant (TND)</Label>
               <Input type="number" min={0} step="0.01" value={montant} onChange={(e) => setMontant(e.target.value)} className={inputCls} />
             </div>
             <div className="space-y-1">
