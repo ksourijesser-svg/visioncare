@@ -118,6 +118,7 @@ export default function PriseRdvPage() {
 
     setFieldErrors({})
     setError('')
+    setConflict(false)
     setSubmitting(true)
     try {
       await publicApi.createRdv({
@@ -130,12 +131,42 @@ export default function PriseRdvPage() {
         motif: motif.trim() || null,
       })
       setSuccess(true)
-    } catch {
-      setError('Une erreur est survenue. Veuillez réessayer.')
+    } catch (err) {
+      const res = (err as { response?: { status?: number; data?: { detail?: string } } }).response
+      if (res?.status === 409) {
+        setConflict(true)
+        setError(res.data?.detail || 'Temps occupé, voir le calendrier du médecin')
+      } else {
+        setError('Une erreur est survenue. Veuillez réessayer.')
+      }
     } finally {
       setSubmitting(false)
     }
   }
+
+  async function openCalendar() {
+    if (!selectedDoctor) return
+    setShowCalendar(true)
+    setLoadingCalendar(true)
+    try {
+      const res = await publicApi.doctorBusy(selectedDoctor.id)
+      setBusySlots(res.data)
+    } catch {
+      setBusySlots([])
+    } finally {
+      setLoadingCalendar(false)
+    }
+  }
+
+  const fmtTime = (d: Date) => d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+
+  const groupedSlots = busySlots.reduce((acc, s) => {
+    const start = new Date(s.date_heure)
+    const end = new Date(start.getTime() + s.duree * 60000)
+    const dayKey = start.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })
+    ;(acc[dayKey] ||= []).push({ start, end })
+    return acc
+  }, {} as Record<string, { start: Date; end: Date }[]>)
 
   const inputClass = (err?: string) =>
     `w-full h-10 rounded-lg border ${err ? 'border-red-300 focus:ring-red-400' : 'border-gray-200 focus:ring-[#3d8fa8]'} px-3 text-sm focus:outline-none focus:ring-2 transition-colors bg-white text-[#1A2B3C]`
