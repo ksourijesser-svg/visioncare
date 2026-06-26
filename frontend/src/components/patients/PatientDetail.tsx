@@ -70,8 +70,16 @@ export function PatientDetail({ patient, open, onClose }: Props) {
         notes:          patient.notes || '',
       })
     }
-    setIsEditing(false)
   }, [patient, reset, open])
+
+  // Leave edit mode whenever the dialog opens or the target patient changes —
+  // render-phase reset (avoids react-hooks/set-state-in-effect).
+  const [viewKey, setViewKey] = useState('')
+  const currentViewKey = open && patient ? `${patient.id}` : ''
+  if (currentViewKey !== viewKey) {
+    setViewKey(currentViewKey)
+    if (isEditing) setIsEditing(false)
+  }
 
   if (!patient) return null
 
