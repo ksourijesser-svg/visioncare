@@ -17,7 +17,7 @@ import {
 import { Patient } from '@/store/patientsStore'
 import { useUpdatePatient } from '@/hooks/usePatients'
 import { useAppointments } from '@/hooks/useAppointments'
-import { usePatientFiles, useUploadPatientFile, useDeletePatientFile, fetchFileObjectUrl } from '@/hooks/usePatientFiles'
+import { usePatientFiles, useUploadPatientFile, useDeletePatientFile, fetchFileObjectUrl, fetchFileDataUrl } from '@/hooks/usePatientFiles'
 import { exportPatientDossierPdf } from '@/lib/patientPdf'
 import { getUser } from '@/lib/auth'
 import { differenceInYears, format } from 'date-fns'
