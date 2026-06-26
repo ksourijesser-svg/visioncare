@@ -243,7 +243,7 @@ export function FactureModal({ open, onClose, facture }: Props) {
 
             <div className="flex items-center justify-end gap-3 pt-2 border-t border-[#DCEEF3] dark:border-[#1C3F62]/40">
               <span className="text-sm text-gray-500 dark:text-[#7AAABB]">Total</span>
-              <span className="text-xl font-bold text-[#3d8fa8] dark:text-[#70B1C4] tabular-nums">{total.toFixed(2)} €</span>
+              <span className="text-xl font-bold text-[#3d8fa8] dark:text-[#70B1C4] tabular-nums">{total.toFixed(2)} TND</span>
             </div>
           </div>
 
