@@ -89,7 +89,7 @@ export default function LandingPage() {
 
           {/* gradient border wrapper (cyan → violet) */}
           <div className="rounded-full p-[1.5px] bg-gradient-to-r from-[#5EC8D8]/55 via-white/10 to-[#A78BFA]/55 shadow-[0_10px_40px_-8px_rgba(0,0,0,0.6)]">
-            <div className="relative rounded-full bg-[#0A1525]/85 backdrop-blur-xl px-5 h-14 flex items-center justify-between overflow-hidden">
+            <div className="relative rounded-full bg-[#0A1525]/85 backdrop-blur-xl px-3 sm:px-5 h-14 flex items-center justify-between overflow-hidden gap-2">
               {/* faint top sheen */}
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
 
