@@ -120,7 +120,7 @@ export default function ProfilPage() {
                   <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
                     <Phone size={11} /> Téléphone
                   </Label>
-                  <Input {...register('telephone')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" placeholder="+33 6 00 00 00 00" />
+                  <Input {...register('telephone')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" />
                 </div>
               </div>
 
