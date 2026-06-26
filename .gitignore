@@ -17,6 +17,10 @@ build/
 .env.local
 .env.*.local
 
+# Local throwaway SQLite (smoke testing)
+*.db
+smoketest.db
+
 # OS
 .DS_Store
 Thumbs.db
