@@ -167,7 +167,7 @@ export default function ProfilPage() {
                   <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
                     <Phone size={11} /> Téléphone du cabinet
                   </Label>
-                  <Input {...register('cabinet_telephone')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" placeholder="01 00 00 00 00" />
+                  <Input {...register('cabinet_telephone')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
