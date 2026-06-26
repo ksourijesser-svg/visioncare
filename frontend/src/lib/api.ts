@@ -124,6 +124,7 @@ export const ordonnancesApi = {
 
 export const publicApi = {
   searchDoctors: (q: string) => api.get('/public/doctors/search', { params: { q } }),
+  doctorBusy: (id: number) => api.get(`/public/doctors/${id}/busy`),
   createRdv: (data: {
     medecin_id: number
     nom: string
