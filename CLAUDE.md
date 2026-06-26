@@ -132,7 +132,11 @@ All routes prefixed `/api/v1`. Health: `GET /health`.
 
 - **User**: `medecin` | `secretaire` roles, JWT auth, telephone, cabinet, specialisation, type_cabinet
 - **Patient**: nom, prenom, date_naissance, telephone, email, adresse, notes, `medecin_id` FK
-- **Appointment** (`rendez_vous`): patient_id, medecin_id, date_heure (datetime), duree, motif, statut, notes, diagnostic, traitement
+- **Appointment** (`rendez_vous`): patient_id, medecin_id, date_heure (datetime), duree, motif, statut, notes, diagnostic, traitement, **salle_statut** (null|attente|en_consultation|termine), **heure_arrivee**
+- **Facture** (`factures`): numero (`FAC-{year}-{NNNN}`), patient_id, medecin_id, date_emission, date_echeance, `lignes` (JSON: designation/quantite/prix_unitaire), montant_total, montant_paye, statut (impayee|partielle|payee|annulee), methode_paiement, date_paiement, notes
+- **Operation** (`operations`): patient_id, medecin_id, date_operation (datetime), duree, type_intervention, oeil (droit|gauche|deux), anesthesie, salle, statut (planifiee|confirmee|terminee|annulee), notes
+- **PatientFile** (`patient_files`): patient_id, medecin_id, filename, content_type, size, `data` (LargeBinary — stored in DB, not disk: Railway FS is ephemeral)
+- **Ordonnance** (`ordonnances`): patient_id, medecin_id, type (medicale|lunettes), date_ordonnance, `medicaments` (JSON list), `verres` (JSON: type_correction/ecart_pupillaire/od/og × sphere,cylindre,axe,addition), notes
 
 ### Table creation — NO Alembic
 Tables via `Base.metadata.create_all()` in `main.py`. New columns via `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` in the same function. Do **not** use `alembic upgrade head`.
