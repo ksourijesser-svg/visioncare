@@ -188,7 +188,8 @@ export default function CalendrierPage() {
 
         {/* ══════════════ WEEK VIEW ══════════════ */}
         {view === 'semaine' && (
-          <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden flex flex-col flex-1 transition-colors duration-300">
+          <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-x-auto overflow-y-hidden flex flex-col flex-1 transition-colors duration-300">
+            <div className="min-w-[640px] flex flex-col flex-1">
             <div className="grid border-b border-gray-100 dark:border-[#1C3F62]/40" style={{ gridTemplateColumns: '56px repeat(7, 1fr)' }}>
               <div />
               {weekDays.map((day, i) => {
