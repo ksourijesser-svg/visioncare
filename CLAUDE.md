@@ -107,6 +107,12 @@ api/routes/
                    # POST /auth/reset-password — validates OTP + changes password
   patients.py      # CRUD + Excel export — filter by medecin_id
   appointments.py  # CRUD for rendez_vous — filter by medecin_id
+  patient_files.py # /patients/{id}/files — upload/list/download/delete (bytes in DB, 10MB max)
+  ordonnances.py   # /ordonnances — prescriptions list/get/create/delete (medicale|lunettes)
+  operations.py    # /operations — surgery CRUD
+  factures.py      # /factures — invoices CRUD + /{id}/paiement; auto-derives statut
+  salle_attente.py # /salle-attente — today's RDV board + PATCH salle_statut
+  rapports.py      # /rapports?periode= — aggregated analytics (Python-side, portable)
   dashboard.py     # aggregated stats
   public.py        # Unauthenticated: GET /public/doctors/search, POST /public/rendez-vous
 core/config.py     # DATABASE_URL, SECRET_KEY, CORS_ORIGINS, RESEND_API_KEY, EMAIL_FROM
