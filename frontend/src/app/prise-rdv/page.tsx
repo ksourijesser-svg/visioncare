@@ -22,11 +22,11 @@ interface BusySlot {
 function Field({ label, error, children, required }: { label: string; error?: string; children: React.ReactNode; required?: boolean }) {
   return (
     <div className="space-y-1.5">
-      <label className="text-sm text-gray-700 font-medium block">
-        {label}{required && <span className="text-red-500 ml-0.5">*</span>}
+      <label className="block" style={neonLabelStyle}>
+        {label}{required && <span className="ml-0.5" style={{ color: '#FF7B7B' }}>*</span>}
       </label>
       {children}
-      {error && <p className="text-red-500 text-xs">{error}</p>}
+      {error && <p className="text-xs" style={{ color: '#FF7B7B' }}>{error}</p>}
     </div>
   )
 }
