@@ -181,30 +181,36 @@ export default function PriseRdvPage() {
       <div className="min-h-screen bg-[#060F1E] flex items-center justify-center p-4 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, rgba(112,177,196,0.10) 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
         <div className="absolute top-[-200px] right-[-100px] w-[600px] h-[600px] pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(61,143,168,0.18) 0%, transparent 65%)' }} />
-        <div className="relative bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full text-center">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4">
-            <CheckCircle2 size={36} className="text-emerald-600" />
-          </div>
-          <h2 className="text-2xl font-bold text-[#1A2B3C] mb-2">Rendez-vous confirmé !</h2>
-          <p className="text-gray-500 mb-2 text-sm leading-relaxed">
-            Votre demande de rendez-vous a bien été enregistrée.
-          </p>
-          {selectedDoctor && (
-            <div className="bg-[#F0F6FA] rounded-xl p-4 mb-6 text-left">
-              <p className="text-xs text-gray-500 mb-1">Médecin</p>
-              <p className="font-semibold text-[#1A2B3C]">Dr. {selectedDoctor.prenom} {selectedDoctor.nom}</p>
-              {selectedDoctor.cabinet && <p className="text-sm text-gray-500">{selectedDoctor.cabinet}</p>}
-              <div className="mt-2 border-t border-gray-200 pt-2">
-                <p className="text-xs text-gray-500">Date &amp; Heure</p>
-                <p className="font-medium text-[#1A2B3C] text-sm">
-                  {new Date(`${date}T${heure}:00`).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} à {heure}
-                </p>
-              </div>
+        <div className="relative z-10 w-full max-w-md">
+          <NeonCard className="text-center">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.35)' }}>
+              <CheckCircle2 size={36} className="text-emerald-400" />
             </div>
-          )}
-          <Link href="/" className="inline-block w-full bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-semibold py-3 rounded-xl transition-colors text-sm">
-            Retour à l&apos;accueil
-          </Link>
+            <h2 className="text-2xl font-bold mb-2" style={{ color: '#D0EEFF' }}>Rendez-vous confirmé !</h2>
+            <p className="mb-2 text-sm leading-relaxed" style={{ color: 'rgba(120,190,230,0.7)' }}>
+              Votre demande de rendez-vous a bien été enregistrée.
+            </p>
+            {selectedDoctor && (
+              <div className="rounded-xl p-4 mb-6 text-left" style={{ background: 'rgba(0,150,220,0.08)', border: '1px solid rgba(0,200,255,0.18)' }}>
+                <p className="text-xs mb-1" style={{ color: 'rgba(120,190,230,0.6)' }}>Médecin</p>
+                <p className="font-semibold" style={{ color: '#D0EEFF' }}>Dr. {selectedDoctor.prenom} {selectedDoctor.nom}</p>
+                {selectedDoctor.cabinet && <p className="text-sm" style={{ color: 'rgba(120,190,230,0.7)' }}>{selectedDoctor.cabinet}</p>}
+                <div className="mt-2 pt-2" style={{ borderTop: '1px solid rgba(0,180,255,0.15)' }}>
+                  <p className="text-xs" style={{ color: 'rgba(120,190,230,0.6)' }}>Date &amp; Heure</p>
+                  <p className="font-medium text-sm" style={{ color: '#D0EEFF' }}>
+                    {new Date(`${date}T${heure}:00`).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} à {heure}
+                  </p>
+                </div>
+              </div>
+            )}
+            <Link
+              href="/"
+              className="inline-block w-full text-white font-semibold py-3 rounded-xl transition-all text-sm"
+              style={{ background: 'linear-gradient(135deg, #007BB8 0%, #00AADD 50%, #0095CC 100%)', border: '1px solid rgba(0,200,255,0.5)', boxShadow: '0 4px 20px rgba(0,150,220,0.4)' }}
+            >
+              Retour à l&apos;accueil
+            </Link>
+          </NeonCard>
         </div>
       </div>
     )
