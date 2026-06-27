@@ -379,7 +379,7 @@ export default function PriseRdvPage() {
                       onChange={e => { setHeure(e.target.value); setConflict(false); setError('') }}
                       min="08:00"
                       max="19:00"
-                      className={inputClass(fieldErrors.heure)}
+                      {...inputProps(fieldErrors.heure)}
                     />
                   </Field>
                 </div>
