@@ -332,22 +332,26 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
   async function onSubmit(data: MedecinData) {
     setError('')
     try {
-      await authApi.sendCode(data.email, 'signup')
       const parts = data.nom_complet.trim().split(' ')
       const prenom = parts[0]
       const nom = parts.slice(1).join(' ') || prenom
 
-      onPendingVerification({
-        email: data.email,
-        registerFn: async () => {
-          await authApi.register({ email: data.email, password: data.password, nom, prenom, role: 'medecin', telephone: data.telephone, cabinet: data.cabinet, specialisation: data.specialisation, type_cabinet: data.type_cabinet })
-          const loginRes = await authApi.login(data.email, data.password)
-          setToken(loginRes.data.access_token)
-          const me = await authApi.me()
-          setUser(me.data)
-          router.push('/dashboard')
-        },
-      })
+      const registerFn = async () => {
+        await authApi.register({ email: data.email, password: data.password, nom, prenom, role: 'medecin', telephone: data.telephone, cabinet: data.cabinet, specialisation: data.specialisation, type_cabinet: data.type_cabinet })
+        const loginRes = await authApi.login(data.email, data.password)
+        setToken(loginRes.data.access_token)
+        const me = await authApi.me()
+        setUser(me.data)
+        router.push('/dashboard')
+      }
+
+      if (!EMAIL_VERIFICATION_ENABLED) {
+        await registerFn()
+        return
+      }
+
+      await authApi.sendCode(data.email, 'signup')
+      onPendingVerification({ email: data.email, registerFn })
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail
       setError(msg || 'Une erreur est survenue. Veuillez réessayer.')
