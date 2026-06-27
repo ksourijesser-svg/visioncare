@@ -335,17 +335,17 @@ export default function PriseRdvPage() {
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <Field label="Nom" error={fieldErrors.nom} required>
-                      <input value={nom} onChange={e => setNom(e.target.value)} placeholder="Dupont" className={inputClass(fieldErrors.nom)} />
+                      <input value={nom} onChange={e => setNom(e.target.value)} placeholder="Dupont" {...inputProps(fieldErrors.nom)} />
                     </Field>
                     <Field label="Prénom" error={fieldErrors.prenom} required>
-                      <input value={prenom} onChange={e => setPrenom(e.target.value)} placeholder="Jean" className={inputClass(fieldErrors.prenom)} />
+                      <input value={prenom} onChange={e => setPrenom(e.target.value)} placeholder="Jean" {...inputProps(fieldErrors.prenom)} />
                     </Field>
                   </div>
                   <Field label="Téléphone" error={fieldErrors.telephone} required>
-                    <input value={telephone} onChange={e => setTelephone(e.target.value)} className={inputClass(fieldErrors.telephone)} />
+                    <input value={telephone} onChange={e => setTelephone(e.target.value)} {...inputProps(fieldErrors.telephone)} />
                   </Field>
                   <Field label="Adresse (optionnel)">
-                    <input value={adresse} onChange={e => setAdresse(e.target.value)} placeholder="Votre adresse" className={inputClass()} />
+                    <input value={adresse} onChange={e => setAdresse(e.target.value)} placeholder="Votre adresse" {...inputProps()} />
                   </Field>
                 </div>
               </div>
