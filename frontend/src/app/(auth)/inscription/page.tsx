@@ -65,9 +65,9 @@ type PendingRegistration = {
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <Label className="text-sm text-gray-600 font-medium">{label}</Label>
+      <Label style={neonLabelStyle}>{label}</Label>
       {children}
-      {error && <p className="text-red-500 text-xs">{error}</p>}
+      {error && <p className="text-xs" style={{ color: '#FF7B7B' }}>{error}</p>}
     </div>
   )
 }
