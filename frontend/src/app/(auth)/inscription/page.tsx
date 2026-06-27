@@ -377,68 +377,68 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
         <h1 className="text-xl font-bold text-white">Créez votre compte médecin</h1>
       </div>
 
-      <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
+      <NeonCard>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-lg bg-[#C5D8E6] flex items-center justify-center text-sm">👤</div>
-              <h2 className="font-bold text-[#1A2B3C]">Informations personnelles</h2>
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center text-sm" style={{ background: 'rgba(0,100,180,0.3)', border: '1px solid rgba(0,200,255,0.3)' }}>👤</div>
+              <h2 className="font-bold" style={{ color: '#D0EEFF' }}>Informations personnelles</h2>
             </div>
             <div className="space-y-4">
               <Field label="Nom complet du médecin *" error={errors.nom_complet?.message}>
-                <Input {...register('nom_complet')} placeholder="Dr. Nom Prénom" className="border-gray-200 focus-visible:ring-[#3d8fa8]" />
+                <Input {...register('nom_complet')} placeholder="Dr. Nom Prénom" className="h-11 text-sm placeholder:text-[#4E7E9C]" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon} />
               </Field>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Téléphone professionnel *" error={errors.telephone?.message}>
-                  <Input {...register('telephone')} className="border-gray-200 focus-visible:ring-[#3d8fa8]" />
+                  <Input {...register('telephone')} className="h-11 text-sm placeholder:text-[#4E7E9C]" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon} />
                 </Field>
                 <Field label="Email professionnel *" error={errors.email?.message}>
-                  <Input {...register('email')} type="email" placeholder="exemple@cabinet.com" className="border-gray-200 focus-visible:ring-[#3d8fa8]" />
+                  <Input {...register('email')} type="email" placeholder="exemple@cabinet.com" className="h-11 text-sm placeholder:text-[#4E7E9C]" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon} />
                 </Field>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Mot de passe *" error={errors.password?.message}>
                   <div className="relative">
-                    <Input {...register('password')} type={showPw ? 'text' : 'password'} placeholder="Minimum 8 caractères" className="border-gray-200 focus-visible:ring-[#3d8fa8] pr-10" />
-                    <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" onClick={() => setShowPw(!showPw)}>
+                    <Input {...register('password')} type={showPw ? 'text' : 'password'} placeholder="Minimum 8 caractères" className="h-11 text-sm pr-10 placeholder:text-[#4E7E9C]" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon} />
+                    <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: 'rgba(100,170,210,0.7)' }} onClick={() => setShowPw(!showPw)}>
                       {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
                   </div>
                 </Field>
                 <Field label="Confirmer le mot de passe *" error={errors.confirm_password?.message}>
                   <div className="relative">
-                    <Input {...register('confirm_password')} type={showConfirm ? 'text' : 'password'} placeholder="••••••••" className="border-gray-200 focus-visible:ring-[#3d8fa8] pr-10" />
-                    <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" onClick={() => setShowConfirm(!showConfirm)}>
+                    <Input {...register('confirm_password')} type={showConfirm ? 'text' : 'password'} placeholder="••••••••" className="h-11 text-sm pr-10 placeholder:text-[#4E7E9C]" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon} />
+                    <button type="button" className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: 'rgba(100,170,210,0.7)' }} onClick={() => setShowConfirm(!showConfirm)}>
                       {showConfirm ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
                   </div>
                 </Field>
               </div>
-            </div>
+          </div>
           </div>
 
-          <div className="border-t border-gray-100" />
+          <div style={{ borderTop: '1px solid rgba(0,180,255,0.12)' }} />
 
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-lg bg-[#C5D8E6] flex items-center justify-center text-sm">🏥</div>
-              <h2 className="font-bold text-[#1A2B3C]">Informations du Cabinet</h2>
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center text-sm" style={{ background: 'rgba(0,100,180,0.3)', border: '1px solid rgba(0,200,255,0.3)' }}>🏥</div>
+              <h2 className="font-bold" style={{ color: '#D0EEFF' }}>Informations du Cabinet</h2>
             </div>
             <div className="space-y-4">
               <Field label="Nom du cabinet médical *" error={errors.cabinet?.message}>
-                <Input {...register('cabinet')} placeholder="Cabinet du Dr. X" className="border-gray-200 focus-visible:ring-[#3d8fa8]" />
+                <Input {...register('cabinet')} placeholder="Cabinet du Dr. X" className="h-11 text-sm placeholder:text-[#4E7E9C]" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon} />
               </Field>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Spécialisation médicale *" error={errors.specialisation?.message}>
-                  <select {...register('specialisation')} className="w-full h-10 rounded-md border border-gray-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#3d8fa8] bg-white text-gray-700">
-                    <option value="">Sélectionnez votre spécialité</option>
-                    {SPECIALISATIONS.map((s) => <option key={s} value={s}>{s}</option>)}
+                  <select {...register('specialisation')} className="w-full h-11 px-3 text-sm focus:outline-none" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon}>
+                    <option value="" style={neonOption}>Sélectionnez votre spécialité</option>
+                    {SPECIALISATIONS.map((s) => <option key={s} value={s} style={neonOption}>{s}</option>)}
                   </select>
                 </Field>
                 <Field label="Type de cabinet *" error={errors.type_cabinet?.message}>
-                  <select {...register('type_cabinet')} className="w-full h-10 rounded-md border border-gray-200 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#3d8fa8] bg-white text-gray-700">
-                    <option value="">Choisissez une option</option>
-                    {TYPES_CABINET.map((t) => <option key={t} value={t}>{t}</option>)}
+                  <select {...register('type_cabinet')} className="w-full h-11 px-3 text-sm focus:outline-none" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon}>
+                    <option value="" style={neonOption}>Choisissez une option</option>
+                    {TYPES_CABINET.map((t) => <option key={t} value={t} style={neonOption}>{t}</option>)}
                   </select>
                 </Field>
               </div>
@@ -446,22 +446,21 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-red-600 text-sm">{error}</div>
+            <div className="rounded-lg px-3 py-2 text-sm" style={{ background: 'rgba(220,38,38,0.12)', border: '1px solid rgba(220,38,38,0.3)', color: '#FCA5A5' }}>{error}</div>
           )}
 
-          <Button type="submit" disabled={isSubmitting} className="w-full bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-semibold h-12 rounded-xl shadow-md shadow-[#3d8fa8]/30 text-base">
-            {isSubmitting && <Loader2 size={18} className="animate-spin mr-2" />}
+          <NeonSubmit loading={isSubmitting}>
             {isSubmitting
               ? (EMAIL_VERIFICATION_ENABLED ? 'Envoi du code…' : 'Création du compte…')
               : (EMAIL_VERIFICATION_ENABLED ? 'Continuer — vérifier mon email' : 'Créer mon compte')}
-          </Button>
+          </NeonSubmit>
 
-          <p className="text-center text-sm text-gray-500">
+          <p className="text-center text-sm" style={{ color: 'rgba(120,190,230,0.7)' }}>
             Déjà inscrit ?{' '}
-            <Link href="/login" className="text-[#3d8fa8] font-semibold hover:underline">Se connecter</Link>
+            <Link href="/login" className="font-semibold hover:underline" style={{ color: 'rgba(0,200,255,0.85)' }}>Se connecter</Link>
           </p>
         </form>
-      </div>
+      </NeonCard>
     </div>
   )
 }
