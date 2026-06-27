@@ -353,16 +353,21 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
   return (
     <div className="w-full max-w-2xl mx-auto">
       <div className="text-center mb-6">
-        <button onClick={onBack} className="inline-flex items-center gap-2 text-white/50 hover:text-white text-sm mb-4 transition-colors">
-          <ArrowLeft size={14} /> Changer de rôle
-        </button>
+        <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 mb-4">
+          <Link href="/" className="inline-flex items-center gap-1.5 text-white/50 hover:text-white text-sm transition-colors">
+            <ArrowLeft size={14} /> Retour à l&apos;accueil
+          </Link>
+          <button onClick={onBack} className="inline-flex items-center gap-1.5 text-white/50 hover:text-white text-sm transition-colors">
+            <RefreshCw size={13} /> Changer de rôle
+          </button>
+        </div>
         <div className="inline-flex items-center gap-2 bg-[#3d8fa8]/20 border border-[#3d8fa8]/30 text-[#70B1C4] text-sm font-semibold rounded-full px-4 py-1.5 mb-3">
           <Stethoscope size={14} /> Compte Médecin
         </div>
         <h1 className="text-xl font-bold text-white">Créez votre compte médecin</h1>
       </div>
 
-      <div className="bg-white rounded-3xl shadow-2xl p-8">
+      <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-8">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
             <div className="flex items-center gap-2 mb-4">
