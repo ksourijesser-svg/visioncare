@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { LandingNav } from '@/components/landing/LandingNav'
 
 const FEATURES = [
   {
