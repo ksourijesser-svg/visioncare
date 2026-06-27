@@ -7,11 +7,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Link from 'next/link'
 import { Eye, EyeOff, Loader2, Stethoscope, ClipboardList, ArrowLeft, Mail, RefreshCw, CheckCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { NeonCard, NeonSubmit, neonInputStyle, focusNeon, blurNeon, neonLabelStyle } from '@/components/ui/neon'
 import { authApi } from '@/lib/api'
 import { setToken, setUser } from '@/lib/auth'
+
+const neonOption: React.CSSProperties = { background: '#072037', color: '#C8E8FF' }
 
 // Set to true once a sending domain is verified in Resend (see core/email.py).
 // While false, signup skips the email OTP step and registers the account directly.
