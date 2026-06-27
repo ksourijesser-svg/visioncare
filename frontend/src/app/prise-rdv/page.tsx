@@ -369,7 +369,7 @@ export default function PriseRdvPage() {
                       value={date}
                       onChange={e => { setDate(e.target.value); setConflict(false); setError('') }}
                       min={new Date().toISOString().split('T')[0]}
-                      className={inputClass(fieldErrors.date)}
+                      {...inputProps(fieldErrors.date)}
                     />
                   </Field>
                   <Field label="Heure" error={fieldErrors.heure} required>
