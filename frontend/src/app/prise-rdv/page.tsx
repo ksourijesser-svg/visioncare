@@ -399,7 +399,7 @@ export default function PriseRdvPage() {
                 </div>
                 <div className="mt-4">
                   <Field label="Motif (optionnel)">
-                    <input value={motif} onChange={e => setMotif(e.target.value)} placeholder="Ex: Contrôle annuel, douleur, consultation..." className={inputClass()} />
+                    <input value={motif} onChange={e => setMotif(e.target.value)} placeholder="Ex: Contrôle annuel, douleur, consultation..." {...inputProps()} />
                   </Field>
                 </div>
               </div>
