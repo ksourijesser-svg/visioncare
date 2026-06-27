@@ -449,7 +449,9 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
 
           <Button type="submit" disabled={isSubmitting} className="w-full bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-semibold h-12 rounded-xl shadow-md shadow-[#3d8fa8]/30 text-base">
             {isSubmitting && <Loader2 size={18} className="animate-spin mr-2" />}
-            {isSubmitting ? 'Envoi du code…' : 'Continuer — vérifier mon email'}
+            {isSubmitting
+              ? (EMAIL_VERIFICATION_ENABLED ? 'Envoi du code…' : 'Création du compte…')
+              : (EMAIL_VERIFICATION_ENABLED ? 'Continuer — vérifier mon email' : 'Créer mon compte')}
           </Button>
 
           <p className="text-center text-sm text-gray-500">
@@ -565,7 +567,9 @@ function SecretaireForm({ onBack, onPendingVerification }: { onBack: () => void;
 
           <Button type="submit" disabled={isSubmitting} className="w-full bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-semibold h-12 rounded-xl shadow-md shadow-[#3d8fa8]/30 text-base">
             {isSubmitting && <Loader2 size={18} className="animate-spin mr-2" />}
-            {isSubmitting ? 'Envoi du code…' : 'Continuer — vérifier mon email'}
+            {isSubmitting
+              ? (EMAIL_VERIFICATION_ENABLED ? 'Envoi du code…' : 'Création du compte…')
+              : (EMAIL_VERIFICATION_ENABLED ? 'Continuer — vérifier mon email' : 'Créer mon compte')}
           </Button>
 
           <p className="text-center text-sm text-gray-500">
