@@ -13,6 +13,10 @@ import { Label } from '@/components/ui/label'
 import { authApi } from '@/lib/api'
 import { setToken, setUser } from '@/lib/auth'
 
+// Set to true once a sending domain is verified in Resend (see core/email.py).
+// While false, signup skips the email OTP step and registers the account directly.
+const EMAIL_VERIFICATION_ENABLED = false
+
 const SPECIALISATIONS = [
   'Ophtalmologie', 'Cardiologie', 'Dermatologie', 'Médecine générale',
   'Pédiatrie', 'Gynécologie', 'Orthopédie', 'Neurologie', 'Psychiatrie', 'Stomatologie',
