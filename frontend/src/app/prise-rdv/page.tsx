@@ -351,17 +351,17 @@ export default function PriseRdvPage() {
                 </div>
               </div>
 
-              <div className="border-t border-gray-100" />
+              <div style={{ borderTop: '1px solid rgba(0,180,255,0.12)' }} />
 
               {/* Date + time */}
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-7 h-7 rounded-lg bg-[#C5D8E6] flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#3d8fa8" strokeWidth={2} className="w-3.5 h-3.5">
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'rgba(0,100,180,0.3)', border: '1px solid rgba(0,200,255,0.3)' }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#00D4FF" strokeWidth={2} className="w-3.5 h-3.5">
                       <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
                     </svg>
                   </div>
-                  <h2 className="font-bold text-[#1A2B3C] text-sm">Date &amp; Heure du rendez-vous</h2>
+                  <h2 className="font-bold text-sm" style={{ color: '#D0EEFF' }}>Date &amp; Heure du rendez-vous</h2>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <Field label="Date" error={fieldErrors.date} required>
