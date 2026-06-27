@@ -245,53 +245,54 @@ export default function PriseRdvPage() {
             <p className="text-white/55 text-sm">Remplissez le formulaire, votre médecin recevra la demande immédiatement.</p>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-2xl p-8">
+          <NeonCard>
             <form onSubmit={handleSubmit} className="space-y-6">
 
               {/* Doctor search */}
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-7 h-7 rounded-lg bg-[#C5D8E6] flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#3d8fa8" strokeWidth={2} className="w-3.5 h-3.5">
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'rgba(0,100,180,0.3)', border: '1px solid rgba(0,200,255,0.3)' }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#00D4FF" strokeWidth={2} className="w-3.5 h-3.5">
                       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
                     </svg>
                   </div>
-                  <h2 className="font-bold text-[#1A2B3C] text-sm">Rechercher votre médecin</h2>
+                  <h2 className="font-bold text-sm" style={{ color: '#D0EEFF' }}>Rechercher votre médecin</h2>
                 </div>
 
                 <div className="relative" ref={dropdownRef}>
-                  <div className={`flex items-center gap-2 h-10 rounded-lg border ${fieldErrors.doctor ? 'border-red-300' : 'border-gray-200'} px-3 bg-white focus-within:ring-2 focus-within:ring-[#3d8fa8] transition-all`}>
-                    {searching ? <Loader2 size={15} className="text-gray-400 animate-spin shrink-0" /> : <Search size={15} className="text-gray-400 shrink-0" />}
+                  <div className="flex items-center gap-2 h-11 px-3 transition-all" style={fieldErrors.doctor ? neonInputErrorStyle : neonInputStyle}>
+                    {searching ? <Loader2 size={15} className="animate-spin shrink-0" style={{ color: 'rgba(120,190,230,0.7)' }} /> : <Search size={15} className="shrink-0" style={{ color: 'rgba(120,190,230,0.7)' }} />}
                     <input
                       type="text"
                       placeholder="Nom du médecin ou du cabinet..."
                       value={doctorQuery}
                       onChange={(e) => handleDoctorInput(e.target.value)}
                       onFocus={() => doctorResults.length > 0 && setShowDropdown(true)}
-                      className="flex-1 text-sm outline-none bg-transparent text-[#1A2B3C] placeholder:text-gray-400"
+                      className="flex-1 text-sm outline-none bg-transparent placeholder:text-[#4E7E9C]"
+                      style={{ color: '#C8E8FF' }}
                     />
                     {selectedDoctor && (
-                      <button type="button" onClick={clearDoctor} className="text-gray-400 hover:text-gray-600 shrink-0">
+                      <button type="button" onClick={clearDoctor} className="shrink-0" style={{ color: 'rgba(120,190,230,0.7)' }}>
                         <X size={14} />
                       </button>
                     )}
                   </div>
 
                   {showDropdown && doctorResults.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-20 overflow-hidden">
+                    <div className="absolute top-full left-0 right-0 mt-1 rounded-xl shadow-lg z-20 overflow-hidden" style={{ background: '#06182B', border: '1px solid rgba(0,150,210,0.35)' }}>
                       {doctorResults.map((d) => (
                         <button
                           key={d.id}
                           type="button"
                           onClick={() => selectDoctor(d)}
-                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-[#F0F6FA] transition-colors text-left"
+                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left"
                         >
-                          <div className="w-9 h-9 rounded-full bg-[#3d8fa8]/15 flex items-center justify-center text-[#3d8fa8] text-xs font-bold shrink-0">
+                          <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold shrink-0" style={{ background: 'rgba(0,150,220,0.18)', color: '#00D4FF' }}>
                             {d.prenom[0]}{d.nom[0]}
                           </div>
                           <div className="min-w-0">
-                            <p className="text-sm font-semibold text-[#1A2B3C]">Dr. {d.prenom} {d.nom}</p>
-                            <p className="text-xs text-gray-500 truncate">{d.cabinet ?? ''}{d.specialisation ? ` · ${d.specialisation}` : ''}</p>
+                            <p className="text-sm font-semibold" style={{ color: '#D0EEFF' }}>Dr. {d.prenom} {d.nom}</p>
+                            <p className="text-xs truncate" style={{ color: 'rgba(120,190,230,0.6)' }}>{d.cabinet ?? ''}{d.specialisation ? ` · ${d.specialisation}` : ''}</p>
                           </div>
                         </button>
                       ))}
@@ -299,38 +300,38 @@ export default function PriseRdvPage() {
                   )}
 
                   {showDropdown && doctorResults.length === 0 && !searching && doctorQuery.length >= 2 && (
-                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-20 px-4 py-3 text-sm text-gray-500">
+                    <div className="absolute top-full left-0 right-0 mt-1 rounded-xl shadow-lg z-20 px-4 py-3 text-sm" style={{ background: '#06182B', border: '1px solid rgba(0,150,210,0.35)', color: 'rgba(120,190,230,0.7)' }}>
                       Aucun médecin trouvé pour « {doctorQuery} »
                     </div>
                   )}
                 </div>
 
                 {selectedDoctor && (
-                  <div className="mt-2 bg-[#F0F6FA] border border-[#3d8fa8]/20 rounded-xl px-4 py-2.5 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#3d8fa8]/20 flex items-center justify-center text-[#3d8fa8] text-xs font-bold shrink-0">
+                  <div className="mt-2 rounded-xl px-4 py-2.5 flex items-center gap-3" style={{ background: 'rgba(0,150,220,0.10)', border: '1px solid rgba(0,200,255,0.25)' }}>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0" style={{ background: 'rgba(0,150,220,0.2)', color: '#00D4FF' }}>
                       {selectedDoctor.prenom[0]}{selectedDoctor.nom[0]}
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-[#1A2B3C]">Dr. {selectedDoctor.prenom} {selectedDoctor.nom}</p>
-                      {selectedDoctor.cabinet && <p className="text-xs text-gray-500">{selectedDoctor.cabinet}{selectedDoctor.specialisation ? ` · ${selectedDoctor.specialisation}` : ''}</p>}
+                      <p className="text-sm font-semibold" style={{ color: '#D0EEFF' }}>Dr. {selectedDoctor.prenom} {selectedDoctor.nom}</p>
+                      {selectedDoctor.cabinet && <p className="text-xs" style={{ color: 'rgba(120,190,230,0.6)' }}>{selectedDoctor.cabinet}{selectedDoctor.specialisation ? ` · ${selectedDoctor.specialisation}` : ''}</p>}
                     </div>
-                    <CheckCircle2 size={16} className="text-emerald-500 ml-auto shrink-0" />
+                    <CheckCircle2 size={16} className="text-emerald-400 ml-auto shrink-0" />
                   </div>
                 )}
-                {fieldErrors.doctor && <p className="text-red-500 text-xs mt-1">{fieldErrors.doctor}</p>}
+                {fieldErrors.doctor && <p className="text-xs mt-1" style={{ color: '#FF7B7B' }}>{fieldErrors.doctor}</p>}
               </div>
 
-              <div className="border-t border-gray-100" />
+              <div style={{ borderTop: '1px solid rgba(0,180,255,0.12)' }} />
 
               {/* Patient info */}
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-7 h-7 rounded-lg bg-[#C5D8E6] flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#3d8fa8" strokeWidth={2} className="w-3.5 h-3.5">
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'rgba(0,100,180,0.3)', border: '1px solid rgba(0,200,255,0.3)' }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#00D4FF" strokeWidth={2} className="w-3.5 h-3.5">
                       <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
                     </svg>
                   </div>
-                  <h2 className="font-bold text-[#1A2B3C] text-sm">Vos informations</h2>
+                  <h2 className="font-bold text-sm" style={{ color: '#D0EEFF' }}>Vos informations</h2>
                 </div>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
