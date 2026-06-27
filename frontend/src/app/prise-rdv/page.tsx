@@ -389,13 +389,14 @@ export default function PriseRdvPage() {
                     type="button"
                     onClick={openCalendar}
                     disabled={!selectedDoctor}
-                    className="inline-flex items-center gap-1.5 text-[#3d8fa8] hover:text-[#2d7a94] disabled:text-gray-400 disabled:cursor-not-allowed font-semibold text-sm transition-colors"
+                    className="inline-flex items-center gap-1.5 font-semibold text-sm transition-colors disabled:cursor-not-allowed"
+                    style={{ color: selectedDoctor ? 'rgba(0,200,255,0.85)' : 'rgba(120,190,230,0.4)' }}
                   >
                     <Calendar size={15} />
                     Voir calendrier
                   </button>
                   {!selectedDoctor && (
-                    <p className="text-xs text-gray-400 mt-1">Sélectionnez d&apos;abord un médecin pour voir ses disponibilités.</p>
+                    <p className="text-xs mt-1" style={{ color: 'rgba(120,190,230,0.5)' }}>Sélectionnez d&apos;abord un médecin pour voir ses disponibilités.</p>
                   )}
                 </div>
                 <div className="mt-4">
