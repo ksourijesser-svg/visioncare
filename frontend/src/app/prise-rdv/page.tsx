@@ -407,13 +407,14 @@ export default function PriseRdvPage() {
               </div>
 
               {error && (
-                <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-red-600 text-sm">
+                <div className="rounded-lg px-3 py-2 text-sm" style={{ background: 'rgba(220,38,38,0.12)', border: '1px solid rgba(220,38,38,0.3)', color: '#FCA5A5' }}>
                   <p>{error}</p>
                   {conflict && (
                     <button
                       type="button"
                       onClick={openCalendar}
-                      className="mt-2 inline-flex items-center gap-1.5 bg-[#3d8fa8] hover:bg-[#2d7a94] text-white font-semibold rounded-lg px-3 py-1.5 text-xs transition-colors"
+                      className="mt-2 inline-flex items-center gap-1.5 text-white font-semibold rounded-lg px-3 py-1.5 text-xs transition-all"
+                      style={{ background: 'linear-gradient(135deg, #007BB8, #00AADD)', border: '1px solid rgba(0,200,255,0.4)' }}
                     >
                       <Calendar size={13} />
                       Voir calendrier
@@ -422,27 +423,22 @@ export default function PriseRdvPage() {
                 </div>
               )}
 
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full flex items-center justify-center gap-2 bg-[#3d8fa8] hover:bg-[#2d7a94] disabled:opacity-60 text-white font-semibold h-12 rounded-xl shadow-lg shadow-[#3d8fa8]/30 transition-all text-base"
-              >
-                {submitting && <Loader2 size={18} className="animate-spin" />}
+              <NeonSubmit loading={submitting}>
                 {submitting ? 'Envoi en cours...' : 'Confirmer le rendez-vous'}
-              </button>
+              </NeonSubmit>
 
-              <p className="text-center text-xs text-gray-400">
+              <p className="text-center text-xs" style={{ color: 'rgba(120,190,230,0.6)' }}>
                 Vous êtes médecin ?{' '}
-                <Link href="/login" className="text-[#3d8fa8] font-medium hover:underline">
+                <Link href="/login" className="font-medium hover:underline" style={{ color: 'rgba(0,200,255,0.85)' }}>
                   Connectez-vous
                 </Link>{' '}
                 ou{' '}
-                <Link href="/inscription" className="text-[#3d8fa8] font-medium hover:underline">
+                <Link href="/inscription" className="font-medium hover:underline" style={{ color: 'rgba(0,200,255,0.85)' }}>
                   créez votre compte
                 </Link>
               </p>
             </form>
-          </div>
+          </NeonCard>
         </div>
       </div>
 
