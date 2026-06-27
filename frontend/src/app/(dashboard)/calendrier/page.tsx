@@ -111,13 +111,13 @@ export default function CalendrierPage() {
           </div>
 
           {/* Right: view switcher + button */}
-          <div className="flex items-center gap-2">
-            <div className="flex bg-[#E4EEF4] dark:bg-[#06101E] rounded-xl p-1 gap-0.5">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+            <div className="flex bg-[#E4EEF4] dark:bg-[#06101E] rounded-xl p-1 gap-0.5 w-full sm:w-auto">
               {(['jour', 'semaine', 'mois'] as ViewMode[]).map((v) => (
                 <button
                   key={v}
                   onClick={() => setView(v)}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+                  className={`flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                     view === v
                       ? 'bg-[#70B1C4] text-white shadow-md shadow-[#70B1C4]/30'
                       : 'text-gray-500 dark:text-[#7AAABB] hover:text-[#1A2B3C] dark:hover:text-[#E2EDF5]'
@@ -129,7 +129,7 @@ export default function CalendrierPage() {
             </div>
             <Button
               onClick={() => setModalOpen(true)}
-              className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30 btn-neon"
+              className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30 btn-neon w-full sm:w-auto whitespace-nowrap"
             >
               <Plus size={16} className="mr-1.5" /> Nouveau RDV
             </Button>
