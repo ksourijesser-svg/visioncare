@@ -169,8 +169,12 @@ export default function PriseRdvPage() {
     return acc
   }, {} as Record<string, { start: Date; end: Date }[]>)
 
-  const inputClass = (err?: string) =>
-    `w-full h-10 rounded-lg border ${err ? 'border-red-300 focus:ring-red-400' : 'border-gray-200 focus:ring-[#3d8fa8]'} px-3 text-sm focus:outline-none focus:ring-2 transition-colors bg-white text-[#1A2B3C]`
+  const inputProps = (err?: string) => ({
+    className: neonFieldClass,
+    style: err ? neonInputErrorStyle : neonInputStyle,
+    onFocus: focusNeon,
+    onBlur: blurNeon,
+  })
 
   if (success) {
     return (
