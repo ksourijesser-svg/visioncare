@@ -374,6 +374,37 @@ export default function PriseRdvPage() {
                         </a>
                       </div>
                     )}
+
+                    {selectedDoctor.google_maps_url && (
+                      <div style={{ borderTop: '1px solid rgba(0,180,255,0.15)' }}>
+                        <button
+                          type="button"
+                          onClick={() => setShowAvis((v) => !v)}
+                          className="w-full flex items-center gap-2 px-4 py-2.5 text-left transition-colors hover:bg-white/5"
+                        >
+                          <Star size={15} className="shrink-0" style={{ color: '#FFC53D', fill: '#FFC53D' }} />
+                          <span className="text-sm font-semibold" style={{ color: '#D0EEFF' }}>Avis Google</span>
+                          <ChevronDown size={15} className="ml-auto shrink-0 transition-transform" style={{ color: 'rgba(120,190,230,0.7)', transform: showAvis ? 'rotate(180deg)' : 'none' }} />
+                        </button>
+                        {showAvis && (
+                          <div className="px-4 pb-4 pt-1">
+                            <p className="text-xs mb-3" style={{ color: 'rgba(120,190,230,0.7)' }}>
+                              Consultez l&apos;ensemble des avis vérifiés des patients sur la fiche Google de votre médecin.
+                            </p>
+                            <a
+                              href={selectedDoctor.google_maps_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold transition-all"
+                              style={{ background: 'linear-gradient(135deg, #007BB8, #00AADD)', color: '#fff', border: '1px solid rgba(0,200,255,0.4)' }}
+                            >
+                              <Star size={14} style={{ fill: '#fff' }} /> Voir tous les avis sur Google
+                              <ExternalLink size={13} />
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
                 {fieldErrors.doctor && <p className="text-xs mt-1" style={{ color: '#FF7B7B' }}>{fieldErrors.doctor}</p>}
