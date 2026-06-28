@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import or_
 from pydantic import BaseModel
 from datetime import datetime, timedelta
+from app.core.maps import get_place_info
 from app.db.base import get_db
 from app.models.user import User, UserRole
 from app.models.patient import Patient
