@@ -18,6 +18,11 @@ class Settings(BaseSettings):
     RESEND_API_KEY: str = ""
     EMAIL_FROM: str = "VisionCare <onboarding@resend.dev>"
 
+    # Google Places API — optional. When set, the public booking page shows
+    # the doctor's Google reviews inline. Without it, only the map + a link
+    # to the doctor's Google profile are shown.
+    GOOGLE_PLACES_API_KEY: str = ""
+
     class Config:
         env_file = ".env"
 
