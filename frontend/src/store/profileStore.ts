@@ -74,6 +74,7 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
         specialite:        updated.specialite,
         rpps:              updated.rpps,
         cabinet_adresse:   updated.cabinet_adresse,
+        google_maps_url:   updated.google_maps_url,
         cabinet_telephone: updated.cabinet_telephone,
         cabinet_email:     updated.cabinet_email,
         cabinet_site:      updated.cabinet_site,
