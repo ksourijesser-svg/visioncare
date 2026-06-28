@@ -11,7 +11,7 @@ from app.core.email import send_code_email
 from app.core.security import create_access_token, decode_token, hash_password, verify_password
 from app.db.base import get_db
 from app.models.user import User
-from app.schemas.user import Token, UserCreate, UserOut
+from app.schemas.user import Token, UserCreate, UserOut, UserUpdate
 
 router = APIRouter(prefix="/auth", tags=["Authentification"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
