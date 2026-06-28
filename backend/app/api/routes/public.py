@@ -121,6 +121,21 @@ def create_public_rdv(data: PublicRdvCreate, db: Session = Depends(get_db)):
     return {"message": "Rendez-vous créé avec succès", "rdv_id": rdv.id}
 
 
+@router.get("/doctors/{doctor_id}/place")
+def doctor_place(doctor_id: int, db: Session = Depends(get_db)):
+    """Map embed query + Google reviews (if a Places API key is configured)."""
+    doctor = (
+        db.query(User)
+        .filter(User.id == doctor_id, User.role == UserRole.medecin, User.is_active == True)
+        .first()
+    )
+    if not doctor:
+        raise HTTPException(status_code=404, detail="Médecin introuvable")
+
+    name_hint = " ".join(filter(None, [doctor.prenom, doctor.nom, doctor.cabinet]))
+    return get_place_info(doctor.google_maps_url, doctor.adresse, name_hint)
+
+
 @router.get("/doctors/{doctor_id}/busy")
 def doctor_busy(doctor_id: int, db: Session = Depends(get_db)):
     """Occupied slots (from today onward) for a doctor — times only, no patient data."""
