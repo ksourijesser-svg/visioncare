@@ -19,6 +19,11 @@ export function Header({ title }: HeaderProps) {
   const { theme, toggle } = useTheme()
   const initials = user ? `${user.prenom[0]}${user.nom[0]}`.toUpperCase() : 'U'
 
+  function logout() {
+    removeToken()
+    router.push('/login')
+  }
+
   return (
     <header className="
       mx-4 mt-3 mb-1 rounded-2xl h-14
