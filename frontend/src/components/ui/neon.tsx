@@ -38,11 +38,11 @@ export const neonInputErrorStyle: React.CSSProperties = {
   border: '1px solid rgba(248,113,113,0.55)',
 }
 
-export const focusNeon = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+export const focusNeon = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
   e.currentTarget.style.border = '1px solid rgba(0,200,255,0.65)'
   e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,180,255,0.13), 0 0 12px rgba(0,180,255,0.15)'
 }
-export const blurNeon = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+export const blurNeon = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
   e.currentTarget.style.border = '1px solid rgba(0,150,210,0.35)'
   e.currentTarget.style.boxShadow = 'none'
 }
