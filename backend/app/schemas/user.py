@@ -26,6 +26,7 @@ class UserUpdate(BaseModel):
     specialisation: str | None = None
     type_cabinet: str | None = None
     adresse: str | None = None
+    google_maps_url: str | None = None
     photo: str | None = None
 
 
