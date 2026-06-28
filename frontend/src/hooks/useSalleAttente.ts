@@ -15,6 +15,7 @@ export interface SalleRdv {
   statut: string
   salle_statut: SalleStatut
   heure_arrivee: string | null
+  prix_consultation: number | null
 }
 
 export function useSalleAttente() {
