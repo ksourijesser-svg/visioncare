@@ -469,6 +469,17 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
                   </div>
                 </Field>
               </div>
+              <Field label="Biographie / Présentation (optionnel)" error={errors.bio?.message}>
+                <textarea
+                  {...register('bio')}
+                  rows={4}
+                  placeholder="Présentez-vous à vos patients : parcours, expertise, approche de soin..."
+                  className="w-full text-sm px-3 py-2 rounded-[10px] focus:outline-none transition-all placeholder:text-[#4E7E9C] resize-y"
+                  style={neonInputStyle}
+                  onFocus={focusNeon}
+                  onBlur={blurNeon}
+                />
+              </Field>
           </div>
           </div>
 
