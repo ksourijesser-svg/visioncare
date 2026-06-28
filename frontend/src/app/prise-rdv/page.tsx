@@ -44,6 +44,22 @@ interface BusySlot {
   duree: number
 }
 
+interface Review {
+  author_name: string | null
+  rating: number | null
+  text: string | null
+  relative_time: string | null
+  profile_photo_url: string | null
+}
+
+interface PlaceInfo {
+  embed_q: string | null
+  maps_url: string | null
+  rating: number | null
+  total: number | null
+  reviews: Review[]
+}
+
 function Field({ label, error, children, required }: { label: string; error?: string; children: React.ReactNode; required?: boolean }) {
   return (
     <div className="space-y-1.5">
