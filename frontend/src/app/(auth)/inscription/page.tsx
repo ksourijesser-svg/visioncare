@@ -405,6 +405,38 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
               <h2 className="font-bold" style={{ color: '#D0EEFF' }}>Informations personnelles</h2>
             </div>
             <div className="space-y-4">
+              {/* Photo de profil — affichée aux patients sur la page de prise de rendez-vous */}
+              <div className="flex items-center gap-4">
+                <div
+                  className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center shrink-0"
+                  style={{ background: 'rgba(0,25,55,0.7)', border: '1px solid rgba(0,150,210,0.35)' }}
+                >
+                  {photo
+                    ? <img src={photo} alt="Aperçu" className="w-full h-full object-cover" />
+                    : <Camera size={22} style={{ color: 'rgba(100,170,210,0.6)' }} />}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => photoInputRef.current?.click()}
+                      disabled={uploadingPhoto}
+                      className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors disabled:opacity-60"
+                      style={{ background: 'rgba(0,100,180,0.3)', border: '1px solid rgba(0,200,255,0.3)', color: '#D0EEFF' }}
+                    >
+                      {uploadingPhoto ? <Loader2 size={13} className="animate-spin" /> : <Camera size={13} />}
+                      {photo ? 'Changer la photo' : 'Ajouter une photo'}
+                    </button>
+                    {photo && (
+                      <button type="button" onClick={() => setPhoto('')} className="inline-flex items-center gap-1 text-xs transition-colors" style={{ color: 'rgba(120,190,230,0.7)' }}>
+                        <Trash2 size={12} /> Retirer
+                      </button>
+                    )}
+                  </div>
+                  <p className="text-xs mt-1.5" style={{ color: 'rgba(120,190,230,0.55)' }}>Visible par vos patients lors de la prise de rendez-vous.</p>
+                  <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhoto} />
+                </div>
+              </div>
               <Field label="Nom complet du médecin *" error={errors.nom_complet?.message}>
                 <Input {...register('nom_complet')} placeholder="Dr. Nom Prénom" className="h-11 text-sm placeholder:text-[#4E7E9C]" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon} />
               </Field>
