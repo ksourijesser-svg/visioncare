@@ -61,6 +61,7 @@ def search_doctors(q: str = Query(..., min_length=1), db: Session = Depends(get_
             "cabinet": d.cabinet,
             "specialisation": d.specialisation,
             "adresse": d.adresse,
+            "bio": d.bio,
             "google_maps_url": d.google_maps_url,
             "photo": d.photo,
         }
