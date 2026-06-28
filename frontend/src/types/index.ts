@@ -8,6 +8,9 @@ export interface User {
   role: UserRole
   cabinet?: string
   telephone?: string
+  specialisation?: string
+  adresse?: string
+  photo?: string
 }
 
 export interface AuthTokens {
