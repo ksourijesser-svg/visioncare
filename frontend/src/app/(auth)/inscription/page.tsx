@@ -6,12 +6,13 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Link from 'next/link'
-import { Eye, EyeOff, Loader2, Stethoscope, ClipboardList, ArrowLeft, Mail, RefreshCw, CheckCircle } from 'lucide-react'
+import { Eye, EyeOff, Loader2, Stethoscope, ClipboardList, ArrowLeft, Mail, RefreshCw, CheckCircle, Camera, Trash2 } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { NeonCard, NeonSubmit, neonInputStyle, focusNeon, blurNeon, neonLabelStyle } from '@/components/ui/neon'
 import { authApi } from '@/lib/api'
 import { setToken, setUser } from '@/lib/auth'
+import { fileToResizedDataUrl } from '@/lib/image'
 
 const neonOption: React.CSSProperties = { background: '#072037', color: '#C8E8FF' }
 
