@@ -335,15 +335,41 @@ export default function PriseRdvPage() {
                 </div>
 
                 {selectedDoctor && (
-                  <div className="mt-2 rounded-xl px-4 py-2.5 flex items-center gap-3" style={{ background: 'rgba(0,150,220,0.10)', border: '1px solid rgba(0,200,255,0.25)' }}>
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0" style={{ background: 'rgba(0,150,220,0.2)', color: '#00D4FF' }}>
-                      {selectedDoctor.prenom[0]}{selectedDoctor.nom[0]}
+                  <div className="mt-2 rounded-xl overflow-hidden" style={{ background: 'rgba(0,150,220,0.10)', border: '1px solid rgba(0,200,255,0.25)' }}>
+                    <div className="px-4 py-3 flex items-center gap-3">
+                      <DoctorAvatar doctor={selectedDoctor} size={48} />
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold" style={{ color: '#D0EEFF' }}>Dr. {selectedDoctor.prenom} {selectedDoctor.nom}</p>
+                        {selectedDoctor.cabinet && <p className="text-xs" style={{ color: 'rgba(120,190,230,0.6)' }}>{selectedDoctor.cabinet}{selectedDoctor.specialisation ? ` · ${selectedDoctor.specialisation}` : ''}</p>}
+                        {selectedDoctor.adresse && (
+                          <p className="text-xs flex items-center gap-1 mt-0.5" style={{ color: 'rgba(120,190,230,0.6)' }}>
+                            <MapPin size={11} className="shrink-0" /> {selectedDoctor.adresse}
+                          </p>
+                        )}
+                      </div>
+                      <CheckCircle2 size={16} className="text-emerald-400 ml-auto shrink-0 self-start mt-0.5" />
                     </div>
-                    <div>
-                      <p className="text-sm font-semibold" style={{ color: '#D0EEFF' }}>Dr. {selectedDoctor.prenom} {selectedDoctor.nom}</p>
-                      {selectedDoctor.cabinet && <p className="text-xs" style={{ color: 'rgba(120,190,230,0.6)' }}>{selectedDoctor.cabinet}{selectedDoctor.specialisation ? ` · ${selectedDoctor.specialisation}` : ''}</p>}
-                    </div>
-                    <CheckCircle2 size={16} className="text-emerald-400 ml-auto shrink-0" />
+                    {selectedDoctor.adresse && (
+                      <div className="relative" style={{ borderTop: '1px solid rgba(0,180,255,0.15)' }}>
+                        <iframe
+                          title="Localisation du cabinet"
+                          src={`https://maps.google.com/maps?q=${encodeURIComponent(selectedDoctor.adresse)}&z=15&output=embed`}
+                          className="w-full h-44 block"
+                          style={{ border: 0, filter: 'grayscale(0.2) contrast(1.05)' }}
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                        />
+                        <a
+                          href={`https://maps.google.com/maps?q=${encodeURIComponent(selectedDoctor.adresse)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium backdrop-blur-sm"
+                          style={{ background: 'rgba(3,16,34,0.85)', border: '1px solid rgba(0,200,255,0.3)', color: '#00D4FF' }}
+                        >
+                          <MapPin size={11} /> Itinéraire
+                        </a>
+                      </div>
+                    )}
                   </div>
                 )}
                 {fieldErrors.doctor && <p className="text-xs mt-1" style={{ color: '#FF7B7B' }}>{fieldErrors.doctor}</p>}
