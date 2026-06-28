@@ -390,7 +390,7 @@ export default function PriseRdvPage() {
                         </div>
                       )}
 
-                      <div className="relative px-4 py-4" style={{ maxWidth: '64%', minHeight: '128px' }}>
+                      <div className="relative px-4 py-4" style={{ maxWidth: '60%', minHeight: '170px' }}>
                         {selectedDoctor.specialisation && (
                           <span className="inline-block text-[11px] font-semibold px-2.5 py-0.5 rounded-full mb-2" style={{ background: 'rgba(0,200,255,0.16)', color: '#8FE3FF', border: '1px solid rgba(0,200,255,0.25)' }}>
                             {selectedDoctor.specialisation}
