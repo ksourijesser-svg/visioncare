@@ -181,6 +181,81 @@ export default function SalleAttentePage() {
           </div>
         )}
       </div>
+
+      {/* Modal — prix de consultation (avant de terminer) */}
+      {pricingFor && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={() => !update.isPending && setPricingFor(null)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-sm rounded-2xl overflow-hidden bg-white dark:bg-[#0C1F36] shadow-2xl border border-gray-100 dark:border-[#1C3F62]/60"
+            style={{ boxShadow: '0 0 0 1px rgba(112,177,196,0.15), 0 20px 60px rgba(0,0,0,0.45), 0 0 40px rgba(61,143,168,0.25)' }}
+          >
+            {/* Header */}
+            <div className="relative px-5 py-4 bg-gradient-to-r from-[#E4F0F4] to-white dark:from-[#13344b] dark:to-[#0C1F36]">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-[#70B1C4]/15 dark:bg-[#70B1C4]/20 flex items-center justify-center">
+                  <Banknote size={18} className="text-[#3d8fa8] dark:text-[#70B1C4]" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-[#1A2B3C] dark:text-[#EDF8FF] leading-tight">Prix de la consultation</h3>
+                  <p className="text-xs text-gray-400 dark:text-[#7AAABB]">{pricingFor.patient_prenom} {pricingFor.patient_nom}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => !update.isPending && setPricingFor(null)}
+                className="absolute top-3 right-3 p-1 rounded-lg text-gray-400 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="p-5 space-y-3">
+              <label className="block text-xs font-medium text-gray-500 dark:text-[#7AAABB]">
+                Montant à facturer
+              </label>
+              <div className="relative">
+                <input
+                  type="number"
+                  min="0"
+                  step="0.001"
+                  autoFocus
+                  value={priceInput}
+                  onChange={(e) => { setPriceInput(e.target.value); setPriceError('') }}
+                  onKeyDown={(e) => { if (e.key === 'Enter') confirmTermine() }}
+                  placeholder="0.000"
+                  className="w-full h-12 pl-4 pr-16 text-lg font-semibold rounded-xl outline-none transition-all bg-gray-50 dark:bg-[#091628] text-[#1A2B3C] dark:text-[#EDF8FF] border border-gray-200 dark:border-[#1C3F62]/60 focus:border-[#70B1C4] focus:ring-2 focus:ring-[#70B1C4]/30"
+                />
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400 dark:text-[#7AAABB]">TND</span>
+              </div>
+              {priceError && <p className="text-xs text-red-500">{priceError}</p>}
+              <p className="text-xs text-gray-400 dark:text-[#5E8BA8]">Ce montant sera réutilisé lors de la création de la facture.</p>
+            </div>
+
+            {/* Footer */}
+            <div className="px-5 pb-5 flex items-center gap-2.5">
+              <button
+                onClick={() => setPricingFor(null)}
+                disabled={update.isPending}
+                className="flex-1 h-10 rounded-xl text-sm font-semibold text-gray-600 dark:text-[#B4D0E0] bg-gray-100 dark:bg-[#13283f] hover:bg-gray-200 dark:hover:bg-[#1C3F62]/60 transition-colors disabled:opacity-50"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={confirmTermine}
+                disabled={update.isPending}
+                className="flex-1 h-10 rounded-xl text-sm font-semibold text-white bg-[#70B1C4] hover:bg-[#5a9db8] transition-colors btn-neon inline-flex items-center justify-center gap-2 disabled:opacity-60"
+              >
+                {update.isPending ? <Loader2 size={15} className="animate-spin" /> : <CheckCircle2 size={15} />}
+                Terminer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
