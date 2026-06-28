@@ -123,6 +123,7 @@ export default function PriseRdvPage() {
     setDoctorQuery(`Dr. ${doctor.prenom} ${doctor.nom}`)
     setShowDropdown(false)
     setDoctorResults([])
+    setShowAvis(false)
   }
 
   function clearDoctor() {
@@ -130,6 +131,7 @@ export default function PriseRdvPage() {
     setDoctorQuery('')
     setDoctorResults([])
     setShowDropdown(false)
+    setShowAvis(false)
   }
 
   async function handleSubmit(e: React.FormEvent) {
