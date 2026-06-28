@@ -1,11 +1,11 @@
 'use client'
 
-import { Bell, User, Sun, Moon } from 'lucide-react'
+import { Bell, User, Sun, Moon, LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { getUser } from '@/lib/auth'
+import { getUser, removeToken } from '@/lib/auth'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import {
-  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useTheme } from '@/providers/ThemeProvider'
 
