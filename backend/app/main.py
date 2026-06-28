@@ -29,6 +29,7 @@ def create_tables():
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS specialisation VARCHAR",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS type_cabinet VARCHAR",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS adresse VARCHAR",
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS bio TEXT",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS google_maps_url VARCHAR",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS photo TEXT",
         ]:
