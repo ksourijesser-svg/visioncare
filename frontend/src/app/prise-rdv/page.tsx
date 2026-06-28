@@ -384,18 +384,25 @@ export default function PriseRdvPage() {
                       </div>
                       <CheckCircle2 size={16} className="text-emerald-400 ml-auto shrink-0 self-start mt-0.5" />
                     </div>
-                    {selectedDoctor.adresse && (
+                    {loadingPlace && (
+                      <div className="flex items-center justify-center py-6" style={{ borderTop: '1px solid rgba(0,180,255,0.15)' }}>
+                        <Loader2 size={18} className="animate-spin" style={{ color: '#00D4FF' }} />
+                      </div>
+                    )}
+
+                    {/* Map — rendered from the doctor's Google Maps link (fallback: address) */}
+                    {placeInfo?.embed_q && (
                       <div className="relative" style={{ borderTop: '1px solid rgba(0,180,255,0.15)' }}>
                         <iframe
                           title="Localisation du cabinet"
-                          src={`https://maps.google.com/maps?q=${encodeURIComponent(selectedDoctor.adresse)}&z=15&output=embed`}
+                          src={`https://maps.google.com/maps?q=${encodeURIComponent(placeInfo.embed_q)}&z=16&output=embed`}
                           className="w-full h-44 block"
                           style={{ border: 0, filter: 'grayscale(0.2) contrast(1.05)' }}
                           loading="lazy"
                           referrerPolicy="no-referrer-when-downgrade"
                         />
                         <a
-                          href={`https://maps.google.com/maps?q=${encodeURIComponent(selectedDoctor.adresse)}`}
+                          href={placeInfo.maps_url || `https://maps.google.com/maps?q=${encodeURIComponent(placeInfo.embed_q)}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium backdrop-blur-sm"
@@ -406,34 +413,53 @@ export default function PriseRdvPage() {
                       </div>
                     )}
 
+                    {/* Avis Google — inline reviews (when a Places API key is configured) */}
                     {selectedDoctor.google_maps_url && (
-                      <div style={{ borderTop: '1px solid rgba(0,180,255,0.15)' }}>
-                        <button
-                          type="button"
-                          onClick={() => setShowAvis((v) => !v)}
-                          className="w-full flex items-center gap-2 px-4 py-2.5 text-left transition-colors hover:bg-white/5"
-                        >
+                      <div className="px-4 py-3" style={{ borderTop: '1px solid rgba(0,180,255,0.15)' }}>
+                        <div className="flex items-center gap-2 mb-3">
                           <Star size={15} className="shrink-0" style={{ color: '#FFC53D', fill: '#FFC53D' }} />
                           <span className="text-sm font-semibold" style={{ color: '#D0EEFF' }}>Avis Google</span>
-                          <ChevronDown size={15} className="ml-auto shrink-0 transition-transform" style={{ color: 'rgba(120,190,230,0.7)', transform: showAvis ? 'rotate(180deg)' : 'none' }} />
-                        </button>
-                        {showAvis && (
-                          <div className="px-4 pb-4 pt-1">
-                            <p className="text-xs mb-3" style={{ color: 'rgba(120,190,230,0.7)' }}>
-                              Consultez l&apos;ensemble des avis vérifiés des patients sur la fiche Google de votre médecin.
-                            </p>
-                            <a
-                              href={selectedDoctor.google_maps_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold transition-all"
-                              style={{ background: 'linear-gradient(135deg, #007BB8, #00AADD)', color: '#fff', border: '1px solid rgba(0,200,255,0.4)' }}
-                            >
-                              <Star size={14} style={{ fill: '#fff' }} /> Voir tous les avis sur Google
-                              <ExternalLink size={13} />
-                            </a>
+                          {placeInfo?.rating != null && (
+                            <span className="text-xs font-semibold ml-1 px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,197,61,0.14)', color: '#FFD66B' }}>
+                              {placeInfo.rating.toFixed(1)} ★{placeInfo.total != null ? ` · ${placeInfo.total} avis` : ''}
+                            </span>
+                          )}
+                        </div>
+
+                        {placeInfo && placeInfo.reviews.length > 0 ? (
+                          <div className="space-y-2.5">
+                            {placeInfo.reviews.slice(0, 2).map((r, i) => (
+                              <div key={i} className="rounded-lg p-3" style={{ background: 'rgba(0,30,60,0.5)', border: '1px solid rgba(0,150,210,0.18)' }}>
+                                <div className="flex items-center gap-2 mb-1">
+                                  <span className="text-xs font-semibold truncate" style={{ color: '#D0EEFF' }}>{r.author_name || 'Patient'}</span>
+                                  {r.rating != null && (
+                                    <span className="text-xs shrink-0" style={{ color: '#FFD66B' }}>
+                                      {'★'.repeat(Math.round(r.rating))}<span style={{ color: 'rgba(120,190,230,0.3)' }}>{'★'.repeat(5 - Math.round(r.rating))}</span>
+                                    </span>
+                                  )}
+                                  {r.relative_time && <span className="text-[11px] ml-auto shrink-0" style={{ color: 'rgba(120,190,230,0.5)' }}>{r.relative_time}</span>}
+                                </div>
+                                {r.text && <p className="text-xs leading-relaxed line-clamp-3" style={{ color: 'rgba(180,215,240,0.8)' }}>{r.text}</p>}
+                              </div>
+                            ))}
                           </div>
-                        )}
+                        ) : !loadingPlace ? (
+                          <p className="text-xs mb-3" style={{ color: 'rgba(120,190,230,0.7)' }}>
+                            Consultez les avis vérifiés des patients sur la fiche Google de votre médecin.
+                          </p>
+                        ) : null}
+
+                        <a
+                          href={selectedDoctor.google_maps_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold transition-all"
+                          style={{ background: 'linear-gradient(135deg, #007BB8, #00AADD)', color: '#fff', border: '1px solid rgba(0,200,255,0.4)' }}
+                        >
+                          <Star size={14} style={{ fill: '#fff' }} />
+                          {placeInfo && placeInfo.reviews.length > 0 ? 'Voir tous les avis sur Google' : 'Voir les avis sur Google'}
+                          <ExternalLink size={13} />
+                        </a>
                       </div>
                     )}
                   </div>
