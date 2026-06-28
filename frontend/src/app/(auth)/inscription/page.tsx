@@ -480,6 +480,9 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
               <Field label="Nom du cabinet médical *" error={errors.cabinet?.message}>
                 <Input {...register('cabinet')} placeholder="Cabinet du Dr. X" className="h-11 text-sm placeholder:text-[#4E7E9C]" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon} />
               </Field>
+              <Field label="Adresse du cabinet" error={errors.adresse?.message}>
+                <Input {...register('adresse')} placeholder="12 rue de la Santé, 75014 Paris" className="h-11 text-sm placeholder:text-[#4E7E9C]" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon} />
+              </Field>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Spécialisation médicale *" error={errors.specialisation?.message}>
                   <select {...register('specialisation')} className="w-full h-11 px-3 text-sm focus:outline-none" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon}>
