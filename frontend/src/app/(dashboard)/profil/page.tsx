@@ -213,7 +213,7 @@ export default function ProfilPage() {
 
               <div className="space-y-1">
                 <Label className="text-xs text-gray-500 dark:text-[#7AAABB]">Nom du cabinet *</Label>
-                <Input {...register('cabinet_nom')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" placeholder="Cabinet VisionCare" />
+                <Input {...register('cabinet_nom')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" placeholder="Cabinet Ophtech" />
                 {errors.cabinet_nom && <p className="text-red-500 text-xs">{errors.cabinet_nom.message}</p>}
               </div>
 
