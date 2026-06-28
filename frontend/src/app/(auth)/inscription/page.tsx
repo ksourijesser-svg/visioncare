@@ -38,6 +38,7 @@ const medecinSchema = z.object({
   cabinet: z.string().min(2, 'Nom du cabinet requis'),
   specialisation: z.string().min(1, 'Spécialisation requise'),
   type_cabinet: z.string().min(1, 'Type de cabinet requis'),
+  adresse: z.string(),
 }).refine((d) => d.password === d.confirm_password, {
   message: 'Les mots de passe ne correspondent pas',
   path: ['confirm_password'],
