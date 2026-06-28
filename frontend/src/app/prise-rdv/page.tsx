@@ -380,11 +380,13 @@ export default function PriseRdvPage() {
                           alt={`Dr. ${selectedDoctor.prenom} ${selectedDoctor.nom}`}
                           className="absolute top-0 right-0 h-full w-[50%] object-contain object-right-top pointer-events-none select-none"
                           style={{
-                            // Fade every edge of the photo into the blue card on all sides.
+                            // Fade every edge of the photo into the blue card. The left fade
+                            // spans the full width so the right-aligned (contain) photo's real
+                            // left edge always lands mid-gradient — no hard vertical line.
                             WebkitMaskImage:
-                              'linear-gradient(to right, transparent 0%, #000 32%), linear-gradient(to left, transparent 0%, #000 12%), linear-gradient(to bottom, transparent 0%, #000 22%), linear-gradient(to top, transparent 0%, #000 14%)',
+                              'linear-gradient(to right, transparent 0%, #000 88%), linear-gradient(to left, transparent 0%, #000 12%), linear-gradient(to bottom, transparent 0%, #000 22%), linear-gradient(to top, transparent 0%, #000 14%)',
                             maskImage:
-                              'linear-gradient(to right, transparent 0%, #000 32%), linear-gradient(to left, transparent 0%, #000 12%), linear-gradient(to bottom, transparent 0%, #000 22%), linear-gradient(to top, transparent 0%, #000 14%)',
+                              'linear-gradient(to right, transparent 0%, #000 88%), linear-gradient(to left, transparent 0%, #000 12%), linear-gradient(to bottom, transparent 0%, #000 22%), linear-gradient(to top, transparent 0%, #000 14%)',
                             WebkitMaskComposite: 'source-in',
                             maskComposite: 'intersect',
                           } as React.CSSProperties}
