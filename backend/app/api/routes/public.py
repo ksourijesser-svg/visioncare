@@ -59,6 +59,8 @@ def search_doctors(q: str = Query(..., min_length=1), db: Session = Depends(get_
             "prenom": d.prenom,
             "cabinet": d.cabinet,
             "specialisation": d.specialisation,
+            "adresse": d.adresse,
+            "photo": d.photo,
         }
         for d in doctors
     ]
