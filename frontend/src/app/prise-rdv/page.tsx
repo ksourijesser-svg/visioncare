@@ -378,10 +378,10 @@ export default function PriseRdvPage() {
                         <img
                           src={selectedDoctor.photo}
                           alt={`Dr. ${selectedDoctor.prenom} ${selectedDoctor.nom}`}
-                          className="absolute top-0 right-0 h-full w-[48%] object-cover object-top pointer-events-none select-none"
+                          className="absolute top-0 right-0 h-full w-[50%] object-contain object-right-top pointer-events-none select-none"
                           style={{
-                            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, #000 42%)',
-                            maskImage: 'linear-gradient(to right, transparent 0%, #000 42%)',
+                            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, #000 30%)',
+                            maskImage: 'linear-gradient(to right, transparent 0%, #000 30%)',
                           }}
                         />
                       ) : (
