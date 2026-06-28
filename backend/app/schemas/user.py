@@ -13,6 +13,8 @@ class UserCreate(BaseModel):
     cabinet: str | None = None
     specialisation: str | None = None
     type_cabinet: str | None = None
+    adresse: str | None = None
+    photo: str | None = None
 
 
 class UserUpdate(BaseModel):
@@ -22,6 +24,8 @@ class UserUpdate(BaseModel):
     cabinet: str | None = None
     specialisation: str | None = None
     type_cabinet: str | None = None
+    adresse: str | None = None
+    photo: str | None = None
 
 
 class UserOut(BaseModel):
