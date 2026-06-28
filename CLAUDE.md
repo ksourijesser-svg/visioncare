@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-**VisionCare** is a multi-tenant SaaS platform for ophthalmology practices, French-language UI. Patients, appointments, consultations, calendar, dashboard analytics, billing (factures), live waiting room (salle d'attente), surgery scheduling (opérations), reports (rapports), patient document uploads, and prescriptions (ordonnances). Each doctor's data is isolated by `medecin_id`.
+**Ophtech** is a multi-tenant SaaS platform for ophthalmology practices, French-language UI. Patients, appointments, consultations, calendar, dashboard analytics, billing (factures), live waiting room (salle d'attente), surgery scheduling (opérations), reports (rapports), patient document uploads, and prescriptions (ordonnances). Each doctor's data is isolated by `medecin_id`.
 
 ## Stack
 
@@ -34,8 +34,8 @@ uvicorn app.main:app --reload --port 8000
 
 | Rôle | Email | Mot de passe |
 |------|-------|--------------|
-| Médecin | `medecin@visioncare.fr` | `demo1234` |
-| Secrétaire | `secretaire@visioncare.fr` | `demo1234` |
+| Médecin | `medecin@ophtech.fr` | `demo1234` |
+| Secrétaire | `secretaire@ophtech.fr` | `demo1234` |
 
 Auto-seeded on startup via `lifespan` in `main.py`.
 
@@ -161,7 +161,7 @@ Server state → React Query hooks. Zustand stores → type interfaces only. `pr
 DATABASE_URL        = (set by Railway PostgreSQL plugin)
 SECRET_KEY          = (strong random string)
 RESEND_API_KEY      = re_...
-EMAIL_FROM          = VisionCare <onboarding@resend.dev>
+EMAIL_FROM          = Ophtech <onboarding@resend.dev>
 ```
 
 ## Key Conventions & Gotchas
@@ -170,7 +170,7 @@ EMAIL_FROM          = VisionCare <onboarding@resend.dev>
 User has no Docker Desktop (no admin rights). Never suggest `docker-compose up`. Run backend with `uvicorn` directly and frontend with `npm run dev`. DB in production is Railway PostgreSQL.
 
 ### Email — Resend only, no SMTP
-Railway blocks all outbound SMTP ports (587 and 465). Use **Resend API** (`core/email.py`) via HTTPS. Do not switch back to `smtplib`. Resend API key in Railway env vars + `backend/.env` locally. Must include `User-Agent: VisionCare/1.0` header — Cloudflare blocks requests without it.
+Railway blocks all outbound SMTP ports (587 and 465). Use **Resend API** (`core/email.py`) via HTTPS. Do not switch back to `smtplib`. Resend API key in Railway env vars + `backend/.env` locally. Must include `User-Agent: Ophtech/1.0` header — Cloudflare blocks requests without it.
 
 ### Multi-tenant isolation — CRITICAL
 Every backend route touching patients/appointments **must** filter `medecin_id == current_user.id`.
@@ -236,7 +236,7 @@ Do **not** use `absolute` positioning inside a `@base-ui/react` Dialog — stack
 **Dashboard**: background `#C5D8E6`, cards white `shadow-sm rounded-2xl`.
 **Sidebar** (`layout/Sidebar.tsx`): two-layer glassmorphism — transparent `<aside>` shell (`w-64 p-3`, keeps the `md:pl-64` layout footprint) wrapping an inner floating card (`rounded-[20px] backdrop-blur-2xl`). Light mode: `bg-white/70`, dark text, teal active state (`bg-[#3d8fa8]/14 text-[#15324a]`). Dark mode: translucent `bg-[#0A1A2E]/40` (glass — background shows through), active `bg-white/[0.10] text-white`. Nav items `rounded-xl mx-2`. Decorative cyan corner glow + diagonal sheen are **dark-mode only** (`hidden dark:block`) and kept very faint so brand text stays readable. Every text/border/bg has an explicit light + `dark:` variant. Nav order: Tableau de bord, Calendrier, Rendez-vous, Salle d'attente, Opérations, Patients, Facturation, Rapports — then Mon profil + user card at the bottom. The "Navigation" label is teal and readable; the old SVG eye widget + rotating tip card was removed.
 **Landing page**: dark `#060F1E` background + dot-grid overlay + 3 gradient orbs. Navbar glass `bg-[#060F1E]/85 backdrop-blur`.
-**Landing sections**: "Pourquoi choisir VisionCare?" `bg-white` with 3 SVG illustration cards. Fonctionnalités section `bg-[#C5D8E6]`. No Spécialités section (ophthalmology-only).
+**Landing sections**: "Pourquoi choisir Ophtech?" `bg-white` with 3 SVG illustration cards. Fonctionnalités section `bg-[#C5D8E6]`. No Spécialités section (ophthalmology-only).
 **Colors**: primary teal `#70B1C4`, active teal `#3d8fa8`, dark text `#1A2B3C`.
 **Neon CSS classes** (in `globals.css`): `btn-neon` (teal glow), `btn-neon-white` (white/silver glow), `btn-neon-outline` (soft outline glow).
 **Glow utilities**: `glow`, `glow-md`, `glow-green`, `glow-violet`, `glow-red`, `glow-sidebar`.
