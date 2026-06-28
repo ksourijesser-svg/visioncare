@@ -82,8 +82,8 @@ export const facturesApi = {
 
 export const salleAttenteApi = {
   list: () => api.get('/salle-attente'),
-  updateStatut: (id: number, salle_statut: string | null) =>
-    api.patch(`/salle-attente/${id}`, { salle_statut }),
+  updateStatut: (id: number, salle_statut: string | null, prix_consultation?: number | null) =>
+    api.patch(`/salle-attente/${id}`, { salle_statut, prix_consultation }),
 }
 
 export const rapportsApi = {
