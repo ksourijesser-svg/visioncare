@@ -88,11 +88,24 @@ export default function ProfilPage() {
             <div className="h-24 bg-gradient-to-r from-[#70B1C4] to-[#DCEEF3] dark:from-[#1e6c87] dark:to-[#3d8fa8]" />
             <CardContent className="pt-0 pb-5 px-6">
               <div className="flex items-end gap-4 -mt-10 mb-4">
-                <Avatar className="w-20 h-20 border-4 border-white dark:border-[#102844] shadow-md">
-                  <AvatarFallback className="bg-[#70B1C4] text-white text-2xl font-bold">
-                    {initials}
-                  </AvatarFallback>
-                </Avatar>
+                <div className="relative">
+                  <Avatar className="w-20 h-20 border-4 border-white dark:border-[#102844] shadow-md">
+                    {profile.photo && <AvatarImage src={profile.photo} alt="Photo de profil" className="object-cover" />}
+                    <AvatarFallback className="bg-[#70B1C4] text-white text-2xl font-bold">
+                      {initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploadingPhoto}
+                    title="Changer la photo"
+                    className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-[#70B1C4] hover:bg-[#5a9db8] text-white flex items-center justify-center shadow-md border-2 border-white dark:border-[#102844] transition-colors disabled:opacity-60"
+                  >
+                    {uploadingPhoto ? <Loader2 size={13} className="animate-spin" /> : <Camera size={13} />}
+                  </button>
+                  <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
+                </div>
                 <div className="pb-1">
                   <h2 className="text-xl font-bold text-[#2D3748] dark:text-[#EDF8FF]">
                     {profile.prenom} {profile.nom}
@@ -105,6 +118,15 @@ export default function ProfilPage() {
                       <span className="text-xs text-gray-400 dark:text-[#7AAABB]">{profile.specialite}</span>
                     )}
                   </div>
+                  {profile.photo && (
+                    <button
+                      type="button"
+                      onClick={removePhoto}
+                      className="mt-1.5 inline-flex items-center gap-1 text-xs text-gray-400 hover:text-red-500 dark:text-[#7AAABB] transition-colors"
+                    >
+                      <Trash2 size={11} /> Supprimer la photo
+                    </button>
+                  )}
                 </div>
               </div>
             </CardContent>
