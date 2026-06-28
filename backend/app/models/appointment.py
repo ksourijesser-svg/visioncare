@@ -29,6 +29,8 @@ class Appointment(Base):
     # Salle d'attente — null = pas encore arrivé. attente | en_consultation | termine
     salle_statut = Column(String, nullable=True)
     heure_arrivee = Column(DateTime(timezone=True), nullable=True)
+    # Prix saisi à la fin de la consultation (salle d'attente) — réutilisé pour la facture
+    prix_consultation = Column(Float, nullable=True)
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
