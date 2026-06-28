@@ -51,8 +51,8 @@ def seed_demo_users():
         db = SessionLocal()
         try:
             demos = [
-                {"email": "medecin@visioncare.fr", "password": "demo1234", "nom": "Dupont", "prenom": "Jean", "role": UserRole.medecin, "cabinet": "Cabinet VisionCare"},
-                {"email": "secretaire@visioncare.fr", "password": "demo1234", "nom": "Martin", "prenom": "Sophie", "role": UserRole.secretaire, "cabinet": "Cabinet VisionCare"},
+                {"email": "medecin@Ophtech.fr", "password": "demo1234", "nom": "Dupont", "prenom": "Jean", "role": UserRole.medecin, "cabinet": "Cabinet Ophtech"},
+                {"email": "secretaire@Ophtech.fr", "password": "demo1234", "nom": "Martin", "prenom": "Sophie", "role": UserRole.secretaire, "cabinet": "Cabinet Ophtech"},
             ]
             for u in demos:
                 if not db.query(User).filter(User.email == u["email"]).first():

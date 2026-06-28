@@ -6,10 +6,10 @@ from app.core.config import settings
 
 def send_code_email(to_email: str, code: str, code_type: str) -> None:
     if code_type == "signup":
-        subject = "VisionCare — Code de vérification d'email"
+        subject = "Ophtech — Code de vérification d'email"
         action = "valider votre inscription"
     else:
-        subject = "VisionCare — Réinitialisation du mot de passe"
+        subject = "Ophtech — Réinitialisation du mot de passe"
         action = "réinitialiser votre mot de passe"
 
     html = f"""<!DOCTYPE html>
@@ -19,7 +19,7 @@ def send_code_email(to_email: str, code: str, code_type: str) -> None:
               border:1px solid rgba(0,180,255,0.22);border-radius:16px;padding:40px;">
     <div style="text-align:center;margin-bottom:28px;">
       <span style="font-size:22px;font-weight:bold;color:#00D4FF;letter-spacing:2px;">
-        VisionCare
+        Ophtech
       </span>
     </div>
     <p style="color:#C8E8FF;font-size:15px;margin-bottom:8px;">
@@ -39,7 +39,7 @@ def send_code_email(to_email: str, code: str, code_type: str) -> None:
     <div style="margin-top:32px;padding-top:20px;
                 border-top:1px solid rgba(0,180,255,0.12);
                 text-align:center;color:rgba(80,140,180,0.5);font-size:11px;">
-      © 2025 VisionCare — Plateforme sécurisée
+      © 2025 Ophtech — Plateforme sécurisée
     </div>
   </div>
 </body>
@@ -58,7 +58,7 @@ def send_code_email(to_email: str, code: str, code_type: str) -> None:
         headers={
             "Authorization": f"Bearer {settings.RESEND_API_KEY}",
             "Content-Type": "application/json",
-            "User-Agent": "VisionCare/1.0",
+            "User-Agent": "Ophtech/1.0",
         },
         method="POST",
     )

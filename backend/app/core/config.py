@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "VisionCare API"
+    PROJECT_NAME: str = "Ophtech API"
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api/v1"
 
@@ -16,7 +16,7 @@ class Settings(BaseSettings):
 
     # Email — Resend API
     RESEND_API_KEY: str = ""
-    EMAIL_FROM: str = "VisionCare <onboarding@resend.dev>"
+    EMAIL_FROM: str = "Ophtech <onboarding@resend.dev>"
 
     # Google Places API — optional. When set, the public booking page shows
     # the doctor's Google reviews inline. Without it, only the map + a link

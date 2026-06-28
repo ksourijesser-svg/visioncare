@@ -104,7 +104,7 @@ export function Sidebar() {
               <Eye size={17} className="text-white" />
             </div>
             <div>
-              <p className="font-bold text-[#1A2B3C] dark:text-white text-sm tracking-tight">VisionCare</p>
+              <p className="font-bold text-[#1A2B3C] dark:text-white text-sm tracking-tight">Ophtech</p>
               <p className="text-[10px] text-[#3d8fa8]/80 dark:text-[#70B1C4]/55 font-medium">Cabinet d&apos;Ophtalmologie</p>
             </div>
           </div>

@@ -21,7 +21,7 @@ import urllib.error
 
 from app.core.config import settings
 
-_UA = "VisionCare/1.0 (+https://visioncare.fr)"
+_UA = "Ophtech/1.0 (+https://Ophtech.fr)"
 _CACHE_TTL = 6 * 3600  # 6 hours
 _cache: dict[str, dict] = {}
 _cache_lock = threading.Lock()

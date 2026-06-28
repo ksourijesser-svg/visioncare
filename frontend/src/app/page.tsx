@@ -218,15 +218,15 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Why VisionCare ─────────────────────────────────────────────────── */}
+      {/* ── Why Ophtech ─────────────────────────────────────────────────── */}
       <section className="py-20 bg-white border-b border-gray-100">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#1A2B3C] mb-4">
-              Pourquoi choisir VisionCare ?
+              Pourquoi choisir Ophtech ?
             </h2>
             <p className="text-[#1A2B3C]/55 text-base max-w-xl mx-auto">
-              Avec VisionCare, prenez rendez-vous en ligne avec votre médecin autrement.
+              Avec Ophtech, prenez rendez-vous en ligne avec votre médecin autrement.
             </p>
           </div>
 
@@ -509,9 +509,9 @@ export default function LandingPage() {
                 <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
               </svg>
             </div>
-            <span className="text-white/65 font-semibold text-base">VisionCare</span>
+            <span className="text-white/65 font-semibold text-base">Ophtech</span>
           </div>
-          <p>© 2026 VisionCare. Tous droits réservés. · Données sécurisées · Conformité RGPD</p>
+          <p>© 2026 Ophtech. Tous droits réservés. · Données sécurisées · Conformité RGPD</p>
           <div className="flex items-center gap-6 text-white/40">
             <a href="#" className="hover:text-white/70 transition-colors">Confidentialité</a>
             <a href="#" className="hover:text-white/70 transition-colors">CGU</a>

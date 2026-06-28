@@ -509,7 +509,7 @@ export default function LoginPage() {
         </NeonCard>
 
         <p className="text-center text-xs mt-6" style={{ color: 'rgba(80,140,180,0.5)' }}>
-          © 2025 VisionCare — Plateforme sécurisée
+          © 2025 Ophtech — Plateforme sécurisée
         </p>
       </div>
     </div>

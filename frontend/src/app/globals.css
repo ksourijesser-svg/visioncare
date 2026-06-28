@@ -83,7 +83,7 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* VisionCare dark navy theme — high contrast */
+/* Ophtech dark navy theme — high contrast */
 .dark {
   --background: oklch(0.075 0.025 237);   /* #06101E very dark navy (bg) */
   --foreground: oklch(0.97 0.008 210);    /* #EDF8FF bright text */

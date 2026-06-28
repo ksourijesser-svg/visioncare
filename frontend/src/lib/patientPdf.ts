@@ -131,7 +131,7 @@ export function exportPatientDossierPdf(data: DossierData) {
   <div class="header">
     <div class="brand">
       <div class="logo">◉</div>
-      <div><h1>VisionCare</h1><p>Cabinet d'Ophtalmologie</p></div>
+      <div><h1>Ophtech</h1><p>Cabinet d'Ophtalmologie</p></div>
     </div>
     <div class="meta">
       <div><strong>Dossier patient</strong></div>
@@ -160,7 +160,7 @@ export function exportPatientDossierPdf(data: DossierData) {
   <h3>Documents joints</h3>
   ${documents}
 
-  <div class="footer">Document généré par VisionCare — confidentiel · usage médical strictement réservé.</div>
+  <div class="footer">Document généré par Ophtech — confidentiel · usage médical strictement réservé.</div>
   <script>
     (function () {
       var printed = false;

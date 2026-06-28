@@ -144,7 +144,7 @@ export function exportOrdonnancePdf(data: OrdonnanceDoc): boolean {
       </div>
     </div>
     <div class="brand">
-      <div class="logo"><span class="dot">◉</span><span><span class="name">VisionCare</span><br/><span class="sub">Cabinet d'Ophtalmologie</span></span></div>
+      <div class="logo"><span class="dot">◉</span><span><span class="name">Ophtech</span><br/><span class="sub">Cabinet d'Ophtalmologie</span></span></div>
       <div class="meta">Le ${esc(frDate(data.date_ordonnance))}</div>
     </div>
   </div>
@@ -163,7 +163,7 @@ export function exportOrdonnancePdf(data: OrdonnanceDoc): boolean {
 
   <div class="sign"><div class="box">Signature et cachet du médecin</div></div>
 
-  <div class="footer">VisionCare — Ordonnance générée électroniquement · document à valeur médicale.</div>
+  <div class="footer">Ophtech — Ordonnance générée électroniquement · document à valeur médicale.</div>
 
   <script>
     (function () {

@@ -9,7 +9,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "VisionCare — Cabinet d'Ophtalmologie",
+  title: "Ophtech — Cabinet d'Ophtalmologie",
   description: "Plateforme de gestion ophtalmologique",
 };
 
