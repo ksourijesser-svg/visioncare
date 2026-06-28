@@ -485,6 +485,10 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
               <Field label="Adresse du cabinet" error={errors.adresse?.message}>
                 <Input {...register('adresse')} placeholder="12 rue de la Santé, 75014 Paris" className="h-11 text-sm placeholder:text-[#4E7E9C]" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon} />
               </Field>
+              <Field label="Lien Google Maps — avis (optionnel)" error={errors.google_maps_url?.message}>
+                <Input {...register('google_maps_url')} placeholder="https://maps.app.goo.gl/..." className="h-11 text-sm placeholder:text-[#4E7E9C]" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon} />
+                <p className="text-xs mt-1" style={{ color: 'rgba(120,190,230,0.55)' }}>Vos patients pourront consulter vos avis Google lors de la prise de rendez-vous.</p>
+              </Field>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field label="Spécialisation médicale *" error={errors.specialisation?.message}>
                   <select {...register('specialisation')} className="w-full h-11 px-3 text-sm focus:outline-none" style={neonInputStyle} onFocus={focusNeon} onBlur={blurNeon}>
