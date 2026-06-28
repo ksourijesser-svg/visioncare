@@ -23,6 +23,7 @@ const schema = z.object({
   telephone:         z.string(),
   specialite:        z.string(),
   rpps:              z.string(),
+  bio:               z.string(),
   cabinet_nom:       z.string().min(1, 'Requis'),
   cabinet_adresse:   z.string(),
   google_maps_url:   z.union([z.string().url('Lien invalide'), z.literal('')]),
