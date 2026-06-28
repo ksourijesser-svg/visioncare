@@ -34,6 +34,8 @@ type FormData = z.infer<typeof schema>
 
 export default function ProfilPage() {
   const { profile, updateProfile } = useProfileStore()
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [uploadingPhoto, setUploadingPhoto] = useState(false)
 
   const { register, handleSubmit, reset, formState: { errors, isDirty } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -48,6 +50,28 @@ export default function ProfilPage() {
     updateProfile(data)
     reset(data)
     toast.success('Profil mis à jour avec succès')
+  }
+
+  async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    e.target.value = '' // allow re-selecting the same file
+    if (!file) return
+    if (!file.type.startsWith('image/')) { toast.error('Veuillez choisir une image'); return }
+    setUploadingPhoto(true)
+    try {
+      const dataUrl = await fileToResizedDataUrl(file)
+      updateProfile({ photo: dataUrl })
+      toast.success('Photo mise à jour')
+    } catch {
+      toast.error("Impossible de charger l'image")
+    } finally {
+      setUploadingPhoto(false)
+    }
+  }
+
+  function removePhoto() {
+    updateProfile({ photo: '' })
+    toast.success('Photo supprimée')
   }
 
   const initials = `${profile.prenom[0] || '?'}${profile.nom[0] || '?'}`.toUpperCase()
