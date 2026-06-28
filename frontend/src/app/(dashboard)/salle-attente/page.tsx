@@ -33,6 +33,11 @@ export default function SalleAttentePage() {
   const update = useUpdateSalleStatut()
   const [now, setNow] = useState(() => Date.now())
 
+  // Modal "prix de consultation" — ouvert lorsqu'on termine une consultation
+  const [pricingFor, setPricingFor] = useState<SalleRdv | null>(null)
+  const [priceInput, setPriceInput] = useState('')
+  const [priceError, setPriceError] = useState('')
+
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 30_000)
     return () => clearInterval(id)
@@ -42,7 +47,27 @@ export default function SalleAttentePage() {
   for (const r of rdvs) grouped[colOf(r)].push(r)
 
   function move(r: SalleRdv, to: SalleStatut) {
+    // Avant de marquer "Terminé", demander le prix de la consultation
+    if (to === 'termine') {
+      setPricingFor(r)
+      setPriceInput(r.prix_consultation != null ? String(r.prix_consultation) : '')
+      setPriceError('')
+      return
+    }
     update.mutate({ id: r.id, salle_statut: to })
+  }
+
+  function confirmTermine() {
+    if (!pricingFor) return
+    const value = parseFloat(priceInput.replace(',', '.'))
+    if (priceInput.trim() === '' || isNaN(value) || value < 0) {
+      setPriceError('Veuillez saisir un prix valide')
+      return
+    }
+    update.mutate(
+      { id: pricingFor.id, salle_statut: 'termine', prix_consultation: value },
+      { onSuccess: () => setPricingFor(null) },
+    )
   }
 
   // Forward / backward transitions per column
