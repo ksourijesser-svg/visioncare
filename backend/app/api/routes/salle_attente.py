@@ -14,6 +14,7 @@ VALID = {"attente", "en_consultation", "termine"}
 
 class SalleStatutUpdate(BaseModel):
     salle_statut: str | None  # None = remettre "à venir" (annule l'arrivée)
+    prix_consultation: float | None = None  # saisi lors du passage en "terminé"
 
 
 def _serialize(rdv: Appointment) -> dict:
