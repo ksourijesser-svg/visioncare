@@ -12,6 +12,7 @@ export interface Profile {
   photo: string            // base64 data URL — shown on the public booking page
   cabinet_nom: string
   cabinet_adresse: string  // persisted to backend (users.adresse) → public booking map
+  bio: string              // persisted to backend → doctor presentation on booking page
   google_maps_url: string  // persisted to backend → "Avis Google" button on booking page
   cabinet_telephone: string
   cabinet_email: string
