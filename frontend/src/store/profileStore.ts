@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { getUser, setUser } from '@/lib/auth'
+import { authApi } from '@/lib/api'
 
 export interface Profile {
   prenom: string
@@ -8,8 +9,9 @@ export interface Profile {
   telephone: string
   specialite: string
   rpps: string
+  photo: string            // base64 data URL — shown on the public booking page
   cabinet_nom: string
-  cabinet_adresse: string
+  cabinet_adresse: string  // persisted to backend (users.adresse) → public booking map
   cabinet_telephone: string
   cabinet_email: string
   cabinet_site: string
@@ -26,10 +28,11 @@ function loadProfile(): Profile {
     nom:               user?.nom             || '',
     email:             user?.email           || '',
     telephone:         user?.telephone       || '',
-    specialite:        extra.specialite      || 'Ophtalmologue',
+    specialite:        user?.specialisation  || extra.specialite || 'Ophtalmologue',
     rpps:              extra.rpps            || '',
+    photo:             user?.photo           || '',
     cabinet_nom:       user?.cabinet         || 'Cabinet VisionCare',
-    cabinet_adresse:   extra.cabinet_adresse || '',
+    cabinet_adresse:   user?.adresse         || extra.cabinet_adresse || '',
     cabinet_telephone: extra.cabinet_telephone || '',
     cabinet_email:     extra.cabinet_email   || '',
     cabinet_site:      extra.cabinet_site    || '',
@@ -52,11 +55,14 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
     if (user) {
       setUser({
         ...user,
-        prenom:    updated.prenom,
-        nom:       updated.nom,
-        email:     updated.email,
-        telephone: updated.telephone,
-        cabinet:   updated.cabinet_nom,
+        prenom:        updated.prenom,
+        nom:           updated.nom,
+        email:         updated.email,
+        telephone:     updated.telephone,
+        cabinet:       updated.cabinet_nom,
+        specialisation: updated.specialite,
+        adresse:       updated.cabinet_adresse,
+        photo:         updated.photo,
       })
     }
 
@@ -69,6 +75,18 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
         cabinet_email:     updated.cabinet_email,
         cabinet_site:      updated.cabinet_site,
       }))
+
+      // Persist the fields the public booking page needs to the backend so a
+      // patient sees the same photo / address the doctor set here.
+      authApi.updateMe({
+        nom:            updated.nom,
+        prenom:         updated.prenom,
+        telephone:      updated.telephone,
+        cabinet:        updated.cabinet_nom,
+        specialisation: updated.specialite,
+        adresse:        updated.cabinet_adresse,
+        photo:          updated.photo,
+      }).catch(() => { /* non-blocking — localStorage already updated */ })
     }
   },
 }))
