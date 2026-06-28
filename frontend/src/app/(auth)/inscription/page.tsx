@@ -361,7 +361,7 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
       const nom = parts.slice(1).join(' ') || prenom
 
       const registerFn = async () => {
-        await authApi.register({ email: data.email, password: data.password, nom, prenom, role: 'medecin', telephone: data.telephone, cabinet: data.cabinet, specialisation: data.specialisation, type_cabinet: data.type_cabinet, adresse: data.adresse, google_maps_url: data.google_maps_url, photo: photo || null })
+        await authApi.register({ email: data.email, password: data.password, nom, prenom, role: 'medecin', telephone: data.telephone, cabinet: data.cabinet, specialisation: data.specialisation, type_cabinet: data.type_cabinet, adresse: data.adresse, bio: data.bio, google_maps_url: data.google_maps_url, photo: photo || null })
         const loginRes = await authApi.login(data.email, data.password)
         setToken(loginRes.data.access_token)
         const me = await authApi.me()
