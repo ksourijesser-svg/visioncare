@@ -371,18 +371,47 @@ export default function PriseRdvPage() {
 
                 {selectedDoctor && (
                   <div className="mt-2 rounded-xl overflow-hidden" style={{ background: 'rgba(0,150,220,0.10)', border: '1px solid rgba(0,200,255,0.25)' }}>
-                    <div className="px-4 py-3 flex items-center gap-3">
-                      <DoctorAvatar doctor={selectedDoctor} size={48} />
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold" style={{ color: '#D0EEFF' }}>Dr. {selectedDoctor.prenom} {selectedDoctor.nom}</p>
-                        {selectedDoctor.cabinet && <p className="text-xs" style={{ color: 'rgba(120,190,230,0.6)' }}>{selectedDoctor.cabinet}{selectedDoctor.specialisation ? ` · ${selectedDoctor.specialisation}` : ''}</p>}
+                    {/* Hero header — portrait blended into the blue design */}
+                    <div className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(0,95,165,0.40) 0%, rgba(0,45,95,0.12) 60%, rgba(0,30,70,0.05) 100%)' }}>
+                      {selectedDoctor.photo ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={selectedDoctor.photo}
+                          alt={`Dr. ${selectedDoctor.prenom} ${selectedDoctor.nom}`}
+                          className="absolute top-0 right-0 h-full w-[48%] object-cover object-top pointer-events-none select-none"
+                          style={{
+                            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, #000 42%)',
+                            maskImage: 'linear-gradient(to right, transparent 0%, #000 42%)',
+                          }}
+                        />
+                      ) : (
+                        <div className="absolute top-1/2 right-4 -translate-y-1/2">
+                          <DoctorAvatar doctor={selectedDoctor} size={64} />
+                        </div>
+                      )}
+
+                      <div className="relative px-4 py-4" style={{ maxWidth: '64%', minHeight: '128px' }}>
+                        {selectedDoctor.specialisation && (
+                          <span className="inline-block text-[11px] font-semibold px-2.5 py-0.5 rounded-full mb-2" style={{ background: 'rgba(0,200,255,0.16)', color: '#8FE3FF', border: '1px solid rgba(0,200,255,0.25)' }}>
+                            {selectedDoctor.specialisation}
+                          </span>
+                        )}
+                        <p className="text-lg font-bold leading-tight" style={{ color: '#EAF7FF' }}>Dr. {selectedDoctor.prenom} {selectedDoctor.nom}</p>
+                        {selectedDoctor.cabinet && (
+                          <p className="text-xs flex items-center gap-1.5 mt-2" style={{ color: 'rgba(160,210,245,0.8)' }}>
+                            <Building2 size={12} className="shrink-0" /> {selectedDoctor.cabinet}
+                          </p>
+                        )}
                         {selectedDoctor.adresse && (
-                          <p className="text-xs flex items-center gap-1 mt-0.5" style={{ color: 'rgba(120,190,230,0.6)' }}>
-                            <MapPin size={11} className="shrink-0" /> {selectedDoctor.adresse}
+                          <p className="text-xs flex items-start gap-1.5 mt-1" style={{ color: 'rgba(120,190,230,0.65)' }}>
+                            <MapPin size={12} className="shrink-0 mt-0.5" /> <span>{selectedDoctor.adresse}</span>
                           </p>
                         )}
                       </div>
-                      <CheckCircle2 size={16} className="text-emerald-400 ml-auto shrink-0 self-start mt-0.5" />
+
+                      <span className="absolute top-3 right-3 inline-flex items-center justify-center w-6 h-6 rounded-full" style={{ background: 'rgba(3,16,34,0.55)', backdropFilter: 'blur(4px)' }}>
+                        <CheckCircle2 size={16} className="text-emerald-400" />
+                      </span>
                     </div>
                     {loadingPlace && (
                       <div className="flex items-center justify-center py-6" style={{ borderTop: '1px solid rgba(0,180,255,0.15)' }}>
