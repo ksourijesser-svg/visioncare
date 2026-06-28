@@ -13,6 +13,7 @@ interface Doctor {
   cabinet: string | null
   specialisation: string | null
   adresse: string | null
+  bio: string | null
   google_maps_url: string | null
   photo: string | null
 }
