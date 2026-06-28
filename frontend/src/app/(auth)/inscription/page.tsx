@@ -327,11 +327,29 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
   const [showPw, setShowPw] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [error, setError] = useState('')
+  const [photo, setPhoto] = useState('')
+  const [uploadingPhoto, setUploadingPhoto] = useState(false)
+  const photoInputRef = useRef<HTMLInputElement>(null)
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<MedecinData>({
     resolver: zodResolver(medecinSchema),
-    defaultValues: { nom_complet: '', telephone: '', email: '', password: '', confirm_password: '', cabinet: '', specialisation: '', type_cabinet: '' },
+    defaultValues: { nom_complet: '', telephone: '', email: '', password: '', confirm_password: '', cabinet: '', specialisation: '', type_cabinet: '', adresse: '' },
   })
+
+  async function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+    if (!file.type.startsWith('image/')) { setError('Veuillez choisir une image'); return }
+    setUploadingPhoto(true)
+    try {
+      setPhoto(await fileToResizedDataUrl(file))
+    } catch {
+      setError("Impossible de charger l'image")
+    } finally {
+      setUploadingPhoto(false)
+    }
+  }
 
   async function onSubmit(data: MedecinData) {
     setError('')
@@ -341,7 +359,7 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
       const nom = parts.slice(1).join(' ') || prenom
 
       const registerFn = async () => {
-        await authApi.register({ email: data.email, password: data.password, nom, prenom, role: 'medecin', telephone: data.telephone, cabinet: data.cabinet, specialisation: data.specialisation, type_cabinet: data.type_cabinet })
+        await authApi.register({ email: data.email, password: data.password, nom, prenom, role: 'medecin', telephone: data.telephone, cabinet: data.cabinet, specialisation: data.specialisation, type_cabinet: data.type_cabinet, adresse: data.adresse, photo: photo || null })
         const loginRes = await authApi.login(data.email, data.password)
         setToken(loginRes.data.access_token)
         const me = await authApi.me()
