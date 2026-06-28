@@ -80,6 +80,7 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
         specialisation=data.specialisation,
         type_cabinet=data.type_cabinet,
         adresse=data.adresse,
+        google_maps_url=data.google_maps_url,
         photo=data.photo,
     )
     db.add(user)
