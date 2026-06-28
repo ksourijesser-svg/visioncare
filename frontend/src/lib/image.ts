@@ -1,7 +1,10 @@
 // Reads an image File, downscales it client-side to keep the base64 small enough
 // to store in the DB (users.photo) and ship in API responses, and returns a
-// JPEG data URL. Used for the doctor profile photo (signup + profile page).
+// data URL. PNG inputs keep their transparency (so a cut-out portrait shows with
+// no background on the booking page); everything else is encoded as JPEG.
+// Used for the doctor profile photo (signup + profile page).
 export function fileToResizedDataUrl(file: File, max = 512, quality = 0.85): Promise<string> {
+  const keepAlpha = file.type === 'image/png' || file.type === 'image/webp'
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onerror = () => reject(new Error('Lecture du fichier impossible'))
