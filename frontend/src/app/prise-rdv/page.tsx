@@ -420,6 +420,15 @@ export default function PriseRdvPage() {
                         <CheckCircle2 size={16} className="text-emerald-400" />
                       </span>
                     </div>
+
+                    {/* Doctor bio / presentation */}
+                    {selectedDoctor.bio && (
+                      <div className="px-4 py-3" style={{ borderTop: '1px solid rgba(0,180,255,0.15)' }}>
+                        <p className="text-xs font-semibold uppercase tracking-wide mb-1.5" style={{ color: 'rgba(0,200,255,0.75)' }}>À propos</p>
+                        <p className="text-xs leading-relaxed whitespace-pre-line" style={{ color: 'rgba(185,218,242,0.82)' }}>{selectedDoctor.bio}</p>
+                      </div>
+                    )}
+
                     {loadingPlace && (
                       <div className="flex items-center justify-center py-6" style={{ borderTop: '1px solid rgba(0,180,255,0.15)' }}>
                         <Loader2 size={18} className="animate-spin" style={{ color: '#00D4FF' }} />
