@@ -41,6 +41,7 @@ class UserOut(BaseModel):
     specialisation: str | None
     type_cabinet: str | None
     adresse: str | None = None
+    google_maps_url: str | None = None
     photo: str | None = None
     is_active: bool
     created_at: datetime
