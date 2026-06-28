@@ -185,6 +185,19 @@ export default function ProfilPage() {
                   <Input {...register('rpps')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" placeholder="10 chiffres" />
                 </div>
               </div>
+
+              <div className="space-y-1">
+                <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
+                  <FileText size={11} /> Biographie / Présentation
+                </Label>
+                <textarea
+                  {...register('bio')}
+                  rows={4}
+                  className="w-full rounded-md px-3 py-2 text-sm border border-gray-200 dark:border-[#1C3F62]/50 bg-transparent dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB] focus:outline-none focus:ring-2 focus:ring-[#70B1C4]/40 resize-y"
+                  placeholder="Présentez-vous à vos patients : parcours, expertise, approche de soin..."
+                />
+                <p className="text-xs text-gray-400 dark:text-[#5E8BA8]">Affichée aux patients lors de la prise de rendez-vous.</p>
+              </div>
             </CardContent>
           </Card>
 
