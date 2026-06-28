@@ -25,6 +25,7 @@ const schema = z.object({
   rpps:              z.string(),
   cabinet_nom:       z.string().min(1, 'Requis'),
   cabinet_adresse:   z.string(),
+  google_maps_url:   z.union([z.string().url('Lien invalide'), z.literal('')]),
   cabinet_telephone: z.string(),
   cabinet_email:     z.union([z.string().email('Email invalide'), z.literal('')]),
   cabinet_site:      z.string(),
