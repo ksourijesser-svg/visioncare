@@ -31,6 +31,7 @@ def _serialize(rdv: Appointment) -> dict:
         "statut": rdv.statut.value if rdv.statut else "programme",
         "salle_statut": rdv.salle_statut,
         "heure_arrivee": rdv.heure_arrivee.isoformat() if rdv.heure_arrivee else None,
+        "prix_consultation": rdv.prix_consultation,
     }
 
 
