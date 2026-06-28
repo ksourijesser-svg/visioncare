@@ -23,6 +23,7 @@ class User(Base):
     specialisation = Column(String, nullable=True)
     type_cabinet = Column(String, nullable=True)
     adresse = Column(String, nullable=True)        # cabinet address — shown on public booking map
+    bio = Column(Text, nullable=True)              # doctor's short presentation — shown to patients
     google_maps_url = Column(String, nullable=True)  # doctor's Google Maps place link — patients open reviews
     photo = Column(Text, nullable=True)            # base64 data URL — doctor profile photo
     is_active = Column(Boolean, default=True)
