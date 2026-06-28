@@ -28,6 +28,8 @@ def create_tables():
             "ALTER TABLE rendez_vous ADD COLUMN IF NOT EXISTS heure_arrivee TIMESTAMP WITH TIME ZONE",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS specialisation VARCHAR",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS type_cabinet VARCHAR",
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS adresse VARCHAR",
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS photo TEXT",
         ]:
             try:
                 conn.execute(text(stmt))
