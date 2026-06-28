@@ -26,7 +26,7 @@ export function fileToResizedDataUrl(file: File, max = 512, quality = 0.85): Pro
         const ctx = canvas.getContext('2d')
         if (!ctx) return reject(new Error('Canvas indisponible'))
         ctx.drawImage(img, 0, 0, width, height)
-        resolve(canvas.toDataURL('image/jpeg', quality))
+        resolve(keepAlpha ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', quality))
       }
       img.src = reader.result as string
     }
