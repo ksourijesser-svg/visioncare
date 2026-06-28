@@ -18,8 +18,8 @@ interface Doctor {
 
 function DoctorAvatar({ doctor, size = 36 }: { doctor: Doctor; size?: number }) {
   if (doctor.photo) {
-    // eslint-disable-next-line @next/next/no-img-element
     return (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         src={doctor.photo}
         alt={`Dr. ${doctor.prenom} ${doctor.nom}`}
