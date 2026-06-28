@@ -334,7 +334,7 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<MedecinData>({
     resolver: zodResolver(medecinSchema),
-    defaultValues: { nom_complet: '', telephone: '', email: '', password: '', confirm_password: '', cabinet: '', specialisation: '', type_cabinet: '', adresse: '' },
+    defaultValues: { nom_complet: '', telephone: '', email: '', password: '', confirm_password: '', cabinet: '', specialisation: '', type_cabinet: '', adresse: '', google_maps_url: '' },
   })
 
   async function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
