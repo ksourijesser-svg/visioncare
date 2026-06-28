@@ -140,7 +140,21 @@ export default function PriseRdvPage() {
     setDoctorQuery(`Dr. ${doctor.prenom} ${doctor.nom}`)
     setShowDropdown(false)
     setDoctorResults([])
-    setShowAvis(false)
+    loadPlace(doctor)
+  }
+
+  async function loadPlace(doctor: Doctor) {
+    setPlaceInfo(null)
+    if (!doctor.google_maps_url && !doctor.adresse) return
+    setLoadingPlace(true)
+    try {
+      const res = await publicApi.doctorPlace(doctor.id)
+      setPlaceInfo(res.data)
+    } catch {
+      setPlaceInfo(null)
+    } finally {
+      setLoadingPlace(false)
+    }
   }
 
   function clearDoctor() {
@@ -148,7 +162,7 @@ export default function PriseRdvPage() {
     setDoctorQuery('')
     setDoctorResults([])
     setShowDropdown(false)
-    setShowAvis(false)
+    setPlaceInfo(null)
   }
 
   async function handleSubmit(e: React.FormEvent) {
