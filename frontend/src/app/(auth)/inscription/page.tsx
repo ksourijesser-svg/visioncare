@@ -412,6 +412,7 @@ function MedecinForm({ onBack, onPendingVerification }: { onBack: () => void; on
                   style={{ background: 'rgba(0,25,55,0.7)', border: '1px solid rgba(0,150,210,0.35)' }}
                 >
                   {photo
+                    // eslint-disable-next-line @next/next/no-img-element
                     ? <img src={photo} alt="Aperçu" className="w-full h-full object-cover" />
                     : <Camera size={22} style={{ color: 'rgba(100,170,210,0.6)' }} />}
                 </div>
