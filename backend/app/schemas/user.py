@@ -38,6 +38,8 @@ class UserOut(BaseModel):
     cabinet: str | None
     specialisation: str | None
     type_cabinet: str | None
+    adresse: str | None = None
+    photo: str | None = None
     is_active: bool
     created_at: datetime
 
