@@ -210,6 +210,17 @@ export default function ProfilPage() {
                 <Input {...register('cabinet_adresse')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" placeholder="12 rue de la Santé, 75014 Paris" />
               </div>
 
+              <div className="space-y-1">
+                <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
+                  <Star size={11} /> Lien Google Maps (avis)
+                </Label>
+                <Input {...register('google_maps_url')} className="border border-gray-200 dark:border-[#1C3F62]/50 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#7AAABB]" placeholder="https://maps.app.goo.gl/..." />
+                {errors.google_maps_url && <p className="text-red-500 text-xs">{errors.google_maps_url.message}</p>}
+                <p className="text-xs text-gray-400 dark:text-[#5E8BA8]">
+                  Collez le lien « Partager » de votre fiche Google Maps. Vos patients pourront consulter vos avis.
+                </p>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <Label className="text-xs text-gray-500 dark:text-[#7AAABB] flex items-center gap-1">
