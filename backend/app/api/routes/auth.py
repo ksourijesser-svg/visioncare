@@ -79,6 +79,8 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
         cabinet=data.cabinet,
         specialisation=data.specialisation,
         type_cabinet=data.type_cabinet,
+        adresse=data.adresse,
+        photo=data.photo,
     )
     db.add(user)
     db.commit()
@@ -88,6 +90,19 @@ def register(data: UserCreate, db: Session = Depends(get_db)):
 
 @router.get("/me", response_model=UserOut)
 def me(current_user: User = Depends(get_current_user)):
+    return current_user
+
+
+@router.put("/me", response_model=UserOut)
+def update_me(
+    data: UserUpdate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    for field, value in data.model_dump(exclude_unset=True).items():
+        setattr(current_user, field, value)
+    db.commit()
+    db.refresh(current_user)
     return current_user
 
 
