@@ -10,6 +10,7 @@ export interface User {
   telephone?: string
   specialisation?: string
   adresse?: string
+  bio?: string
   google_maps_url?: string
   photo?: string
 }
