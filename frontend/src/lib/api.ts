@@ -34,6 +34,7 @@ export const authApi = {
     })
   },
   me: () => api.get('/auth/me'),
+  updateMe: (data: unknown) => api.put('/auth/me', data),
   register: (data: unknown) => api.post('/auth/register', data),
   sendCode: (email: string, type: 'signup' | 'reset') =>
     api.post('/auth/send-code', { email, type }),
