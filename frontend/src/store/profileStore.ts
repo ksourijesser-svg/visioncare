@@ -33,7 +33,7 @@ function loadProfile(): Profile {
     specialite:        user?.specialisation  || extra.specialite || 'Ophtalmologue',
     rpps:              extra.rpps            || '',
     photo:             user?.photo           || '',
-    cabinet_nom:       user?.cabinet         || 'Cabinet VisionCare',
+    cabinet_nom:       user?.cabinet         || 'Cabinet Ophtech',
     cabinet_adresse:   user?.adresse         || extra.cabinet_adresse || '',
     bio:               user?.bio             || extra.bio || '',
     google_maps_url:   user?.google_maps_url || extra.google_maps_url || '',
