@@ -97,6 +97,13 @@ export function Header({ title }: HeaderProps) {
             <DropdownMenuItem onClick={() => router.push('/profil')}>
               <User size={16} className="mr-2" /> Mon profil
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={logout}
+              className="text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
+            >
+              <LogOut size={16} className="mr-2" /> Se déconnecter
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
