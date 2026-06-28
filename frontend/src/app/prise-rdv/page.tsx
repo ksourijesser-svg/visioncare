@@ -12,6 +12,30 @@ interface Doctor {
   prenom: string
   cabinet: string | null
   specialisation: string | null
+  adresse: string | null
+  photo: string | null
+}
+
+function DoctorAvatar({ doctor, size = 36 }: { doctor: Doctor; size?: number }) {
+  if (doctor.photo) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return (
+      <img
+        src={doctor.photo}
+        alt={`Dr. ${doctor.prenom} ${doctor.nom}`}
+        className="rounded-full object-cover shrink-0"
+        style={{ width: size, height: size, border: '1px solid rgba(0,200,255,0.3)' }}
+      />
+    )
+  }
+  return (
+    <div
+      className="rounded-full flex items-center justify-center font-bold shrink-0"
+      style={{ width: size, height: size, fontSize: size * 0.32, background: 'rgba(0,150,220,0.18)', color: '#00D4FF' }}
+    >
+      {doctor.prenom[0]}{doctor.nom[0]}
+    </div>
+  )
 }
 
 interface BusySlot {
