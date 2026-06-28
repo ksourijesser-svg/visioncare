@@ -93,6 +93,7 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
         cabinet:        updated.cabinet_nom,
         specialisation: updated.specialite,
         adresse:        updated.cabinet_adresse,
+        bio:            updated.bio,
         google_maps_url: updated.google_maps_url,
         photo:          updated.photo,
       }).catch(() => { /* non-blocking — localStorage already updated */ })
