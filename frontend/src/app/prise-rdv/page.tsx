@@ -317,9 +317,7 @@ export default function PriseRdvPage() {
                           onClick={() => selectDoctor(d)}
                           className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left"
                         >
-                          <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold shrink-0" style={{ background: 'rgba(0,150,220,0.18)', color: '#00D4FF' }}>
-                            {d.prenom[0]}{d.nom[0]}
-                          </div>
+                          <DoctorAvatar doctor={d} size={36} />
                           <div className="min-w-0">
                             <p className="text-sm font-semibold" style={{ color: '#D0EEFF' }}>Dr. {d.prenom} {d.nom}</p>
                             <p className="text-xs truncate" style={{ color: 'rgba(120,190,230,0.6)' }}>{d.cabinet ?? ''}{d.specialisation ? ` · ${d.specialisation}` : ''}</p>
