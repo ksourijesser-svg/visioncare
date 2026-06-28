@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Clock, Loader2, UserPlus, Stethoscope, CheckCircle2, ChevronRight, ChevronLeft, Hourglass, CalendarClock, Users } from 'lucide-react'
+import { Clock, Loader2, UserPlus, Stethoscope, CheckCircle2, ChevronRight, ChevronLeft, Hourglass, CalendarClock, Users, X, Banknote } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { useSalleAttente, useUpdateSalleStatut, type SalleRdv, type SalleStatut } from '@/hooks/useSalleAttente'
 
