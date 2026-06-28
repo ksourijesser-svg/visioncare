@@ -81,6 +81,8 @@ def update_salle_statut(
     if new == "termine":
         # Terminer la consultation marque le RDV comme complété
         rdv.statut = AppointmentStatus.complete
+        if data.prix_consultation is not None:
+            rdv.prix_consultation = data.prix_consultation
 
     db.commit()
     db.refresh(rdv)
