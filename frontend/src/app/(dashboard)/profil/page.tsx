@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -9,10 +9,11 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { User, Building2, Phone, Mail, Globe, MapPin, ShieldCheck, Save } from 'lucide-react'
+import { User, Building2, Phone, Mail, Globe, MapPin, ShieldCheck, Save, Camera, Loader2, Trash2 } from 'lucide-react'
 import { useProfileStore } from '@/store/profileStore'
+import { fileToResizedDataUrl } from '@/lib/image'
 import { toast } from 'sonner'
 
 const schema = z.object({
