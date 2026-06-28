@@ -34,6 +34,7 @@ function loadProfile(): Profile {
     photo:             user?.photo           || '',
     cabinet_nom:       user?.cabinet         || 'Cabinet VisionCare',
     cabinet_adresse:   user?.adresse         || extra.cabinet_adresse || '',
+    google_maps_url:   user?.google_maps_url || extra.google_maps_url || '',
     cabinet_telephone: extra.cabinet_telephone || '',
     cabinet_email:     extra.cabinet_email   || '',
     cabinet_site:      extra.cabinet_site    || '',
