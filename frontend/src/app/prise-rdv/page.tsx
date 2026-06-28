@@ -78,7 +78,8 @@ export default function PriseRdvPage() {
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null)
   const [showDropdown, setShowDropdown] = useState(false)
   const [searching, setSearching] = useState(false)
-  const [showAvis, setShowAvis] = useState(false)
+  const [placeInfo, setPlaceInfo] = useState<PlaceInfo | null>(null)
+  const [loadingPlace, setLoadingPlace] = useState(false)
 
   const [nom, setNom] = useState('')
   const [prenom, setPrenom] = useState('')
