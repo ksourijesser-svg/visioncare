@@ -32,8 +32,8 @@ export function useSalleAttente() {
 export function useUpdateSalleStatut() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, salle_statut }: { id: number; salle_statut: SalleStatut }) =>
-      salleAttenteApi.updateStatut(id, salle_statut),
+    mutationFn: ({ id, salle_statut, prix_consultation }: { id: number; salle_statut: SalleStatut; prix_consultation?: number | null }) =>
+      salleAttenteApi.updateStatut(id, salle_statut, prix_consultation),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['salle-attente'] })
       qc.invalidateQueries({ queryKey: ['appointments'] })
