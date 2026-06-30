@@ -184,7 +184,9 @@ Three actors: **Médecin**, **Secrétaire** (both use dashboard), **Patient** (b
 `inscription/page.tsx` shows a role-selection step first, then renders the matching form, then email OTP verification.
 
 ### Public (unauthenticated) routes
-`GET /api/v1/public/doctors/search?q=` — searches User by name/cabinet (medecin + is_active only).
+`GET /api/v1/public/doctors/search?q=` — searches User by name/cabinet (medecin + is_active only); returns photo, adresse, bio, google_maps_url too.
+`GET /api/v1/public/doctors/{id}/place` — map embed query + (optional) Google reviews (see "Public doctor profile" below).
+`GET /api/v1/public/doctors/{id}/busy` — occupied slots from today onward (times only).
 `POST /api/v1/public/rendez-vous` — auto-creates Patient + Appointment under the selected `medecin_id`, statut=`programme`. Frontend calls via `publicApi` in `lib/api.ts`.
 
 ### Appointment statuses
