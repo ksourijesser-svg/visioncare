@@ -195,6 +195,7 @@ The waiting-room board is a **non-destructive overlay** on `rendez_vous` via two
 - Moving to **`attente`** (clicking "Arrivé") sets `heure_arrivee=now()` **and** `statut = confirme` (so the Rendez-vous page shows Confirmé).
 - Moving to **`termine`** (clicking "Terminer") sets `statut = complete`.
 - These are forward-only — moving a patient *back* does not revert `statut`.
+- Clicking **"Terminer"** opens a price modal (dark/light themed) requiring `prix_consultation`; on confirm it PATCHes `{salle_statut:'termine', prix_consultation}`. Stored on the appointment for later facture use.
 `useUpdateSalleStatut` invalidates both `['salle-attente']` and `['appointments']` so the RDV page refreshes.
 
 ### Factures — auto-derived status (CRITICAL)
