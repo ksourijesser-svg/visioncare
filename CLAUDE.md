@@ -60,7 +60,7 @@ app/
     operations/         # surgery scheduling — agenda grouped by day + KPIs
     facturation/        # invoices: line items, payments, auto-status; KPIs + table
     rapports/           # analytics — revenue/RDV/patients charts, period selector
-    profil/             # doctor profile + cabinet info editor
+    profil/             # doctor profile editor — photo upload, bio, address, Google Maps link, cabinet info
 
 hooks/
   usePatients.ts        # list, create, update, delete — filtered by medecin_id
