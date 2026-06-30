@@ -160,10 +160,11 @@ Server state → React Query hooks. Zustand stores → type interfaces only. `pr
 ### Railway env vars required
 
 ```
-DATABASE_URL        = (set by Railway PostgreSQL plugin)
-SECRET_KEY          = (strong random string)
-RESEND_API_KEY      = re_...
-EMAIL_FROM          = Ophtech <onboarding@resend.dev>
+DATABASE_URL          = (set by Railway PostgreSQL plugin)
+SECRET_KEY            = (strong random string)
+RESEND_API_KEY        = re_...
+EMAIL_FROM            = Ophtech <onboarding@resend.dev>
+GOOGLE_PLACES_API_KEY = (optional) AIza... — enables inline Google reviews on the booking page
 ```
 
 ## Key Conventions & Gotchas
