@@ -88,6 +88,7 @@ components/
 lib/
   patientPdf.ts         # client-side dossier PDF via print window (embeds image attachments as base64)
   ordonnancePdf.ts      # client-side prescription PDF (medicale + lunettes), doctor header from profileStore
+  image.ts              # fileToResizedDataUrl — downscales profile photo to ≤512px; keeps PNG/WebP transparency, else JPEG
 
 store/
   appointmentsStore.ts  # Zustand — type source only (do not use CRUD methods)
