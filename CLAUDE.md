@@ -112,13 +112,14 @@ api/routes/
   ordonnances.py   # /ordonnances — prescriptions list/get/create/delete (medicale|lunettes)
   operations.py    # /operations — surgery CRUD
   factures.py      # /factures — invoices CRUD + /{id}/paiement; auto-derives statut
-  salle_attente.py # /salle-attente — today's RDV board + PATCH salle_statut
+  salle_attente.py # /salle-attente — today's RDV board + PATCH salle_statut (+ prix_consultation on termine)
   rapports.py      # /rapports?periode= — aggregated analytics (Python-side, portable)
   dashboard.py     # aggregated stats
-  public.py        # Unauthenticated: GET /public/doctors/search, POST /public/rendez-vous
-core/config.py     # DATABASE_URL, SECRET_KEY, CORS_ORIGINS, RESEND_API_KEY, EMAIL_FROM
+  public.py        # Unauthenticated: GET /public/doctors/search, /doctors/{id}/place, /doctors/{id}/busy, POST /public/rendez-vous
+core/config.py     # DATABASE_URL, SECRET_KEY, CORS_ORIGINS, RESEND_API_KEY, EMAIL_FROM, GOOGLE_PLACES_API_KEY
 core/security.py   # JWT, hash_password, verify_password
 core/email.py      # send_code_email() — Resend HTTP API via urllib (no new deps)
+core/maps.py       # get_place_info() — resolves doctor's Google Maps link → embed coords + (optional) reviews
 main.py            # lifespan: create_tables + seed_demo_users
 ```
 
