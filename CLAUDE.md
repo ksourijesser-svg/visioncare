@@ -51,6 +51,7 @@ app/
     login/              # Login page — dark medical theme (hex grid + ECG lines + glassmorphism card)
                         #   3 inline modes: login | forgot-email | forgot-code (no page change)
     inscription/        # Multi-step: Role selection → Médecin/Secrétaire form → Email verification (OTP)
+                        #   Médecin form includes photo upload, bio, cabinet address + Google Maps link
   (dashboard)/          # protected layout — sidebar + header
     dashboard/          # welcome banner, stat cards, charts, today's RDV
     patients/           # patient cards (only patients with ≥1 complete RDV)
