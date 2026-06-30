@@ -102,7 +102,7 @@ store/
 
 ```
 api/routes/
-  auth.py          # POST /login, POST /register, GET /me
+  auth.py          # POST /login, POST /register, GET /me, PUT /me (update doctor profile → DB)
                    # POST /auth/send-code      — sends 6-digit OTP via Resend (signup|reset)
                    # POST /auth/verify-code    — validates OTP for signup flow
                    # POST /auth/reset-password — validates OTP + changes password
