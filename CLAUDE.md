@@ -228,8 +228,17 @@ Do **not** use `.optional().default('')` with `zodResolver` — `.default()` wid
 Do **not** use `absolute` positioning inside a `@base-ui/react` Dialog — stacking context clips it.
 **Fix**: inline element in document flow (pushes content down). On standalone pages like `/prise-rdv`, `absolute` is fine.
 
-### Profile persistence
-`profileStore.updateProfile()` writes to two localStorage keys: `user` (name/email/tel/cabinet) and `profile_extra` (specialite, rpps, cabinet_*).
+### Profile persistence — localStorage + backend
+`profileStore.updateProfile()` writes to two localStorage keys (`user`, `profile_extra`) **and** fires `PUT /auth/me` (non-blocking) so the public-facing fields (photo, bio, `adresse`, `specialisation`, `google_maps_url`, cabinet) persist to the DB. This is required because the public booking page reads them from the backend, not localStorage. Backend `adresse` ↔ profile `cabinet_adresse`.
+
+### Public doctor profile — photo, map & reviews (prise-rdv)
+When a patient selects a doctor, `prise-rdv` calls `GET /public/doctors/{id}/place` (`core/maps.py`):
+- **Map from the Google Maps link**: backend follows the `maps.app.goo.gl` short link (browser can't — CORS), extracts coordinates, returns `embed_q` for the keyless `maps.google.com/maps?q=...&output=embed` iframe. Falls back to `adresse`. Cached 6h.
+- **Reviews**: only if `GOOGLE_PLACES_API_KEY` is set — `findplacefromtext` → place details → rating + up to 5 reviews shown inline, plus a "Voir tous les avis sur Google" link. No key → map + link only (no inline reviews; Google has no free/legal way to show full review text, and caps the API at 5).
+- The doctor **photo** renders as a hero portrait blended into the blue card via a single **radial-gradient `mask-image`** (multi-layer `mask-composite` was unreliable). Transparent PNGs show as true cutouts.
+
+### Header logout
+`layout/Header.tsx` avatar dropdown has **Mon profil** + **Se déconnecter** (red item) — calls `removeToken()` then routes to `/login`.
 
 ### Calendar views
 `calendrier/page.tsx`: Mois/Semaine/Jour. Nav arrows move by respective unit. Click day number → Jour view. Time grid 08:00–19:00.
