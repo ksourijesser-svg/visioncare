@@ -113,7 +113,7 @@ api/routes/
   patients.py      # CRUD + Excel export — filter by medecin_id
   appointments.py  # CRUD for rendez_vous — filter by medecin_id
   patient_files.py # /patients/{id}/files — upload/list/download/delete (bytes in DB, 10MB max)
-  ordonnances.py   # /ordonnances — prescriptions list/get/create/delete (medicale|lunettes)
+  ordonnances.py   # /ordonnances — prescriptions list/get/create/delete (medicale|lunettes|lentilles)
   operations.py    # /operations — surgery CRUD
   factures.py      # /factures — invoices CRUD + /{id}/paiement; auto-derives statut
   salle_attente.py # /salle-attente — today's RDV board + PATCH salle_statut (+ prix_consultation on termine)
