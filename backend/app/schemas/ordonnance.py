@@ -25,12 +25,27 @@ class Verres(BaseModel):
     og: OeilVerre = OeilVerre()
 
 
+class OeilLentille(BaseModel):
+    puissance: str = ""
+    rayon: str = ""       # rayon de courbure (mm)
+    diametre: str = ""    # diamètre (mm)
+
+
+class Lentilles(BaseModel):
+    type_lentille: str = ""    # souple | rigide
+    rythme_port: str = ""      # journalier | hebdomadaire | mensuel | trimestriel | annuel
+    produit_entretien: str = ""
+    od: OeilLentille = OeilLentille()
+    og: OeilLentille = OeilLentille()
+
+
 class OrdonnanceCreate(BaseModel):
     patient_id: int
     type: OrdonnanceType
     date_ordonnance: date | None = None
     medicaments: list[Medicament] = []
     verres: Verres | None = None
+    lentilles: Lentilles | None = None
     notes: str | None = None
 
 
@@ -42,6 +57,7 @@ class OrdonnanceOut(BaseModel):
     date_ordonnance: date
     medicaments: list[Medicament] | None
     verres: Verres | None
+    lentilles: Lentilles | None
     notes: str | None
     patient: PatientOut
     created_at: datetime
