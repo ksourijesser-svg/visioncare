@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { Users, Calendar, CheckCircle, XCircle, ClipboardList, TrendingUp } from 'lucide-react'
 import { Header } from '@/components/layout/Header'
 import { StatCard } from '@/components/dashboard/StatCard'
@@ -12,15 +13,6 @@ import { usePatients } from '@/hooks/usePatients'
 import { useAppointments } from '@/hooks/useAppointments'
 import { getUser } from '@/lib/auth'
 import { useTheme } from '@/providers/ThemeProvider'
-
-const activityData = [
-  { mois: 'Jan', consultations: 42 },
-  { mois: 'Fév', consultations: 58 },
-  { mois: 'Mar', consultations: 63 },
-  { mois: 'Avr', consultations: 71 },
-  { mois: 'Mai', consultations: 55 },
-  { mois: 'Jun', consultations: 68 },
-]
 
 const statusColors: Record<string, string> = {
   programme: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
