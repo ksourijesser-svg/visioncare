@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { ordonnancesApi } from '@/lib/api'
 
-export type OrdonnanceType = 'medicale' | 'lunettes'
+export type OrdonnanceType = 'medicale' | 'lunettes' | 'lentilles'
 
 export interface Medicament {
   medicament: string
@@ -24,6 +24,20 @@ export interface Verres {
   og: OeilVerre
 }
 
+export interface OeilLentille {
+  puissance: string
+  rayon: string      // rayon de courbure (mm)
+  diametre: string   // diamètre (mm)
+}
+
+export interface Lentilles {
+  type_lentille: string  // souple | rigide
+  rythme_port: string    // journalier | hebdomadaire | mensuel | trimestriel | annuel
+  produit_entretien: string
+  od: OeilLentille
+  og: OeilLentille
+}
+
 export interface Ordonnance {
   id: number
   patient_id: number
@@ -33,14 +47,17 @@ export interface Ordonnance {
   date_ordonnance: string
   medicaments: Medicament[]
   verres: Verres | null
+  lentilles: Lentilles | null
   notes: string
 }
 
 const emptyEye = (): OeilVerre => ({ sphere: '', cylindre: '', axe: '', addition: '' })
+const emptyLensEye = (): OeilLentille => ({ puissance: '', rayon: '', diametre: '' })
 
 function transform(o: Record<string, unknown>): Ordonnance {
   const patient = (o.patient as Record<string, unknown>) || {}
   const v = (o.verres as Partial<Verres>) || null
+  const l = (o.lentilles as Partial<Lentilles>) || null
   return {
     id: o.id as number,
     patient_id: o.patient_id as number,
@@ -60,6 +77,15 @@ function transform(o: Record<string, unknown>): Ordonnance {
           ecart_pupillaire: v.ecart_pupillaire || '',
           od: { ...emptyEye(), ...(v.od || {}) },
           og: { ...emptyEye(), ...(v.og || {}) },
+        }
+      : null,
+    lentilles: l && (l.type_lentille || l.rythme_port || l.produit_entretien || l.od || l.og)
+      ? {
+          type_lentille: l.type_lentille || '',
+          rythme_port: l.rythme_port || '',
+          produit_entretien: l.produit_entretien || '',
+          od: { ...emptyLensEye(), ...(l.od || {}) },
+          og: { ...emptyLensEye(), ...(l.og || {}) },
         }
       : null,
     notes: (o.notes as string) || '',
