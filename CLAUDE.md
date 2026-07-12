@@ -53,7 +53,7 @@ app/
     inscription/        # Multi-step: Role selection → Médecin/Secrétaire form → Email verification (OTP)
                         #   Médecin form includes photo upload, bio, cabinet address + Google Maps link
   (dashboard)/          # protected layout — sidebar + header
-    dashboard/          # welcome banner, stat cards, charts, today's RDV
+    dashboard/          # welcome banner, stat cards, charts (real data from appointments), today's RDV
     patients/           # patient cards (only patients with ≥1 complete RDV)
     rendez-vous/        # appointments table + status update + dossier modal
     calendrier/         # Mois / Semaine / Jour calendar views
