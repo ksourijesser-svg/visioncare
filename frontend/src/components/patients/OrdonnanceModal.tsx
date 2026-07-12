@@ -198,7 +198,7 @@ export function OrdonnanceModal({ open, onClose, patient }: Props) {
                     <Label className={labelCls}>Type de médicament</Label>
                     <Select value={m.categorie || ''} onValueChange={(v) => { if (v) updateMed(i, { categorie: v }) }}>
                       <SelectTrigger className={`${inputCls} h-9`}><SelectValue placeholder="Sélectionner un type..." /></SelectTrigger>
-                      <SelectContent>
+                      <SelectContent alignItemWithTrigger={false} className="w-auto min-w-[240px] max-w-[calc(100vw-2rem)]">
                         {MED_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
                       </SelectContent>
                     </Select>
