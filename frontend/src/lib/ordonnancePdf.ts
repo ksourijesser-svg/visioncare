@@ -19,11 +19,18 @@ export interface OrdonnanceEye {
   addition?: string
 }
 
+export interface OrdonnanceLensEye {
+  puissance?: string
+  rayon?: string
+  diametre?: string
+}
+
 export interface OrdonnanceDoc {
-  type: 'medicale' | 'lunettes'
+  type: 'medicale' | 'lunettes' | 'lentilles'
   date_ordonnance: string
   medicaments: OrdonnanceMedicament[]
   verres: { type_correction?: string; ecart_pupillaire?: string; od: OrdonnanceEye; og: OrdonnanceEye } | null
+  lentilles?: { type_lentille?: string; rythme_port?: string; produit_entretien?: string; od: OrdonnanceLensEye; og: OrdonnanceLensEye } | null
   notes?: string
   patient: { prenom: string; nom: string; age: number | null; date_naissance?: string }
   doctor: {
