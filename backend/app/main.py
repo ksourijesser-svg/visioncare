@@ -36,6 +36,10 @@ def create_tables():
             "ALTER TABLE patients ADD COLUMN IF NOT EXISTS antecedents_generaux TEXT",
             "ALTER TABLE patients ADD COLUMN IF NOT EXISTS antecedents_ophtalmologiques TEXT",
             "ALTER TABLE patients ADD COLUMN IF NOT EXISTS prise_en_charge VARCHAR",
+            "ALTER TABLE ordonnances ADD COLUMN IF NOT EXISTS lentilles JSON",
+            # `type` was a Postgres enum (medicale|lunettes) — convert to plain text
+            # so new kinds (lentilles, …) don't need an enum migration.
+            "ALTER TABLE ordonnances ALTER COLUMN type TYPE VARCHAR USING type::text",
         ]:
             try:
                 conn.execute(text(stmt))
