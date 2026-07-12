@@ -43,6 +43,7 @@ export function OrdonnanceModal({ open, onClose, patient }: Props) {
   const [date, setDate] = useState(todayISO())
   const [meds, setMeds] = useState<Medicament[]>([emptyMed()])
   const [verres, setVerres] = useState<Verres>(emptyVerres())
+  const [lentilles, setLentilles] = useState<Lentilles>(emptyLentilles())
   const [notes, setNotes] = useState('')
 
   // Render-phase reset when the dialog opens.
@@ -54,6 +55,7 @@ export function OrdonnanceModal({ open, onClose, patient }: Props) {
     setDate(todayISO())
     setMeds([emptyMed()])
     setVerres(emptyVerres())
+    setLentilles(emptyLentilles())
     setNotes('')
   }
   if (!currentKey && initKey) setInitKey('')
