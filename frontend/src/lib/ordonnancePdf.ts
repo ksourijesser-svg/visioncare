@@ -161,6 +161,7 @@ export function exportOrdonnancePdf(data: OrdonnanceDoc, opts?: { autoPrint?: bo
   .meds { margin:0; padding-left:20px; }
   .meds li { margin-bottom:14px; }
   .med-name { font-weight:700; font-size:14px; color:#1A2B3C; }
+  .med-cat { display:inline-block; font-size:11px; font-weight:600; color:#1e5f7a; background:#E4F0F4; border-radius:4px; padding:1px 7px; margin-top:3px; }
   .med-line { font-size:13px; color:#27384a; margin-top:2px; }
   .med-line span { color:#6b7c8c; font-weight:600; }
   .corr { font-size:13px; margin:0 0 10px; }
