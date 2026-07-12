@@ -653,6 +653,7 @@ export function PatientDetail({ patient, open, onClose }: Props) {
               </div>
             </div>
           )}
+         </div>{/* ── end grid ── */}
         </form>
       </DialogContent>
     </Dialog>
