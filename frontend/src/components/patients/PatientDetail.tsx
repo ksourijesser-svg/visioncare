@@ -442,6 +442,38 @@ export function PatientDetail({ patient, open, onClose }: Props) {
             </div>
           </div>
 
+          {/* Antécédents & prise en charge */}
+          {!isEditing && (
+            <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden">
+              <div className="px-4 pt-4 pb-2 flex items-center gap-2">
+                <HeartPulse size={13} className="text-[#70B1C4]" />
+                <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Antécédents &amp; prise en charge</span>
+              </div>
+              <div className="px-4 pb-4 space-y-3">
+                {patient.prise_en_charge && (
+                  <div className="inline-flex items-center gap-1.5 bg-[#E4EEF4] dark:bg-[#1C3F62]/60 rounded-full px-3 py-1">
+                    <ShieldCheck size={13} className="text-[#3d8fa8] dark:text-[#70B1C4]" />
+                    <span className="text-xs font-semibold text-[#1A2B3C] dark:text-[#EDF8FF]">
+                      {PRISE_LABEL[patient.prise_en_charge] ?? patient.prise_en_charge}
+                    </span>
+                  </div>
+                )}
+                <div>
+                  <p className="text-[11px] font-semibold text-gray-400 dark:text-[#7AAABB] uppercase tracking-wide mb-1">Généraux</p>
+                  {patient.antecedents_generaux
+                    ? <p className="text-sm text-gray-700 dark:text-[#B4D0E0] leading-relaxed">{patient.antecedents_generaux}</p>
+                    : <p className="text-sm text-gray-400 dark:text-[#7AAABB] italic">Non renseignés</p>}
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold text-gray-400 dark:text-[#7AAABB] uppercase tracking-wide mb-1">Ophtalmologiques</p>
+                  {patient.antecedents_ophtalmologiques
+                    ? <p className="text-sm text-gray-700 dark:text-[#B4D0E0] leading-relaxed">{patient.antecedents_ophtalmologiques}</p>
+                    : <p className="text-sm text-gray-400 dark:text-[#7AAABB] italic">Non renseignés</p>}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Save button (edit mode) */}
           {isEditing && (
             <Button
