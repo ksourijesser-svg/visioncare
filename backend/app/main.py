@@ -33,6 +33,9 @@ def create_tables():
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS bio TEXT",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS google_maps_url VARCHAR",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS photo TEXT",
+            "ALTER TABLE patients ADD COLUMN IF NOT EXISTS antecedents_generaux TEXT",
+            "ALTER TABLE patients ADD COLUMN IF NOT EXISTS antecedents_ophtalmologiques TEXT",
+            "ALTER TABLE patients ADD COLUMN IF NOT EXISTS prise_en_charge VARCHAR",
         ]:
             try:
                 conn.execute(text(stmt))
