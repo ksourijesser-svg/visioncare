@@ -6,20 +6,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { User, Stethoscope } from 'lucide-react'
+import { Stethoscope } from 'lucide-react'
 import { toast } from 'sonner'
 import type { Appointment } from '@/store/appointmentsStore'
-import { usePatients, useUpdatePatient } from '@/hooks/usePatients'
 import { useUpdateAppointment } from '@/hooks/useAppointments'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
 const schema = z.object({
-  date_naissance: z.string(),
-  adresse: z.string(),
-  email: z.union([z.string().email('Email invalide'), z.literal('')]),
   diagnostic: z.string(),
   traitement: z.string(),
 })
@@ -32,46 +27,27 @@ interface Props {
   appointment: Appointment | null
 }
 
-const inputCls = 'border border-[#DCEEF3] dark:border-[#1C3F62]/60 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F] focus-visible:ring-[#70B1C4] h-9'
 const labelCls = 'text-xs text-gray-500 dark:text-[#7AAABB]'
 
 export function ConsultationModal({ open, onClose, appointment }: Props) {
-  const { data: patients = [] } = usePatients()
-  const updatePatient = useUpdatePatient()
   const updateAppointment = useUpdateAppointment()
 
-  const patient = patients.find((p) => p.id === appointment?.patient_id)
-
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<FormData>({
+  const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { date_naissance: '', adresse: '', email: '', diagnostic: '', traitement: '' },
+    defaultValues: { diagnostic: '', traitement: '' },
   })
 
   useEffect(() => {
     if (open && appointment) {
       reset({
-        date_naissance: patient?.date_naissance || '',
-        adresse: patient?.adresse || '',
-        email: patient?.email || '',
         diagnostic: appointment.diagnostic || '',
         traitement: appointment.traitement || '',
       })
     }
-  }, [open, appointment?.id, patient?.id])
+  }, [open, appointment?.id])
 
   async function onSubmit(data: FormData) {
     if (!appointment) return
-
-    if (appointment.patient_id) {
-      await updatePatient.mutateAsync({
-        id: appointment.patient_id,
-        data: {
-          date_naissance: data.date_naissance || undefined,
-          adresse: data.adresse || undefined,
-          email: data.email || undefined,
-        },
-      }).catch(() => {})
-    }
 
     updateAppointment.mutate(
       { id: appointment.id, data: { diagnostic: data.diagnostic, traitement: data.traitement } },
