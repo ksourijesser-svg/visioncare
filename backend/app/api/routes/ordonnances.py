@@ -54,10 +54,11 @@ def create_ordonnance(data: OrdonnanceCreate, db: Session = Depends(get_db), cur
     o = Ordonnance(
         patient_id=data.patient_id,
         medecin_id=current_user.id,
-        type=data.type,
+        type=data.type.value,
         date_ordonnance=data.date_ordonnance or date.today(),
         medicaments=[m.model_dump() for m in data.medicaments],
         verres=data.verres.model_dump() if data.verres else None,
+        lentilles=data.lentilles.model_dump() if data.lentilles else None,
         notes=data.notes,
     )
     db.add(o)
