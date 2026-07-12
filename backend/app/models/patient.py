@@ -16,6 +16,9 @@ class Patient(Base):
     adresse = Column(Text, nullable=True)
     numero_securite_sociale = Column(String, nullable=True)
     notes = Column(Text, nullable=True)
+    antecedents_generaux = Column(Text, nullable=True)
+    antecedents_ophtalmologiques = Column(Text, nullable=True)
+    prise_en_charge = Column(String, nullable=True)  # cnam | assurance_privee | autre
     medecin_id = Column(Integer, ForeignKey("users.id"), nullable=True)
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
