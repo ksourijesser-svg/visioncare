@@ -72,15 +72,17 @@ hooks/
   useRapports.ts        # reports aggregation (periode: mois|trimestre|annee)
   useOperations.ts      # surgeries CRUD
   usePatientFiles.ts    # list/upload/delete + fetchFileObjectUrl / fetchFileDataUrl (blob→url/base64)
-  useOrdonnances.ts     # prescriptions list/create/delete (medicale|lunettes)
+  useOrdonnances.ts     # prescriptions list/create/delete (medicale|lunettes|lentilles)
 
 components/
   layout/Sidebar.tsx    # nav + user card + logout (no eye widget — removed)
   layout/Header.tsx     # page title + bell + avatar dropdown
-  appointments/AppointmentModal.tsx   # create/edit RDV, auto-creates patient
-  appointments/ConsultationModal.tsx  # saves diagnostic/traitement via API
-  patients/PatientDetail.tsx          # slide-over: info, consultations, documents upload, ordonnances, export PDF
-  patients/OrdonnanceModal.tsx        # create ordonnance (médicale meds rows / lunettes OD-OG grid)
+  appointments/AppointmentModal.tsx   # create/edit RDV, auto-creates patient; also captures patient dossier
+                                       #   (date naissance, adresse, email, prise en charge) + antécédents (généraux/ophtalmo)
+  appointments/ConsultationModal.tsx  # compte-rendu only (diagnostic/traitement) + "Opération ?" toggle → creates an Operation
+  patients/PatientDetail.tsx          # full-view dialog (max-w-6xl, 3-col): info, antécédents & prise en charge,
+                                       #   documents upload, ordonnances (click name → PDF new tab), consultations, export PDF
+  patients/OrdonnanceModal.tsx        # create ordonnance — 3 tabs: médicale (meds rows + type/catégorie) / lunettes OD-OG / lentilles OD-OG
   factures/FactureModal.tsx           # create/edit invoice — patient autocomplete + line items
   factures/PaymentModal.tsx           # record a payment against an invoice
   operations/OperationModal.tsx       # schedule/edit a surgery
