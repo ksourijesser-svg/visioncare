@@ -255,6 +255,67 @@ export function OrdonnanceModal({ open, onClose, patient }: Props) {
             </div>
           )}
 
+          {/* ── Lentilles ── */}
+          {type === 'lentilles' && (
+            <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <CircleDot size={13} className="text-[#70B1C4]" />
+                <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Lentilles de contact</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label className={labelCls}>Type de lentille</Label>
+                  <Select value={lentilles.type_lentille} onValueChange={(v) => { if (v) setLentilles((p) => ({ ...p, type_lentille: v })) }}>
+                    <SelectTrigger className={`${inputCls} h-9`}><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="souple">Souple</SelectItem>
+                      <SelectItem value="rigide">Rigide (LRPG)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1">
+                  <Label className={labelCls}>Rythme de renouvellement</Label>
+                  <Select value={lentilles.rythme_port} onValueChange={(v) => { if (v) setLentilles((p) => ({ ...p, rythme_port: v })) }}>
+                    <SelectTrigger className={`${inputCls} h-9`}><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="journalier">Journalière</SelectItem>
+                      <SelectItem value="hebdomadaire">Hebdomadaire</SelectItem>
+                      <SelectItem value="mensuel">Mensuelle</SelectItem>
+                      <SelectItem value="trimestriel">Trimestrielle</SelectItem>
+                      <SelectItem value="annuel">Annuelle</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* OD/OG table */}
+              <div className="overflow-hidden rounded-lg border border-[#DCEEF3] dark:border-[#1C3F62]/50">
+                <div className="grid grid-cols-[80px_1fr_1fr_1fr] bg-[#E4F0F4] dark:bg-[#13344b] text-[10px] font-bold text-[#1e5f7a] dark:text-[#70B1C4] uppercase tracking-wider">
+                  <span className="px-2 py-2" />
+                  <span className="px-2 py-2 text-center">Puissance</span>
+                  <span className="px-2 py-2 text-center">Rayon (mm)</span>
+                  <span className="px-2 py-2 text-center">Diamètre (mm)</span>
+                </div>
+                {(['od', 'og'] as const).map((eye) => (
+                  <div key={eye} className="grid grid-cols-[80px_1fr_1fr_1fr] items-center border-t border-[#DCEEF3] dark:border-[#1C3F62]/40">
+                    <span className="px-2 py-1.5 text-xs font-bold text-[#1A2B3C] dark:text-[#EDF8FF] bg-[#F4F8FA] dark:bg-[#0A1A2E] h-full flex items-center">{eye.toUpperCase()}</span>
+                    <Input value={lentilles[eye].puissance} onChange={(e) => updateLensEye(eye, { puissance: e.target.value })} placeholder="-2.00" className={`${inputCls} h-9 rounded-none border-0 text-center`} />
+                    <Input value={lentilles[eye].rayon} onChange={(e) => updateLensEye(eye, { rayon: e.target.value })} placeholder="8.6" className={`${inputCls} h-9 rounded-none border-0 text-center`} />
+                    <Input value={lentilles[eye].diametre} onChange={(e) => updateLensEye(eye, { diametre: e.target.value })} placeholder="14.2" className={`${inputCls} h-9 rounded-none border-0 text-center`} />
+                  </div>
+                ))}
+              </div>
+
+              <div className="space-y-1">
+                <Label className={labelCls}>Produit d&apos;entretien</Label>
+                <Input value={lentilles.produit_entretien} onChange={(e) => setLentilles((p) => ({ ...p, produit_entretien: e.target.value }))} placeholder="ex. Solution multifonction (rincer et étui à changer tous les 3 mois)" className={`${inputCls} h-9`} />
+              </div>
+
+              <p className="text-[11px] text-gray-400 dark:text-[#7AAABB]">OD = œil droit · OG = œil gauche · Puissance en dioptries. Laissez vide si non applicable.</p>
+            </div>
+          )}
+
           {/* ── Notes ── */}
           <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-1">
             <Label className={labelCls}>Remarques</Label>
