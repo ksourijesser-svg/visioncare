@@ -7,6 +7,7 @@
 
 export interface OrdonnanceMedicament {
   medicament: string
+  categorie?: string
   posologie?: string
   duree?: string
   instructions?: string
