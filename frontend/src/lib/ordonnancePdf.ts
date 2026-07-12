@@ -98,6 +98,7 @@ export function exportOrdonnancePdf(data: OrdonnanceDoc, opts?: { autoPrint?: bo
       ? `<ol class="meds">${meds.map((m) => `
           <li>
             <div class="med-name">${esc(m.medicament)}</div>
+            ${m.categorie ? `<div class="med-cat">${esc(m.categorie)}</div>` : ''}
             ${m.posologie ? `<div class="med-line"><span>Posologie :</span> ${esc(m.posologie)}</div>` : ''}
             ${m.duree ? `<div class="med-line"><span>Durée :</span> ${esc(m.duree)}</div>` : ''}
             ${m.instructions ? `<div class="med-line"><span>Instructions :</span> ${esc(m.instructions)}</div>` : ''}
