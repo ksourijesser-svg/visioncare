@@ -544,15 +544,19 @@ export function PatientDetail({ patient, open, onClose }: Props) {
                           <div className="w-9 h-9 rounded-lg bg-[#E4EEF4] dark:bg-[#1C3F62] flex items-center justify-center shrink-0">
                             {isLun ? <Glasses size={15} className="text-[#3d8fa8] dark:text-[#70B1C4]" /> : <Pill size={15} className="text-[#3d8fa8] dark:text-[#70B1C4]" />}
                           </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-[#1A2B3C] dark:text-[#EDF8FF] truncate leading-tight">
+                          <button type="button" onClick={() => openOrdonnance(o, false)} title="Ouvrir l'ordonnance" className="flex-1 min-w-0 text-left group/ord">
+                            <p className="text-sm font-medium text-[#1A2B3C] dark:text-[#EDF8FF] truncate leading-tight group-hover/ord:text-[#3d8fa8] dark:group-hover/ord:text-[#70B1C4] transition-colors">
                               Ordonnance {isLun ? 'de lunettes' : 'médicale'}
                             </p>
                             <p className="text-[11px] text-gray-400 dark:text-[#7AAABB]">
                               {format(new Date(o.date_ordonnance), 'dd MMM yyyy', { locale: fr })} · {summary}
                             </p>
-                          </div>
-                          <button type="button" onClick={() => printOrdonnance(o)} title="Imprimer / PDF"
+                          </button>
+                          <button type="button" onClick={() => openOrdonnance(o, false)} title="Ouvrir dans un nouvel onglet"
+                            className="p-1.5 rounded-lg text-[#70B1C4] hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 transition-colors shrink-0">
+                            <ExternalLink size={14} />
+                          </button>
+                          <button type="button" onClick={() => openOrdonnance(o, true)} title="Imprimer / PDF"
                             className="p-1.5 rounded-lg text-[#70B1C4] hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/60 transition-colors shrink-0">
                             <Printer size={14} />
                           </button>
