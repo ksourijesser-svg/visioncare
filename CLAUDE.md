@@ -218,7 +218,13 @@ Backend: `date_heure: datetime`. Frontend: separate `date + heure` strings.
 `toISO(date, heure)` in `useAppointments.ts` normalizes AM/PM → 24h. Fetch splits on `'T'`.
 
 ### New patient auto-creation
-`AppointmentModal.onSubmit` calls `patientsApi.create()` first if no patient selected from autocomplete. Sends `null` (not `''`) for optional fields — Pydantic `EmailStr` rejects empty strings.
+`AppointmentModal.onSubmit` calls `patientsApi.create()` first if no patient selected from autocomplete. Sends `null` (not `''`) for optional fields — Pydantic `EmailStr` rejects empty strings. It also **persists the patient dossier fields** captured on the RDV form (date_naissance, adresse, email, antecedents_generaux, antecedents_ophtalmologiques, prise_en_charge) — creating them for a new patient, or `patientsApi.update()` for an existing one. Backend `PatientUpdate` uses `exclude_none=True`, so clearing a field to empty won't null it out.
+
+### Consultation → Operation
+`ConsultationModal` holds only the compte-rendu (diagnostic/traitement) plus a **"Le patient nécessite une opération ?"** Non/Oui toggle. On Oui + save it calls `useCreateOperation` for the consultation's patient (same payload shape as `OperationModal`), so the surgery appears on the **Opérations** page (query invalidated). Forward-only: it creates, never edits.
+
+### Dashboard charts — real data
+`dashboard/page.tsx` builds `monthlyData` with `useMemo` over the last 6 months from `useAppointments()`: **Activité mensuelle** (bar) = RDV count per month; **Tendance des consultations** (line) = `statut === 'complete'` count per month. No mock arrays.
 
 ### Login uses OAuth2 form encoding
 `authApi.login()` sends `application/x-www-form-urlencoded` (URLSearchParams). Backend uses `OAuth2PasswordRequestForm`.
