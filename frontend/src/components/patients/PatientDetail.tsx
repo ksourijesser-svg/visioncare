@@ -228,6 +228,7 @@ export function PatientDetail({ patient, open, onClose }: Props) {
       date_ordonnance: o.date_ordonnance,
       medicaments: o.medicaments,
       verres: o.verres,
+      lentilles: o.lentilles,
       notes: o.notes,
       patient: { prenom: patient.prenom, nom: patient.nom, age, date_naissance: patient.date_naissance || undefined },
       doctor: {
