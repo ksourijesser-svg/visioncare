@@ -6,6 +6,7 @@ from app.schemas.patient import PatientOut
 
 class Medicament(BaseModel):
     medicament: str
+    categorie: str = ""      # type de médicament (antibiotique collyre, corticoïde per os, …)
     posologie: str = ""
     duree: str = ""
     instructions: str = ""
