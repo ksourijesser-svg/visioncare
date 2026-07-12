@@ -125,6 +125,12 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
     setValue('patient_prenom', p.prenom)
     setValue('patient_nom', p.nom)
     setValue('patient_telephone', p.telephone)
+    setValue('date_naissance', p.date_naissance || '')
+    setValue('adresse', p.adresse || '')
+    setValue('patient_email', p.email || '')
+    setValue('antecedents_generaux', p.antecedents_generaux || '')
+    setValue('antecedents_ophtalmologiques', p.antecedents_ophtalmologiques || '')
+    setValue('prise_en_charge', p.prise_en_charge || '')
     setPatientId(p.id)
     setLinkedPatient(p)
     setSearchQuery(`${p.prenom} ${p.nom}`)
@@ -138,6 +144,12 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
     setValue('patient_prenom', '')
     setValue('patient_nom', '')
     setValue('patient_telephone', '')
+    setValue('date_naissance', '')
+    setValue('adresse', '')
+    setValue('patient_email', '')
+    setValue('antecedents_generaux', '')
+    setValue('antecedents_ophtalmologiques', '')
+    setValue('prise_en_charge', '')
   }
 
   async function onSubmit(data: FormData) {
