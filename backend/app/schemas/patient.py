@@ -11,6 +11,9 @@ class PatientCreate(BaseModel):
     adresse: str | None = None
     numero_securite_sociale: str | None = None
     notes: str | None = None
+    antecedents_generaux: str | None = None
+    antecedents_ophtalmologiques: str | None = None
+    prise_en_charge: str | None = None
 
 
 class PatientUpdate(PatientCreate):
@@ -27,6 +30,9 @@ class PatientOut(BaseModel):
     email: str | None
     adresse: str | None
     notes: str | None
+    antecedents_generaux: str | None
+    antecedents_ophtalmologiques: str | None
+    prise_en_charge: str | None
     created_at: datetime
     updated_at: datetime | None
 
