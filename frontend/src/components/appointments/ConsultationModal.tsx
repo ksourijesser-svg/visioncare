@@ -174,14 +174,130 @@ export function ConsultationModal({ open, onClose, appointment }: Props) {
               </div>
             </div>
           </div>
+
+          {/* ── Opération section ── */}
+          <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-[#DCEEF3] dark:bg-[#1C3F62] flex items-center justify-center shrink-0">
+                <Scissors size={12} className="text-[#70B1C4]" />
+              </div>
+              <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Opération</span>
+            </div>
+
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-sm text-[#2D3748] dark:text-[#EDF8FF]">Le patient nécessite une opération ?</span>
+              <div className="flex rounded-lg border border-[#DCEEF3] dark:border-[#1C3F62]/60 overflow-hidden shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setNeedsOp(false)}
+                  className={`px-4 py-1.5 text-sm font-medium transition-colors ${!needsOp ? 'bg-[#70B1C4] text-white' : 'text-gray-500 dark:text-[#7AAABB] hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/40'}`}
+                >
+                  Non
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setNeedsOp(true)}
+                  className={`px-4 py-1.5 text-sm font-medium transition-colors ${needsOp ? 'bg-[#70B1C4] text-white' : 'text-gray-500 dark:text-[#7AAABB] hover:bg-[#E4EEF4] dark:hover:bg-[#1C3F62]/40'}`}
+                >
+                  Oui
+                </button>
+              </div>
+            </div>
+
+            {needsOp && (
+              <div className="space-y-3 pt-1 border-t border-[#DCEEF3] dark:border-[#1C3F62]/40">
+                <p className="text-[11px] text-gray-400 dark:text-[#7AAABB] pt-2">
+                  L&apos;opération sera enregistrée dans la page <span className="font-semibold text-[#3d8fa8] dark:text-[#70B1C4]">Opérations</span>.
+                </p>
+
+                <div className="space-y-1">
+                  <Label className={labelCls}>Type d&apos;intervention</Label>
+                  <Select value={opType} onValueChange={(v) => { if (v) setOpType(v) }}>
+                    <SelectTrigger className={`${inputCls} h-9`}><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      {INTERVENTIONS.map((it) => <SelectItem key={it} value={it}>{it}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <Label className={`${labelCls} flex items-center gap-1`}><Eye size={11} /> Œil</Label>
+                    <Select value={opOeil} onValueChange={(v) => { if (v) setOpOeil(v as Oeil) }}>
+                      <SelectTrigger className={`${inputCls} h-9`}><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="droit">Œil droit</SelectItem>
+                        <SelectItem value="gauche">Œil gauche</SelectItem>
+                        <SelectItem value="deux">Les deux yeux</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className={labelCls}>Anesthésie</Label>
+                    <Select value={opAnesth} onValueChange={(v) => { if (v) setOpAnesth(v as Anesthesie) }}>
+                      <SelectTrigger className={`${inputCls} h-9`}><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="topique">Topique</SelectItem>
+                        <SelectItem value="locale">Locale</SelectItem>
+                        <SelectItem value="generale">Générale</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <Label className={labelCls}>Date</Label>
+                    <Input type="date" value={opDate} onChange={(e) => setOpDate(e.target.value)} className={inputCls} />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className={labelCls}>Heure</Label>
+                    <Input type="time" value={opHeure} onChange={(e) => setOpHeure(e.target.value)} className={inputCls} />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className={labelCls}>Durée (min)</Label>
+                    <Input type="number" min={5} step={5} value={opDuree} onChange={(e) => setOpDuree(parseInt(e.target.value) || 0)} className={inputCls} />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className={labelCls}>Salle / Bloc</Label>
+                    <Input value={opSalle} onChange={(e) => setOpSalle(e.target.value)} placeholder="Bloc 1" className={inputCls} />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <Label className={labelCls}>Statut</Label>
+                  <Select value={opStatut} onValueChange={(v) => { if (v) setOpStatut(v as OperationStatus) }}>
+                    <SelectTrigger className={`${inputCls} h-9`}><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="planifiee">Planifiée</SelectItem>
+                      <SelectItem value="confirmee">Confirmée</SelectItem>
+                      <SelectItem value="terminee">Terminée</SelectItem>
+                      <SelectItem value="annulee">Annulée</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-1">
+                  <Label className={labelCls}>Notes opératoires</Label>
+                  <textarea
+                    value={opNotes}
+                    onChange={(e) => setOpNotes(e.target.value)}
+                    rows={2}
+                    className="w-full rounded-md border border-[#DCEEF3] dark:border-[#1C3F62]/60 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#70B1C4] resize-none bg-white dark:bg-[#06101E] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F]"
+                    placeholder="Précautions, matériel, antécédents pertinents..."
+                  />
+                </div>
+              </div>
+            )}
+          </div>
           </div>
 
           <DialogFooter className="gap-2 shrink-0 pt-3 border-t border-gray-100 dark:border-[#1C3F62]/30">
             <Button type="button" variant="outline" onClick={onClose} className="border-[#DCEEF3] dark:border-[#1C3F62]/60 dark:text-[#EDF8FF] dark:hover:bg-[#1C3F62]/30">
               Annuler
             </Button>
-            <Button type="submit" disabled={isSubmitting || updateAppointment.isPending} className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white btn-neon">
-              Enregistrer
+            <Button type="submit" disabled={isSubmitting || updateAppointment.isPending || createOp.isPending} className="bg-[#70B1C4] hover:bg-[#5a9db8] text-white btn-neon">
+              {needsOp ? 'Enregistrer & planifier' : 'Enregistrer'}
             </Button>
           </DialogFooter>
         </form>
