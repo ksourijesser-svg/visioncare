@@ -283,48 +283,47 @@ export function PatientDetail({ patient, open, onClose }: Props) {
             </div>
           </div>
 
-          {/* Avatar */}
-          <div className="flex flex-col items-center relative z-10">
-            <Avatar className="w-20 h-20 border-4 border-white/40 shadow-xl shadow-black/30">
+          {/* Identity — horizontal layout */}
+          <div className="flex items-center gap-5 relative z-10">
+            <Avatar className="w-20 h-20 border-4 border-white/40 shadow-xl shadow-black/30 shrink-0">
               <AvatarFallback className="bg-white/25 text-white text-2xl font-bold backdrop-blur-sm">
                 {initials}
               </AvatarFallback>
             </Avatar>
             {!isEditing ? (
-              <>
-                <h2 className="mt-3 text-xl font-bold text-white drop-shadow-sm">
+              <div className="min-w-0">
+                <h2 className="text-2xl font-bold text-white drop-shadow-sm truncate">
                   {patient.prenom} {patient.nom}
                 </h2>
                 <p className="text-white/75 text-sm mt-0.5">
                   {age !== null ? `${age} ans` : 'Âge inconnu'} · Patient #{patient.id}
                 </p>
-              </>
+                <div className="flex items-center gap-2 mt-3 flex-wrap">
+                  <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 border border-white/20">
+                    <Activity size={11} className="text-white/90" />
+                    <span className="text-white text-xs font-semibold">{patientAppointments.length} RDV</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 border border-white/20">
+                    <ClipboardList size={11} className="text-white/90" />
+                    <span className="text-white text-xs font-semibold">{consultationHistory.length} compte-rendu{consultationHistory.length > 1 ? 's' : ''}</span>
+                  </div>
+                  {patient.derniere_visite && (
+                    <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 border border-white/20">
+                      <Calendar size={11} className="text-white/90" />
+                      <span className="text-white text-xs font-semibold">
+                        {format(new Date(patient.derniere_visite), 'dd MMM yyyy', { locale: fr })}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
             ) : (
-              <p className="mt-3 text-white/80 text-sm font-medium">Mode édition</p>
+              <div>
+                <h2 className="text-2xl font-bold text-white drop-shadow-sm">{patient.prenom} {patient.nom}</h2>
+                <p className="mt-1 text-white/80 text-sm font-medium">Mode édition</p>
+              </div>
             )}
           </div>
-
-          {/* Stat chips */}
-          {!isEditing && (
-            <div className="flex items-center justify-center gap-2 mt-4 flex-wrap relative z-10">
-              <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 border border-white/20">
-                <Activity size={11} className="text-white/90" />
-                <span className="text-white text-xs font-semibold">{patientAppointments.length} RDV</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 border border-white/20">
-                <ClipboardList size={11} className="text-white/90" />
-                <span className="text-white text-xs font-semibold">{consultationHistory.length} compte-rendu{consultationHistory.length > 1 ? 's' : ''}</span>
-              </div>
-              {patient.derniere_visite && (
-                <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 border border-white/20">
-                  <Calendar size={11} className="text-white/90" />
-                  <span className="text-white text-xs font-semibold">
-                    {format(new Date(patient.derniere_visite), 'dd MMM yyyy', { locale: fr })}
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
         </div>
 
         {/* ── Scrollable body ── */}
