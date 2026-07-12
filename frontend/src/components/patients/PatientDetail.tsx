@@ -328,7 +328,7 @@ export function PatientDetail({ patient, open, onClose }: Props) {
 
         {/* ── Scrollable body ── */}
         <form onSubmit={handleSubmit(onSubmit)} className="flex-1 overflow-y-auto scrollbar-modal px-5 py-5 bg-[#F0F5F8] dark:bg-[#06101E]">
-         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 items-start">
 
           {/* ── Left column: identity & notes ── */}
           <div className="space-y-4">
