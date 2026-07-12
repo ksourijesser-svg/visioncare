@@ -41,11 +41,12 @@ def create_tables():
             # so new kinds (lentilles, …) don't need an enum migration.
             "ALTER TABLE ordonnances ALTER COLUMN type TYPE VARCHAR USING type::text",
         ]:
+            # Commit each statement on its own so one failure can't abort the batch.
             try:
                 conn.execute(text(stmt))
+                conn.commit()
             except Exception:
-                pass
-        conn.commit()
+                conn.rollback()
     print("Database tables ensured")
 
 
