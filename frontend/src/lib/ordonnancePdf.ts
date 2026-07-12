@@ -165,7 +165,7 @@ export function exportOrdonnancePdf(data: OrdonnanceDoc, opts?: { autoPrint?: bo
   <div class="sign"><div class="box">Signature et cachet du médecin</div></div>
 
   <div class="footer">Ophtech — Ordonnance générée électroniquement · document à valeur médicale.</div>
-
+${autoPrint ? `
   <script>
     (function () {
       var printed = false;
@@ -173,7 +173,7 @@ export function exportOrdonnancePdf(data: OrdonnanceDoc, opts?: { autoPrint?: bo
       if (document.readyState === 'complete') setTimeout(go, 150);
       else window.addEventListener('load', function () { setTimeout(go, 150); });
     })();
-  </script>
+  </script>` : ''}
 </body></html>`
 
   const win = window.open('', '_blank', 'width=900,height=1100')
