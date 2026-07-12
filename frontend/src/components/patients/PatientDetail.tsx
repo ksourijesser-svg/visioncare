@@ -13,7 +13,7 @@ import {
   Phone, Mail, MapPin, Calendar, ClipboardList,
   Pencil, X, Save, Hash, Activity, FileText,
   Paperclip, Upload, Trash2, ImageIcon, FileDown, Loader2, ExternalLink,
-  Pill, Glasses, Printer, Plus, HeartPulse, ShieldCheck,
+  Pill, Glasses, Printer, Plus, HeartPulse, ShieldCheck, CircleDot,
 } from 'lucide-react'
 
 const PRISE_LABEL: Record<string, string> = {
