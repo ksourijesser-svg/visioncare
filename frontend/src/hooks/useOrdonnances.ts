@@ -109,6 +109,7 @@ export interface OrdonnanceInput {
   date_ordonnance?: string
   medicaments?: Medicament[]
   verres?: Verres | null
+  lentilles?: Lentilles | null
   notes?: string | null
 }
 
