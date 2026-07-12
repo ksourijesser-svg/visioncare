@@ -594,17 +594,22 @@ export function PatientDetail({ patient, open, onClose }: Props) {
                   <div className="space-y-2">
                     {ordonnances.map((o) => {
                       const isLun = o.type === 'lunettes'
+                      const isLen = o.type === 'lentilles'
+                      const OrdIcon = isLun ? Glasses : isLen ? CircleDot : Pill
+                      const label = isLun ? 'de lunettes' : isLen ? 'de lentilles' : 'médicale'
                       const summary = isLun
                         ? `OD ${o.verres?.od.sphere || '—'} · OG ${o.verres?.og.sphere || '—'}`
-                        : `${o.medicaments.length} médicament${o.medicaments.length > 1 ? 's' : ''}`
+                        : isLen
+                          ? `OD ${o.lentilles?.od.puissance || '—'} · OG ${o.lentilles?.og.puissance || '—'}`
+                          : `${o.medicaments.length} médicament${o.medicaments.length > 1 ? 's' : ''}`
                       return (
                         <div key={o.id} className="flex items-center gap-3 rounded-xl border border-gray-100 dark:border-[#1C3F62]/40 bg-[#F7FAFB] dark:bg-[#091628] px-3 py-2.5">
                           <div className="w-9 h-9 rounded-lg bg-[#E4EEF4] dark:bg-[#1C3F62] flex items-center justify-center shrink-0">
-                            {isLun ? <Glasses size={15} className="text-[#3d8fa8] dark:text-[#70B1C4]" /> : <Pill size={15} className="text-[#3d8fa8] dark:text-[#70B1C4]" />}
+                            <OrdIcon size={15} className="text-[#3d8fa8] dark:text-[#70B1C4]" />
                           </div>
                           <button type="button" onClick={() => openOrdonnance(o, false)} title="Ouvrir l'ordonnance" className="flex-1 min-w-0 text-left group/ord">
                             <p className="text-sm font-medium text-[#1A2B3C] dark:text-[#EDF8FF] truncate leading-tight group-hover/ord:text-[#3d8fa8] dark:group-hover/ord:text-[#70B1C4] transition-colors">
-                              Ordonnance {isLun ? 'de lunettes' : 'médicale'}
+                              Ordonnance {label}
                             </p>
                             <p className="text-[11px] text-gray-400 dark:text-[#7AAABB]">
                               {format(new Date(o.date_ordonnance), 'dd MMM yyyy', { locale: fr })} · {summary}
