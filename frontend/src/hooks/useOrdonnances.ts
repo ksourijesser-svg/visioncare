@@ -5,6 +5,7 @@ export type OrdonnanceType = 'medicale' | 'lunettes' | 'lentilles'
 
 export interface Medicament {
   medicament: string
+  categorie: string   // type de médicament (antibiotique collyre, corticoïde per os, …)
   posologie: string
   duree: string
   instructions: string
