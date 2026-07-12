@@ -145,7 +145,7 @@ All routes prefixed `/api/v1`. Health: `GET /health`.
 - **Ordonnance** (`ordonnances`): patient_id, medecin_id, **type** (medicale|lunettes|lentilles — plain **VARCHAR**, not a DB enum), date_ordonnance, `medicaments` (JSON list: medicament/**categorie**/posologie/duree/instructions), `verres` (JSON: type_correction/ecart_pupillaire/od/og × sphere,cylindre,axe,addition), **`lentilles`** (JSON: type_lentille[souple|rigide]/rythme_port[journalier…annuel]/produit_entretien/od/og × puissance,rayon,diametre), notes. `medicaments[].categorie` = drug type (antibiotique collyre/per os, corticoïde collyre/per os, antiglaucomateux, agent mouillant, pansement néopade, autre).
 
 ### Table creation — NO Alembic
-Tables via `Base.metadata.create_all()` in `main.py`. New columns via `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` in the same function. Do **not** use `alembic upgrade head`.
+Tables via `Base.metadata.create_all()` in `main.py`. New columns via `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` in the same function. Do **not** use `alembic upgrade head`. Each migration statement now **commits on its own** (`conn.commit()` per stmt, `rollback()` on error) so one failure can't abort the whole batch — needed because non-idempotent statements like `ALTER COLUMN ... TYPE VARCHAR` (no `IF NOT EXISTS`) can't be guarded.
 
 ### State Management
 Server state → React Query hooks. Zustand stores → type interfaces only. `profileStore` → localStorage persistence.
