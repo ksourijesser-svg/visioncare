@@ -194,9 +194,18 @@ export function OrdonnanceModal({ open, onClose, patient }: Props) {
                     className="absolute top-2 right-2 p-1 rounded-lg text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 disabled:opacity-30 disabled:cursor-not-allowed">
                     <Trash2 size={13} />
                   </button>
+                  <div className="space-y-1 pr-8">
+                    <Label className={labelCls}>Type de médicament</Label>
+                    <Select value={m.categorie || ''} onValueChange={(v) => { if (v) updateMed(i, { categorie: v }) }}>
+                      <SelectTrigger className={`${inputCls} h-9`}><SelectValue placeholder="Sélectionner un type..." /></SelectTrigger>
+                      <SelectContent>
+                        {MED_CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
                   <div className="space-y-1">
                     <Label className={labelCls}>Médicament</Label>
-                    <Input value={m.medicament} onChange={(e) => updateMed(i, { medicament: e.target.value })} placeholder="ex. Collyre Azarga 5 mL" className={`${inputCls} h-9 pr-8`} />
+                    <Input value={m.medicament} onChange={(e) => updateMed(i, { medicament: e.target.value })} placeholder="ex. Collyre Azarga 5 mL" className={`${inputCls} h-9`} />
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div className="space-y-1">
