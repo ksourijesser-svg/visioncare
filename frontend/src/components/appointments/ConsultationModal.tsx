@@ -1,16 +1,19 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Stethoscope } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Stethoscope, Scissors, Eye } from 'lucide-react'
 import { toast } from 'sonner'
 import type { Appointment } from '@/store/appointmentsStore'
 import { useUpdateAppointment } from '@/hooks/useAppointments'
+import { useCreateOperation, type Oeil, type Anesthesie, type OperationStatus } from '@/hooks/useOperations'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
@@ -27,15 +30,44 @@ interface Props {
   appointment: Appointment | null
 }
 
+const inputCls = 'border border-[#DCEEF3] dark:border-[#1C3F62]/60 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F] focus-visible:ring-[#70B1C4]'
 const labelCls = 'text-xs text-gray-500 dark:text-[#7AAABB]'
+
+const INTERVENTIONS = [
+  'Chirurgie de la cataracte',
+  'Chirurgie réfractive (LASIK)',
+  'Chirurgie réfractive (PKR)',
+  'Injection intravitréenne',
+  'Vitrectomie',
+  'Chirurgie du glaucome',
+  'Greffe de cornée',
+  'Chirurgie des paupières',
+  'Décollement de rétine',
+  'Autre',
+]
+
+function todayISO() { return new Date().toISOString().slice(0, 10) }
 
 export function ConsultationModal({ open, onClose, appointment }: Props) {
   const updateAppointment = useUpdateAppointment()
+  const createOp = useCreateOperation()
 
   const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { diagnostic: '', traitement: '' },
   })
+
+  // ── Opération (optionnelle) ──
+  const [needsOp, setNeedsOp] = useState(false)
+  const [opDate, setOpDate] = useState(todayISO())
+  const [opHeure, setOpHeure] = useState('09:00')
+  const [opDuree, setOpDuree] = useState(60)
+  const [opType, setOpType] = useState(INTERVENTIONS[0])
+  const [opOeil, setOpOeil] = useState<Oeil>('droit')
+  const [opAnesth, setOpAnesth] = useState<Anesthesie>('topique')
+  const [opSalle, setOpSalle] = useState('')
+  const [opStatut, setOpStatut] = useState<OperationStatus>('planifiee')
+  const [opNotes, setOpNotes] = useState('')
 
   useEffect(() => {
     if (open && appointment) {
@@ -43,16 +75,47 @@ export function ConsultationModal({ open, onClose, appointment }: Props) {
         diagnostic: appointment.diagnostic || '',
         traitement: appointment.traitement || '',
       })
+      setNeedsOp(false)
+      setOpDate(todayISO()); setOpHeure('09:00'); setOpDuree(60)
+      setOpType(INTERVENTIONS[0]); setOpOeil('droit'); setOpAnesth('topique')
+      setOpSalle(''); setOpStatut('planifiee'); setOpNotes('')
     }
   }, [open, appointment?.id])
 
   async function onSubmit(data: FormData) {
     if (!appointment) return
 
+    // Register the operation on the Opérations page if the patient needs one.
+    if (needsOp) {
+      if (!appointment.patient_id) {
+        toast.error('Patient introuvable pour planifier l\'opération')
+      } else if (!opType.trim()) {
+        toast.error('Indiquez le type d\'intervention')
+        return
+      } else {
+        try {
+          await createOp.mutateAsync({
+            patient_id: appointment.patient_id,
+            date_operation: `${opDate}T${opHeure}:00`,
+            duree: Number(opDuree) || 60,
+            type_intervention: opType.trim(),
+            oeil: opOeil,
+            anesthesie: opAnesth,
+            salle: opSalle.trim() || null,
+            statut: opStatut,
+            notes: opNotes.trim() || null,
+          })
+        } catch {
+          toast.error('Erreur lors de la planification de l\'opération')
+          return
+        }
+      }
+    }
+
     updateAppointment.mutate(
       { id: appointment.id, data: { diagnostic: data.diagnostic, traitement: data.traitement } },
       {
-        onSuccess: () => { toast.success('Dossier enregistré'); onClose() },
+        onSuccess: () => { toast.success(needsOp ? 'Dossier enregistré · opération planifiée' : 'Dossier enregistré'); onClose() },
         onError: () => toast.error('Erreur lors de l\'enregistrement'),
       }
     )
