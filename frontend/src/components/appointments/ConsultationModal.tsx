@@ -82,33 +82,6 @@ export function ConsultationModal({ open, onClose, appointment }: Props) {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1 overflow-hidden pt-1">
 
           <div className="flex-1 overflow-y-auto space-y-3 pr-1 scrollbar-modal">
-          {/* ── Informations patient section ── */}
-          <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-[#DCEEF3] dark:bg-[#1C3F62] flex items-center justify-center shrink-0">
-                <User size={12} className="text-[#70B1C4]" />
-              </div>
-              <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Informations patient</span>
-            </div>
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <Label className={labelCls}>Date de naissance</Label>
-                <Input {...register('date_naissance')} type="date" className={inputCls} />
-              </div>
-              <div className="space-y-1">
-                <Label className={labelCls}>Adresse</Label>
-                <Input {...register('adresse')} className={inputCls} placeholder="Rue, code postal, ville..." />
-              </div>
-              <div className="space-y-1">
-                <Label className={labelCls}>
-                  Email <span className="text-gray-300 dark:text-[#3A5C70] font-normal">(optionnel)</span>
-                </Label>
-                <Input {...register('email')} type="email" className={inputCls} placeholder="email@exemple.fr" />
-                {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
-              </div>
-            </div>
-          </div>
-
           {/* ── Compte-rendu section ── */}
           <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
             <div className="flex items-center gap-2">
