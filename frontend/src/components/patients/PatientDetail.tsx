@@ -13,8 +13,14 @@ import {
   Phone, Mail, MapPin, Calendar, ClipboardList,
   Pencil, X, Save, Hash, Activity, FileText,
   Paperclip, Upload, Trash2, ImageIcon, FileDown, Loader2, ExternalLink,
-  Pill, Glasses, Printer, Plus,
+  Pill, Glasses, Printer, Plus, HeartPulse, ShieldCheck,
 } from 'lucide-react'
+
+const PRISE_LABEL: Record<string, string> = {
+  cnam: 'CNAM',
+  assurance_privee: 'Assurance privée',
+  autre: 'Autre',
+}
 import { Patient } from '@/store/patientsStore'
 import { useUpdatePatient } from '@/hooks/usePatients'
 import { useAppointments } from '@/hooks/useAppointments'
