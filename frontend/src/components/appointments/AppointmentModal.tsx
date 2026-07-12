@@ -316,6 +316,70 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
             </div>
           </div>
 
+          {/* ── Dossier patient (infos & prise en charge) ── */}
+          <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <ShieldCheck size={13} className="text-[#70B1C4]" />
+              <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Dossier patient</span>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label className={labelCls}>Date de naissance</Label>
+                <Input {...register('date_naissance')} type="date" className={inputCls} />
+              </div>
+              <div className="space-y-1">
+                <Label className={labelCls}>Type de prise en charge</Label>
+                <Select value={watch('prise_en_charge') || ''} onValueChange={(v) => { if (v) setValue('prise_en_charge', v) }}>
+                  <SelectTrigger className={`${inputCls} h-9`}>
+                    <SelectValue placeholder="Sélectionner..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="cnam">CNAM</SelectItem>
+                    <SelectItem value="assurance_privee">Assurance privée</SelectItem>
+                    <SelectItem value="autre">Autre</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="space-y-1">
+              <Label className={labelCls}>Adresse</Label>
+              <Input {...register('adresse')} className={inputCls} placeholder="Rue, code postal, ville..." />
+            </div>
+            <div className="space-y-1">
+              <Label className={labelCls}>
+                Email <span className="text-gray-300 dark:text-[#3A5C70] font-normal">(optionnel)</span>
+              </Label>
+              <Input {...register('patient_email')} type="email" className={inputCls} placeholder="email@exemple.fr" />
+              {errors.patient_email && <p className="text-red-500 text-xs">{errors.patient_email.message}</p>}
+            </div>
+          </div>
+
+          {/* ── Antécédents médicaux ── */}
+          <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <HeartPulse size={13} className="text-[#70B1C4]" />
+              <span className="text-[10px] font-bold text-gray-400 dark:text-[#7AAABB] uppercase tracking-widest">Antécédents</span>
+            </div>
+            <div className="space-y-1">
+              <Label className={labelCls}>Antécédents généraux</Label>
+              <textarea
+                {...register('antecedents_generaux')}
+                rows={2}
+                className="w-full rounded-md border border-[#DCEEF3] dark:border-[#1C3F62]/60 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#70B1C4] resize-none bg-white dark:bg-[#06101E] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F]"
+                placeholder="Diabète, HTA, allergies, traitements en cours..."
+              />
+            </div>
+            <div className="space-y-1">
+              <Label className={labelCls}>Antécédents ophtalmologiques</Label>
+              <textarea
+                {...register('antecedents_ophtalmologiques')}
+                rows={2}
+                className="w-full rounded-md border border-[#DCEEF3] dark:border-[#1C3F62]/60 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#70B1C4] resize-none bg-white dark:bg-[#06101E] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F]"
+                placeholder="Chirurgie réfractive, glaucome, cataracte, port de lentilles..."
+              />
+            </div>
+          </div>
+
           {/* ── Date / Heure / Durée / Statut ── */}
           <div className="rounded-xl bg-[#F7FAFB] dark:bg-[#091628] border border-[#DCEEF3] dark:border-[#1C3F62]/40 p-4 space-y-3">
             <div className="flex items-center gap-2">
