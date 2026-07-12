@@ -209,6 +209,10 @@ The waiting-room board is a **non-destructive overlay** on `rendez_vous` via two
 
 ### PDF export — client-side print window, NO backend PDF lib
 No reportlab/weasyprint on the backend. Dossier (`lib/patientPdf.ts`) and prescriptions (`lib/ordonnancePdf.ts`) build a styled HTML document, `window.open` it, and call `window.print()` (user picks "Save as PDF"). Always rendered light (medical document). Image attachments embed as **base64 data URLs** (blob: URLs don't survive the separate window); the print trigger waits for images to decode. Prescription header pulls doctor identity (name, spécialité, RPPS, cabinet) from `profileStore`.
+`exportOrdonnancePdf(data, { autoPrint })` — default `autoPrint:true` includes the print-trigger script; **`autoPrint:false` just opens the styled doc in a new tab for viewing** (no print dialog). In `PatientDetail`, clicking an ordonnance name (or the external-link icon) opens it with `autoPrint:false`; the printer icon uses `autoPrint:true`.
+
+### Ordonnances — 3 types, `type` is VARCHAR not a DB enum (CRITICAL)
+Types: `medicale` | `lunettes` | `lentilles`. The `type` column was a Postgres **enum** and was **converted to plain VARCHAR** (`ALTER COLUMN type TYPE VARCHAR USING type::text` in `main.py`) so adding future kinds needs **no `ALTER TYPE` enum surgery**. The Python `OrdonnanceType` (str, Enum) still validates input; the route stores `data.type.value` and filters with `type.value`. Kind-specific payloads live in separate JSON columns: `medicaments` / `verres` / `lentilles` (the others are null). `medicaments[].categorie` is stored inside the existing JSON (no migration).
 
 ### Patient files — bytes in Postgres
 Uploaded via multipart to `/patients/{id}/files`; stored as `LargeBinary` in the DB (Railway disk is ephemeral). Because auth is a Bearer header, the browser can't use a plain `<img src>` — the frontend downloads the blob (`responseType: 'blob'`) and makes an object URL to view, or a base64 data URL to embed in the PDF.
