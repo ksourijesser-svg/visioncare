@@ -65,16 +65,27 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { statut: 'programme', duree: '30', patient_telephone: '', notes: '' },
+    defaultValues: {
+      statut: 'programme', duree: '30', patient_telephone: '', notes: '',
+      date_naissance: '', adresse: '', patient_email: '',
+      antecedents_generaux: '', antecedents_ophtalmologiques: '', prise_en_charge: '',
+    },
   })
 
   useEffect(() => {
     if (open) {
       if (appointment) {
+        const existing = patients.find((p) => p.id === appointment.patient_id)
         reset({
           patient_prenom: appointment.patient_prenom,
           patient_nom: appointment.patient_nom,
           patient_telephone: appointment.patient_telephone,
+          date_naissance: existing?.date_naissance || '',
+          adresse: existing?.adresse || '',
+          patient_email: existing?.email || '',
+          antecedents_generaux: existing?.antecedents_generaux || '',
+          antecedents_ophtalmologiques: existing?.antecedents_ophtalmologiques || '',
+          prise_en_charge: existing?.prise_en_charge || '',
           date: appointment.date,
           heure: appointment.heure,
           duree: String(appointment.duree),
@@ -83,11 +94,13 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
           notes: appointment.notes,
         })
         setPatientId(appointment.patient_id)
-        const existing = patients.find((p) => p.id === appointment.patient_id)
         setLinkedPatient(existing ?? null)
         setSearchQuery(existing ? `${existing.prenom} ${existing.nom}` : '')
       } else {
-        reset({ patient_prenom: '', patient_nom: '', patient_telephone: '', date: '', heure: '', duree: '30', motif: '', statut: 'programme', notes: '' })
+        reset({
+          patient_prenom: '', patient_nom: '', patient_telephone: '', date: '', heure: '', duree: '30', motif: '', statut: 'programme', notes: '',
+          date_naissance: '', adresse: '', patient_email: '', antecedents_generaux: '', antecedents_ophtalmologiques: '', prise_en_charge: '',
+        })
         setPatientId(0)
         setLinkedPatient(null)
         setSearchQuery('')
