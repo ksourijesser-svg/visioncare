@@ -41,6 +41,29 @@ export default function DashboardPage() {
   const annules   = appointments.filter((a) => a.statut === 'annule').length
   const completes = appointments.filter((a) => a.statut === 'complete').length
 
+  // Real monthly aggregation over the last 6 months (incl. current), from actual RDV.
+  const monthlyData = useMemo(() => {
+    const now = new Date()
+    const buckets = Array.from({ length: 6 }, (_, i) => {
+      const d = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1)
+      const label = format(d, 'MMM', { locale: fr }).replace('.', '')
+      return {
+        key: format(d, 'yyyy-MM'),
+        mois: label.charAt(0).toUpperCase() + label.slice(1),
+        rdv: 0,
+        consultations: 0,
+      }
+    })
+    const idx = new Map(buckets.map((b, i) => [b.key, i]))
+    for (const a of appointments) {
+      const i = idx.get((a.date || '').slice(0, 7))
+      if (i === undefined) continue
+      buckets[i].rdv += 1
+      if (a.statut === 'complete') buckets[i].consultations += 1
+    }
+    return buckets
+  }, [appointments])
+
   const isDark = theme === 'dark'
   const gridColor    = isDark ? '#1A3A5C' : '#f0f0f0'
   const axisColor    = isDark ? '#6A8E9F' : '#9ca3af'
