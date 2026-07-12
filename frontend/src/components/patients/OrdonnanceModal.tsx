@@ -122,6 +122,7 @@ export function OrdonnanceModal({ open, onClose, patient }: Props) {
   const TYPE_TABS: { key: OrdonnanceType; label: string; icon: typeof Pill }[] = [
     { key: 'medicale', label: 'Médicale', icon: Pill },
     { key: 'lunettes', label: 'Lunettes', icon: Glasses },
+    { key: 'lentilles', label: 'Lentilles', icon: CircleDot },
   ]
 
   return (
