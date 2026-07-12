@@ -30,6 +30,8 @@ const labelCls = 'text-xs text-gray-500 dark:text-[#7AAABB]'
 const emptyMed = (): Medicament => ({ medicament: '', posologie: '', duree: '', instructions: '' })
 const emptyEye = (): OeilVerre => ({ sphere: '', cylindre: '', axe: '', addition: '' })
 const emptyVerres = (): Verres => ({ type_correction: 'loin', ecart_pupillaire: '', od: emptyEye(), og: emptyEye() })
+const emptyLensEye = (): OeilLentille => ({ puissance: '', rayon: '', diametre: '' })
+const emptyLentilles = (): Lentilles => ({ type_lentille: 'souple', rythme_port: 'mensuel', produit_entretien: '', od: emptyLensEye(), og: emptyLensEye() })
 
 function todayISO() { return new Date().toISOString().slice(0, 10) }
 
