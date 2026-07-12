@@ -247,7 +247,7 @@ export function PatientDetail({ patient, open, onClose }: Props) {
       <DialogContent className="w-[95vw] max-w-6xl sm:max-w-6xl p-0 overflow-hidden flex flex-col max-h-[92vh] gap-0 dark:bg-[#06101E] dark:border-[#1C3F62]/50 dark:[box-shadow:0_0_0_1px_rgba(112,177,196,0.50),_0_0_18px_rgba(61,143,168,0.45),_0_0_55px_rgba(61,143,168,0.28),_0_0_110px_rgba(61,143,168,0.15),_0_20px_50px_rgba(0,0,0,0.65),_inset_0_1px_0_rgba(255,255,255,0.06)]">
 
         {/* ── Gradient header ── */}
-        <div className="relative bg-gradient-to-br from-[#1e6c87] via-[#3d8fa8] to-[#70B1C4] pt-6 pb-10 px-6 shrink-0">
+        <div className="relative bg-gradient-to-br from-[#1e6c87] via-[#3d8fa8] to-[#70B1C4] pt-5 pb-6 px-6 shrink-0">
           {/* Decorative circles */}
           <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-white/10 pointer-events-none" />
           <div className="absolute right-10 -bottom-6 w-28 h-28 rounded-full bg-white/[0.07] pointer-events-none" />
