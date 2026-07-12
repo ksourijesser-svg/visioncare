@@ -59,18 +59,39 @@ const CORRECTION_LABEL: Record<string, string> = {
   progressif: 'Verres progressifs',
 }
 
+const LENS_TYPE_LABEL: Record<string, string> = {
+  souple: 'Souple',
+  rigide: 'Rigide (LRPG)',
+}
+
+const RYTHME_LABEL: Record<string, string> = {
+  journalier: 'Journalière',
+  hebdomadaire: 'Hebdomadaire',
+  mensuel: 'Mensuelle',
+  trimestriel: 'Trimestrielle',
+  annuel: 'Annuelle',
+}
+
 function eyeRow(label: string, e: OrdonnanceEye): string {
   const cell = (v?: string) => `<td>${esc(v) || '—'}</td>`
   return `<tr><th>${esc(label)}</th>${cell(e.sphere)}${cell(e.cylindre)}${cell(e.axe)}${cell(e.addition)}</tr>`
 }
 
+function lensRow(label: string, e: OrdonnanceLensEye): string {
+  const cell = (v?: string) => `<td>${esc(v) || '—'}</td>`
+  return `<tr><th>${esc(label)}</th>${cell(e.puissance)}${cell(e.rayon)}${cell(e.diametre)}</tr>`
+}
+
 export function exportOrdonnancePdf(data: OrdonnanceDoc, opts?: { autoPrint?: boolean }): boolean {
   const autoPrint = opts?.autoPrint ?? true
-  const isMed = data.type === 'medicale'
-  const title = isMed ? 'Ordonnance médicale' : 'Ordonnance de lunettes'
+  const title = data.type === 'medicale'
+    ? 'Ordonnance médicale'
+    : data.type === 'lentilles'
+      ? 'Ordonnance de lentilles'
+      : 'Ordonnance de lunettes'
 
   let body: string
-  if (isMed) {
+  if (data.type === 'medicale') {
     const meds = data.medicaments.filter((m) => (m.medicament || '').trim())
     body = meds.length
       ? `<ol class="meds">${meds.map((m) => `
@@ -81,6 +102,20 @@ export function exportOrdonnancePdf(data: OrdonnanceDoc, opts?: { autoPrint?: bo
             ${m.instructions ? `<div class="med-line"><span>Instructions :</span> ${esc(m.instructions)}</div>` : ''}
           </li>`).join('')}</ol>`
       : `<p class="empty">Aucun médicament.</p>`
+  } else if (data.type === 'lentilles') {
+    const l = data.lentilles
+    body = l
+      ? `
+        <p class="corr"><strong>Lentilles ${esc(LENS_TYPE_LABEL[l.type_lentille || ''] || l.type_lentille || '')}</strong>${l.rythme_port ? ` · Renouvellement : ${esc(RYTHME_LABEL[l.rythme_port] || l.rythme_port)}` : ''}</p>
+        <table class="rx">
+          <thead><tr><th></th><th>Puissance</th><th>Rayon (mm)</th><th>Diamètre (mm)</th></tr></thead>
+          <tbody>
+            ${lensRow('Œil droit (OD)', l.od)}
+            ${lensRow('Œil gauche (OG)', l.og)}
+          </tbody>
+        </table>
+        ${l.produit_entretien ? `<p class="ep">Produit d'entretien : <strong>${esc(l.produit_entretien)}</strong></p>` : ''}`
+      : `<p class="empty">Aucune mesure.</p>`
   } else {
     const v = data.verres
     body = v
