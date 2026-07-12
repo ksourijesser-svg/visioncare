@@ -57,7 +57,8 @@ function eyeRow(label: string, e: OrdonnanceEye): string {
   return `<tr><th>${esc(label)}</th>${cell(e.sphere)}${cell(e.cylindre)}${cell(e.axe)}${cell(e.addition)}</tr>`
 }
 
-export function exportOrdonnancePdf(data: OrdonnanceDoc): boolean {
+export function exportOrdonnancePdf(data: OrdonnanceDoc, opts?: { autoPrint?: boolean }): boolean {
+  const autoPrint = opts?.autoPrint ?? true
   const isMed = data.type === 'medicale'
   const title = isMed ? 'Ordonnance médicale' : 'Ordonnance de lunettes'
 
