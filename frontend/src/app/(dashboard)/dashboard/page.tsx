@@ -113,12 +113,12 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={220}>
-                <BarChart data={activityData} barSize={28}>
+                <BarChart data={monthlyData} barSize={28}>
                   <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
                   <XAxis dataKey="mois" tick={{ fontSize: 12, fill: axisColor }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 12, fill: axisColor }} axisLine={false} tickLine={false} />
-                  <Tooltip contentStyle={tooltipStyle} cursor={{ fill: cursorFill }} />
-                  <Bar dataKey="consultations" fill="#70B1C4" radius={[6, 6, 0, 0]} />
+                  <YAxis allowDecimals={false} tick={{ fontSize: 12, fill: axisColor }} axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={tooltipStyle} cursor={{ fill: cursorFill }} formatter={(v) => [v, 'Rendez-vous']} />
+                  <Bar dataKey="rdv" fill="#70B1C4" radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
