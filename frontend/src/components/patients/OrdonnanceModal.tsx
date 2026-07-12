@@ -27,7 +27,18 @@ interface Props {
 const inputCls = 'border border-[#DCEEF3] dark:border-[#1C3F62]/60 dark:bg-[#091628] dark:text-[#EDF8FF] dark:placeholder:text-[#6A8E9F] focus-visible:ring-[#70B1C4]'
 const labelCls = 'text-xs text-gray-500 dark:text-[#7AAABB]'
 
-const emptyMed = (): Medicament => ({ medicament: '', posologie: '', duree: '', instructions: '' })
+const emptyMed = (): Medicament => ({ medicament: '', categorie: '', posologie: '', duree: '', instructions: '' })
+
+const MED_CATEGORIES = [
+  'Antibiotique — collyre',
+  'Antibiotique — per os',
+  'Corticoïde — collyre',
+  'Corticoïde — per os',
+  'Antiglaucomateux',
+  'Agent mouillant (larmes artificielles)',
+  'Pansement oculaire (néopade)',
+  'Autre',
+]
 const emptyEye = (): OeilVerre => ({ sphere: '', cylindre: '', axe: '', addition: '' })
 const emptyVerres = (): Verres => ({ type_correction: 'loin', ecart_pupillaire: '', od: emptyEye(), og: emptyEye() })
 const emptyLensEye = (): OeilLentille => ({ puissance: '', rayon: '', diametre: '' })
