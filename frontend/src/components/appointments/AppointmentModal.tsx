@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Loader2, Search, CheckCircle2, X, User, Calendar, ClipboardList } from 'lucide-react'
+import { Loader2, Search, CheckCircle2, X, User, Calendar, ClipboardList, HeartPulse, ShieldCheck } from 'lucide-react'
 import type { Appointment } from '@/store/appointmentsStore'
 import type { Patient } from '@/store/patientsStore'
 import { usePatients } from '@/hooks/usePatients'
@@ -26,6 +26,12 @@ const schema = z.object({
   patient_prenom: z.string().min(1, 'Requis'),
   patient_nom: z.string().min(1, 'Requis'),
   patient_telephone: z.string(),
+  date_naissance: z.string(),
+  adresse: z.string(),
+  patient_email: z.union([z.string().email('Email invalide'), z.literal('')]),
+  antecedents_generaux: z.string(),
+  antecedents_ophtalmologiques: z.string(),
+  prise_en_charge: z.string(),
   date: z.string().min(1, 'Requis'),
   heure: z.string().min(1, 'Requis'),
   duree: z.string(),
