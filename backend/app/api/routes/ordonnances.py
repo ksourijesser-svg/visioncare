@@ -34,7 +34,7 @@ def list_ordonnances(
     if patient_id:
         q = q.filter(Ordonnance.patient_id == patient_id)
     if type:
-        q = q.filter(Ordonnance.type == type)
+        q = q.filter(Ordonnance.type == type.value)
     return q.order_by(Ordonnance.date_ordonnance.desc(), Ordonnance.id.desc()).all()
 
 
