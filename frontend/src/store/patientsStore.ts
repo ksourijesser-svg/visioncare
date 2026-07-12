@@ -9,6 +9,9 @@ export interface Patient {
   email: string
   adresse: string
   notes: string
+  antecedents_generaux?: string
+  antecedents_ophtalmologiques?: string
+  prise_en_charge?: string
   nb_consultations: number
   derniere_visite: string
   created_at: string
