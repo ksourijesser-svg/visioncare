@@ -155,16 +155,24 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
   async function onSubmit(data: FormData) {
     let pid = patientId
 
+    // Patient-level medical details captured on the RDV form.
+    const patientDetails = {
+      date_naissance: data.date_naissance || null,
+      adresse: data.adresse || null,
+      email: data.patient_email || null,
+      antecedents_generaux: data.antecedents_generaux || null,
+      antecedents_ophtalmologiques: data.antecedents_ophtalmologiques || null,
+      prise_en_charge: data.prise_en_charge || null,
+    }
+
     if (!pid) {
       try {
         const res = await patientsApi.create({
           nom: toTitleCase(data.patient_nom),
           prenom: toTitleCase(data.patient_prenom),
           telephone: data.patient_telephone || null,
-          email: null,
-          adresse: null,
-          date_naissance: null,
           notes: null,
+          ...patientDetails,
         })
         pid = (res.data as { id: number }).id
         queryClient.invalidateQueries({ queryKey: ['patients'] })
@@ -172,6 +180,10 @@ export function AppointmentModal({ open, onClose, appointment }: Props) {
         toast.error('Impossible de créer le patient')
         return
       }
+    } else {
+      // Keep the existing patient record in sync with any edits.
+      await patientsApi.update(pid, patientDetails).catch(() => {})
+      queryClient.invalidateQueries({ queryKey: ['patients'] })
     }
 
     const rdvData = {
