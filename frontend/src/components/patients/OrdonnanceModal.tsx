@@ -6,12 +6,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Loader2, Pill, Glasses, Plus, Trash2, Printer } from 'lucide-react'
+import { Loader2, Pill, Glasses, Plus, Trash2, Printer, CircleDot } from 'lucide-react'
 import type { Patient } from '@/store/patientsStore'
 import { useProfileStore } from '@/store/profileStore'
 import {
   useCreateOrdonnance,
   type OrdonnanceType, type Medicament, type Verres, type OeilVerre,
+  type Lentilles, type OeilLentille,
 } from '@/hooks/useOrdonnances'
 import { exportOrdonnancePdf } from '@/lib/ordonnancePdf'
 import { differenceInYears } from 'date-fns'
