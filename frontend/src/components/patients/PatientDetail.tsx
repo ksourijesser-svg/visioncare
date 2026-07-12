@@ -215,7 +215,7 @@ export function PatientDetail({ patient, open, onClose }: Props) {
     }
   }
 
-  function printOrdonnance(o: Ordonnance) {
+  function openOrdonnance(o: Ordonnance, autoPrint: boolean) {
     if (!patient) return
     const ok = exportOrdonnancePdf({
       type: o.type,
@@ -229,8 +229,8 @@ export function PatientDetail({ patient, open, onClose }: Props) {
         cabinet_nom: profile.cabinet_nom, cabinet_adresse: profile.cabinet_adresse,
         cabinet_telephone: profile.cabinet_telephone, cabinet_email: profile.cabinet_email,
       },
-    })
-    if (!ok) toast.error('Autorisez les fenêtres pop-up pour imprimer')
+    }, { autoPrint })
+    if (!ok) toast.error('Autorisez les fenêtres pop-up pour ouvrir l\'ordonnance')
   }
 
   function handleDeleteOrdonnance(id: number) {
