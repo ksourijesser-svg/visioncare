@@ -90,7 +90,8 @@ components/
 
 lib/
   patientPdf.ts         # client-side dossier PDF via print window (embeds image attachments as base64)
-  ordonnancePdf.ts      # client-side prescription PDF (medicale + lunettes), doctor header from profileStore
+  ordonnancePdf.ts      # client-side prescription PDF (medicale + lunettes + lentilles), doctor header from profileStore
+                        #   exportOrdonnancePdf(data, { autoPrint }) — autoPrint:false opens in a new tab without print dialog
   image.ts              # fileToResizedDataUrl — downscales profile photo to ≤512px; keeps PNG/WebP transparency, else JPEG
 
 store/
