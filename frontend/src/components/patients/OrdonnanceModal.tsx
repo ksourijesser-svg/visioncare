@@ -70,14 +70,21 @@ export function OrdonnanceModal({ open, onClose, patient }: Props) {
     setVerres((prev) => ({ ...prev, [eye]: { ...prev[eye], ...patch } }))
   }
 
+  function updateLensEye(eye: 'od' | 'og', patch: Partial<OeilLentille>) {
+    setLentilles((prev) => ({ ...prev, [eye]: { ...prev[eye], ...patch } }))
+  }
+
   function buildPayload() {
     if (!patient) return null
     if (type === 'medicale') {
       const clean = meds.filter((m) => m.medicament.trim())
       if (clean.length === 0) { toast.error('Ajoutez au moins un médicament'); return null }
-      return { patient_id: patient.id, type, date_ordonnance: date, medicaments: clean, verres: null, notes: notes || null }
+      return { patient_id: patient.id, type, date_ordonnance: date, medicaments: clean, verres: null, lentilles: null, notes: notes || null }
     }
-    return { patient_id: patient.id, type, date_ordonnance: date, medicaments: [], verres, notes: notes || null }
+    if (type === 'lentilles') {
+      return { patient_id: patient.id, type, date_ordonnance: date, medicaments: [], verres: null, lentilles, notes: notes || null }
+    }
+    return { patient_id: patient.id, type, date_ordonnance: date, medicaments: [], verres, lentilles: null, notes: notes || null }
   }
 
   function doPrint() {
@@ -88,6 +95,7 @@ export function OrdonnanceModal({ open, onClose, patient }: Props) {
       date_ordonnance: date,
       medicaments: type === 'medicale' ? meds.filter((m) => m.medicament.trim()) : [],
       verres: type === 'lunettes' ? verres : null,
+      lentilles: type === 'lentilles' ? lentilles : null,
       notes,
       patient: { prenom: patient.prenom, nom: patient.nom, age, date_naissance: patient.date_naissance || undefined },
       doctor: {
