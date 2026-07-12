@@ -142,7 +142,7 @@ All routes prefixed `/api/v1`. Health: `GET /health`.
 - **Facture** (`factures`): numero (`FAC-{year}-{NNNN}`), patient_id, medecin_id, date_emission, date_echeance, `lignes` (JSON: designation/quantite/prix_unitaire), montant_total, montant_paye, statut (impayee|partielle|payee|annulee), methode_paiement, date_paiement, notes
 - **Operation** (`operations`): patient_id, medecin_id, date_operation (datetime), duree, type_intervention, oeil (droit|gauche|deux), anesthesie, salle, statut (planifiee|confirmee|terminee|annulee), notes
 - **PatientFile** (`patient_files`): patient_id, medecin_id, filename, content_type, size, `data` (LargeBinary — stored in DB, not disk: Railway FS is ephemeral)
-- **Ordonnance** (`ordonnances`): patient_id, medecin_id, type (medicale|lunettes), date_ordonnance, `medicaments` (JSON list), `verres` (JSON: type_correction/ecart_pupillaire/od/og × sphere,cylindre,axe,addition), notes
+- **Ordonnance** (`ordonnances`): patient_id, medecin_id, **type** (medicale|lunettes|lentilles — plain **VARCHAR**, not a DB enum), date_ordonnance, `medicaments` (JSON list: medicament/**categorie**/posologie/duree/instructions), `verres` (JSON: type_correction/ecart_pupillaire/od/og × sphere,cylindre,axe,addition), **`lentilles`** (JSON: type_lentille[souple|rigide]/rythme_port[journalier…annuel]/produit_entretien/od/og × puissance,rayon,diametre), notes. `medicaments[].categorie` = drug type (antibiotique collyre/per os, corticoïde collyre/per os, antiglaucomateux, agent mouillant, pansement néopade, autre).
 
 ### Table creation — NO Alembic
 Tables via `Base.metadata.create_all()` in `main.py`. New columns via `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` in the same function. Do **not** use `alembic upgrade head`.
