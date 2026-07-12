@@ -594,9 +594,9 @@ export function PatientDetail({ patient, open, onClose }: Props) {
 
           </div>{/* ── end right column ── */}
 
-          {/* Consultation history — full width */}
+          {/* Consultation history — full width on lg, own column on xl */}
           {!isEditing && (
-            <div className="lg:col-span-2 bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden">
+            <div className="lg:col-span-2 xl:col-span-1 bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden">
               <div className="px-4 pt-4 pb-2 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <ClipboardList size={13} className="text-[#70B1C4]" />
