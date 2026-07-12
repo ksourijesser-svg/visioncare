@@ -437,6 +437,22 @@ export function PatientDetail({ patient, open, onClose }: Props) {
             </div>
           </div>
 
+          {/* Save button (edit mode) */}
+          {isEditing && (
+            <Button
+              type="submit"
+              disabled={!isDirty}
+              className="w-full bg-[#70B1C4] hover:bg-[#5a9db8] text-white shadow-md shadow-[#70B1C4]/30 disabled:opacity-50 btn-neon"
+            >
+              <Save size={14} className="mr-2" /> Enregistrer les modifications
+            </Button>
+          )}
+
+          </div>{/* ── end left column ── */}
+
+          {/* ── Right column: documents & prescriptions ── */}
+          <div className="space-y-4">
+
           {/* Documents */}
           {!isEditing && (
             <div className="bg-white dark:bg-[#102844] rounded-2xl glow overflow-hidden">
