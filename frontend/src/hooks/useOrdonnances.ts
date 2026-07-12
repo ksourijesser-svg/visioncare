@@ -68,6 +68,7 @@ function transform(o: Record<string, unknown>): Ordonnance {
     date_ordonnance: (o.date_ordonnance as string) || '',
     medicaments: ((o.medicaments as Medicament[]) || []).map((m) => ({
       medicament: m.medicament || '',
+      categorie: m.categorie || '',
       posologie: m.posologie || '',
       duree: m.duree || '',
       instructions: m.instructions || '',
