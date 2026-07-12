@@ -273,3 +273,9 @@ When a patient selects a doctor, `prise-rdv` calls `GET /public/doctors/{id}/pla
 
 ### Shadcn Select null guard
 `onValueChange={(v) => { if (v) setValue(...) }}` — types `v` as `string | null`.
+
+### Select popup width — long option labels clip
+`SelectContent` defaults to the trigger's width (`w-(--anchor-width)`) with `overflow-x-hidden` and `whitespace-nowrap` items, so long labels get cut off. For dropdowns with long option text (e.g. the médicament `categorie`), pass `alignItemWithTrigger={false} className="w-auto min-w-[240px] max-w-[calc(100vw-2rem)]"` to size the popup to its content.
+
+### Dialog width — base `sm:max-w-sm` wins (CRITICAL)
+`DialogContent` (`ui/dialog.tsx`) has a base `sm:max-w-sm`. A plain `max-w-*` (no `sm:` prefix) does **not** override it — `tailwind-merge` keeps both and the responsive class wins on ≥sm screens. To actually widen a dialog, use a matching `sm:` variant, e.g. `PatientDetail` uses `w-[95vw] max-w-6xl sm:max-w-6xl`.
